@@ -1,11 +1,8 @@
-import React, {
-  JSXElementConstructor,
-  PropsWithChildren,
-  ReactElement,
-} from 'react';
-import { Container } from '@mui/material';
-import Head from 'next/head';
-import Navbar from '../components/Navbar';
+import React from "react";
+import { Container } from "@mui/material";
+import Head from "next/head";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 interface MainLayoutProps {
   title?: string;
@@ -16,8 +13,8 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({
   children,
-  title = 'TIME',
-  keywords = 'shoe, shop, buy, style, fashion. clothing',
+  title = "TIME - shoe store",
+  keywords = "shoe, shop, buy, style, fashion. clothing",
   description,
 }) => {
   return (
@@ -32,10 +29,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         <meta name="keywords" content={keywords} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="UTF-8" />
+        <link rel="icon" href="/heart-icon.ico" />
       </Head>
       <Container>
-        <Navbar title={title} />
+        <Navbar />
         {children}
+        <Footer />
       </Container>
     </>
   );
