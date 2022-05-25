@@ -1,8 +1,8 @@
-import React from "react";
-import { Container } from "@mui/material";
-import Head from "next/head";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import React from 'react';
+import { Container } from '@mui/material';
+import Head from 'next/head';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 interface MainLayoutProps {
   title?: string;
@@ -13,8 +13,8 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({
   children,
-  title = "TIME - shoe store",
-  keywords = "shoe, shop, buy, style, fashion. clothing",
+  title = 'TIME - shoe store',
+  keywords = 'shoe, shop, buy, style, fashion. clothing',
   description,
 }) => {
   return (
@@ -31,11 +31,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         <meta charSet="UTF-8" />
         <link rel="icon" href="/heart-icon.ico" />
       </Head>
-      <Container>
-        <Navbar />
-        {children}
-        <Footer />
-      </Container>
+      <Navbar />
+      <Container>{children}</Container>
+      <Footer />
     </>
   );
 };

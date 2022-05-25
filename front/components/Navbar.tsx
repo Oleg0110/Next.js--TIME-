@@ -1,4 +1,4 @@
-// import useTranslation from 'next-translate/useTranslation';
+import { Container } from '@mui/material';
 
 import { useTranslation } from 'next-i18next';
 
@@ -12,18 +12,21 @@ const Navbar = () => {
 
   return (
     <div className={styles.background}>
-      <Link href={'/'}>
-        <h1 className={styles.title}>{t('time')}</h1>
-      </Link>
-      <Link href={'/new'}>
-        <h1 className={styles.title}>{t('new')}</h1>
-      </Link>
+      {/* <Container> */}
       <Link href={router.asPath} locale={'en'}>
         <a>EN</a>
       </Link>
       <Link href={router.asPath} locale={'ua'}>
         <a>UA</a>
       </Link>
+      <Link href={'/'}>
+        <h1 className={styles.title}>{t('time')}</h1>
+      </Link>
+      <Link href={'/new'}>
+        <h1 className={styles.title}>{t('new')}</h1>
+      </Link>
+
+      {/* </Container> */}
     </div>
   );
 };

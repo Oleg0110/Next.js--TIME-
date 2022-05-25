@@ -5,14 +5,18 @@ import style from '../styles/button.module.scss';
 import MainLayout from '../layouts/MainLayout';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import TooltipIcon from '../components/TooltipIcon';
 
 const Index = () => {
   const { t } = useTranslation('common');
+
   return (
     <MainLayout>
       Start
       <Button className={style.button1}>DA</Button>
-      <PersonIcon style={{ color: '685248' }} />
+      <TooltipIcon title="Your Account">
+        <PersonIcon className={style.icon} />
+      </TooltipIcon>
       <h1 className={styles.trirong1}>TIME</h1>
       <h1 className={styles.trirong2}>TIME</h1>
       <h1 className={styles.noto}>{t('about-us')}</h1>
