@@ -1,9 +1,8 @@
-import { Router } from 'express';
-import HomeController from '../controllers/HomeController.js';
-import Shoe from '../models/shoe.js';
+const { Router } = require('express');
+const HomeController = require('../controllers/HomeController');
 
 const router = new Router();
 
 router.get('/', HomeController.getShoeSale);
 
-export default router;
+module.exports = router;

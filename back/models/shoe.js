@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+const { Schema, model } = require('mongoose')
 
-const schema = new mongoose.Schema({
+const schema = new Schema({
   productName: { type: String, required: true, unique: true },
   shoeFor: { type: String, required: true },
   shoePrice: { type: Number, required: true },
@@ -15,6 +15,6 @@ const schema = new mongoose.Schema({
   shoeStyleMaterial: { type: String, required: true },
   shoeStyleResponse: { type: String, responseRating: { type: Number } },
   date: { type: Date, required: true, default: Date.now },
-});
+})
 
-export default mongoose.model('Shoe', schema);
+module.exports = model('Shoe', schema)

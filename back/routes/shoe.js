@@ -1,12 +1,12 @@
-import { Router } from 'express';
-import ShoeController from '../controllers/ShoeController.js';
-import Shoe from '../models/shoe.js';
+const { Router } = require('express')
+const ShoeController = require('../controllers/ShoeController')
+const Shoe = require('../models/Shoe')
 
-const router = new Router();
+const router = new Router()
 
-router.get('/:page', ShoeController.getShoes);
+router.get('/:page', ShoeController.getShoes)
 // router.get('/:page/:sort', ShoeController.sortShoe);
-router.get('/:page/:filter', ShoeController.filterShoes);
+router.get('/:page/:filter', ShoeController.filterShoes)
 
 router.post('/', async (req, res) => {
   const {
@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
     shoeDescription,
     shoeStyleName,
     shoeStyleMaterial,
-  } = req.body;
+  } = req.body
   const shoe = new Shoe({
     productName,
     shoeFor,
@@ -34,10 +34,10 @@ router.post('/', async (req, res) => {
     shoeDescription,
     shoeStyleName,
     shoeStyleMaterial,
-  });
+  })
 
-  await shoe.save();
-  res.json('shoe');
-});
+  await shoe.save()
+  res.json('shoe')
+})
 
-export default router;
+module.exports = router
