@@ -1,14 +1,12 @@
-import {
+const {
   chooseCurrentPageFunc,
   addPercentageFunc,
-  includesSizeFunc,
-  comparativeFunc,
   colorFunc,
   styleFunc,
   materialFunc,
   priceFunc,
   sizeFunc,
-} from '../utils/ShoeServiceFunc.js';
+} = require('../utils/ShoeServiceFunc');
 
 class ShoeService {
   async getShoes(page) {
@@ -87,4 +85,4 @@ class ShoeService {
   }
 }
 
-export default new ShoeService();
+module.exports = new ShoeService();

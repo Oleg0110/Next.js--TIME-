@@ -1,4 +1,4 @@
-import ShoeService from '../services/ShoeService.js';
+const ShoeService = require('../services/ShoeService');
 
 class ShoeController {
   async getShoes(req, res) {
@@ -53,4 +53,4 @@ class ShoeController {
   }
 }
 
-export default new ShoeController();
+module.exports = new ShoeController();

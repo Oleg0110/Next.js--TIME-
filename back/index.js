@@ -1,41 +1,44 @@
-import express from 'express';
-import cors from 'cors';
-import mongoose from 'mongoose';
-import shoe from './routes/shoe.js';
-import user from './routes/user.js';
-import home from './routes/home.js';
+require('dotenv').config()
+const express = require('express')
+const cookieParser = require('cookie-parser')
+const cors = require('cors')
+const mongoose = require('mongoose')
+const shoe = require('./routes/shoe')
+const user = require('./routes/user')
+const home = require('./routes/home')
+const admin = require('./routes/admin')
+const errorMiddleware = require('./middleware/errorMiddleware')
+const roleMiddleware = require('./middleware/roleMiddleware')
+const authMiddleware = require('./middleware/authMiddleware')
 
-const app = express();
-const PORT = 5000;
-const MONGODB_URL =
-  'mongodb+srv://Oleg:1234567890@cluster0.sm7pk.mongodb.net/TIME?retryWrites=true&w=majority';
+const app = express()
+const PORT = process.env.PORT || 5000
 
-app.use(express.json());
+app.use(express.json())
+app.use(cookieParser())
 app.use(
   cors({
     origin: 'http://localhost:3000',
   })
-);
+)
 
-app.use('/', home);
-app.use('/user', user);
-app.use('/shoe', shoe);
-
-app.get('/', (req, res) => {
-  res.status(200).json('DA');
-});
+app.use('/', home)
+app.use('/auth', user)
+app.use('/shoe', shoe)
+app.use('/settings', roleMiddleware(['admin']), authMiddleware, admin)
+app.use(errorMiddleware)
 
 const asyncStart = async () => {
   try {
-    await mongoose.connect(MONGODB_URL, {
+    await mongoose.connect(process.env.MONGODB_URL, {
       useNewUrlParser: true,
-    });
+    })
     app.listen(PORT, () => {
-      console.log(`Start on port ${PORT}.....`);
-    });
+      console.log(`Start on port ${PORT}.....`)
+    })
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+}
 
-asyncStart();
+asyncStart()

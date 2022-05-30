@@ -1,15 +1,15 @@
-import HomeService from '../services/HomeService.js';
+const HomeService = require('../services/HomeService')
 
-class UserController {
+class HomeController {
   async getShoeSale(req, res) {
     try {
-      const shoeSale = await HomeService.getShoeSale();
+      const shoeSale = await HomeService.getShoeSale()
 
-      res.status(200).json(shoeSale);
+      res.status(200).json(shoeSale)
     } catch (e) {
-      res.status(500).json(e.message);
+      res.status(500).json(e.message)
     }
   }
 }
 
-export default new UserController();
+module.exports = new HomeController()

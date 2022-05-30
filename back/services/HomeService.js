@@ -1,14 +1,11 @@
-import Shoe from '../models/shoe.js';
+const Shoe = require('../models/Shoe')
 
-class UserService {
+class HomeService {
   async getShoeSale() {
-    const saleShoe = await Shoe.aggregate([
-      { $match: { shoeSale: true } },
-      { $sample: { size: 5 } },
-    ]);
+    const saleShoe = await Shoe.aggregate([{ $match: { shoeSale: true } }, { $sample: { size: 7 } }])
 
-    return saleShoe;
+    return saleShoe
   }
 }
 
-export default new UserService();
+module.exports = new HomeService()
