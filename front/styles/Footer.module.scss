@@ -1,13 +1,59 @@
 @import './colors.module.scss';
 @import './fonts.module.scss';
 
-.background {
-  background-color: $main-color;
-  width: 100%;
-  height: 400px;
+.mailIcon {
+  background-image: url(../assets/icon/mail.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  width: 30px;
+  height: 30px;
 }
-
-.title {
-  @extend %title-fonts;
-  cursor: pointer;
+.visa {
+  background-image: url(../assets/icon/visa.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 75px;
+  width: 80px;
+  height: 80px;
+}
+.applePay {
+  background-image: url(../assets/icon/applePay.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 75px;
+  width: 80px;
+  height: 80px;
+}
+.facebook {
+  background-image: url(../assets/icon/facebook.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  width: 30px;
+  height: 30px;
+}
+.google {
+  background-image: url(../assets/icon/google.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  width: 30px;
+  height: 30px;
+}
+.instagram {
+  background-image: url(../assets/icon/instagram.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  width: 30px;
+  height: 30px;
+}
+.twitter {
+  background-image: url(../assets/icon/twitter.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  width: 30px;
+  height: 30px;
 }

@@ -68,7 +68,8 @@ class AdminController {
         shoeColor,
         shoeDescription,
         shoeStyleName,
-        shoeStyleMaterial
+        shoeStyleMaterial,
+        req.files.shoeMainPictures
       )
 
       res.status(200).json({ message: 'Successful added', shoe })

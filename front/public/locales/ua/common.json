@@ -1,5 +1,23 @@
 {
-  "time": "ЧAC",
-  "new": "Новинки",
-  "about-us": "Про нас"
+  "new": "НОВИНКИ",
+  "women": "ЖІНОЧЕ",
+  "men": "ЧОЛОВІЧЕ",
+  "sale": "РОЗПРОДАЖ",
+  "about-us": "Про нас",
+  "search": "Пошук",
+  "shopping-cart": "Корзина",
+  "your-account": "Ваш Акаунт",
+  "favorites": "Улюблені",
+  "phone-numbers": "Номери телефонів",
+  "translation": "Переклад",
+  "close": "Закрити",
+  "catalog": "Каталог",
+  "women-shoes": "Жіноче взуття",
+  "men-shoes": "Чоловіче взуття",
+  "sale-footer": "Розпродаж",
+  "new-footer": "Новий",
+  "contacts": "Контакти",
+  "information": "Інформація",
+  "shipping-payment": "Доставка та оплата",
+  "personal-office": "Особистий офіс"
 }

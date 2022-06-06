@@ -1,5 +1,23 @@
 {
-  "time": "TIME",
   "new": "NEW",
-  "about-us": "About us"
+  "women": "WOMEN",
+  "men": "MEN",
+  "sale": "SALE",
+  "about-us": "About us",
+  "search": "Search",
+  "shopping-cart": "Shopping Cart",
+  "your-account": "Your Account",
+  "favorites": "Favorites",
+  "phone-numbers": "Phone Numbers",
+  "translation": "Translation",
+  "close": "Close",
+  "catalog": "Catalog",
+  "women-shoes": "Women shoes",
+  "men-shoes": "Men shoes",
+  "sale-footer": "Sale",
+  "new-footer": "New",
+  "contacts": "Contacts",
+  "information": "Information",
+  "shipping-payment": "Shipping and Payment",
+  "personal-office": "Personal office"
 }
