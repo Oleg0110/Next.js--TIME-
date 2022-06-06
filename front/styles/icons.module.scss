@@ -1,0 +1,110 @@
+@import './colors.module.scss';
+@import './fonts.module.scss';
+
+.likeHeader {
+  background-image: url(../assets/icon/likeHeader.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.likeHeaderFilled {
+  background-image: url(../assets/icon/likeHeaderFilled.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.person {
+  background-image: url(../assets/icon/person.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.personFilled {
+  background-image: url(../assets/icon/personFilled.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.bagHeader {
+  background-image: url(../assets/icon/bagHeader.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.bagHeaderFilled {
+  background-image: url(../assets/icon/bagHeaderFilled.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.search {
+  background-image: url(../assets/icon/search.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.earth {
+  background-image: url(../assets/icon/earth.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.phone {
+  background-image: url(../assets/icon/phone.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.phoneMenu {
+  background-image: url(../assets/icon/phone.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.burgerMenu {
+  background-image: url(../assets/icon/burgerMenu.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px;
+  width: 30px;
+  height: 30px;
+}
+
+.close {
+  background-image: url(../assets/icon/close.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 17px;
+  width: 30px;
+  height: 30px;
+}

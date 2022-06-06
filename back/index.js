@@ -10,12 +10,14 @@ const admin = require('./routes/admin')
 const errorMiddleware = require('./middleware/errorMiddleware')
 const roleMiddleware = require('./middleware/roleMiddleware')
 const authMiddleware = require('./middleware/authMiddleware')
+const fileUpload = require('express-fileupload')
 
 const app = express()
 const PORT = process.env.PORT || 5000
 
 app.use(express.json())
 app.use(cookieParser())
+app.use(fileUpload())
 app.use(
   cors({
     origin: 'http://localhost:3000',
@@ -25,7 +27,11 @@ app.use(
 app.use('/', home)
 app.use('/auth', user)
 app.use('/shoe', shoe)
-app.use('/settings', roleMiddleware(['admin']), authMiddleware, admin)
+app.use(
+  '/settings',
+  // roleMiddleware(['admin']), authMiddleware,
+  admin
+)
 app.use(errorMiddleware)
 
 const asyncStart = async () => {

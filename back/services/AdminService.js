@@ -28,7 +28,8 @@ class AdminService {
     shoeColor,
     shoeDescription,
     shoeStyleName,
-    shoeStyleMaterial
+    shoeStyleMaterial,
+    picture
   ) {
     const user = new Shoe({
       productName,
