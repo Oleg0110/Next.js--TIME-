@@ -1,0 +1,23 @@
+{
+  "sizing": "SIZING GUIDELINES",
+  "about-shoes": "ABOUT THE SHOES",
+  "notice": "OUT-OF-STOCK NOTICE",
+  "retailer": "RETAILER LOCATIONS",
+  "shipping": "SHIPPING OPTIONS",
+  "returns-exchange": "RETURNS OR EXCHANGES",
+  "common": "COMMON SHIPPING AND DELIVERY QUESTIONS",
+  "common-can": "Can I return or exchange my order?",
+  "can-text-1": "We want you to love your shoes. If they don't fit great, we are happy to offer returns or exchanges under the following conditions.",
+  "can-text-2": "Please check out more details in our Store Policy section",
+  "returns": "Returns:",
+  "returns-text": "You may return new, unworn shoes in the original packaging and condition within 30 days of purchase for exchange or a full refund minus shipping fee.",
+  "exchanges": "Exchanges:",
+  "customers": "US Customers:",
+  "customers-text-1": "Please allow 2-3 weeks for them to be processed after you have sent the item back. We offer free standard domestic shipping to send the second pair to you, but do not cover the shipping back to our warehouse.",
+  "International": "International Customers:",
+  "International-text-1": "Please check out more details in our Store Policy section",
+  "important": "IMPORTANT NOTE: Shoes must be in their original condition and packaging with no signs of wear.",
+  "custom": "Custom-Order Styles - The Annalise series, Layla and Mariposa are custom-orders and, therefore, are not refundable.",
+  "please-text": "Please complete the Return Form enclosed in the package and return it with the shoes to ensure speedy processing. For exchanges, please indicate the new style and size you would like to exchange them to. Apologies, we do not cover the shipping cost back to us, unless we made a mistake on the first shipment. Please obtain a tracking service for the packages shipped back to us for your reference.",
+  "accordion-lorem": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."
+}

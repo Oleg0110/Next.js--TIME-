@@ -23,12 +23,22 @@ const Communication = () => {
         <div className={styles.earth} />
       </TooltipIcon>
       <Link href={router.asPath} locale={'en'}>
-        <Typography variant="translation" color={Colors.secondaryWhite}>
+        <Typography
+          variant="translation"
+          color={
+            router.locale === 'en' ? Colors.darkGray : Colors.secondaryWhite
+          }
+        >
           EN
         </Typography>
       </Link>
       <Link href={router.asPath} locale={'ua'}>
-        <Typography variant="translation" color={Colors.secondaryWhite}>
+        <Typography
+          variant="translation"
+          color={
+            router.locale === 'ua' ? Colors.darkGray : Colors.secondaryWhite
+          }
+        >
           UA
         </Typography>
       </Link>

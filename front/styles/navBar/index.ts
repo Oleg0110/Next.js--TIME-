@@ -71,7 +71,27 @@ export const IconsBox = styled(Box)(() => ({
 })) as typeof Box;
 
 export const Icons = styled(Box)(() => ({
-  display: 'Block',
+  display: 'flex',
+  [theme.breakpoints.down('md')]: {
+    display: 'none',
+  },
+})) as typeof Box;
+
+export const IconsContainerMobile = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'space-around',
+  alignItems: 'center',
+  position: 'fixed',
+  background: Colors.primary,
+  bottom: 0,
+  left: 0,
+  width: '100%',
+  zIndex: 99,
+  borderTop: `1px solid ${Colors.secondaryWhite}`,
+})) as typeof Box;
+
+export const IconsContainerDesktop = styled(Box)(() => ({
+  display: 'flex',
   [theme.breakpoints.down('md')]: {
     display: 'none',
   },

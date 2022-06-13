@@ -16,7 +16,6 @@ import IconButtons from './IconButtons';
 import Communication from './Communication';
 import SwipeableTemporaryDrawer from '../Drawer';
 import styles from '../../styles/icons.module.scss';
-import ShoppingCart from '../ShoppingCart';
 
 const NavbarDesktop = () => {
   const router = useRouter();
