@@ -19,5 +19,11 @@
   "contacts": "Контакти",
   "information": "Інформація",
   "shipping-payment": "Доставка та оплата",
-  "personal-office": "Особистий офіс"
+  "personal-office": "Особистий офіс",
+  "profile": "Профіль",
+  "logout": "Вийти",
+  "login": "Вхід",
+  "loginToUpper": "ВХІД",
+  "registration": "Зареєструватися",
+  "entry": "Вхід"
 }

@@ -5,6 +5,10 @@ import theme, { Colors } from './theme/index';
 export const MainContentBox = styled(Container)(() => ({
   width: theme.breakpoints.down('lg'),
   backgroundColor: Colors.secondaryWhite,
+  paddingTop: '100px',
+  [theme.breakpoints.down('md')]: {
+    paddingTop: '70px',
+  },
 })) as typeof Container;
 
 export const MainNavBarContainer = styled(Box)(() => ({
@@ -15,6 +19,8 @@ export const MainNavBarContainer = styled(Box)(() => ({
   width: '100%',
   height: '100px',
   backgroundColor: Colors.primary,
+  position: 'fixed',
+  zIndex: '1',
   [theme.breakpoints.down('md')]: {
     height: '70px',
   },
@@ -28,4 +34,8 @@ export const MainFooterContainer = styled(Box)(() => ({
   width: '100%',
   maxHeight: '1000px',
   backgroundColor: Colors.primary,
+  paddingBottom: '20px',
+  [theme.breakpoints.down('md')]: {
+    paddingBottom: '60px',
+  },
 })) as typeof Box;

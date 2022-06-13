@@ -1,6 +1,6 @@
-import { TryRounded } from '@mui/icons-material';
 import type {} from '@mui/lab/themeAugmentation';
 import { createTheme } from '@mui/material/styles';
+import Photo from '../../assets/icon/close.svg';
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
@@ -18,6 +18,17 @@ declare module '@mui/material/Typography' {
     roboto16400: true;
     translation: true;
     footerMail: true;
+    error: true;
+  }
+}
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsSizeOverrides {
+    XL: true;
+    LG: true;
+    MD: true;
+    SM: true;
+    XS: true;
   }
 }
 
@@ -78,17 +89,197 @@ const { breakpoints } = defaultTheme;
 const theme = createTheme({
   ...defaultTheme,
   components: {
+    MuiMenu: {
+      variants: [
+        {
+          props: { variant: 'menu' },
+          style: {
+            overflow: 'visible',
+            mt: 500,
+            top: 36,
+            left: 1,
+            filter: `drop-shadow(0px 2px 8px ${Colors.primary})`,
+            '& .MuiAvatar-root': {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            '& MuiPaper-elevation': {
+              transformOrigin: '800px 50px;',
+            },
+            '& .scss-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper ':
+              {
+                minWidth: '200px',
+                minHeight: '100px',
+                borderRadius: '0px',
+                boxShadow: 'none',
+              },
+            '&:before': {
+              content: '""',
+              display: 'block',
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              width: 10,
+              height: 10,
+              bgcolor: 'background.paper',
+              zIndex: 0,
+            },
+          },
+        },
+        {
+          props: { variant: 'selectedMenu' },
+          style: {
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+            mt: 500,
+            top: 36,
+            left: 1,
+            '& .MuiAvatar-root': {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            '& .scss-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper ':
+              {
+                border: '1px solid',
+                minWidth: '620px',
+                minHeight: '300px',
+                borderRadius: '0px',
+                boxShadow: 'none',
+                maxHeight: '500px',
+                overflowY: 'scroll',
+                '&::-webkit-scrollbar': {
+                  width: '15px',
+                },
+                '&::-webkit-scrollbar-track': {
+                  background: Colors.secondaryWhite,
+                  borderRadius: '10px',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                  backgroundColor: Colors.darkGray,
+                  border: `4px solid ${Colors.lightGray}`,
+                  borderRadius: '10px',
+                },
+              },
+            '&:before': {
+              content: '""',
+              display: 'block',
+              position: 'absolute',
+              top: 500,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: 'background.paper',
+              zIndex: 0,
+            },
+          },
+        },
+      ],
+    },
     MuiContainer: {
       defaultProps: {
         disableGutters: true,
         maxWidth: false,
       },
     },
+    MuiAccordion: {
+      variants: [
+        {
+          props: { variant: 'elevation' },
+          style: {
+            position: 'unset',
+            boxShadow: 'none',
+            margin: '0px',
+            background: Colors.primary,
+            borderBottom: `1px solid ${Colors.secondaryWhite}`,
+          },
+        },
+        {
+          props: { variant: 'outlined' },
+          style: {
+            position: 'unset',
+            boxShadow: 'none',
+            margin: '0px',
+            background: Colors.secondaryWhite,
+            borderBottom: `1px solid ${Colors.black}`,
+          },
+        },
+      ],
+    },
     MuiButton: {
-      defaultProps: {
-        disableRipple: true,
-        disableElevation: true,
-      },
+      variants: [
+        {
+          props: { color: 'primary' },
+          style: {
+            fontFamily: 'Roboto',
+            fontWeight: 400,
+            fontSize: '30px',
+            color: Colors.primary,
+            backgroundColor: Colors.secondaryWhite,
+            border: `1px solid ${Colors.primary}`,
+            borderRadius: '20px',
+            textTransform: 'none',
+            ':hover': {
+              color: Colors.secondaryWhite,
+              backgroundColor: Colors.primary,
+              border: `1px solid ${Colors.black}`,
+            },
+          },
+        },
+        {
+          props: { color: 'secondary' },
+          style: {
+            fontFamily: 'Roboto',
+            fontWeight: 400,
+            fontSize: '30px',
+            color: Colors.secondaryWhite,
+            backgroundColor: Colors.primary,
+            border: `1px solid ${Colors.secondaryWhite}`,
+            borderRadius: '20px',
+            textTransform: 'none',
+            ':hover': {
+              color: Colors.primary,
+              backgroundColor: Colors.secondaryWhite,
+              border: `1px solid ${Colors.black}`,
+            },
+          },
+        },
+        {
+          props: { size: 'XL' },
+          style: {
+            minWidth: '345px',
+            maxWidth: '370px',
+            height: '50px',
+          },
+        },
+        {
+          props: { size: 'LG' },
+          style: {
+            minWidth: '285px',
+            maxWidth: '360px',
+            height: '50px',
+          },
+        },
+        {
+          props: { size: 'MD' },
+          style: {
+            minWidth: '225px',
+            maxWidth: '260px',
+            height: '50px',
+          },
+        },
+        {
+          props: { size: 'SM' },
+          style: {
+            minWidth: '180px',
+            maxWidth: '220px',
+            height: '35px',
+          },
+        },
+      ],
     },
     MuiDrawer: {
       styleOverrides: {
@@ -260,6 +451,23 @@ const theme = createTheme({
             },
           },
         },
+        {
+          props: { variant: 'error' },
+          style: {
+            fontFamily: 'Noto Serif',
+            fontSize: '350px',
+            fontWeight: 300,
+            fontStyle: 'normal',
+            color: Colors.lightGray,
+            textShadow: '-2px 0 white, 0 2px white, 2px 0 white, 0 -2px white',
+            [breakpoints.down('md')]: {
+              fontSize: '250px',
+            },
+            [breakpoints.down('sm')]: {
+              fontSize: '200px',
+            },
+          },
+        },
       ],
     },
   },
@@ -288,17 +496,3 @@ const theme = createTheme({
 });
 
 export default theme;
-
-// export const TranslationHeader = styled(Typography)(() => ({
-//   fontFamily: 'Roboto',
-//   fontWeight: 300,
-//   fontSize: '16px',
-//   color: Colors.secondaryWhite,
-//   marginLeft: '2px',
-//   marginRight: '2px',
-//   cursor: 'pointer',
-//   ':hover': {
-//     fontWeight: 400,
-//     color: Colors.lightGray,
-//   },
-// })) as typeof Typography;

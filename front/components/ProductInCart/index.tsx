@@ -9,8 +9,10 @@ import {
 } from '../../styles/productInCart';
 import styles from '../../styles/icons.module.scss';
 import { Colors } from '../../styles/theme';
+import { useTranslation } from 'next-i18next';
 
 const ProductInCart = () => {
+  const { t } = useTranslation('shopFavorCart');
   return (
     <MainContainer>
       <PhotoContainer></PhotoContainer>
@@ -23,14 +25,11 @@ const ProductInCart = () => {
           Loafers are black in a cell
         </Typography>
         <Typography variant="roboto20200" color={Colors.darkGray}>
-          Size: 31
-        </Typography>
-        <Typography variant="roboto20200" color={Colors.darkGray}>
-          To-th: 1
+          {t('size')}: 31
         </Typography>
         <Typography
           variant="roboto20400"
-          marginBottom="25px"
+          marginBottom="-6px"
           color={Colors.black}
         >
           3 600 UAH
@@ -38,7 +37,7 @@ const ProductInCart = () => {
         <RemoveBox>
           <RemoveButton>
             <div className={styles.close} />
-            Remove
+            {t('remove')}
           </RemoveButton>
         </RemoveBox>
       </InfoContainer>

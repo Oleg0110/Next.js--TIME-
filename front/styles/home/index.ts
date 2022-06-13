@@ -10,7 +10,7 @@ export const MainPhotoBox = styled(Box)(() => ({
   alignItems: 'center',
   margin: 0,
   width: '100%',
-  height: '800px',
+  height: '850px',
   padding: '0px 10px',
   backgroundColor: Colors.primary,
   [theme.breakpoints.down('md')]: {
@@ -49,13 +49,29 @@ export const ColumnPhotoBox = styled(Box)(() => ({
 
 //About
 
+export const AboutMainBox = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  marginTop: '100px',
+  padding: '0px 10px',
+  [theme.breakpoints.down('lg')]: {
+    marginTop: '65px',
+  },
+  [theme.breakpoints.down('md')]: {
+    marginTop: '35px',
+  },
+})) as typeof Box;
+
 export const AboutContentBox = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center',
   width: '1200px',
-  margin: 'auto',
-  marginTop: '100px',
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
 })) as typeof Box;
 
 export const AboutBox = styled(Box)(() => ({
@@ -63,54 +79,89 @@ export const AboutBox = styled(Box)(() => ({
   flexDirection: 'column',
   width: '50%',
   marginRight: '25px',
+  [theme.breakpoints.down('md')]: {
+    width: '100%',
+    margin: '0px 0px 40px 0px',
+    textAlign: 'center',
+    alignItems: 'center',
+  },
+  [theme.breakpoints.down('sm')]: {
+    margin: '0px',
+  },
 })) as typeof Box;
 
 export const AboutPhoto = styled(Box)(() => ({
   display: 'flex',
-  alignItems: 'centers',
+  alignItems: 'center',
   height: '690px',
-  width: '75%',
+  maxWidth: '650px',
 })) as typeof Box;
 
 export const AboutSmallPhoto = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  height: '605px',
-  width: '312px',
-  justifyContent: 'space-between',
-  marginRight: '15px',
+  justifyContent: 'end',
+  minHeight: '240px',
+  maxWidth: '312px',
+  margin: '-70px 15px 0px 0px',
+  [theme.breakpoints.down('lg')]: {
+    height: '500px',
+    marginTop: '-30px',
+  },
+})) as typeof Box;
+
+export const SmallPhotoBox = styled(Box)(() => ({
+  margin: '5px 0',
 })) as typeof Box;
 
 export const AboutLargePhoto = styled(Box)(() => ({
-  width: '380px',
+  maxWidth: '380px',
   height: '600px',
   marginTop: '30px',
+  [theme.breakpoints.down('lg')]: {
+    marginTop: '50px',
+  },
 })) as typeof Box;
 
 //NEW
+
+export const NewMainBox = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  padding: '0px 10px',
+})) as typeof Box;
 
 export const NewContentBox = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   width: '1200px',
-  margin: 'auto',
-  marginTop: '100px',
 })) as typeof Box;
 
 export const CategoryPositionBox = styled(Box)(() => ({
   display: 'flex',
-  // justifyContent: 'space-between',
+  justifyContent: 'space-around',
   alignItems: 'center',
-  width: 'inherit',
-  marginTop: '60px',
+  width: '100%',
+  marginTop: '30px',
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
 })) as typeof Box;
 
 export const WomanNewBox = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'column',
-  marginRight: '10%',
+  [theme.breakpoints.down('md')]: {
+    width: '45%',
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '60%',
+  },
 })) as typeof Box;
 
 export const ManNewBox = styled(Box)(() => ({
@@ -118,4 +169,17 @@ export const ManNewBox = styled(Box)(() => ({
   alignItems: 'center',
   flexDirection: 'column',
   marginLeft: '5%',
+  [theme.breakpoints.down('md')]: {
+    width: '45%',
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '60%',
+    margin: '30px 0',
+  },
+})) as typeof Box;
+
+export const ImageOpacity = styled(Box)(() => ({
+  ':hover': {
+    opacity: 0.7,
+  },
 })) as typeof Box;

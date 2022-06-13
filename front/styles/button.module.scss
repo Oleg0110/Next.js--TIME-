@@ -1,10 +1,25 @@
-@import './colors.module.scss';
-
-.button1 {
-  color: $main-color;
-  padding: 5px 100px;
+.arrow {
+  background-image: url(../assets/icon/arrowBrown.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 40px;
+  height: 30px;
+  position: relative;
+  display: block;
 }
 
-.icon {
-  color: $main-color;
+.arrow:hover {
+  background-image: url(../assets/icon/arrowWhite.svg);
+}
+
+.arrow:before {
+  content: '';
+  position: absolute;
+  display: block;
+  top: -10px;
+  left: -156px;
+  right: -83px;
+  bottom: -10px;
+  border-radius: 20px;
 }

@@ -19,5 +19,11 @@
   "contacts": "Contacts",
   "information": "Information",
   "shipping-payment": "Shipping and Payment",
-  "personal-office": "Personal office"
+  "personal-office": "Personal office",
+  "profile": "Profile",
+  "logout": "Logout",
+  "login": "Log in",
+  "loginToUpper": "LOG IN",
+  "registration": "Registration",
+  "entry": "Entry"
 }

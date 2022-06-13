@@ -11,6 +11,12 @@ export const AboutUsContainer = styled(Box)(() => ({
   height: '100%',
   margin: 0,
   padding: '50px 10px 0px 10px',
+  [theme.breakpoints.down('md')]: {
+    paddingTop: '30px',
+  },
+  [theme.breakpoints.down('sm')]: {
+    paddingTop: '0px',
+  },
 })) as typeof Box;
 
 export const AboutUsContentBox = styled(Box)(() => ({
