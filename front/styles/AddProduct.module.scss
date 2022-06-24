@@ -1,0 +1,75 @@
+@import './colors.module.scss';
+
+.inputText {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 25px;
+  width: 100%;
+  height: 30px;
+  padding: 5px;
+  margin: 10px 0 15px;
+  border: 1px solid #685248;
+}
+
+.errorStyle {
+  width: 45%;
+  text-align: center;
+  color: #e64848;
+  font-size: 18px;
+  border: 1px solid;
+}
+
+.numberInput {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 20px;
+  width: 100%;
+  height: 30px;
+  padding: 5px;
+  margin: 10px 0 15px;
+  border: 1px solid #685248;
+}
+
+.radioInput {
+  left: -999em;
+  position: absolute;
+}
+
+.textArea {
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 25px;
+  width: 100%;
+  height: 70px;
+  padding: 5px;
+  margin: 10px 0 15px;
+  resize: none;
+  border: 1px solid #685248;
+}
+
+.booleanCheckBox {
+  width: 73px;
+  height: 24px;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 15px;
+  background-color: $main-background-color;
+  border-radius: 20px;
+  margin: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $main-color;
+  }
+}
+
+input[type='radio']:checked + .booleanCheckBox {
+  background-color: $main-color;
+}
+
+.booleanChecked {
+  background-color: $main-color;
+}

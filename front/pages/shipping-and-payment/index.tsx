@@ -188,8 +188,12 @@ const ShippingAndPayment = () => {
           </Typography>
           <Typography
             variant="roboto36400"
-            color={Colors.secondaryWhite}
             marginBottom="20px"
+            sx={{
+              color: Colors.secondaryWhite,
+              marginBottom: '20px',
+              textAlign: 'center',
+            }}
           >
             {t('our-manager')}
           </Typography>

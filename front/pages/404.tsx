@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Link from 'next/link';
 import React from 'react';
-import CustomButton from '../components/Button';
+import CustomButton from '../components/CustomButton';
 import MainLayout from '../layouts/MainLayout';
 import { ErrorContainer, ErrorContent, WarningBox } from '../styles/404/404';
 import { Colors } from '../styles/theme';

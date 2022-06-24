@@ -1,10 +1,14 @@
-const Shoe = require('../models/Shoe')
+const ProductDto = require('../dtos/product-dtos')
+const Product = require('../models/Product')
 
 class HomeService {
-  async getShoeSale() {
-    const saleShoe = await Shoe.aggregate([{ $match: { shoeSale: true } }, { $sample: { size: 7 } }])
+  async getProductSale() {
+    const saleProduct = await Product.aggregate([{ $match: { productSale: true } }, { $sample: { size: 6 } }])
+    let dtoProducts = []
 
-    return saleShoe
+    saleProduct.map((data) => dtoProducts.push({ ...new ProductDto(data) }))
+
+    return dtoProducts
   }
 }
 

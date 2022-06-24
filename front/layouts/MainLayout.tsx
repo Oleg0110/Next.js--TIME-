@@ -7,6 +7,7 @@ import {
   MainNavBarContainer,
   MainFooterContainer,
 } from '../styles/global';
+import { NextPage } from 'next';
 
 interface MainLayoutProps {
   title?: string;
@@ -15,7 +16,7 @@ interface MainLayoutProps {
   children?: any;
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({
+const MainLayout: NextPage<MainLayoutProps> = ({
   children,
   title = 'shoe store',
   keywords = 'shoe, shop, buy, style, fashion. clothing',

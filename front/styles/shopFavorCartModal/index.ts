@@ -7,7 +7,7 @@ export const MainBox = styled(Box)(() => ({
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 550,
+  width: 500,
   maxHeight: '370px',
   backgroundColor: Colors.secondaryWhite,
   border: `6px solid ${Colors.primary}`,

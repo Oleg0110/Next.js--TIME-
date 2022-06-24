@@ -5,6 +5,7 @@ import {
   TooltipTitleTypes,
 } from '../../utils/types/types';
 import { useTranslation } from 'next-i18next';
+import { NextPage } from 'next';
 
 interface TooltipIconProps {
   onClick?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
@@ -14,7 +15,7 @@ interface TooltipIconProps {
   placement?: TooltipPositionTypes;
 }
 
-const TooltipIcon: React.FC<TooltipIconProps> = ({
+const TooltipIcon: NextPage<TooltipIconProps> = ({
   children,
   title,
   placement = 'top',

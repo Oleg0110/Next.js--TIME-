@@ -10,17 +10,22 @@ import {
 import styles from '../../styles/icons.module.scss';
 import { Colors } from '../../styles/theme';
 import { useTranslation } from 'next-i18next';
+import Image from 'next/image';
+import SaleProductTest from '../../assets/saleProductTest.png';
 
 const ProductInCart = () => {
   const { t } = useTranslation('shopFavorCart');
   return (
     <MainContainer>
-      <PhotoContainer></PhotoContainer>
+      <PhotoContainer>
+        <Image src={SaleProductTest} width="160px" height="160px" />
+      </PhotoContainer>
       <InfoContainer>
         <Typography
           variant="roboto20400"
           marginBottom="8px"
           color={Colors.black}
+          sx={{ width: '260px', textAlign: 'end', color: Colors.black }}
         >
           Loafers are black in a cell
         </Typography>

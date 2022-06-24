@@ -12,7 +12,7 @@ const accordions = [
   { id: '1', title: 'sizing', text: { lorem: 'accordion-lorem' } },
   {
     id: '2',
-    title: 'about-shoes',
+    title: 'about-products',
     text: { lorem: 'accordion-lorem' },
   },
   { id: '3', title: 'notice', text: { lorem: 'accordion-lorem' } },

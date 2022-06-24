@@ -1,57 +1,56 @@
-const Shoe = require('../models/Shoe')
+const Product = require('../models/Product')
 const User = require('../models/User')
 
 class AdminService {
   async getProducts(text) {
     const regex = new RegExp(text, 'i')
 
-    const shoes = await Shoe.find({
-      $or: [
-        { productName: { $regex: regex } },
-        { shoeStyleMaterial: { $regex: regex } },
-        { shoeStyleName: { $regex: regex } },
-        { shoeColor: { $regex: regex } },
-      ],
+    const product = await Product.find({
+      $or: [{ productNumber: { $regex: regex } }],
     }).limit(10)
 
-    return shoes
+    return product
   }
 
   async addProduct(
     productName,
-    shoeFor,
-    shoeNew,
-    shoePrice,
-    shoeDiscountPrice,
-    shoeSale,
-    shoeSize,
-    shoeColor,
-    shoeDescription,
-    shoeStyleName,
-    shoeStyleMaterial,
+    productFor,
+    productNew,
+    productPrice,
+    productDiscountPrice,
+    productSale,
+    productSize,
+    productColor,
+    productDescription,
+    productStyleName,
+    productStyleMaterial,
     picture
   ) {
-    const user = new Shoe({
+    let productNumber = Number(`1${Math.floor(Math.random() * (999999999 - 100000000 + 1) + 1000000000)}`)
+
+    const product = new Product({
+      productNumber,
       productName,
-      shoeFor,
-      shoeNew,
-      shoePrice,
-      shoeDiscountPrice,
-      shoeSale,
-      shoeSize,
-      shoeColor,
-      shoeDescription,
-      shoeStyleName,
-      shoeStyleMaterial,
+      productFor,
+      productNew,
+      productPrice,
+      productDiscountPrice,
+      productSale,
+      productSize,
+      productColor,
+      productDescription,
+      productStyleName,
+      productStyleMaterial,
     })
 
-    return await user.save()
+    await product.save()
+    return
   }
 
-  async changeProduct(productId, shoePrice, shoeDiscountPrice, shoeSale, shoeNew, shoeSize) {
-    const changedProduct = await Shoe.findOneAndUpdate(
+  async changeProduct(productId, productPrice, productDiscountPrice, productSale, productNew, productSize) {
+    const changedProduct = await Product.findOneAndUpdate(
       { _id: productId },
-      { $set: { shoePrice, shoeDiscountPrice, shoeSale, shoeNew, shoeSize } },
+      { $set: { productPrice, productDiscountPrice, productSale, productNew, productSize } },
       { new: true }
     )
 
@@ -59,12 +58,12 @@ class AdminService {
   }
 
   async deleteProduct(productId) {
-    const deletedProduct = await Shoe.findOneAndDelete({ _id: productId })
+    const deletedProduct = await Product.findOneAndDelete({ _id: productId })
 
     return deletedProduct
   }
 
-  async getUsers(text) {
+  async getCustomers(text) {
     const regex = new RegExp(text, 'i')
 
     const users = await User.find({

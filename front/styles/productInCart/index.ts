@@ -3,14 +3,14 @@ import { Box, Button } from '@mui/material';
 import theme, { Colors } from '../theme';
 
 export const MainContainer = styled(Box)(() => ({
-  maxWidth: '600px',
+  maxWidth: '450px',
   minHeight: '150px',
   borderBottom: `1px solid ${Colors.primary}`,
   margin: 'auto',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-around',
-  marginRight: '-5px',
+  marginRight: '5px',
   [theme.breakpoints.down('md')]: {
     marginRight: '0px',
   },
@@ -21,10 +21,7 @@ export const MainContainer = styled(Box)(() => ({
 })) as typeof Box;
 
 export const PhotoContainer = styled(Box)(() => ({
-  width: '200px',
-  height: '130px',
   padding: '5px 10px 15px 10px',
-  border: `1px solid ${Colors.primary}`,
   [theme.breakpoints.down('sm')]: {
     marginBottom: '10px',
   },

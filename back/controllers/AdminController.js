@@ -23,30 +23,29 @@ class AdminController {
     try {
       const {
         productName,
-        shoeFor,
-        shoeNew,
-        shoePrice,
-        shoeDiscountPrice,
-        shoeSale,
-        shoeSize,
-        shoeColor,
-        shoeDescription,
-        shoeStyleName,
-        shoeStyleMaterial,
+        productFor,
+        productNew,
+        productPrice,
+        productDiscountPrice,
+        productSale,
+        productSize,
+        productColor,
+        productDescription,
+        productStyleName,
+        productStyleMaterial,
       } = req.body
-
       if (
         !productName &&
-        !shoeFor &&
-        !shoeNew &&
-        !shoePrice &&
-        !shoeDiscountPrice &&
-        !shoeSale &&
-        !shoeSize &&
-        !shoeColor &&
-        !shoeDescription &&
-        !shoeStyleName &&
-        !shoeStyleMaterial
+        !productFor &&
+        !productNew &&
+        !productPrice &&
+        !productDiscountPrice &&
+        !productSale &&
+        !productSize &&
+        !productColor &&
+        !productDescription &&
+        !productStyleName &&
+        !productStyleMaterial
       ) {
         return next(ApiErrors.BadRequest('invalid data'))
       }
@@ -57,22 +56,22 @@ class AdminController {
         return next(ApiErrors.BadRequest('Data entry error', errors.array()))
       }
 
-      const shoe = await AdminService.addProduct(
+      const product = await AdminService.addProduct(
         productName,
-        shoeFor,
-        shoeNew,
-        shoePrice,
-        shoeDiscountPrice,
-        shoeSale,
-        shoeSize,
-        shoeColor,
-        shoeDescription,
-        shoeStyleName,
-        shoeStyleMaterial,
-        req.files.shoeMainPictures
+        productFor,
+        productNew,
+        productPrice,
+        productDiscountPrice,
+        productSale,
+        productSize,
+        productColor,
+        productDescription,
+        productStyleName,
+        productStyleMaterial
+        // req.files.productMainPictures
       )
 
-      res.status(200).json({ message: 'Successful added', shoe })
+      res.status(200).json({ message: 'Successful added', product })
     } catch (e) {
       next(e)
     }
@@ -80,19 +79,19 @@ class AdminController {
 
   async changeProduct(req, res, next) {
     try {
-      const { productId, shoePrice, shoeDiscountPrice, shoeSale, shoeNew, shoeSize } = req.body
+      const { productId, productPrice, productDiscountPrice, productSale, productNew, productSize } = req.body
 
-      if (!productId && !shoePrice && !shoeDiscountPrice && !shoeSale && !shoeNew && !shoeSize) {
+      if (!productId && !productPrice && !productDiscountPrice && !productSale && !productNew && !productSize) {
         return next(ApiErrors.BadRequest('invalid data'))
       }
 
       const changedProduct = await AdminService.changeProduct(
         productId,
-        shoePrice,
-        shoeDiscountPrice,
-        shoeSale,
-        shoeNew,
-        shoeSize
+        productPrice,
+        productDiscountPrice,
+        productSale,
+        productNew,
+        productSize
       )
 
       res.status(200).json(changedProduct)
@@ -118,7 +117,7 @@ class AdminController {
     }
   }
 
-  async getUsers(req, res, next) {
+  async getCustomers(req, res, next) {
     try {
       const { text } = req.params
 
@@ -126,7 +125,7 @@ class AdminController {
         return next(ApiErrors.BadRequest('invalid data'))
       }
 
-      const users = await AdminService.getUsers(text)
+      const users = await AdminService.getCustomers(text)
 
       res.status(200).json(users)
     } catch (e) {

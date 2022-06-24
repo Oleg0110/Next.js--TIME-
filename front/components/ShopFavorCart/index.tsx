@@ -4,18 +4,19 @@ import Menu from '@mui/material/Menu';
 import theme, { Colors } from '../../styles/theme';
 import TooltipIcon from '../TooltipIcon/TooltipIcon';
 import styles from '../../styles/icons.module.scss';
-import { Typography, useMediaQuery } from '@mui/material';
+import { Slide, Typography, useMediaQuery } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import ProductInCart from '../ProductInCart';
 import { ButtonBox, ResultBox, TotalBox } from '../../styles/shopFavorCart';
-import CustomButton from '../Button';
+import CustomButton from '../CustomButton';
 import ShopFavorCartModal from '../ShopFavorCartModal';
+import { NextPage } from 'next';
 
 interface IShopFavorCartProps {
   who: 'cart' | 'favorite';
 }
 
-const ShopFavorCart: React.FC<IShopFavorCartProps> = ({ who }) => {
+const ShopFavorCart: NextPage<IShopFavorCartProps> = ({ who }) => {
   const media = useMediaQuery(theme.breakpoints.down('md'));
   const { t } = useTranslation('shopFavorCart');
 

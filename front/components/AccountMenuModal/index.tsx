@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
-import CustomButton from '../Button';
+import CustomButton from '../CustomButton';
 import { Colors } from '../../styles/theme';
 import {
   ButtonAccountModalBox,
@@ -9,13 +9,14 @@ import {
   InputsBox,
   MainAccountModalBox,
 } from '../../styles/accountMenuModal';
+import { NextPage } from 'next';
 
 interface IAccountMenuModalProps {
   isModalOpened: boolean;
   handleClose: () => void;
 }
 
-const AccountMenuModal: React.FC<IAccountMenuModalProps> = ({
+const AccountMenuModal: NextPage<IAccountMenuModalProps> = ({
   isModalOpened,
   handleClose,
 }) => {

@@ -5,9 +5,9 @@ import theme, { Colors } from './theme/index';
 export const MainContentBox = styled(Container)(() => ({
   width: theme.breakpoints.down('lg'),
   backgroundColor: Colors.secondaryWhite,
-  paddingTop: '100px',
+  paddingTop: '75px',
   [theme.breakpoints.down('md')]: {
-    paddingTop: '70px',
+    paddingTop: '60px',
   },
 })) as typeof Container;
 
@@ -17,12 +17,13 @@ export const MainNavBarContainer = styled(Box)(() => ({
   alignItems: 'center',
   margin: 0,
   width: '100%',
-  height: '100px',
+  height: '75px',
   backgroundColor: Colors.primary,
+  borderBottom: `1px solid ${Colors.secondaryWhite}`,
   position: 'fixed',
-  zIndex: '1',
+  zIndex: '10',
   [theme.breakpoints.down('md')]: {
-    height: '70px',
+    height: '60px',
   },
 })) as typeof Box;
 
@@ -34,8 +35,8 @@ export const MainFooterContainer = styled(Box)(() => ({
   width: '100%',
   maxHeight: '1000px',
   backgroundColor: Colors.primary,
-  paddingBottom: '20px',
+  paddingBottom: '10px',
   [theme.breakpoints.down('md')]: {
-    paddingBottom: '60px',
+    paddingBottom: '40px',
   },
 })) as typeof Box;

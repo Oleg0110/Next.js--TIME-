@@ -20,4 +20,9 @@ export type TooltipTitleTypes =
   | 'phone-numbers'
   | 'translation'
   | 'close'
-  | 'new';
+  | 'admin-page'
+  | 'new'
+  | 'add-to-favorites'
+  | 'remove-from-favorites'
+  | 'add-to-shopping-cart'
+  | 'remove-from-shopping-cart';

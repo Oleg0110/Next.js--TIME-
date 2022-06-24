@@ -16,9 +16,10 @@ import {
   ButtonAccountMenuStyle,
   InputsAccountMenuBox,
 } from '../../styles/accountMenu';
-import CustomButton from '../Button';
+import CustomButton from '../CustomButton';
+import { NextPage } from 'next';
 
-const AccountMenu: React.FC = ({}) => {
+const AccountMenu: NextPage = ({}) => {
   const media = useMediaQuery(theme.breakpoints.down('md'));
   const { t } = useTranslation('common');
 

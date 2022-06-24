@@ -1,6 +1,5 @@
 import type {} from '@mui/lab/themeAugmentation';
 import { createTheme } from '@mui/material/styles';
-import Photo from '../../assets/icon/close.svg';
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
@@ -96,7 +95,7 @@ const theme = createTheme({
           style: {
             overflow: 'visible',
             mt: 500,
-            top: 36,
+            top: 0,
             left: 1,
             filter: `drop-shadow(0px 2px 8px ${Colors.primary})`,
             '& .MuiAvatar-root': {
@@ -105,11 +104,9 @@ const theme = createTheme({
               ml: -0.5,
               mr: 1,
             },
-            '& MuiPaper-elevation': {
-              transformOrigin: '800px 50px;',
-            },
             '& .scss-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper ':
               {
+                marginTop: 24,
                 minWidth: '200px',
                 minHeight: '100px',
                 borderRadius: '0px',
@@ -134,7 +131,7 @@ const theme = createTheme({
             overflow: 'visible',
             filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
             mt: 500,
-            top: 36,
+            top: 0,
             left: 1,
             '& .MuiAvatar-root': {
               width: 32,
@@ -144,8 +141,9 @@ const theme = createTheme({
             },
             '& .scss-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper ':
               {
+                marginTop: 24,
                 border: '1px solid',
-                minWidth: '620px',
+                minWidth: '490px',
                 minHeight: '300px',
                 borderRadius: '0px',
                 boxShadow: 'none',
