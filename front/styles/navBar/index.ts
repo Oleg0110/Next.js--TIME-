@@ -10,8 +10,6 @@ export const MainNavBarBox = styled(Box)(() => ({
   alignItems: 'center',
   padding: '10px',
   width: '1920px',
-  height: '100%',
-  marginBottom: '10px',
 })) as typeof Box;
 
 export const BurgerBox = styled(Box)(() => ({
@@ -29,8 +27,10 @@ export const TitleBox = styled(Box)(() => ({
   justifyContent: 'space-between',
   alignItems: 'center',
   width: '100%',
+  height: '50px',
   marginBottom: '-10px',
   [theme.breakpoints.down('md')]: {
+    marginBottom: '0px',
     height: '100%',
   },
 })) as typeof Box;
@@ -39,7 +39,7 @@ export const CommunicationBox = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'start',
   alignItems: 'center',
-  width: '200px',
+  minWidth: '200px',
   [theme.breakpoints.down('md')]: {
     display: 'none',
   },
@@ -51,22 +51,31 @@ export const CommunicationMenuBox = styled(Box)(() => ({
   alignItems: 'center',
 })) as typeof Box;
 
-export const LinkBox = styled(Box)(() => ({
+export const LinkNavBarContainer = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  maxWidth: '820px',
+  width: '102%',
+  marginTop: '5px',
+  borderTop: `1px solid ${Colors.secondaryWhite}`,
   [theme.breakpoints.down('md')]: {
     display: 'none',
   },
 })) as typeof Box;
 
+export const LinkBox = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  maxWidth: '820px',
+})) as typeof Box;
+
 export const IconsBox = styled(Box)(() => ({
   display: 'flex',
-  width: '200px',
+  minWidth: '230px',
   justifyContent: 'end',
   [theme.breakpoints.down('md')]: {
-    width: '50px',
+    minWidth: '50px',
   },
 })) as typeof Box;
 
@@ -86,6 +95,7 @@ export const IconsContainerMobile = styled(Box)(() => ({
   bottom: 0,
   left: 0,
   width: '100%',
+  height: '35px',
   zIndex: 99,
   borderTop: `1px solid ${Colors.secondaryWhite}`,
 })) as typeof Box;

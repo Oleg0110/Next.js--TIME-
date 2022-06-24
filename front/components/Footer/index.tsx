@@ -1,4 +1,8 @@
 import Link from 'next/link';
+import Information from './Information';
+import Catalog from './Catalog';
+import IconsField from './IconsField';
+import Contacts from './Contacts';
 import {
   InformBox,
   MainFooterBox,
@@ -6,12 +10,7 @@ import {
   NameBox,
 } from '../../styles/footer/index';
 import { Typography } from '@mui/material';
-import Information from './Information';
-import Catalog from './Catalog';
-import IconsField from './IconsField';
-import Contacts from './Contacts';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import styles from '../../styles/Footer.module.scss';
 
 const Footer = () => {
   return (

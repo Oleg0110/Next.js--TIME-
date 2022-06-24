@@ -1,0 +1,116 @@
+@import './colors.module.scss';
+
+.radioInput {
+  left: -999em;
+  position: absolute;
+}
+
+.colorRadioBox {
+  width: 50px;
+  height: 50px;
+  margin: 1px;
+  background-color: $main-background-color;
+  border: 1px solid $main-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $discount-price-color;
+  }
+}
+
+.colorProperty {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.color-black {
+  background-color: $black-color;
+}
+
+.color-gray {
+  background-color: $light-grey-color;
+}
+
+.color-white {
+  border: 1px solid $black-color;
+  background-color: $main-background-color;
+}
+
+.color-brown {
+  border: 1px solid $main-background-color;
+  background-color: $main-color;
+}
+
+.color-blue {
+  background-color: $blue-product-color;
+}
+
+.color-pink {
+  background-color: $pink-product-color;
+}
+
+.color-green {
+  background-color: $green-product-color;
+}
+
+.sizeCheckbox {
+  width: 50px;
+  height: 50px;
+  margin: 1px;
+  background-color: $main-background-color;
+  border: 1px solid $main-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $discount-price-color;
+  }
+}
+
+input[type='checkbox']:checked + .sizeCheckbox {
+  background-color: $main-color;
+}
+
+.styleMaterialButton {
+  width: 170px;
+  height: 25px;
+  margin: 1px;
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-size: 17px;
+  background-color: $main-background-color;
+  border: 1px solid $main-color;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  &:hover {
+    // color: $main-background-color;
+    // background-color: $main-color;
+    // border: 1px solid $black-color;
+    background-color: $discount-price-color;
+  }
+}
+
+input[type='radio']:checked + .colorRadioBox {
+  background-color: $main-color;
+}
+
+input[type='radio']:checked + .styleMaterialButton {
+  background-color: $main-color;
+}
+
+@media screen and (max-width: 600px) {
+  .styleMaterialButton {
+    width: 140px;
+    height: 20px;
+    font-size: 15px;
+  }
+}

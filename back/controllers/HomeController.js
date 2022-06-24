@@ -1,11 +1,11 @@
 const HomeService = require('../services/HomeService')
 
 class HomeController {
-  async getShoeSale(req, res) {
+  async getProductSale(req, res) {
     try {
-      const shoeSale = await HomeService.getShoeSale()
+      const productSale = await HomeService.getProductSale()
 
-      res.status(200).json(shoeSale)
+      res.status(200).json(productSale)
     } catch (e) {
       res.status(500).json(e.message)
     }

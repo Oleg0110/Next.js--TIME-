@@ -1,9 +1,11 @@
 import React, { ReactNode } from 'react';
 import { Button } from '@mui/material';
 import styles from '../../styles/button.module.scss';
+import { NextPage } from 'next';
 
 type SizeType = 'XL' | 'LG' | 'MD' | 'SM';
 type VariantType = 'primary' | 'secondary';
+type ButtonType = 'button' | 'submit' | 'reset';
 
 interface ICustomButtonProps {
   size: SizeType;
@@ -13,9 +15,10 @@ interface ICustomButtonProps {
   variant?: VariantType;
   onClick?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onSubmit?: () => void;
+  type?: ButtonType;
 }
 
-const CustomButton: React.FC<ICustomButtonProps> = ({
+const CustomButton: NextPage<ICustomButtonProps> = ({
   size = 'XL',
   style,
   isIcon = false,
@@ -23,15 +26,17 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
   variant = 'primary',
   onClick,
   onSubmit,
+  type,
 }) => {
   return (
     (!isIcon && (
       <Button
         color={variant}
         size={`${size}`}
-        style={style}
+        sx={style}
         onClick={onClick}
         onSubmit={onSubmit}
+        type={type}
       >
         {children}
       </Button>
@@ -39,9 +44,10 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
       <Button
         color={variant}
         size={size}
-        style={style}
+        sx={style}
         onClick={onClick}
         onSubmit={onSubmit}
+        type={type}
       >
         {children}
         <div className={styles.arrow} />

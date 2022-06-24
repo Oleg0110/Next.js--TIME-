@@ -1,4 +1,3 @@
-
 .likeHeader {
   background-image: url(../assets/icon/likeHeader.svg);
   background-repeat: no-repeat;
@@ -15,6 +14,24 @@
   background-size: 20px;
   width: 30px;
   height: 30px;
+}
+
+.likeProduct {
+  background-image: url(../assets/icon/likeProduct.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px;
+  width: 35px;
+  height: 35px;
+}
+
+.likeProductFilled {
+  background-image: url(../assets/icon/likeProductFilled.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px;
+  width: 35px;
+  height: 35px;
 }
 
 .person {
@@ -53,8 +70,35 @@
   height: 30px;
 }
 
+.bagProduct {
+  background-image: url(../assets/icon/bagProduct.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px;
+  width: 35px;
+  height: 35px;
+}
+
+.bagProductFilled {
+  background-image: url(../assets/icon/bagProductFilled.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px;
+  width: 35px;
+  height: 35px;
+}
+
 .search {
   background-image: url(../assets/icon/search.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.settings {
+  background-image: url(../assets/icon/settings.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 20px;
@@ -106,3 +150,81 @@
   width: 30px;
   height: 30px;
 }
+
+.carouselArrowPrev {
+  background-image: url(../assets/icon/carouselArrow.svg);
+  background-repeat: no-repeat;
+  background-size: 85px !important;
+  background-position: center;
+  width: 90px !important;
+  height: 125px !important;
+}
+
+.carouselArrowNext {
+  background-image: url(../assets/icon/carouselArrow.svg);
+  background-repeat: no-repeat;
+  background-size: 85px !important;
+  transform: rotate(180deg);
+  background-position: center;
+  width: 90px !important;
+  height: 125px !important;
+}
+
+//Footer
+.mailIcon {
+  background-image: url(../assets/icon/mail.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  width: 30px;
+  height: 30px;
+}
+.visa {
+  background-image: url(../assets/icon/visa.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 75px;
+  width: 80px;
+  height: 80px;
+}
+.applePay {
+  background-image: url(../assets/icon/applePay.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 75px;
+  width: 80px;
+  height: 80px;
+}
+.facebook {
+  background-image: url(../assets/icon/facebook.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  width: 30px;
+  height: 30px;
+}
+.google {
+  background-image: url(../assets/icon/google.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  width: 30px;
+  height: 30px;
+}
+.instagram {
+  background-image: url(../assets/icon/instagram.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  width: 30px;
+  height: 30px;
+}
+.twitter {
+  background-image: url(../assets/icon/twitter.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  width: 30px;
+  height: 30px;
+}
+

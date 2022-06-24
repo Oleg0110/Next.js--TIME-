@@ -3,9 +3,10 @@ import { Modal, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import ProductInCart from '../ProductInCart';
 import { ButtonBox, ResultBox, TotalBox } from '../../styles/shopFavorCart';
-import CustomButton from '../Button';
+import CustomButton from '../CustomButton';
 import { Colors } from '../../styles/theme';
 import { MainBox } from '../../styles/shopFavorCartModal';
+import { NextPage } from 'next';
 
 interface IShopFavorCartModalProps {
   isModalOpened: boolean;
@@ -13,7 +14,7 @@ interface IShopFavorCartModalProps {
   who: 'cart' | 'favorite';
 }
 
-const ShopFavorCartModal: React.FC<IShopFavorCartModalProps> = ({
+const ShopFavorCartModal: NextPage<IShopFavorCartModalProps> = ({
   isModalOpened,
   handleClose,
   who,

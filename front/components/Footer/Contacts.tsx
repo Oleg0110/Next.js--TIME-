@@ -1,8 +1,8 @@
 import React from 'react';
 import { ContactBox } from '../../styles/footer/index';
-import styles from '../../styles/Footer.module.scss';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
+import styles from '../../styles/icons.module.scss';
 
 const Contacts = () => {
   const { t } = useTranslation('common');

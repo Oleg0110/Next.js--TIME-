@@ -3,7 +3,7 @@ const express = require('express')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
-const shoe = require('./routes/shoe')
+const product = require('./routes/product')
 const user = require('./routes/user')
 const home = require('./routes/home')
 const admin = require('./routes/admin')
@@ -26,9 +26,9 @@ app.use(
 
 app.use('/', home)
 app.use('/auth', user)
-app.use('/shoe', shoe)
+app.use('/product', product)
 app.use(
-  '/settings',
+  '/administration-page',
   // roleMiddleware(['admin']), authMiddleware,
   admin
 )

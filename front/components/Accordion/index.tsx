@@ -7,10 +7,11 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import { useTranslation } from 'next-i18next';
 import { Colors } from '../../styles/theme';
 import { SummaryAccordion } from '../../styles/accordion';
+import { NextPage } from 'next';
 
 type TitleAccordionType =
   | 'sizing'
-  | 'about-shoes'
+  | 'about-products'
   | 'notice'
   | 'retailer'
   | 'shipping'
@@ -43,7 +44,7 @@ interface ICustomAccordionPros {
   accordionVariant: VariantAccordionType;
 }
 
-const CustomAccordion: React.FC<ICustomAccordionPros> = ({
+const CustomAccordion: NextPage<ICustomAccordionPros> = ({
   title,
   textArr,
   accordionVariant = 'elevation',
