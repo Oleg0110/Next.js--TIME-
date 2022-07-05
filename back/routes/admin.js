@@ -4,11 +4,11 @@ const { body } = require('express-validator')
 
 const router = new Router()
 
-router.get('/:text', body('text').isString(), AdminController.getProducts)
+router.get('/:searchValue', body('searchValue').isString(), AdminController.getProducts)
 router.post(
   '/products-management/add-product',
   // body('productName', "Product name can't be empty").notEmpty().isString().isLength({ max: 30 }),
-  // body('productFor', "Product For can't be empty, use 'mens' or 'womens'").notEmpty().isString().isLength({ max: 6, min: 4 }),
+  // body('productFor', "Product For can't be empty, use 'men' or 'women'").notEmpty().isString().isLength({ max: 6, min: 4 }),
   // body('productPrice', "Product Price can't be empty and this is a number").notEmpty().isNumeric(),
   // body('productDiscountPrice', "Product Discount Price can't be empty and this is a number").notEmpty().isNumeric(),
   // body('productSale', 'Product Sale is boolean').notEmpty().isBoolean(),
@@ -33,8 +33,8 @@ router.patch(
   body('productDiscountPrice', "Product Discount Price can't be empty and this is a number").notEmpty().isNumeric(),
   AdminController.changeProduct
 )
-router.post('/products-management/delete-product', AdminController.deleteProduct)
-router.get('/customers-management/:text', body('text').isString(), AdminController.getCustomers)
+router.delete('/products-management/delete-product/:productId/:searchValue', AdminController.deleteProduct)
+router.get('/customers-management/:searchValue', body('searchValue').isString(), AdminController.getCustomers)
 // router.get('/orders-management', body('text').isString(), AdminController.getCustomers)
 
 module.exports = router

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import MainLayout from '../../layouts/MainLayout';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -10,11 +9,14 @@ import {
   MainAdminBox,
 } from '../../styles/administration';
 import theme, { Colors } from '../../styles/theme';
+import MainLayout from '../../layouts/MainLayout';
 import AddProduct from './AddProduct';
 import ChangeDelete from './ChangeDelete';
+import CustomManagement from './CustomManagement';
 
-const AdministrationPage = ({ children }) => {
+const AdministrationPage = () => {
   const { t } = useTranslation('admin');
+
   const [isActive, setIsActive] = useState<
     'add' | 'change' | 'customer' | 'orders' | 'empty'
   >('empty');
@@ -104,6 +106,7 @@ const AdministrationPage = ({ children }) => {
           </ButtonAdminBox>
           {isActive === 'add' && <AddProduct />}
           {isActive === 'change' && <ChangeDelete />}
+          {isActive === 'customer' && <CustomManagement />}
         </AdminContent>
       </MainAdminBox>
     </MainLayout>
@@ -114,6 +117,6 @@ export default AdministrationPage;
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['admin', 'common'])),
+    ...(await serverSideTranslations(locale, ['admin', 'toast', 'common'])),
   },
 });

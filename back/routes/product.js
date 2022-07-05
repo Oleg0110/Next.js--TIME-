@@ -4,9 +4,10 @@ const Product = require('../models/Product')
 
 const router = new Router()
 
-router.get('/:page', ProductController.getProducts)
+router.get('/product/:productId', ProductController.getProduct)
+router.get('/:category', ProductController.getProducts)
 // router.get('/:page/:sort', ProductController.sortProducts);
-router.get('/:page/:filter', ProductController.filterProducts)
+router.get('/:category/:filter', ProductController.filterProducts)
 
 router.post('/', async (req, res) => {
   const {

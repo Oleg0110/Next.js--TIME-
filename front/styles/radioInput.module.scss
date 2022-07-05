@@ -5,7 +5,7 @@
   position: absolute;
 }
 
-.colorRadioBox {
+.colorBox {
   width: 50px;
   height: 50px;
   margin: 1px;
@@ -60,8 +60,8 @@
 .sizeCheckbox {
   width: 50px;
   height: 50px;
-  margin: 1px;
-  background-color: $main-background-color;
+  margin: 2px;
+  background-color: $white-color;
   border: 1px solid $main-color;
   display: flex;
   align-items: center;
@@ -72,8 +72,21 @@
     background-color: $discount-price-color;
   }
 }
+.sizeCheckboxDisable {
+  width: 50px;
+  height: 50px;
+  margin: 2px;
+  background-color: #e6e6e6;
+  border: 1px solid $light-grey-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 input[type='checkbox']:checked + .sizeCheckbox {
+  background-color: $main-color;
+}
+input[type='radio']:checked + .sizeCheckbox {
   background-color: $main-color;
 }
 
@@ -99,11 +112,18 @@ input[type='checkbox']:checked + .sizeCheckbox {
   }
 }
 
-input[type='radio']:checked + .colorRadioBox {
+input[type='checkbox']:checked + .colorBox {
+  background-color: $main-color;
+}
+input[type='radio']:checked + .colorBox {
   background-color: $main-color;
 }
 
 input[type='radio']:checked + .styleMaterialButton {
+  background-color: $main-color;
+}
+
+input[type='checkbox']:checked + .styleMaterialButton {
   background-color: $main-color;
 }
 

@@ -15,12 +15,13 @@ import ProductTest from '../../assets/productTest.png';
 import TooltipIcon from '../TooltipIcon/TooltipIcon';
 import Link from 'next/link';
 import styles from '../../styles/icons.module.scss';
+import { useRouter } from 'next/router';
 
 interface IProductOnPageProps {
   name: string;
-  price: string;
+  price: number;
   href: string;
-  salePrice?: string;
+  salePrice?: number;
 }
 
 const ProductOnPage: NextPage<IProductOnPageProps> = ({
@@ -32,6 +33,7 @@ const ProductOnPage: NextPage<IProductOnPageProps> = ({
   const [isLiked, setIsLiked] = useState(false);
   const [isAddToCart, setIsAddToCart] = useState(false);
 
+  const router = useRouter();
   return (
     <ProductOnPageBox>
       <ProductOnPagePhoto>
@@ -49,16 +51,17 @@ const ProductOnPage: NextPage<IProductOnPageProps> = ({
         </IconPosition>
       </ProductOnPagePhoto>
       <ProductOnPageInfo>
-        <Link href={href}>
+        <Link href={`${router.asPath}/${name}/${href}`}>
           <Typography
             variant="roboto20400"
             marginBottom="8px"
             color={Colors.black}
+            sx={{ cursor: 'pointer' }}
           >
             {name}
           </Typography>
         </Link>
-        {!salePrice ? (
+        {salePrice === 0 ? (
           <Typography variant="roboto20200" color={Colors.black}>
             {price} UAH
           </Typography>

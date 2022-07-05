@@ -2,22 +2,22 @@
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import React from 'react';
-import MainLayout from '../../layouts/MainLayout';
+import MainLayout from '../../../layouts/MainLayout';
 
-const Men = () => {
+const New = () => {
   const { t } = useTranslation('new');
 
   return (
     <MainLayout>
-      <div>{t('new')}Men</div>
+      <div>{t('new')}</div>
     </MainLayout>
   );
 };
 
-export default Men;
+export default New;
 
 export const getStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['men', 'common'])),
+    ...(await serverSideTranslations(locale, ['new', 'common'])),
   },
 });

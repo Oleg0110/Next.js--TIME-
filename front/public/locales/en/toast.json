@@ -1,0 +1,9 @@
+{
+  "product-modified": "The product has not been modified",
+  "product-not-change": "The product has not changed",
+  "product-was-change": "The product successful changed",
+  "failed-copy": "Failed to copy!",
+  "successful-copy": "Copied",
+  "product-was-deleted": "The product successful deleted",
+  "product-was-created": "The product successful created"
+}

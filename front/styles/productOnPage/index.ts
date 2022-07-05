@@ -3,7 +3,7 @@ import { Box, Button } from '@mui/material';
 import theme, { Colors } from '../theme';
 
 export const ProductOnPageBox = styled(Box)(() => ({
-  width: '450px',
+  width: '370px',
   minHeight: '150px',
   display: 'flex',
   flexDirection: 'column',
