@@ -15,6 +15,7 @@ import {
 } from '../../styles/home';
 import { Typography } from '@mui/material';
 import { Colors } from '../../styles/theme';
+import { BASIC_URL } from '../../utils/httpLinks';
 
 interface ISaleProps {
   saleCarouselProduct: IProduct[];
@@ -71,6 +72,7 @@ const Sale: NextPage<ISaleProps> = ({ saleCarouselProduct }) => {
             saleCarouselProduct.map((product) => (
               <SwiperSlide key={product.id}>
                 <SaleCarouselProduct
+                  src={`${BASIC_URL}/${product.productMainPictures}`}
                   name={product.productName}
                   price={product.productPrice}
                   href="/"

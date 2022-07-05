@@ -1,19 +1,34 @@
 const ProductService = require('../services/ProductService')
 
 class ProductController {
+  async getProduct(req, res) {
+    try {
+      const { productId } = req.params
+
+      if (!productId) res.status(400).json({ error: 'invalid data' })
+
+      const product = await ProductService.getProduct(productId)
+
+      res.status(200).json(product)
+    } catch (e) {
+      res.status(500).json(e.message)
+    }
+  }
+
   async getProducts(req, res) {
     try {
-      const { page } = req.params
+      const { category } = req.params
 
-      if (!page) res.status(400).json({ error: 'invalid data' })
+      if (!category) res.status(400).json({ error: 'invalid data' })
 
-      const products = await ProductService.getProducts(page)
+      const products = await ProductService.getProducts(category)
 
       res.status(200).json(products)
     } catch (e) {
       res.status(500).json(e.message)
     }
   }
+
   async sortProducts(req, res) {
     try {
       const { page, sort } = req.params
@@ -30,21 +45,13 @@ class ProductController {
 
   async filterProducts(req, res) {
     try {
-      // const filter = {
-      //   productColor: ['black', 'white', 'pink', 'gray'],
-      //   productStyleName: ['sandals', 'bootforts'],
-      //   productStyleMaterial: ['fiber', 'leather'],
-      //   productPrice: {
-      //     from: 2500,
-      //     to: 6000,
-      //   },
-      //   productSize: [40],
-      // };
-      const { page, filter } = req.params
+      const { category, filter } = req.query
 
-      if (!page && !filter) res.status(400).json({ error: 'invalid data' })
+      const filters = JSON.parse(filter)
 
-      const filteredProducts = await ProductService.filterProducts(page, filter)
+      if (!category && !filter) res.status(400).json({ error: 'invalid data' })
+
+      const filteredProducts = await ProductService.filterProducts(category, filters)
 
       res.status(200).json(filteredProducts)
     } catch (e) {

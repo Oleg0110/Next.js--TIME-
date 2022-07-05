@@ -1,13 +1,3 @@
-import { IProduct } from '../interface/productInterface';
-
-export interface ProductState {
-  products: IProduct[];
-  productsSale: IProduct[];
-  productSearch: IProduct[];
-  isLoading: boolean;
-  error: string;
-}
-
 export type ProductColor =
   | 'black'
   | 'white'
@@ -21,9 +11,9 @@ export type ProductStyle =
   | 'sneakers'
   | 'loafers'
   | 'boots'
+  | 'shoes'
   | 'bootforts'
   | 'sandals'
-  | 'footwear'
   | 'slippers';
 
 export type ProductMaterial =

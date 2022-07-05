@@ -82,8 +82,8 @@ export const AddMainFormBox = styled(Box)(() => ({
   alignItem: 'center',
   justifyContent: 'center',
   padding: '5px',
-  backgroundColor: Colors.lightGray,
-  border: `2px solid ${Colors.primary}`,
+  backgroundColor: Colors.secondaryWhite,
+  border: `6px solid ${Colors.primary}`,
   [theme.breakpoints.down('sm')]: {
     width: '350px',
   },
@@ -141,21 +141,25 @@ export const ButtonClickPosition = styled(Box)(() => ({
 
 export const ChangeDeleteBox = styled(Box)(() => ({
   display: 'flex',
-  // maxWidth: '1000px',
-  width: '1000px',
+  maxWidth: '1000px',
   alignItem: 'center',
   justifyContent: 'center',
   padding: '15px',
+  [theme.breakpoints.down('sm')]: {
+    padding: '0px',
+    marginBottom: '15px',
+  },
 })) as typeof Box;
 
 export const ChangeDeleteMainFormBox = styled(Box)(() => ({
   display: 'flex',
-  width: '400px',
+  width: '550px',
   alignItem: 'center',
   justifyContent: 'center',
   padding: '5px',
-  backgroundColor: Colors.lightGray,
+  backgroundColor: Colors.secondaryWhite,
   border: `2px solid ${Colors.primary}`,
+  flexDirection: 'column',
   [theme.breakpoints.down('sm')]: {
     width: '350px',
   },
@@ -165,8 +169,11 @@ export const ChangeDeleteFormBox = styled(Box)(() => ({
   display: 'flex',
   alignItem: 'center',
   justifyContent: 'center',
-  flexDirection: 'column',
   padding: '5px',
+  width: '60%',
+  [theme.breakpoints.down('sm')]: {
+    width: '85%',
+  },
 })) as typeof Box;
 
 export const ChangeDeleteStateBox = styled(Box)(() => ({
@@ -179,4 +186,33 @@ export const InfoChangeDeleteBox = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-betweens',
+})) as typeof Box;
+
+export const Davay = styled(Box)(() => ({
+  width: '100%',
+  maxHeight: '150px',
+  overflowY: 'scroll',
+  '&::-webkit-scrollbar': {
+    width: '15px',
+  },
+  '&::-webkit-scrollbar-track': {
+    background: Colors.secondaryWhite,
+    borderRadius: '10px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: Colors.darkGray,
+    border: `4px solid ${Colors.lightGray}`,
+    borderRadius: '10px',
+  },
+})) as typeof Box;
+
+export const FoundProductBox = styled(Box)(() => ({
+  width: '100%',
+  height: '100%',
+  padding: '5px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  borderTop: `1px solid ${Colors.primary}`,
 })) as typeof Box;

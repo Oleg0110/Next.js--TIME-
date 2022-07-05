@@ -1,15 +1,11 @@
 const Product = require('../models/Product')
-const User = require('../models/User')
+const AdminFunc = require('../utils/functions/AdminFunc')
+const uuid = require('uuid')
+const path = require('path')
 
 class AdminService {
-  async getProducts(text) {
-    const regex = new RegExp(text, 'i')
-
-    const product = await Product.find({
-      $or: [{ productNumber: { $regex: regex } }],
-    }).limit(10)
-
-    return product
+  async getProducts(searchValue) {
+    return await AdminFunc.regexFunc(searchValue, 'product')
   }
 
   async addProduct(
@@ -24,9 +20,10 @@ class AdminService {
     productDescription,
     productStyleName,
     productStyleMaterial,
-    picture
+    file
   ) {
     let productNumber = Number(`1${Math.floor(Math.random() * (999999999 - 100000000 + 1) + 1000000000)}`)
+    const fileName = uuid.v4() + '.jpg'
 
     const product = new Product({
       productNumber,
@@ -38,39 +35,66 @@ class AdminService {
       productSale,
       productSize,
       productColor,
+      productMainPictures: fileName,
       productDescription,
       productStyleName,
       productStyleMaterial,
     })
 
-    await product.save()
-    return
+    const savedProduct = await product.save()
+
+    file.mv(path.resolve(__dirname, '..', 'static', fileName))
+
+    return savedProduct
   }
 
-  async changeProduct(productId, productPrice, productDiscountPrice, productSale, productNew, productSize) {
+  async changeProduct(
+    productId,
+    productName,
+    productFor,
+    productNew,
+    productPrice,
+    productDiscountPrice,
+    productSale,
+    productSize,
+    productColor,
+    productDescription,
+    productStyleName,
+    productStyleMaterial,
+    searchValue
+  ) {
     const changedProduct = await Product.findOneAndUpdate(
       { _id: productId },
-      { $set: { productPrice, productDiscountPrice, productSale, productNew, productSize } },
+      {
+        $set: {
+          productId,
+          productName,
+          productFor,
+          productNew,
+          productPrice,
+          productDiscountPrice,
+          productSale,
+          productSize,
+          productColor,
+          productDescription,
+          productStyleName,
+          productStyleMaterial,
+        },
+      },
       { new: true }
     )
 
-    return changedProduct
+    return await AdminFunc.regexFunc(searchValue, 'product')
   }
 
-  async deleteProduct(productId) {
-    const deletedProduct = await Product.findOneAndDelete({ _id: productId })
+  async deleteProduct(productId, searchValue) {
+    await Product.findOneAndDelete({ _id: productId })
 
-    return deletedProduct
+    return await AdminFunc.regexFunc(searchValue, 'product')
   }
 
-  async getCustomers(text) {
-    const regex = new RegExp(text, 'i')
-
-    const users = await User.find({
-      $or: [{ name: { $regex: regex } }, { surname: { $regex: regex } }, { email: { $regex: regex } }],
-    }).limit(10)
-
-    return users
+  async getCustomers(searchValue) {
+    return await AdminFunc.regexFunc(searchValue, 'customer')
   }
 }
 

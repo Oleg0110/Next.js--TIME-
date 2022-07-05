@@ -6,6 +6,7 @@ export const MainContentBox = styled(Container)(() => ({
   width: theme.breakpoints.down('lg'),
   backgroundColor: Colors.secondaryWhite,
   paddingTop: '75px',
+  minHeight: '650px',
   [theme.breakpoints.down('md')]: {
     paddingTop: '60px',
   },

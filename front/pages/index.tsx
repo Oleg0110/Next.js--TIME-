@@ -14,7 +14,6 @@ export const getServerSideProps = async ({ locale }) => {
   const res = await fetch(`${BASIC_URL}`);
 
   const saleCarouselProduct: IProduct[] = await res.json();
-  console.log(saleCarouselProduct);
 
   return {
     props: {
@@ -37,40 +36,8 @@ const Index = ({
       <About />
       <New />
       <Sale saleCarouselProduct={saleCarouselProduct} />
-
-      {/* <ProductMainBox>
-        <ProductOnPage name="Dairy loafers" price="3600" href="/" />
-        <ProductOnPage name="Dairy loafers" price="3600" href="/" />
-        <ProductOnPage
-          name="Dairy loafers"
-          price="3600"
-          href="/"
-          salePrice="3000"
-        />
-  </ProductMainBox>*/}
     </MainLayout>
   );
 };
-
-// export const getServerSideProps =
-//   async (store) =>
-//   async (
-//     ctx: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>
-//   ): Promise<{}> => {
-//     const dispatch = useAppDispatch();
-//     console.log(await store.dispatch(await getSaleProduct()));
-
-//     await dispatch(await getSaleProduct());
-
-//     return {
-//       props: {
-//         ...(await serverSideTranslations(ctx.locale, [
-//           'home',
-//           'common',
-//           'shopFavorCart',
-//         ])),
-//       },
-//     };
-//   };
 
 export default Index;

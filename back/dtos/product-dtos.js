@@ -1,6 +1,7 @@
 module.exports = class ProductDto {
   id
   productName
+  productNumber
   productFor
   productPrice
   productDiscountPrice
@@ -17,6 +18,7 @@ module.exports = class ProductDto {
   constructor(model) {
     this.id = model._id
     this.productName = model.productName
+    this.productNumber = model.productNumber
     this.productFor = model.productFor
     this.productPrice = model.productPrice
     this.productDiscountPrice = model.productDiscountPrice

@@ -1,20 +1,26 @@
-const {
-  chooseCurrentPageFunc,
-  addPercentageFunc,
-  colorFunc,
-  styleFunc,
-  materialFunc,
-  priceFunc,
-  sizeFunc,
-} = require('../utils/ProductServiceFunc')
+const ProductFunc = require('../utils/functions/ProductFunc')
+const ProductDto = require('../dtos/product-dtos')
+const Product = require('../models/Product')
 
 class ProductService {
-  async getProducts(page) {
-    return await chooseCurrentPageFunc(page)
+  async getProduct(productId) {
+    const product = await Product.findOne({ _id: productId })
+
+    const dtoValue = new ProductDto(product)
+    return dtoValue
+  }
+
+  async getProducts(category) {
+    const product = await ProductFunc.chooseCurrentPageFunc(category)
+
+    let dtoValue = []
+
+    product.map((data) => dtoValue.push({ ...new ProductDto(data) }))
+    return dtoValue
   }
 
   async sortProduct(page, sort) {
-    const currentPage = await chooseCurrentPageFunc(page)
+    const currentPage = await ProductFunc.chooseCurrentPageFunc(page)
 
     switch (sort) {
       case 'cheapToExpensive':
@@ -27,45 +33,66 @@ class ProductService {
         return currentPage.sort((a, b) => b.date - a.date)
 
       case 'maximumDiscount':
-        return addPercentageFunc(page)
+        return ProductFunc.addPercentageFunc(page)
 
       default:
         break
     }
   }
 
-  async filterProducts(page, filter) {
-    const { productColor, productStyleName, productSize, productStyleMaterial, productPrice } = filter
+  async filterProducts(category, filters) {
+    const {
+      productColor,
+      productStyleName,
+      productSize,
+      productStyleMaterial,
+      productPrice,
+      productPriceFrom,
+      productPriceTo,
+    } = filters
 
-    const currentPage = await chooseCurrentPageFunc(page)
+    const currentPage = await ProductFunc.chooseCurrentPageFunc(category)
 
     let filtered = []
 
     //Color
-    productColor !== undefined && (filtered = colorFunc(currentPage, productColor))
+    productColor[0] !== undefined
+      ? (filtered = ProductFunc.colorFunc(currentPage, productColor))
+      : (filtered = currentPage)
 
     // Style
-    productStyleName !== undefined && productColor
-      ? (filtered = styleFunc(filtered, currentPage, productStyleName, true))
-      : productStyleName !== undefined && (filtered = styleFunc(filtered, currentPage, productStyleName, false))
+    productStyleName[0] !== undefined && productColor
+      ? (filtered = ProductFunc.styleFunc(filtered, currentPage, productStyleName, true))
+      : productStyleName[0] !== undefined &&
+        (filtered = ProductFunc.styleFunc(filtered, currentPage, productStyleName, false))
 
     // Material
-    productStyleMaterial !== undefined && (productColor || productStyleName)
-      ? (filtered = materialFunc(filtered, currentPage, productStyleMaterial, true))
-      : productStyleMaterial !== undefined &&
-        (filtered = materialFunc(filtered, currentPage, productStyleMaterial, false))
+    productStyleMaterial[0] !== undefined && (productColor || productStyleName)
+      ? (filtered = ProductFunc.materialFunc(filtered, currentPage, productStyleMaterial, true))
+      : productStyleMaterial[0] !== undefined &&
+        (filtered = ProductFunc.materialFunc(filtered, currentPage, productStyleMaterial, false))
 
     // Price
-    productPrice !== undefined && (productColor || productStyleName || productStyleMaterial)
-      ? (filtered = priceFunc(filtered, currentPage, productPrice, true))
-      : productPrice !== undefined && (filtered = priceFunc(filtered, currentPage, productPrice, false))
+    productPriceFrom && productPriceTo !== undefined && (productColor || productStyleName || productStyleMaterial)
+      ? (filtered = ProductFunc.priceFunc(filtered, currentPage, productPriceFrom, productPriceTo, true))
+      : productPrice !== undefined &&
+        (filtered = ProductFunc.priceFunc(filtered, currentPage, productPriceFrom, productPriceTo, false))
 
     //Size
-    productSize !== undefined && (productColor || productStyleName || productStyleMaterial || productPrice)
-      ? (filtered = sizeFunc(filtered, currentPage, productSize, true))
-      : (filtered = productSize !== undefined && sizeFunc(filtered, currentPage, productSize, false))
+    productSize[0] !== undefined && (productColor || productStyleName || productStyleMaterial || productPrice)
+      ? (filtered = ProductFunc.sizeFunc(filtered, currentPage, productSize, true))
+      : (filtered = productSize[0] !== undefined && ProductFunc.sizeFunc(filtered, currentPage, productSize, false))
+    console.log(1, filtered)
 
-    return filtered
+    let dtoValue = []
+
+    if (filtered[0] !== undefined) {
+      filtered.map((data) => dtoValue.push({ ...new ProductDto(data) }))
+    } else {
+      currentPage.map((data) => dtoValue.push({ ...new ProductDto(data) }))
+    }
+
+    return dtoValue
   }
 }
 

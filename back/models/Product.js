@@ -10,7 +10,7 @@ const schema = new Schema({
   productNew: { type: Boolean },
   productSize: [{ type: Number }],
   productColor: { type: String },
-  // productMainPictures: [{ type: String }],
+  productMainPictures: { type: String },
   productDescription: { type: String },
   productStyleName: { type: String },
   productStyleMaterial: { type: String },

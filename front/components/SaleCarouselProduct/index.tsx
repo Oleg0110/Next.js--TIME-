@@ -21,6 +21,7 @@ interface ISaleCarouselProductProps {
   price: number;
   href: string;
   salePrice: number;
+  src: any;
 }
 
 const SaleCarouselProduct: NextPage<ISaleCarouselProductProps> = ({
@@ -28,6 +29,7 @@ const SaleCarouselProduct: NextPage<ISaleCarouselProductProps> = ({
   price,
   href,
   salePrice,
+  src,
 }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isAddToCart, setIsAddToCart] = useState(false);
@@ -35,7 +37,7 @@ const SaleCarouselProduct: NextPage<ISaleCarouselProductProps> = ({
   return (
     <SaleCarouselProductBox>
       <SaleCarouselProductPhoto>
-        <Image src={SaleProductTest} width="380px" height="360px" />
+        <img src={src} width="300px" height="300px" />
         <IconPosition onClick={() => setIsLiked(!isLiked)}>
           {isLiked ? (
             <TooltipIcon title="remove-from-favorites">
