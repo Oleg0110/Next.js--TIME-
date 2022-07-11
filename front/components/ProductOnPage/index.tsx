@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import { Colors } from '../../styles/theme';
 import {
@@ -6,39 +6,82 @@ import {
   ProductOnPageBox,
   ProductOnPageInfo,
   ProductOnPagePhoto,
-  CartIconPosition,
+  BagIconPosition,
   PriceProductBox,
 } from '../../styles/productOnPage';
 import { NextPage } from 'next';
-import Image from 'next/image';
-import ProductTest from '../../assets/productTest.png';
+import { toast } from 'react-toastify';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { BASIC_URL } from '../../utils/httpLinks';
+import { removeFromBag } from '../../utils/function';
 import TooltipIcon from '../TooltipIcon/TooltipIcon';
+import ChooseSizeModal from '../ChooseSizeModal';
 import Link from 'next/link';
 import styles from '../../styles/icons.module.scss';
-import { useRouter } from 'next/router';
 
 interface IProductOnPageProps {
   name: string;
   price: number;
-  href: string;
+  productId: string;
   salePrice?: number;
+  productFor: string;
+  productSize: number[];
+  mainPicture: string;
 }
 
 const ProductOnPage: NextPage<IProductOnPageProps> = ({
   name,
   price,
-  href,
+  productId,
   salePrice,
+  productFor,
+  productSize,
+  mainPicture,
 }) => {
   const [isLiked, setIsLiked] = useState(false);
-  const [isAddToCart, setIsAddToCart] = useState(false);
 
-  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const isAuth = false;
+
+  const { productInBag } = useAppSelector((state) => state.product);
+
+  const isAdded = !!productInBag.find((f) => f.productId === productId);
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <ProductOnPageBox>
+      <ChooseSizeModal
+        isModalOpened={open}
+        handleClose={handleClose}
+        productSize={productSize}
+        price={price}
+        salePrice={salePrice}
+        productId={productId}
+        productName={name}
+        productPhoto={mainPicture}
+      />
       <ProductOnPagePhoto>
-        <Image src={ProductTest} width="450px" height="420px" />
-        <IconPosition onClick={() => setIsLiked(!isLiked)}>
+        <img src={`${BASIC_URL}/${mainPicture}`} width="370px" height="335px" />
+        <IconPosition
+          onClick={() => {
+            if (isAuth) {
+              setIsLiked(!isLiked);
+            } else {
+              toast.warning('Please log in to add');
+            }
+          }}
+        >
           {isLiked ? (
             <TooltipIcon title="remove-from-favorites">
               <div className={styles.likeProductFilled} />
@@ -51,7 +94,7 @@ const ProductOnPage: NextPage<IProductOnPageProps> = ({
         </IconPosition>
       </ProductOnPagePhoto>
       <ProductOnPageInfo>
-        <Link href={`${router.asPath}/${name}/${href}`}>
+        <Link href={`/product/${productFor}/${name}/${productId}`}>
           <Typography
             variant="roboto20400"
             marginBottom="8px"
@@ -83,17 +126,20 @@ const ProductOnPage: NextPage<IProductOnPageProps> = ({
             </Typography>
           </PriceProductBox>
         )}
-        <CartIconPosition onClick={() => setIsAddToCart(!isAddToCart)}>
-          {isAddToCart ? (
-            <TooltipIcon title="remove-from-shopping-cart">
+        <BagIconPosition>
+          {isAdded ? (
+            <TooltipIcon
+              title="remove-from-shopping-bag"
+              onClick={() => removeFromBag(productId, dispatch)}
+            >
               <div className={styles.bagProductFilled} />
             </TooltipIcon>
           ) : (
-            <TooltipIcon title="add-to-shopping-cart">
+            <TooltipIcon title="add-to-shopping-bag" onClick={handleClick}>
               <div className={styles.bagProduct} />
             </TooltipIcon>
           )}
-        </CartIconPosition>
+        </BagIconPosition>
       </ProductOnPageInfo>
     </ProductOnPageBox>
   );

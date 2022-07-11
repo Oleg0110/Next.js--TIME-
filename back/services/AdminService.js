@@ -1,11 +1,44 @@
 const Product = require('../models/Product')
+const Photo = require('../models/Photo')
 const AdminFunc = require('../utils/functions/AdminFunc')
+const ProductDto = require('../dtos/product-dto')
 const uuid = require('uuid')
 const path = require('path')
 
 class AdminService {
   async getProducts(searchValue) {
-    return await AdminFunc.regexFunc(searchValue, 'product')
+    const productsData = await AdminFunc.regexFunc(searchValue, 'product')
+    const productPhoto = []
+
+    productsData.forEach(async (data) => {
+      const photo = await Photo.findOne({ productId: data.id })
+      productPhoto.push(photo)
+    })
+
+    const products = productsData.map((data) => {
+      data, productPhoto
+    })
+
+    console.log(1, products)
+
+    // return products
+  }
+
+  async addPhoto(file, productId) {
+    const fileName = uuid.v4() + '.jpg'
+
+    const photo = new Photo({
+      productId,
+      photoName: fileName,
+    })
+
+    const productPhoto = await photo.save()
+
+    if (productPhoto) {
+      file.mv(path.resolve(__dirname, '..', 'static', fileName))
+    }
+
+    return productPhoto
   }
 
   async addProduct(
@@ -23,6 +56,7 @@ class AdminService {
     file
   ) {
     let productNumber = Number(`1${Math.floor(Math.random() * (999999999 - 100000000 + 1) + 1000000000)}`)
+
     const fileName = uuid.v4() + '.jpg'
 
     const product = new Product({
@@ -43,9 +77,11 @@ class AdminService {
 
     const savedProduct = await product.save()
 
-    file.mv(path.resolve(__dirname, '..', 'static', fileName))
+    savedProduct && file.mv(path.resolve(__dirname, '..', 'static', fileName))
 
-    return savedProduct
+    const dtoValue = new ProductDto(savedProduct)
+
+    return dtoValue
   }
 
   async changeProduct(

@@ -1,4 +1,4 @@
-const ProductDto = require('../dtos/product-dtos')
+const ProductDto = require('../dtos/product-dto')
 const Product = require('../models/Product')
 
 class HomeService {

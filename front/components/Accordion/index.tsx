@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
@@ -6,20 +6,15 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useTranslation } from 'next-i18next';
 import { Colors } from '../../styles/theme';
-import { SummaryAccordion } from '../../styles/accordion';
+import {
+  OpenComment,
+  ReviewBox,
+  ReviewField,
+  SummaryAccordion,
+} from '../../styles/accordion';
 import { NextPage } from 'next';
-
-type TitleAccordionType =
-  | 'sizing'
-  | 'about-products'
-  | 'notice'
-  | 'retailer'
-  | 'shipping'
-  | 'returns-exchange'
-  | 'common'
-  | 'delivery'
-  | 'contact-us'
-  | 'reviews';
+import { Button, colors, List, ListItem, Rating } from '@mui/material';
+import ReviewForm from './ReviewForm';
 
 type VariantAccordionType = 'elevation' | 'outlined';
 
@@ -39,18 +34,25 @@ type TextAccordionType = {
 };
 
 interface ICustomAccordionPros {
-  title: TitleAccordionType;
+  title: string;
   textArr?: TextAccordionType;
   accordionVariant: VariantAccordionType;
+  children?: ReactNode;
+  averageRating?: number;
+  countReviews?: number;
 }
 
 const CustomAccordion: NextPage<ICustomAccordionPros> = ({
   title,
   textArr,
   accordionVariant = 'elevation',
+  children,
+  averageRating,
+  countReviews,
 }) => {
   const { t } = useTranslation('accordion');
   const [expanded, setExpanded] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
@@ -60,12 +62,20 @@ const CustomAccordion: NextPage<ICustomAccordionPros> = ({
             expanded ? (
               <AddIcon
                 fontSize="large"
-                style={{ color: `${Colors.secondaryWhite}` }}
+                sx={
+                  accordionVariant === 'elevation'
+                    ? { color: Colors.secondaryWhite }
+                    : { color: Colors.darkGray }
+                }
               />
             ) : (
               <RemoveIcon
                 fontSize="large"
-                style={{ color: `${Colors.secondaryWhite}` }}
+                sx={
+                  accordionVariant === 'elevation'
+                    ? { color: Colors.secondaryWhite }
+                    : { color: Colors.darkGray }
+                }
               />
             )
           }
@@ -73,64 +83,154 @@ const CustomAccordion: NextPage<ICustomAccordionPros> = ({
             setExpanded(!expanded);
           }}
         >
-          <Typography
-            variant="roboto30300"
-            color={
-              accordionVariant === 'elevation'
-                ? Colors.secondaryWhite
-                : Colors.black
-            }
-          >
-            {title}
-          </Typography>
+          {title && title === 'Reviews' ? (
+            <ReviewBox>
+              <Typography
+                variant="roboto30300"
+                color={
+                  accordionVariant === 'elevation'
+                    ? Colors.secondaryWhite
+                    : Colors.black
+                }
+              >
+                {title} {countReviews !== 0 && `(${countReviews})`}
+              </Typography>
+              {countReviews !== 0 && averageRating && (
+                <Rating
+                  name="read-only"
+                  value={averageRating}
+                  readOnly
+                  sx={{ color: Colors.primary, marginRight: '20px' }}
+                  size="large"
+                />
+              )}
+            </ReviewBox>
+          ) : (
+            <Typography
+              variant="roboto30300"
+              color={
+                accordionVariant === 'elevation'
+                  ? Colors.secondaryWhite
+                  : Colors.black
+              }
+            >
+              {title}
+            </Typography>
+          )}
         </SummaryAccordion>
+        {title && title === 'Reviews' && (
+          <AccordionDetails>
+            {children}
+            <ReviewField>
+              {!isOpen && (
+                <OpenComment onClick={() => setIsOpen(!isOpen)}>
+                  Add Review
+                </OpenComment>
+              )}
+              {isOpen && <ReviewForm setIsOpen={setIsOpen} />}
+            </ReviewField>
+          </AccordionDetails>
+        )}
+        {title && title === 'Delivery' && (
+          <AccordionDetails>
+            <Typography
+              variant="roboto24500"
+              component="p"
+              sx={{ color: Colors.black, textAlign: 'start' }}
+            >
+              {t('delivery-propose-standard')}
+            </Typography>
+            <ListItem sx={{ display: 'list-item' }}>
+              <Typography
+                variant="roboto24200"
+                sx={{ color: Colors.black, textAlign: 'start' }}
+              >
+                {t('delivery-item-1')}
+              </Typography>
+            </ListItem>
+            <Typography
+              variant="roboto24500"
+              component="p"
+              sx={{ color: Colors.black, textAlign: 'start' }}
+            >
+              {t('delivery-propose-next-day')}
+            </Typography>
+            <ListItem sx={{ display: 'list-item' }}>
+              <Typography
+                variant="roboto24200"
+                sx={{ color: Colors.black, textAlign: 'start' }}
+              >
+                {t('delivery-item-2')}
+              </Typography>
+            </ListItem>
+            <ListItem sx={{ display: 'list-item' }}>
+              <Typography
+                variant="roboto24200"
+                sx={{ color: Colors.black, textAlign: 'start' }}
+              >
+                {t('delivery-item-3')}
+              </Typography>
+            </ListItem>
+            <Typography
+              variant="roboto24500"
+              component="p"
+              sx={{
+                color: Colors.black,
+                textAlign: 'start',
+                fontStyle: 'italic',
+              }}
+            >
+              {t('delivery-attention')}
+            </Typography>
+          </AccordionDetails>
+        )}
         <AccordionDetails>
-          {textArr.lorem && (
+          {textArr && textArr.lorem && (
             <Typography variant="roboto24200" component="p" marginBottom="30px">
               {t(textArr.lorem)}
             </Typography>
           )}
-          {textArr.commonCan && (
+          {textArr && textArr.commonCan && (
             <Typography variant="roboto24500" component="p" marginBottom="30px">
               {t(textArr.commonCan)}
             </Typography>
           )}
-          {textArr.canText1 && (
+          {textArr && textArr.canText1 && (
             <Typography variant="roboto24200" component="p" marginBottom="30px">
               {t(textArr.canText1)}
             </Typography>
           )}
-          {textArr.canText2 && (
+          {textArr && textArr.canText2 && (
             <Typography variant="roboto24200" component="p" marginBottom="30px">
               {t(textArr.canText2)}
             </Typography>
           )}
-          {textArr.returns && (
+          {textArr && textArr.returns && (
             <Typography variant="roboto24500" component="p" marginBottom="30px">
               {t(textArr.returns)}
             </Typography>
           )}
-          {textArr.returnsText && (
+          {textArr && textArr.returnsText && (
             <Typography variant="roboto24200" component="p" marginBottom="30px">
               {t(textArr.returnsText)}
             </Typography>
           )}
-          {textArr.exchanges && (
+          {textArr && textArr.exchanges && (
             <Typography variant="roboto24500" component="p" marginBottom="30px">
               {t(textArr.exchanges)}
             </Typography>
           )}
-          {textArr.customersText1 && (
+          {textArr && textArr.customersText1 && (
             <Typography variant="roboto24200" component="p" marginBottom="30px">
               {t(textArr.customersText1)}
             </Typography>
           )}
-          {textArr.international && (
+          {textArr && textArr.international && (
             <Typography variant="roboto24200" component="p" marginBottom="30px">
               {t(textArr.international)}
             </Typography>
           )}
-          {textArr.important && (
+          {textArr && textArr.important && (
             <Typography
               variant="roboto24500"
               color={Colors.saleColor}
@@ -140,7 +240,7 @@ const CustomAccordion: NextPage<ICustomAccordionPros> = ({
               {t(textArr.important)}
             </Typography>
           )}
-          {textArr.custom && (
+          {textArr && textArr.custom && (
             <Typography
               variant="roboto24500"
               color={Colors.saleColor}
@@ -150,7 +250,7 @@ const CustomAccordion: NextPage<ICustomAccordionPros> = ({
               {t(textArr.custom)}
             </Typography>
           )}
-          {textArr.pleaseText && (
+          {textArr && textArr.pleaseText && (
             <Typography variant="roboto24200" component="p">
               {t(textArr.pleaseText)}
             </Typography>

@@ -43,7 +43,7 @@ const AddProduct: NextPage = () => {
     productNew: false,
     productSize: [],
     productColor: 'black',
-    productMainPictures: null,
+    productMainPictures: [],
     productDescription:
       'Lorem, ipsum dolo. Porro et perspiciatis vel autem? Aperiam tenetur minima nihil adipisci, eniti harum itaque asperiores.',
     productStyleName: 'boots',
@@ -51,30 +51,30 @@ const AddProduct: NextPage = () => {
   };
 
   const validationSchema = object().shape({
-    productName: string()
-      .min(3, 'Too Short!')
-      .max(40, 'Too Long!')
-      .required('Required'),
-    productFor: string().required('Men or Women'),
-    productPrice: number()
-      .min(1, 'More than 0')
-      .max(15000, 'Max is 15000')
-      .required('Required'),
-    productDiscountPrice: number()
-      .min(0)
-      .max(14999, 'Max is 14999')
-      .required('Required'),
-    productSale: boolean(),
-    productNew: boolean(),
-    productSize: array().of(number()).required().min(1, 'Choose some sizes'),
-    productColor: string().required('Choose by colors propose'),
-    // productMainPictures: string().required('Choose by colors propose'),
-    productDescription: string()
-      .min(20, 'Too Short!')
-      .max(150, 'Too Long!')
-      .required('Required'),
-    productStyleName: string().required('Choose by style propose'),
-    productStyleMaterial: string().required('Choose by material propose'),
+    // productName: string()
+    //   .min(3, 'Too Short!')
+    //   .max(40, 'Too Long!')
+    //   .required('Required'),
+    // productFor: string().required('Men or Women'),
+    // productPrice: number()
+    //   .min(1, 'More than 0')
+    //   .max(15000, 'Max is 15000')
+    //   .required('Required'),
+    // productDiscountPrice: number()
+    //   .min(0)
+    //   .max(14999, 'Max is 14999')
+    //   .required('Required'),
+    // productSale: boolean(),
+    // productNew: boolean(),
+    // productSize: array().of(number()).required().min(1, 'Choose some sizes'),
+    // productColor: string().required('Choose by colors propose'),
+    // productMainPictures: array(),
+    // productDescription: string()
+    //   .min(20, 'Too Short!')
+    //   .max(150, 'Too Long!')
+    //   .required('Required'),
+    // productStyleName: string().required('Choose by style propose'),
+    // productStyleMaterial: string().required('Choose by material propose'),
   });
 
   const styleSpan = { width: '45%', color: Colors.primary };
@@ -99,9 +99,12 @@ const AddProduct: NextPage = () => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={async (values, { resetForm }) => {
-              // console.log(values.productMainPictures);
-
-              const data = await dispatch(addProduct(values));
+              const data = await dispatch(
+                addProduct({
+                  product: values,
+                  photoFile: values.productMainPictures,
+                })
+              );
               // resetForm();
               //!! Problem
               // if (data.payload !== undefined || null)
@@ -127,21 +130,23 @@ const AddProduct: NextPage = () => {
                     placeholder={t('placeholderName')}
                     className={styles.inputText}
                   />
-                  {/* <input
+                  <input
                     // hidden
                     // ref={fileRef}
                     type="file"
                     name="productMainPictures"
                     onChange={(event) => {
+                      console.log(event.target.files[0]);
+
                       setFieldValue(
                         'productMainPictures',
                         values.productMainPictures.concat(event.target.files[0])
                       );
                     }}
-                  /> */}
-                  <input
-                    // hidden
-                    // ref={fileRef}
+                  />
+                  {/* <input
+                    hidden
+                    ref={fileRef}
                     type="file"
                     name="productMainPictures"
                     onChange={(event) => {
@@ -150,7 +155,7 @@ const AddProduct: NextPage = () => {
                         event.target.files[0]
                       );
                     }}
-                  />
+                  /> */}
                   {/* {values.productMainPictures && (
                     <PreviewImage file={values.productMainPictures} />
                   )} */}

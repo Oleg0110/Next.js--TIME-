@@ -5,7 +5,7 @@
   "sale": "SALE",
   "about-us": "About us",
   "search": "Search",
-  "shopping-cart": "Shopping Cart",
+  "shopping-bag": "Shopping Bag",
   "your-account": "Your Account",
   "favorites": "Favorites",
   "phone-numbers": "Phone Numbers",
@@ -14,8 +14,8 @@
   "admin-page": "Administration Page",
   "add-to-favorites": "Add to Favorites",
   "remove-from-favorites": "Remove from Favorites",
-  "add-to-shopping-cart": "Add to Shopping Cart",
-  "remove-from-shopping-cart": "Remove from Shopping Cart",
+  "add-to-shopping-bag": "Add to Shopping Bag",
+  "remove-from-shopping-bag": "Remove from Shopping Bag",
   "catalog": "Catalog",
   "women-products": "Women shoes",
   "men-products": "Men shoes",
@@ -30,5 +30,10 @@
   "login": "Log in",
   "loginToUpper": "LOG IN",
   "registration": "Registration",
-  "entry": "Entry"
+  "entry": "Entry",
+  "size": "Size",
+  "remove": "Remove",
+  "total": "Total",
+  "order": "To order",
+  "continue": "Continue shopping"
 }

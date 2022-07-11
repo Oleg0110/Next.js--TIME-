@@ -1,16 +1,16 @@
 import React from 'react';
-import TooltipIcon from '../TooltipIcon/TooltipIcon';
 import {
   IconsContainerDesktop,
   IconsContainerMobile,
 } from '../../styles/navBar';
-import AccountMenu from '../AccountMenu';
 import { useMediaQuery } from '@mui/material';
-import ShopFavorCart from '../ShopFavorCart';
+import { ROUTES } from '../../utils/constants';
+import ShopFavorBag from '../ShopFavorBag';
+import TooltipIcon from '../TooltipIcon/TooltipIcon';
+import AccountMenu from '../AccountMenu';
 import theme from '../../styles/theme';
 import styles from '../../styles/icons.module.scss';
 import Link from 'next/link';
-import { ROUTES } from '../../utils/constants';
 
 const IconButtons = () => {
   const media = useMediaQuery(theme.breakpoints.down('md'));
@@ -28,9 +28,9 @@ const IconButtons = () => {
         <div className={styles.search} />
       </TooltipIcon>
       <Component>
-        <ShopFavorCart who="cart" />
+        <ShopFavorBag who="bag" />
         <AccountMenu />
-        <ShopFavorCart who="favorite" />
+        <ShopFavorBag who="favorite" />
       </Component>
     </>
   );

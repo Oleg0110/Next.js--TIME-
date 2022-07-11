@@ -20,6 +20,23 @@ class AdminController {
     }
   }
 
+  async addPhoto(req, res, next) {
+    try {
+      const { file } = req.files
+      const { productId } = req.body
+
+      if (!file && !productId) {
+        return next(ApiErrors.BadRequest('invalid data'))
+      }
+
+      const photos = await AdminService.addPhoto(file, productId)
+
+      res.status(200).json(photos)
+    } catch (e) {
+      next(e)
+    }
+  }
+
   async addProduct(req, res, next) {
     try {
       const { file } = req.files
@@ -62,9 +79,7 @@ class AdminController {
         return next(ApiErrors.BadRequest('Data entry error', errors.array()))
       }
 
-      console.log(productSize)
       const sortedSizes = productSize.sort()
-      console.log(sortedSizes)
 
       const product = await AdminService.addProduct(
         productName,

@@ -25,3 +25,10 @@ export type ProductMaterial =
   | 'velor'
   | 'artificial materials'
   | 'fiber';
+
+export type SortType =
+  | 'cheap to expensive'
+  | 'expensive to cheap'
+  | 'novelty'
+  | 'maximum discount'
+  | 'empty';

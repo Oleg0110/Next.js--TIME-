@@ -18,20 +18,47 @@ export interface IProduct {
   date: null | any;
 }
 
+export interface IProductPhoto {
+  id: string;
+  productId: string;
+  photoName: string[];
+}
+
+export interface IProductInBag {
+  price: number;
+  productId: string;
+  productName: string;
+  productPhoto: string;
+  salePrice: number;
+  sizeProduct: number;
+}
+
 export interface IProductFilter {
   productSize: number[];
   productColor: string[];
   productStyleName: string[];
   productStyleMaterial: string[];
-  // productPrice: { from: number; to: number };
   productPriceFrom: number;
   productPriceTo: number;
+}
+
+export interface IProductReview {
+  id: string;
+  productId: string;
+  userId: string;
+  userName: string;
+  comment: string;
+  rating: number;
+  date: number;
 }
 
 export interface ProductState {
   products: IProduct[];
   productsSale: IProduct[];
   productSearch: IProduct[];
+  productReviews: IProductReview[];
+  productsRecommended: IProduct[];
+  productInBag: IProductInBag[];
   isLoading: boolean;
   error: string;
 }

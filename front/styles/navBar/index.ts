@@ -8,7 +8,7 @@ export const MainNavBarBox = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  padding: '10px',
+  padding: '10px 10px 0px',
   width: '1920px',
 })) as typeof Box;
 

@@ -1,5 +1,4 @@
 import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 import {
   BurgerBox,
   CommunicationBox,
@@ -19,7 +18,6 @@ import SwipeableTemporaryDrawer from '../Drawer';
 import styles from '../../styles/icons.module.scss';
 
 const NavbarDesktop = () => {
-  // const router = useRouter();
   const { t } = useTranslation('common');
 
   return (

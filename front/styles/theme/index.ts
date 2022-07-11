@@ -15,6 +15,7 @@ declare module '@mui/material/Typography' {
     roboto20400: true;
     roboto20200: true;
     roboto16400: true;
+    roboto16200: true;
     translation: true;
     footerMail: true;
     error: true;
@@ -193,6 +194,7 @@ const theme = createTheme({
             margin: '0px',
             background: Colors.primary,
             borderBottom: `1px solid ${Colors.secondaryWhite}`,
+            // width: '100%',
           },
         },
         {
@@ -202,7 +204,16 @@ const theme = createTheme({
             boxShadow: 'none',
             margin: '0px',
             background: Colors.secondaryWhite,
-            borderBottom: `1px solid ${Colors.black}`,
+            width: '100%',
+            borderRadius: '0px',
+            border: '0px',
+            borderTop: `1px solid ${Colors.primary}`,
+            '.scss-o4b71y-MuiAccordionSummary-content.Mui-expanded ': {
+              margin: '0px',
+            },
+            '.scss-15v22id-MuiAccordionDetails-root': {
+              padding: '0px 30px 16px',
+            },
           },
         },
       ],
@@ -419,6 +430,15 @@ const theme = createTheme({
             fontFamily: 'Roboto',
             fontSize: '16px',
             fontWeight: 400,
+            color: Colors.secondaryWhite,
+          },
+        },
+        {
+          props: { variant: 'roboto16200' },
+          style: {
+            fontFamily: 'Roboto',
+            fontSize: '16px',
+            fontWeight: 200,
             color: Colors.secondaryWhite,
           },
         },

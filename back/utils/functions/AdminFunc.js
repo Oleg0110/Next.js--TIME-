@@ -1,7 +1,7 @@
 const Product = require('../../models/Product')
 const User = require('../../models/User')
-const ProductDto = require('../../dtos/product-dtos')
-const UserDto = require('../../dtos/user-dtos')
+const ProductDto = require('../../dtos/product-dto')
+const UserDto = require('../../dtos/user-dto')
 
 class AdminFunc {
   regexFunc = async (searchValue, type) => {

@@ -9,23 +9,28 @@ export const MainProductContainer = styled(Box)(() => ({
   alignItems: 'center',
   width: '100%',
   height: '100%',
+  position: 'relative',
+})) as typeof Box;
+
+export const MainContentProductBox = styled(Box)(() => ({
+  display: 'flex',
 })) as typeof Box;
 
 export const ProductContentBox = styled(Box)(() => ({
   display: 'flex',
-  justifyContent: 'center',
+  justifyContent: 'space-around',
   alignItems: 'center',
   width: '100%',
   height: '100%',
   margin: 0,
-  padding: '30px 20px',
+  padding: '20px 20px 30px',
   flexWrap: 'wrap',
 })) as typeof Box;
 
 export const InfoProductBox = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  padding: '40px 20px 30px',
+  padding: '20px 20px 0px',
   width: '100%',
 })) as typeof Box;
 

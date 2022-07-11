@@ -5,7 +5,7 @@
   "sale": "РОЗПРОДАЖ",
   "about-us": "Про нас",
   "search": "Пошук",
-  "shopping-cart": "Корзина",
+  "shopping-bag": "Корзина",
   "your-account": "Ваш Акаунт",
   "favorites": "Улюблені",
   "phone-numbers": "Номери телефонів",
@@ -14,8 +14,8 @@
   "admin-page": "Сторінка Адміністратора",
   "add-to-favorites": "Додати в Улюблені",
   "remove-from-favorites": "Видалити з Улюблених",
-  "add-to-shopping-cart": "Додати до Корзини",
-  "remove-from-shopping-cart": "Видалити з Корзини",
+  "add-to-shopping-bag": "Додати до Корзини",
+  "remove-from-shopping-bag": "Видалити з Корзини",
   "catalog": "Каталог",
   "women-products": "Жіноче взуття",
   "men-products": "Чоловіче взуття",
@@ -30,5 +30,10 @@
   "login": "Вхід",
   "loginToUpper": "ВХІД",
   "registration": "Зареєструватися",
-  "entry": "Вхід"
+  "entry": "Вхід",
+  "size": "Розмір",
+  "remove": "Видалити",
+  "total": "Загальний",
+  "order": "Заказати",
+  "continue": "Продовжити покупки"
 }

@@ -22,7 +22,7 @@ import {
   DescriptionChangeBox,
   InfoChangeBox,
   MainChangeModalBox,
-} from '../../styles/changeModal';
+} from '../../styles/modal';
 import { changeProduct } from '../../store/services/ProductService';
 import { toast } from 'react-toastify';
 
