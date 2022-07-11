@@ -1,4 +1,12 @@
 {
+  "reviews": "Reviews",
+  "delivery": "Delivery",
+  "delivery-propose-standard": "Standard Delivery 2–4 business days",
+  "delivery-item-1": "150 UAH, free for orders more than 5000 UAH",
+  "delivery-propose-next-day": "Next-Day Delivery",
+  "delivery-item-2": "250 UAH",
+  "delivery-item-3": "Available before 12pm Monday–Thursday",
+  "delivery-attention": "Please note, Next-Day Delivery may not be available for your order.",
   "sizing": "SIZING GUIDELINES",
   "about-products": "ABOUT THE SHOES",
   "notice": "OUT-OF-STOCK NOTICE",

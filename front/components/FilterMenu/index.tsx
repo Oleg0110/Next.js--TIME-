@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import Menu from '@mui/material/Menu';
 import theme, { Colors } from '../../styles/theme';
-import TooltipIcon from '../TooltipIcon/TooltipIcon';
-import styles from '../../styles/icons.module.scss';
 import { Slide, Slider, Typography, useMediaQuery } from '@mui/material';
 import { useTranslation } from 'next-i18next';
-import ProductInCart from '../ProductInCart';
-import { ButtonBox, ResultBox, TotalBox } from '../../styles/shopFavorCart';
-import CustomButton from '../CustomButton';
-import ShopFavorCartModal from '../ShopFavorCartModal';
 import { NextPage } from 'next';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import {
+  CustomInput,
   FilterClickPosition,
+  FilterOpenBox,
   FilterOptionsBox,
   InfoFilterBox,
+  InputPriceBox,
+  Line,
+  SliderBox,
 } from '../../styles/filter';
 import {
   colorArray,
@@ -24,45 +21,34 @@ import {
   sizeArray,
   styleArray,
 } from '../../utils/constants';
-import CheckBoxRadioInput from '../../components/CheckBoxRadioInput';
 import { useAppDispatch } from '../../hooks/redux';
 import { filterProducts } from '../../store/services/ProductService';
 import { IProductFilter } from '../../utils/interface/productInterface';
-
-const paperStyle = {
-  elevation: 0,
-  sx: {
-    overflow: 'visible',
-    filter: 'none',
-    mt: 2.5,
-    width: '370px',
-    minHeight: '100px',
-    borderRadius: '0px',
-    boxShadow: 'none',
-    '&:before': {
-      content: '""',
-      display: 'block',
-      width: 0,
-      bgcolor: Colors.secondaryWhite,
-      transform: 'translateY(-50%) rotate(45deg)',
-      zIndex: 0,
-    },
-  },
-};
-
-function valuetext(value: number) {
-  return `${value}°C`;
-}
+import styles from '../../styles/icons.module.scss';
+import CustomButton from '../CustomButton';
+import CheckBoxRadioInput from '../../components/CheckBoxRadioInput';
 
 interface IFilterMenuProps {
   category: string;
+  isOpen: boolean;
+  setIsOpen: (boolean: boolean) => void;
 }
 
-const FilterMenu: NextPage<IFilterMenuProps> = ({ category }) => {
-  let filters: IProductFilter;
-  let productPriceFrom;
-  let productPriceTo;
+const FilterMenu: NextPage<IFilterMenuProps> = ({
+  category,
+  isOpen,
+  setIsOpen,
+}) => {
+  const { t } = useTranslation('filters');
+  const media = useMediaQuery(theme.breakpoints.down('md'));
+
   const ISSERVER = typeof window === 'undefined';
+
+  const dispatch = useAppDispatch();
+
+  let filters: IProductFilter;
+  let productPriceTo;
+  let productPriceFrom;
 
   if (!ISSERVER) {
     filters = JSON.parse(localStorage.getItem(filterDataName));
@@ -72,23 +58,6 @@ const FilterMenu: NextPage<IFilterMenuProps> = ({ category }) => {
 
   const [min, setMin] = useState(productPriceFrom);
   const [max, setMax] = useState(productPriceTo);
-
-  // console.log(value);
-
-  const media = useMediaQuery(theme.breakpoints.down('md'));
-  const { t } = useTranslation('filters');
-  const dispatch = useAppDispatch();
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   const handleChange = (event, setFieldValue) => {
     setFieldValue('productPriceFrom', event.target.value[0]) &&
@@ -120,45 +89,15 @@ const FilterMenu: NextPage<IFilterMenuProps> = ({ category }) => {
   const styleSpan = { width: '45%', color: Colors.primary };
 
   return (
-    <>
-      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Typography
-          variant="roboto24200"
-          onClick={handleClick}
-          sx={open ? { color: Colors.darkGray } : { color: Colors.black }}
-          style={{ cursor: 'pointer' }}
-        >
-          {t('filters')}
-        </Typography>
-      </Box>
-      {/* {media ? (
-        <>
-          <ShopFavorCartModal
-            isModalOpened={open}
-            handleClose={handleClose}
-            who={who}
-          />
-        </>
-      ) : (
-        <> */}
-      <Menu
-        anchorEl={anchorEl}
-        id="account-menu"
-        open={open}
-        onClose={handleClose}
-        sx={{
-          filter: 'none',
-          left: -150,
-        }}
-        PaperProps={paperStyle}
-      >
+    <Slide direction="left" in={isOpen} mountOnEnter unmountOnExit>
+      <FilterOpenBox>
         <Formik
           initialValues={initialValues}
           // validationSchema={validationSchema}
           onSubmit={async (values) => {
-            // handleClose();
             localStorage.setItem(filterDataName, JSON.stringify(values));
             await dispatch(filterProducts({ filter: values, category }));
+            setIsOpen(false);
           }}
         >
           {({ values, setFieldValue, handleSubmit }) => {
@@ -224,28 +163,29 @@ const FilterMenu: NextPage<IFilterMenuProps> = ({ category }) => {
                     {t('price')}
                   </Typography>
                 </InfoFilterBox>
-                <Field
-                  type="number"
-                  id="productPriceFrom"
-                  name="productPriceFrom"
-                  value={min}
-                  onChange={(event) =>
-                    // console.log(event);
-
-                    handleTextChange(event, setFieldValue, 'from')
-                  }
-                />
-
-                <Field
-                  type="number"
-                  id="productPriceTo"
-                  name="productPriceTo"
-                  value={max}
-                  onChange={(event) =>
-                    handleTextChange(event, setFieldValue, 'to')
-                  }
-                />
-                <Box sx={{ width: 300 }}>
+                <InputPriceBox>
+                  <CustomInput
+                    type="number"
+                    id="productPriceFrom"
+                    name="productPriceFrom"
+                    value={min}
+                    onChange={(event) =>
+                      handleTextChange(event, setFieldValue, 'from')
+                    }
+                    className={styles.inputPrice}
+                  />
+                  <Line />
+                  <CustomInput
+                    type="number"
+                    id="productPriceTo"
+                    name="productPriceTo"
+                    value={max}
+                    onChange={(event) =>
+                      handleTextChange(event, setFieldValue, 'to')
+                    }
+                  />
+                </InputPriceBox>
+                <SliderBox>
                   <Slider
                     getAriaLabel={() => 'Temperature range'}
                     value={[min, max]}
@@ -254,8 +194,18 @@ const FilterMenu: NextPage<IFilterMenuProps> = ({ category }) => {
                     // getAriaValueText={valuetext}
                     max={15000}
                     min={0}
+                    sx={{
+                      height: '0px',
+                      '.scss-1sj75n8-MuiSlider-thumb': {
+                        width: '10px',
+                        height: '10px',
+                      },
+                      '.scss-14pt78w-MuiSlider-rail': {
+                        height: '1px',
+                      },
+                    }}
                   />
-                </Box>
+                </SliderBox>
                 <InfoFilterBox>
                   <Typography variant="roboto24200" sx={styleSpan}>
                     {t('material')}
@@ -285,10 +235,8 @@ const FilterMenu: NextPage<IFilterMenuProps> = ({ category }) => {
             );
           }}
         </Formik>
-      </Menu>
-      {/* </>
-      )} */}
-    </>
+      </FilterOpenBox>
+    </Slide>
   );
 };
 

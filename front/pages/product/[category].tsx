@@ -2,7 +2,7 @@ import { Typography } from '@mui/material';
 import { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import FilterMenu from '../../components/FilterMenu';
 import ProductOnPage from '../../components/ProductOnPage';
 import SortingMenu from '../../components/SortingMenu';
@@ -12,15 +12,21 @@ import { getProducts } from '../../store/services/ProductService';
 import {
   CategoryBox,
   InfoProductBox,
+  MainContentProductBox,
   MainProductContainer,
   ProductContentBox,
   SortingFilterBox,
 } from '../../styles/product';
 import { Colors } from '../../styles/theme';
-import { filterDataName, filterReset } from '../../utils/constants';
-import { firstLetterUpper } from '../../utils/function';
-import { GET_PRODUCTS } from '../../utils/httpLinks';
+import {
+  filterDataName,
+  filterReset,
+  sortingDataName,
+} from '../../utils/constants';
+import { firstLetterUpper, sortProduct } from '../../utils/function';
+import { BASIC_URL, GET_PRODUCTS } from '../../utils/httpLinks';
 import { IProduct } from '../../utils/interface/productInterface';
+import { SortType } from '../../utils/types/product';
 import Error from '../404';
 
 export const getServerSideProps = async (context) => {
@@ -44,30 +50,49 @@ interface ICategoryPage {
 }
 
 const CategoryPage: NextPage<ICategoryPage> = ({}) => {
+  let sorting;
   const router = useRouter();
   const category = router.query.category;
   const categoryStr = JSON.parse(JSON.stringify(category));
   const categoryTitle = firstLetterUpper(categoryStr);
 
+  const dispatch = useAppDispatch();
+
+  const [isSortingOpen, setIsSortingOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
+
   const ISSERVER = typeof window === 'undefined';
 
   if (!ISSERVER) {
     const localCategory = localStorage.getItem('category');
+    sorting = localStorage.getItem(sortingDataName);
+
     if (category !== localCategory) {
       localStorage.setItem(filterDataName, JSON.stringify(filterReset));
+      localStorage.setItem(sortingDataName, 'empty');
+      sorting = 'empty';
     }
     localStorage.setItem('category', categoryStr);
   }
 
-  const dispatch = useAppDispatch();
+  const [isActive, setIsActive] = useState<SortType>(sorting);
+
   useEffect(() => {
     const getData = async () => {
       await dispatch(getProducts(categoryStr));
     };
+
     getData();
+
+    setIsActive(sorting);
   }, [categoryStr, getProducts, dispatch]);
 
   const { products } = useAppSelector((state) => state.product);
+
+  const sortedProduct: IProduct[] =
+    isActive !== 'empty' && products
+      ? sortProduct(products, isActive)
+      : products;
 
   return (
     <MainLayout>
@@ -84,30 +109,77 @@ const CategoryPage: NextPage<ICategoryPage> = ({}) => {
               {categoryTitle} / {categoryTitle} shoes
             </Typography>
             <SortingFilterBox>
-              <SortingMenu />
+              <Typography
+                variant="roboto24200"
+                onClick={() => {
+                  setIsSortingOpen(!isSortingOpen);
+                  setIsFilterOpen(false);
+                }}
+                sx={
+                  isSortingOpen
+                    ? { color: Colors.darkGray }
+                    : { color: Colors.black }
+                }
+                style={{ cursor: 'pointer' }}
+              >
+                {/* {t('filters')} */}
+                Sorting
+              </Typography>
               <Typography
                 variant="roboto24200"
                 sx={{ color: Colors.black, margin: '0px 5px' }}
               >
                 /
               </Typography>
-              <FilterMenu category={categoryStr} />
+              <Typography
+                variant="roboto24200"
+                onClick={() => {
+                  setIsFilterOpen(!isFilterOpen);
+                  setIsSortingOpen(false);
+                }}
+                sx={
+                  isFilterOpen
+                    ? { color: Colors.darkGray }
+                    : { color: Colors.black }
+                }
+                style={{ cursor: 'pointer' }}
+              >
+                {/* {t('filters')} */}
+                Filters
+              </Typography>
             </SortingFilterBox>
           </CategoryBox>
         </InfoProductBox>
-        <ProductContentBox>
-          {products &&
-            products.map((data) => (
-              <div key={data.id}>
-                <ProductOnPage
-                  href={data.id}
-                  name={data.productName}
-                  price={data.productPrice}
-                  salePrice={data.productDiscountPrice}
-                />
-              </div>
-            ))}
-        </ProductContentBox>
+        <MainContentProductBox>
+          <ProductContentBox>
+            {sortedProduct &&
+              sortedProduct.map((data) => (
+                <div key={data.id}>
+                  <ProductOnPage
+                    mainPicture={data.productMainPictures}
+                    productId={data.id}
+                    productFor={data.productFor}
+                    name={data.productName}
+                    price={data.productPrice}
+                    salePrice={data.productDiscountPrice}
+                    productSize={data.productSize}
+                  />
+                </div>
+              ))}
+          </ProductContentBox>
+          <SortingMenu
+            isOpen={isSortingOpen}
+            setIsOpen={setIsSortingOpen}
+            category={categoryStr}
+            isActive={isActive}
+            setIsActive={setIsActive}
+          />
+          <FilterMenu
+            category={categoryStr}
+            isOpen={isFilterOpen}
+            setIsOpen={setIsFilterOpen}
+          />
+        </MainContentProductBox>
       </MainProductContainer>
     </MainLayout>
   );

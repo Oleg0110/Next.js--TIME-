@@ -22,19 +22,6 @@ class ProductFunc {
     return await Product.find({ productFor: category })
   }
 
-  addPercentageFunc = async (page) => {
-    const addPercentage = await chooseCurrentPageFunc(page, 'discount')
-    const copyFns = JSON.parse(JSON.stringify(addPercentage))
-
-    return copyFns
-      .map((data) => {
-        const percentageSale = Math.floor(100 - (data.productDiscountPrice * 100) / data.productPrice)
-
-        return { ...data, percentageSale }
-      })
-      .sort((a, b) => b.percentageSale - a.percentageSale)
-  }
-
   colorFunc = (currentPage, productColor) => {
     let currentData = []
 

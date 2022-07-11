@@ -7,7 +7,7 @@ const MailService = require('./MailService')
 const tokensMakeFunc = require('../utils/UserServiceFunc')
 const ApiErrors = require('../utils/apiErrors')
 const TokenService = require('./TokenService')
-const UserDto = require('../dtos/user-dtos')
+const UserDto = require('../dtos/user-dto')
 
 class UserService {
   async registration(req, res, next) {
@@ -20,19 +20,19 @@ class UserService {
     if (!errors.isEmpty()) {
       return next(ApiErrors.BadRequest('Data entry error', errors.array()))
     }
-    
+
     const uniqueEmail = await User.findOne({ email })
-    
+
     if (uniqueEmail) {
       throw ApiErrors.BadRequest(`This ${email} already using`)
     }
-    
+
     const hashPassword = await bcrypt.hashSync(password, 10)
-    
+
     const activationLink = uuid.v4()
-    
+
     const role = await Role.findOne({ userRole: 'user' })
-    
+
     const user = new User({
       name,
       surname,
@@ -41,13 +41,13 @@ class UserService {
       role: [role.userRole],
       activationLink,
     })
-    
+
     await user.save()
-    
+
     //!!! Problem
     // await MailService.sendActivationMail(email, `${process.env.API_URL}/auth/activate/${activationLink}`)
-    
-    console.log(1111,user);
+
+    console.log(1111, user)
     return tokensMakeFunc(user, res, 'Please confirm your email')
   }
 

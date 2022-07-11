@@ -1,8 +1,6 @@
-import { badgeClasses, Box, Container, Grid, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { url } from 'inspector';
 import theme, { Colors } from '../theme';
-import IconCart from '../../assets/icon/bag.svg';
 
 //Boxes
 

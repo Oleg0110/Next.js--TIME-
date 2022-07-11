@@ -5,9 +5,12 @@ const Product = require('../models/Product')
 const router = new Router()
 
 router.get('/product/:productId', ProductController.getProduct)
+router.get('/product/photos/:productId', ProductController.getProductPhotos)
 router.get('/:category', ProductController.getProducts)
-// router.get('/:page/:sort', ProductController.sortProducts);
 router.get('/:category/:filter', ProductController.filterProducts)
+router.post('/add-review', ProductController.addReview)
+router.get('/:category/get-review/:productId', ProductController.getReview)
+router.get('/:category/get-recommended/:style', ProductController.getRecommended)
 
 router.post('/', async (req, res) => {
   const {

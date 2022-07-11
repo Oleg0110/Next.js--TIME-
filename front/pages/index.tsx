@@ -1,11 +1,9 @@
 import MainLayout from '../layouts/MainLayout';
 import PhotoBox from '../components/PhotoBox';
-import ProductOnPage from '../components/ProductOnPage';
 import About from './home/About';
 import New from './home/New';
-import { InferGetStaticPropsType, NextPage } from 'next';
+import { InferGetStaticPropsType } from 'next';
 import { IProduct } from '../utils/interface/productInterface';
-import { ProductMainBox } from '../styles/productOnPage';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Sale from './home/Sale';
 import { BASIC_URL } from '../utils/httpLinks';
@@ -18,11 +16,7 @@ export const getServerSideProps = async ({ locale }) => {
   return {
     props: {
       saleCarouselProduct,
-      ...(await serverSideTranslations(locale, [
-        'home',
-        'common',
-        'shopFavorCart',
-      ])),
+      ...(await serverSideTranslations(locale, ['home', 'common'])),
     },
   };
 };

@@ -10,6 +10,7 @@ import {
 import {
   IProduct,
   IProductFilter,
+  IProductReview,
 } from '../../utils/interface/productInterface';
 import axios from 'axios';
 
@@ -42,6 +43,32 @@ interface IFilterArg {
   category: string;
 }
 
+type AddProductType = {
+  message: string;
+  product: IProduct;
+};
+
+interface IAddArg {
+  product: Omit<IProduct, 'id' | 'date' | 'productNumber'>;
+  photoFile: any[];
+}
+
+interface IAddReviewArg {
+  comment: string;
+  productId: string;
+  userId: string;
+  rating: number;
+}
+interface IGetReviewArg {
+  productId: string;
+  category: string;
+}
+
+interface IGetRecommendedArg {
+  style: string;
+  category: string;
+}
+
 export const getSaleProduct = createAsyncThunk(
   'home/getSaleProduct',
   async (_, thunkApi) => {
@@ -59,8 +86,6 @@ export const getProducts = createAsyncThunk(
   'product/getProducts',
   async (category: string | string[], thunkApi) => {
     try {
-      console.log(category);
-
       const res = await axios.get<IProduct[]>(`${GET_PRODUCTS}/${category}`);
 
       return res.data;
@@ -85,25 +110,57 @@ export const getProduct = createAsyncThunk(
 
 export const addProduct = createAsyncThunk(
   'admin/addProduct',
-  async (
-    product: Omit<IProduct, 'id' | 'date' | 'productNumber'>,
-    thunkApi
-  ) => {
+  async (arg: IAddArg, thunkApi) => {
     try {
-      let formData = new FormData();
-      // const blob = new Blob([JSON.stringify(product.productMainPictures)]);
-      // console.log(blob);
+      const { product, photoFile } = arg;
 
-      formData.append('file', product.productMainPictures);
+      // const res = await axios.post<AddProductType>(ADMIN_ADD_PRODUCT, product);
+
+      let formData = new FormData();
+
+      formData.append('file', product.productMainPictures[0]);
       formData.append('product', JSON.stringify({ ...product }));
 
-      const res = await axios.post<IProduct>(`${ADMIN_ADD_PRODUCT}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data; application/json',
-        },
-      });
+      const res = await axios.post<AddProductType>(
+        `${ADMIN_ADD_PRODUCT}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data; application/json',
+          },
+        }
+      );
 
-      return res.data;
+      console.log(res.data.product);
+
+      const productData = res.data.product;
+
+      let countPhoto = 0;
+
+      if (productData) {
+        photoFile.forEach(async (data) => {
+          let formData = new FormData();
+
+          formData.append('file', data);
+          formData.append('productId', productData.id);
+
+          const res = await axios.post(
+            `${ADMIN_ADD_PRODUCT}/add-photos`,
+            formData,
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            }
+          );
+
+          res.data && countPhoto++;
+        });
+      }
+
+      if (countPhoto === photoFile.length) {
+        return res.data.product;
+      }
     } catch (error) {
       return thunkApi.rejectWithValue((error as Error).message);
     }
@@ -174,6 +231,57 @@ export const filterProducts = createAsyncThunk(
           },
         }
       );
+
+      return res.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+export const getReview = createAsyncThunk(
+  'product/getReview',
+  async (arg: IGetReviewArg, thunkApi) => {
+    try {
+      const { category, productId } = arg;
+
+      const res = await axios.get<IProductReview[]>(
+        `${GET_PRODUCTS}/${category}/get-review/${productId}`
+      );
+
+      return res.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+export const getRecommendedProducts = createAsyncThunk(
+  'product/getRecommendedProducts',
+  async (arg: IGetRecommendedArg, thunkApi) => {
+    try {
+      const { category, style } = arg;
+
+      const res = await axios.get<IProduct[]>(
+        `${GET_PRODUCTS}/${category}/get-recommended/${style}`
+      );
+
+      return res.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+export const addReview = createAsyncThunk(
+  'product/addReview',
+  async (arg: IAddReviewArg, thunkApi) => {
+    try {
+      const res = await axios.post<IProductReview[]>(
+        `${GET_PRODUCTS}/add-review`,
+        arg
+      );
+      console.log(res.data);
 
       return res.data;
     } catch (error) {

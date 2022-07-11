@@ -14,7 +14,7 @@ export type TooltipPositionTypes =
 
 export type TooltipTitleTypes =
   | 'search'
-  | 'shopping-cart'
+  | 'shopping-bag'
   | 'your-account'
   | 'favorites'
   | 'phone-numbers'
@@ -24,5 +24,5 @@ export type TooltipTitleTypes =
   | 'new'
   | 'add-to-favorites'
   | 'remove-from-favorites'
-  | 'add-to-shopping-cart'
-  | 'remove-from-shopping-cart';
+  | 'add-to-shopping-bag'
+  | 'remove-from-shopping-bag';

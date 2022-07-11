@@ -1,25 +1,25 @@
 import React from 'react';
 import { Modal, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
-import ProductInCart from '../ProductInCart';
-import { ButtonBox, ResultBox, TotalBox } from '../../styles/shopFavorCart';
-import CustomButton from '../CustomButton';
 import { Colors } from '../../styles/theme';
-import { MainBox } from '../../styles/shopFavorCartModal';
 import { NextPage } from 'next';
+import { MainBox } from '../../styles/ShopFavorBagModal';
+import { ButtonBox, ResultBox, TotalBox } from '../../styles/shopFavorBag';
+import CustomButton from '../CustomButton';
+import ProductInBag from '../ProductInBag';
 
-interface IShopFavorCartModalProps {
+interface IShopFavorBagModalProps {
   isModalOpened: boolean;
   handleClose: () => void;
-  who: 'cart' | 'favorite';
+  who: 'bag' | 'favorite';
 }
 
-const ShopFavorCartModal: NextPage<IShopFavorCartModalProps> = ({
+const ShopFavorBagModal: NextPage<IShopFavorBagModalProps> = ({
   isModalOpened,
   handleClose,
   who,
 }) => {
-  const { t } = useTranslation('shopFavorCart');
+  const { t } = useTranslation('common');
   return (
     <>
       <Modal
@@ -30,11 +30,11 @@ const ShopFavorCartModal: NextPage<IShopFavorCartModalProps> = ({
         disableScrollLock={true}
       >
         <MainBox>
-          {who === 'cart' ? (
+          {who === 'bag' ? (
             <div>
-              <ProductInCart />
-              <ProductInCart />
-              <ProductInCart />
+              {/* <ProductInBag />
+              <ProductInBag />
+              <ProductInBag /> */}
               <ResultBox>
                 <TotalBox>
                   <Typography variant="roboto24200" color={Colors.black}>
@@ -64,10 +64,10 @@ const ShopFavorCartModal: NextPage<IShopFavorCartModalProps> = ({
             </div>
           ) : (
             <div>
-              <ProductInCart />
-              <ProductInCart />
-              <ProductInCart />
-              <ProductInCart />
+              {/* <ProductInBag />
+              <ProductInBag />
+              <ProductInBag />
+              <ProductInBag /> */}
             </div>
           )}
         </MainBox>
@@ -76,4 +76,4 @@ const ShopFavorCartModal: NextPage<IShopFavorCartModalProps> = ({
   );
 };
 
-export default ShopFavorCartModal;
+export default ShopFavorBagModal;

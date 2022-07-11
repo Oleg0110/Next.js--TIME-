@@ -8,10 +8,12 @@ import createEmotionCache from '../createEmotionCache';
 import theme from '../styles/theme/index';
 import { store } from '../store/index';
 import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import '../styles/global.scss';
 import 'swiper/scss';
+import 'swiper/scss/free-mode';
 import 'swiper/scss/navigation';
-import { ToastContainer } from 'react-toastify';
+import 'swiper/scss/thumbs';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();

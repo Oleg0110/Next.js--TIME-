@@ -1,4 +1,4 @@
-const UserDto = require('../dtos/user-dtos')
+const UserDto = require('../dtos/user-dto')
 const TokenService = require('../services/TokenService')
 
 module.exports = tokensMakeFunc = async (user, res, message) => {

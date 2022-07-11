@@ -1,12 +1,27 @@
 const ProductFunc = require('../utils/functions/ProductFunc')
-const ProductDto = require('../dtos/product-dtos')
+const ProductDto = require('../dtos/product-dto')
+const PhotoDto = require('../dtos/photo-dto')
+const ReviewDto = require('../dtos/review-dto')
 const Product = require('../models/Product')
+const Photo = require('../models/Photo')
+const User = require('../models/User')
+const Review = require('../models/Review')
 
 class ProductService {
   async getProduct(productId) {
     const product = await Product.findOne({ _id: productId })
 
     const dtoValue = new ProductDto(product)
+    return dtoValue
+  }
+
+  async getProductPhotos(productId) {
+    const productPhotos = await Photo.find({ productId: productId })
+
+    let dtoValue = []
+
+    productPhotos.map((data) => dtoValue.push({ ...new PhotoDto(data) }))
+
     return dtoValue
   }
 
@@ -19,37 +34,9 @@ class ProductService {
     return dtoValue
   }
 
-  async sortProduct(page, sort) {
-    const currentPage = await ProductFunc.chooseCurrentPageFunc(page)
-
-    switch (sort) {
-      case 'cheapToExpensive':
-        return currentPage.sort((a, b) => a.productPrice - b.productPrice)
-
-      case 'expensiveToCheap':
-        return currentPage.sort((a, b) => b.productPrice - a.productPrice)
-
-      case 'novelty':
-        return currentPage.sort((a, b) => b.date - a.date)
-
-      case 'maximumDiscount':
-        return ProductFunc.addPercentageFunc(page)
-
-      default:
-        break
-    }
-  }
-
   async filterProducts(category, filters) {
-    const {
-      productColor,
-      productStyleName,
-      productSize,
-      productStyleMaterial,
-      productPrice,
-      productPriceFrom,
-      productPriceTo,
-    } = filters
+    const { productColor, productStyleName, productSize, productStyleMaterial, productPriceFrom, productPriceTo } =
+      filters
 
     const currentPage = await ProductFunc.chooseCurrentPageFunc(category)
 
@@ -75,14 +62,15 @@ class ProductService {
     // Price
     productPriceFrom && productPriceTo !== undefined && (productColor || productStyleName || productStyleMaterial)
       ? (filtered = ProductFunc.priceFunc(filtered, currentPage, productPriceFrom, productPriceTo, true))
-      : productPrice !== undefined &&
+      : productPriceFrom &&
+        productPriceTo !== undefined &&
         (filtered = ProductFunc.priceFunc(filtered, currentPage, productPriceFrom, productPriceTo, false))
 
     //Size
-    productSize[0] !== undefined && (productColor || productStyleName || productStyleMaterial || productPrice)
+    productSize[0] !== undefined &&
+    (productColor || productStyleName || productStyleMaterial || productPriceFrom || productPriceTo)
       ? (filtered = ProductFunc.sizeFunc(filtered, currentPage, productSize, true))
-      : (filtered = productSize[0] !== undefined && ProductFunc.sizeFunc(filtered, currentPage, productSize, false))
-    console.log(1, filtered)
+      : productSize[0] !== undefined && (filtered = ProductFunc.sizeFunc(filtered, currentPage, productSize, false))
 
     let dtoValue = []
 
@@ -91,6 +79,60 @@ class ProductService {
     } else {
       currentPage.map((data) => dtoValue.push({ ...new ProductDto(data) }))
     }
+
+    return dtoValue
+  }
+
+  async getReview(productId) {
+    const reviews = await Review.find({ productId })
+    let dtoValue = []
+
+    reviews.map((data) => dtoValue.push({ ...new ReviewDto(data) }))
+
+    const reviewsArr = dtoValue
+      .map((data) => {
+        let currentDate = Date.parse(new Date())
+        let days = Math.round((currentDate - Date.parse(data.date)) / 86400000)
+        return { ...data, date: days }
+      })
+      .sort((a, b) => a.date - b.date)
+
+    let count = 0
+
+    for (let i = 0; i < reviewsArr.length; i++) {
+      const rev = reviewsArr[i]
+      count += rev.rating
+    }
+
+    const averageRating = Math.round(count / reviewsArr.length)
+
+    return reviewsArr
+  }
+
+  async getRecommended(style, category) {
+    const recommendedProduct = await Product.aggregate([
+      { $match: { productFor: category, productStyleName: style } },
+      { $sample: { size: 6 } },
+    ])
+
+    let dtoValue = []
+
+    recommendedProduct.map((data) => dtoValue.push({ ...new ProductDto(data) }))
+    return dtoValue
+  }
+
+  async addReview(comment, productId, userId, rating) {
+    const user = await User.findById({ _id: userId })
+    const userName = `${user.name} ${user.surname}`
+
+    const review = new Review({ productId, userId, userName, comment, rating })
+
+    await review.save()
+
+    const reviews = await Review.find({ productId })
+    let dtoValue = []
+
+    reviews.map((data) => dtoValue.push({ ...new ReviewDto(data) }))
 
     return dtoValue
   }

@@ -70,7 +70,7 @@ const CheckBoxRadioInput: NextPage<IRadioInput> = ({
             id={htmlFor}
           />
           <label htmlFor={htmlFor} className={styles.sizeCheckbox}>
-            <Typography variant="roboto24200" color={Colors.black}>
+            <Typography variant="roboto20200" color={Colors.black}>
               {value}
             </Typography>
           </label>
@@ -80,7 +80,7 @@ const CheckBoxRadioInput: NextPage<IRadioInput> = ({
         <>
           {!isSize ? (
             <div className={styles.sizeCheckboxDisable}>
-              <Typography variant="roboto24200" color={Colors.lightGray}>
+              <Typography variant="roboto20200" color={Colors.lightGray}>
                 {value}
               </Typography>
             </div>

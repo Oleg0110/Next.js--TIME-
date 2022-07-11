@@ -10,7 +10,7 @@ export const MainProductPageContainer = styled(Box)(() => ({
   width: '100%',
   height: '100%',
   margin: 0,
-  padding: '50px 10px 30px 10px',
+  padding: '30px 10px 30px 10px',
 })) as typeof Box;
 
 export const ProductPageMainBox = styled(Box)(() => ({
@@ -19,6 +19,7 @@ export const ProductPageMainBox = styled(Box)(() => ({
   justifyContent: 'center',
   alignItems: 'center',
   width: '1500px',
+  minWidth: '0px',
 })) as typeof Box;
 
 export const ProductPageLinkBox = styled(Box)(() => ({
@@ -32,6 +33,8 @@ export const ProductPageMainInfoBox = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   width: '100%',
+  minWidth: '0px',
+  marginBottom: '50px',
 })) as typeof Box;
 
 export const InfoProductPageBox = styled(Box)(() => ({
@@ -39,6 +42,7 @@ export const InfoProductPageBox = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   position: 'relative',
+  marginRight: '15px',
 })) as typeof Box;
 
 export const PriceBottomLineBox = styled(Box)(() => ({
@@ -67,6 +71,7 @@ export const PhotoDescriptionBox = styled(Box)(() => ({
   flexDirection: 'column',
   alignItems: 'center',
   textAlign: 'center',
+  minWidth: '0px',
 })) as typeof Box;
 
 // export const CleanPhotoBox = styled(Box)(() => ({
@@ -102,4 +107,41 @@ export const ProductPageSizeBox = styled(Box)(() => ({
 
 export const ProductPageColorBox = styled(Box)(() => ({
   marginTop: '10px',
+})) as typeof Box;
+
+// Product Swiper
+export const SwiperProductContainer = styled(Box)(() => ({
+  height: '575px',
+  width: 'inherit',
+})) as typeof Box;
+
+// Product Recommended
+export const ProductRecommended = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  width: '1430px',
+  position: 'relative',
+})) as typeof Box;
+
+export const ButtonArrowPrev = styled(Box)(() => ({
+  position: 'absolute',
+  cursor: 'pointer',
+  zIndex: '3',
+  left: '-3%',
+  top: '40%',
+  [theme.breakpoints.down('md')]: {
+    display: 'none',
+  },
+})) as typeof Box;
+
+export const ButtonArrowNext = styled(Box)(() => ({
+  position: 'absolute',
+  cursor: 'pointer',
+  zIndex: '3',
+  right: '-3%',
+  top: '40%',
+  [theme.breakpoints.down('md')]: {
+    display: 'none',
+  },
 })) as typeof Box;

@@ -1,12 +1,10 @@
+import React from 'react';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
-import React from 'react';
 import { useCallback, useRef, useState } from 'react';
-import SaleCarouselProduct from '../../components/SaleCarouselProduct';
 import { IProduct } from '../../utils/interface/productInterface';
 import { Swiper, SwiperSlide, useSwiper, SwiperProps } from 'swiper/react';
 import { Autoplay, Navigation, SwiperOptions } from 'swiper';
-import styles from '../../styles/icons.module.scss';
 import {
   ButtonArrowNext,
   ButtonArrowPrev,
@@ -16,6 +14,9 @@ import {
 import { Typography } from '@mui/material';
 import { Colors } from '../../styles/theme';
 import { BASIC_URL } from '../../utils/httpLinks';
+import ProductCarousel from '../../components/ProductCarousel';
+import styles from '../../styles/icons.module.scss';
+import stylesHome from '../../styles/Home.module.scss';
 
 interface ISaleProps {
   saleCarouselProduct: IProduct[];
@@ -71,11 +72,11 @@ const Sale: NextPage<ISaleProps> = ({ saleCarouselProduct }) => {
           {saleCarouselProduct &&
             saleCarouselProduct.map((product) => (
               <SwiperSlide key={product.id}>
-                <SaleCarouselProduct
+                <ProductCarousel
                   src={`${BASIC_URL}/${product.productMainPictures}`}
                   name={product.productName}
                   price={product.productPrice}
-                  href="/"
+                  href={product.id}
                   salePrice={product.productDiscountPrice}
                 />
               </SwiperSlide>

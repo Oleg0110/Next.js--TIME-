@@ -1,10 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IProduct, ProductState } from '../../utils/interface/productInterface';
 import {
+  IProduct,
+  IProductInBag,
+  IProductReview,
+  ProductState,
+} from '../../utils/interface/productInterface';
+import {
+  addReview,
   changeProduct,
   deleteProduct,
   filterProducts,
   getProducts,
+  getRecommendedProducts,
+  getReview,
   getSaleProduct,
   getSearchProduct,
 } from '../services/ProductService';
@@ -13,6 +21,9 @@ const initialState: ProductState = {
   products: [],
   productsSale: [],
   productSearch: [],
+  productReviews: [],
+  productsRecommended: [],
+  productInBag: [],
   isLoading: false,
   error: '',
 };
@@ -20,7 +31,14 @@ const initialState: ProductState = {
 export const productReducer = createSlice({
   name: 'products',
   initialState,
-  reducers: {},
+  reducers: {
+    setProductInShoppingBag: (
+      state,
+      action: PayloadAction<IProductInBag[]>
+    ) => {
+      state.productInBag = action.payload;
+    },
+  },
   extraReducers: {
     [getSaleProduct.fulfilled.type]: (
       state,
@@ -115,7 +133,57 @@ export const productReducer = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    [getReview.fulfilled.type]: (
+      state,
+      action: PayloadAction<IProductReview[]>
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.productReviews = action.payload;
+    },
+    [getReview.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [getReview.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [getRecommendedProducts.fulfilled.type]: (
+      state,
+      action: PayloadAction<IProduct[]>
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.productsRecommended = action.payload;
+    },
+    [getRecommendedProducts.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [getRecommendedProducts.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [addReview.fulfilled.type]: (
+      state,
+      action: PayloadAction<IProductReview[]>
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.productReviews = action.payload;
+    },
+    [addReview.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [addReview.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
+
+export const { setProductInShoppingBag } = productReducer.actions;
 
 export default productReducer.reducer;

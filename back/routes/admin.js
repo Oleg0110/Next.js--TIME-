@@ -5,6 +5,7 @@ const { body } = require('express-validator')
 const router = new Router()
 
 router.get('/:searchValue', body('searchValue').isString(), AdminController.getProducts)
+router.post('/products-management/add-product/add-photos', body('searchValue').isString(), AdminController.addPhoto)
 router.post(
   '/products-management/add-product',
   // body('productName', "Product name can't be empty").notEmpty().isString().isLength({ max: 30 }),

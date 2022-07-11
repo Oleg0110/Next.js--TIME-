@@ -13,7 +13,6 @@ export const ProductOnPageBox = styled(Box)(() => ({
 
 export const ProductOnPagePhoto = styled(Box)(() => ({
   position: 'relative',
-  margin: '5px',
 })) as typeof Box;
 
 export const IconPosition = styled(Box)(() => ({
@@ -23,7 +22,7 @@ export const IconPosition = styled(Box)(() => ({
   cursor: 'pointer',
 })) as typeof Box;
 
-export const CartIconPosition = styled(Box)(() => ({
+export const BagIconPosition = styled(Box)(() => ({
   position: 'absolute',
   top: '0px',
   right: '15px',

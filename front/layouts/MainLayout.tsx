@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Navbar from '../components/NavBar/index';
 import Footer from '../components/Footer';
@@ -8,6 +8,10 @@ import {
   MainFooterContainer,
 } from '../styles/global';
 import { NextPage } from 'next';
+import { useAppDispatch } from '../hooks/redux';
+import { IProductInBag } from '../utils/interface/productInterface';
+import { setProductInShoppingBag } from '../store/reducers/ProductSlice';
+import { shoppingBagDataName } from '../utils/constants';
 
 interface MainLayoutProps {
   title?: string;
@@ -22,6 +26,18 @@ const MainLayout: NextPage<MainLayoutProps> = ({
   keywords = 'shoe, shop, buy, style, fashion. clothing',
   description,
 }) => {
+  const ISSERVER = typeof window === 'undefined';
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (!ISSERVER) {
+      const arr: IProductInBag[] =
+        JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
+
+      dispatch(setProductInShoppingBag(arr));
+    }
+  }, []);
+
   return (
     <>
       <Head>

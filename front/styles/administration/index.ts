@@ -188,7 +188,7 @@ export const InfoChangeDeleteBox = styled(Box)(() => ({
   justifyContent: 'space-betweens',
 })) as typeof Box;
 
-export const Davay = styled(Box)(() => ({
+export const CustomerSearchBox = styled(Box)(() => ({
   width: '100%',
   maxHeight: '150px',
   overflowY: 'scroll',

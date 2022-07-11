@@ -5,7 +5,7 @@ import {
   ChangeDeleteBox,
   ChangeDeleteFormBox,
   ChangeDeleteMainFormBox,
-  Davay,
+  CustomerSearchBox,
   FoundProductBox,
   InfoChangeDeleteBox,
 } from '../../styles/administration';
@@ -84,7 +84,7 @@ const CustomManagement: NextPage = () => {
         </ChangeDeleteFormBox>
         {customerSearch[0] !== undefined && (
           <FoundProductBox>
-            <Davay>
+            <CustomerSearchBox>
               {customerSearch.map((data) => (
                 <div key={data.id}>
                   <CustomerSearch
@@ -94,7 +94,7 @@ const CustomManagement: NextPage = () => {
                   />
                 </div>
               ))}
-            </Davay>
+            </CustomerSearchBox>
           </FoundProductBox>
         )}
       </ChangeDeleteMainFormBox>
