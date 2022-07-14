@@ -9,6 +9,7 @@ import theme from '../styles/theme/index';
 import { store } from '../store/index';
 import { Provider } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import '../styles/global.scss';
 import 'swiper/scss';
 import 'swiper/scss/free-mode';
@@ -30,7 +31,7 @@ const MyApp = (props) => {
           <Component {...pageProps} />
           <ToastContainer
             position="top-right"
-            autoClose={3000}
+            autoClose={2500}
             hideProgressBar={false}
             newestOnTop={false}
             draggable={false}

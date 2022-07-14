@@ -18,29 +18,26 @@ import {
 } from '../../styles/shopFavorBag';
 import ShopFavorBagModal from '../ShopFavorCartModal';
 import ProductInBag from '../ProductInBag';
+import { toast } from 'react-toastify';
+import { totalPriceFunc } from '../../utils/function';
+import { useRouter } from 'next/router';
+import { ROUTES } from '../../utils/constants';
 
 interface IShopFavorBagProps {
   who: 'bag' | 'favorite';
 }
 
 const ShopFavorBag: NextPage<IShopFavorBagProps> = ({ who }) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
   const media = useMediaQuery(theme.breakpoints.down('md'));
   const { t } = useTranslation('common');
+  const router = useRouter();
 
   const { productInBag } = useAppSelector((state) => state.product);
 
-  let totalPrice: number = 0;
-
-  for (let i = 0; i < productInBag.length; i++) {
-    if (productInBag[i].salePrice !== 0) {
-      totalPrice += productInBag[i].salePrice;
-    } else {
-      totalPrice += productInBag[i].price;
-    }
-  }
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const totalPrice = totalPriceFunc(productInBag);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -54,8 +51,15 @@ const ShopFavorBag: NextPage<IShopFavorBagProps> = ({ who }) => {
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         {who === 'bag' ? (
-          <TooltipIcon title="shopping-bag" onClick={handleClick}>
-            {open ? (
+          <TooltipIcon
+            title="shopping-bag"
+            onClick={(event) => {
+              productInBag[0]
+                ? handleClick(event)
+                : toast.warning('Shopping Bag is empty');
+            }}
+          >
+            {productInBag[0] && open ? (
               <StyledBadge badgeContent={productInBag.length} color="secondary">
                 <div className={styles.bagHeaderFilled} />
               </StyledBadge>
@@ -80,6 +84,7 @@ const ShopFavorBag: NextPage<IShopFavorBagProps> = ({ who }) => {
           isModalOpened={open}
           handleClose={handleClose}
           who={who}
+          totalPrice={totalPrice}
         />
       ) : (
         <>
@@ -87,7 +92,7 @@ const ShopFavorBag: NextPage<IShopFavorBagProps> = ({ who }) => {
             variant="selectedMenu"
             anchorEl={anchorEl}
             id="account-menu"
-            open={open}
+            open={productInBag[0] !== undefined && open}
             onClose={handleClose}
             disableScrollLock={true}
           >
@@ -120,6 +125,9 @@ const ShopFavorBag: NextPage<IShopFavorBagProps> = ({ who }) => {
                       size="LG"
                       variant="secondary"
                       style={{ marginBottom: '15px' }}
+                      onClick={() =>
+                        productInBag[0] !== undefined && router.push(ROUTES.bag)
+                      }
                     >
                       {t('order')}
                     </CustomButton>

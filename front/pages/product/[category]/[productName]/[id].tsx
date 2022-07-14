@@ -27,7 +27,7 @@ import Link from 'next/link';
 import MainLayout from '../../../../layouts/MainLayout';
 import ProductPhotoCarousel from '../../../../components/ProductPhotoCarousel';
 import CustomAccordion from '../../../../components/Accordion';
-import CustomerReview from '../../../../components/CustomerReview';
+import UserReview from '../../../../components/UserReview';
 import styles from '../../../../styles/product.module.scss';
 import Recommended from './Recommended';
 import Information from './Information';
@@ -148,7 +148,7 @@ const Product: NextPage<IProductProps> = ({
                     {productReviews &&
                       productReviews.map((data) => (
                         <div key={data.id}>
-                          <CustomerReview
+                          <UserReview
                             comment={data.comment}
                             date={data.date}
                             rating={data.rating}
@@ -156,7 +156,7 @@ const Product: NextPage<IProductProps> = ({
                           />
                         </div>
                       ))}
-                    {/* <CustomerReview /> */}
+                    {/* <UserReview /> */}
                   </CustomAccordion>
                 </PhotoDescriptionBox>
                 <Information product={product} />

@@ -6,25 +6,25 @@ import { NextPage } from 'next';
 import { useAppDispatch } from '../../hooks/redux';
 import {
   ChangeButton,
-  CustomerSearchButtonBox,
-  CustomerSearchContainer,
-  InfoCustomerContainer,
-} from '../../styles/customerSearch';
+  UserSearchButtonBox,
+  UserSearchContainer,
+  InfoUserContainer,
+} from '../../styles/userSearch';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ChangeModal from '../ChangeModal';
 import styles from '../../styles/icons.module.scss';
 
-interface ICustomerSearch {
-  customerName: string;
-  customerSurname: string;
-  customerEmail: string;
+interface IUserSearch {
+  userName: string;
+  userSurname: string;
+  userEmail: string;
 }
 
-const CustomerSearch: NextPage<ICustomerSearch> = ({
-  customerName,
-  customerSurname,
-  customerEmail,
+const UserSearch: NextPage<IUserSearch> = ({
+  userName,
+  userSurname,
+  userEmail,
 }) => {
   const { t } = useTranslation(['admin', 'toast']);
   const dispatch = useAppDispatch();
@@ -75,33 +75,31 @@ const CustomerSearch: NextPage<ICustomerSearch> = ({
   };
 
   const copyEmail = async () => {
-    if (customerEmail === undefined) {
+    if (userEmail === undefined) {
       toast.error(t('failed-copy', { ns: 'toast' }));
     } else {
-      await navigator.clipboard.writeText(customerEmail);
-      toast.success(
-        `${t('successful-copy', { ns: 'toast' })} ${customerEmail}`
-      );
+      await navigator.clipboard.writeText(userEmail);
+      toast.success(`${t('successful-copy', { ns: 'toast' })} ${userEmail}`);
     }
   };
 
   return (
-    <CustomerSearchContainer onClick={copyEmail}>
+    <UserSearchContainer onClick={copyEmail}>
       {/* <ChangeModal
         isModalOpened={open}
         handleClose={handleClose}
         product={product}
         searchValue={searchValue}
       /> */}
-      <Avatar {...stringAvatar(`${customerName} ${customerSurname}`)} />
-      <InfoCustomerContainer>
+      <Avatar {...stringAvatar(`${userName} ${userSurname}`)} />
+      <InfoUserContainer>
         <Typography variant="roboto20200" sx={spanStyle}>
-          {`${customerName} ${customerSurname}`}
+          {`${userName} ${userSurname}`}
         </Typography>
         <Typography variant="roboto16400" color={Colors.primary} sx={spanStyle}>
-          {customerEmail}
+          {userEmail}
         </Typography>
-        {/* <CustomerSearchButtonBox> */}
+        {/* <UserSearchButtonBox> */}
         {/* <DeleteButton
             onClick={async () => {
               await dispatch(
@@ -112,16 +110,16 @@ const CustomerSearch: NextPage<ICustomerSearch> = ({
               {t('remove')}
               Delete
               </DeleteButton>
-            </CustomerSearchButtonBox> */}
-      </InfoCustomerContainer>
+            </UserSearchButtonBox> */}
+      </InfoUserContainer>
       <Typography
         variant="roboto16400"
         sx={{ ...spanStyle, color: Colors.darkGray }}
       >
         {t('click-to-copy')}
       </Typography>
-    </CustomerSearchContainer>
+    </UserSearchContainer>
   );
 };
 
-export default CustomerSearch;
+export default UserSearch;

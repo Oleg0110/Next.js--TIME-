@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import { Box, Button } from '@mui/material';
 import theme, { Colors } from '../theme';
 
-export const CustomerReviewManiContainer = styled(Box)(() => ({
+export const UserReviewManiContainer = styled(Box)(() => ({
   width: '95%',
   minHeight: '100px',
   display: 'flex',
@@ -14,7 +14,7 @@ export const CustomerReviewManiContainer = styled(Box)(() => ({
   position: 'relative',
 })) as typeof Box;
 
-export const ReviewCustomer = styled(Box)(() => ({
+export const ReviewUser = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   padding: '10px',

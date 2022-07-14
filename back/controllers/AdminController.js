@@ -177,7 +177,7 @@ class AdminController {
     }
   }
 
-  async getCustomers(req, res, next) {
+  async getUsers(req, res, next) {
     try {
       const { searchValue } = req.params
 
@@ -185,7 +185,7 @@ class AdminController {
         return next(ApiErrors.BadRequest('invalid data'))
       }
 
-      const users = await AdminService.getCustomers(searchValue)
+      const users = await AdminService.getUsers(searchValue)
 
       res.status(200).json(users)
     } catch (e) {

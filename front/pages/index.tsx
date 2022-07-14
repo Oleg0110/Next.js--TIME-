@@ -10,6 +10,11 @@ import { BASIC_URL } from '../utils/httpLinks';
 
 export const getServerSideProps = async ({ locale }) => {
   const res = await fetch(`${BASIC_URL}`);
+  // const da = await fetch(
+  //   'https://raw.githubusercontent.com/Adushar/UkraineCitiesAndVillages/main/CitiesAndVillages%20-%2014%20March.json'
+  // );
+  // const no = await da.json();
+  // console.log(no);
 
   const saleCarouselProduct: IProduct[] = await res.json();
 

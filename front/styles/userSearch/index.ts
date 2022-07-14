@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import { Box, Button } from '@mui/material';
 import theme, { Colors } from '../theme';
 
-export const CustomerSearchContainer = styled(Box)(() => ({
+export const UserSearchContainer = styled(Box)(() => ({
   width: '100%',
   height: '50px',
   display: 'flex',
@@ -21,7 +21,7 @@ export const CustomerSearchContainer = styled(Box)(() => ({
   },
 })) as typeof Box;
 
-export const InfoCustomerContainer = styled(Box)(() => ({
+export const InfoUserContainer = styled(Box)(() => ({
   width: '50%',
   display: 'flex',
   alignItems: 'start',
@@ -31,7 +31,7 @@ export const InfoCustomerContainer = styled(Box)(() => ({
   },
 })) as typeof Box;
 
-export const CustomerSearchButtonBox = styled(Box)(() => ({
+export const UserSearchButtonBox = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'space-around',
   alignItems: 'center',

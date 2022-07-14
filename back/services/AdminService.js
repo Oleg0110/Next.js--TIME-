@@ -55,7 +55,7 @@ class AdminService {
     productStyleMaterial,
     file
   ) {
-    let productNumber = Number(`1${Math.floor(Math.random() * (999999999 - 100000000 + 1) + 1000000000)}`)
+    const productNumber = Number(`1${Math.floor(Math.random() * (999999999 - 100000000 + 1) + 1000000000)}`)
 
     const fileName = uuid.v4() + '.jpg'
 
@@ -129,8 +129,8 @@ class AdminService {
     return await AdminFunc.regexFunc(searchValue, 'product')
   }
 
-  async getCustomers(searchValue) {
-    return await AdminFunc.regexFunc(searchValue, 'customer')
+  async getUsers(searchValue) {
+    return await AdminFunc.regexFunc(searchValue, 'user')
   }
 }
 

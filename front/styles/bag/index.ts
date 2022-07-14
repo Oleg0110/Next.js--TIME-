@@ -2,34 +2,28 @@ import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import theme, { Colors } from '../theme';
 
-export const ErrorContainer = styled(Box)(() => ({
+export const BagPageContainer = styled(Box)(() => ({
   backgroundColor: Colors.primary,
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
   width: '100%',
-  height: '100%',
+  minHeight: '600px',
   margin: 0,
   padding: '0px 10px',
+  borderBottom: `1px solid ${Colors.secondaryWhite}`,
 })) as typeof Box;
 
-export const ErrorContent = styled(Box)(() => ({
+export const BagPageContent = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   width: '100%',
   textAlign: 'center',
-  [theme.breakpoints.down('md')]: {
-    marginTop: '-10px',
-  },
+  marginBottom: '30px',
 })) as typeof Box;
 
-export const WarningBox = styled(Box)(() => ({
-  marginTop: '-95px',
+export const ProductOnBagBox = styled(Box)(() => ({
+  width: '100%',
   alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
-  [theme.breakpoints.down('sm')]: {
-    marginTop: '-50px',
-  },
+  borderTop: `1px solid ${Colors.secondaryWhite}`,
 })) as typeof Box;

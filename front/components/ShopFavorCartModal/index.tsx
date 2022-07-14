@@ -7,23 +7,27 @@ import { MainBox } from '../../styles/ShopFavorBagModal';
 import { ButtonBox, ResultBox, TotalBox } from '../../styles/shopFavorBag';
 import CustomButton from '../CustomButton';
 import ProductInBag from '../ProductInBag';
+import { useAppSelector } from '../../hooks/redux';
 
 interface IShopFavorBagModalProps {
   isModalOpened: boolean;
   handleClose: () => void;
   who: 'bag' | 'favorite';
+  totalPrice: number;
 }
 
 const ShopFavorBagModal: NextPage<IShopFavorBagModalProps> = ({
   isModalOpened,
   handleClose,
   who,
+  totalPrice,
 }) => {
   const { t } = useTranslation('common');
+  const { productInBag } = useAppSelector((state) => state.product);
   return (
     <>
       <Modal
-        open={isModalOpened}
+        open={productInBag[0] !== undefined && isModalOpened}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -32,16 +36,26 @@ const ShopFavorBagModal: NextPage<IShopFavorBagModalProps> = ({
         <MainBox>
           {who === 'bag' ? (
             <div>
-              {/* <ProductInBag />
-              <ProductInBag />
-              <ProductInBag /> */}
+              {productInBag &&
+                productInBag.map((data) => (
+                  <div key={data.productId}>
+                    <ProductInBag
+                      price={data.price}
+                      productId={data.productId}
+                      productName={data.productName}
+                      productPhoto={data.productPhoto}
+                      salePrice={data.salePrice}
+                      sizeProduct={data.sizeProduct}
+                    />
+                  </div>
+                ))}
               <ResultBox>
                 <TotalBox>
                   <Typography variant="roboto24200" color={Colors.black}>
                     {t('total')}
                   </Typography>
                   <Typography variant="roboto20400" color={Colors.black}>
-                    3849 UAH
+                    {totalPrice} UAH
                   </Typography>
                 </TotalBox>
                 <ButtonBox>

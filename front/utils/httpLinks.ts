@@ -7,4 +7,4 @@ export const ADMIN_PAGE = `${BASIC_URL}${ROUTES.adminPage}`;
 export const ADMIN_ADD_PRODUCT = `${BASIC_URL}${ROUTES.adminPage}${ROUTES.adminAddProduct}`;
 export const ADMIN_CHANGE_PRODUCT = `${BASIC_URL}${ROUTES.adminPage}${ROUTES.adminChangeProduct}`;
 export const ADMIN_DELETE_PRODUCT = `${BASIC_URL}${ROUTES.adminPage}${ROUTES.adminDeleteProduct}`;
-export const ADMIN_CUSTOMER_MANAGEMENT = `${BASIC_URL}${ROUTES.adminPage}${ROUTES.adminCustomersManagement}`;
+export const ADMIN_USER_MANAGEMENT = `${BASIC_URL}${ROUTES.adminPage}${ROUTES.adminUsersManagement}`;
