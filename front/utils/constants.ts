@@ -15,7 +15,7 @@ export const ROUTES = {
   authRefreshToken: '/auth//refreshToken',
   product: '/product',
   adminPage: '/administration-page',
-  adminCustomersManagement: '/customers-management',
+  adminUsersManagement: '/users-management',
   adminOrdersManagement: '/administration-page/order-management',
   adminProductManagement: '/administration-page/products-management',
   adminAddProduct: '/products-management/add-product',
@@ -25,6 +25,8 @@ export const ROUTES = {
   shipping: '/shipping-and-payment',
   FAQ: '/FAQ',
   personalOffice: '/personal-office',
+  bag: '/bag',
+  delivery: '/delivery-details',
 };
 
 export const BUTTONS: IButtonProps[] = [
@@ -124,3 +126,8 @@ export const swiper = new Swiper('.swiper', {
     nextEl: '.swiper-button-next',
   },
 });
+
+export const phoneRegExp = /^(?:\+38)?(0\d{9})$/;
+export const stringRegExp = /^[A-ZА-Я]?[a-zа-яA-ZА-Я]+$/;
+export const placeRegExp = /^[A-ZА-Я][a-zа-яA-ZА-Я-/]+$/;
+export const addressRegExp = /^[A-ZА-Я][a-zа-яA-ZА-Я / 0-9]+$/;

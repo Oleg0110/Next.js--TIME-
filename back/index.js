@@ -5,7 +5,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const product = require('./routes/product')
 const user = require('./routes/user')
-const home = require('./routes/home')
+const common = require('./routes/common')
 const admin = require('./routes/admin')
 const errorMiddleware = require('./middleware/errorMiddleware')
 const roleMiddleware = require('./middleware/roleMiddleware')
@@ -26,8 +26,8 @@ app.use(
   })
 )
 
-app.use('/', home)
-app.use('/auth', user)
+app.use('/', common)
+app.use('/', user)
 app.use('/product', product)
 app.use(
   '/administration-page',

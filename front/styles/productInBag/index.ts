@@ -40,7 +40,7 @@ export const InfoContainer = styled(Box)(() => ({
 
 export const PriceInBagBox = styled(Box)(() => ({
   display: 'flex',
-  alignItems: 'center',
+  alignItems: 'baseline',
 })) as typeof Box;
 
 export const RemoveBox = styled(Box)(() => ({

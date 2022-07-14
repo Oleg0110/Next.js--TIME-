@@ -35,7 +35,7 @@ router.patch(
   AdminController.changeProduct
 )
 router.delete('/products-management/delete-product/:productId/:searchValue', AdminController.deleteProduct)
-router.get('/customers-management/:searchValue', body('searchValue').isString(), AdminController.getCustomers)
-// router.get('/orders-management', body('text').isString(), AdminController.getCustomers)
+router.get('/users-management/:searchValue', body('searchValue').isString(), AdminController.getUsers)
+// router.get('/orders-management', body('text').isString(), AdminController.getUsers)
 
 module.exports = router

@@ -8,7 +8,7 @@
   height: 30px;
   padding: 5px;
   margin: 10px 0 15px;
-  border: 1px solid #685248;
+  border: 1px solid $main-color;
 }
 
 .errorStyle {
@@ -27,7 +27,7 @@
   height: 30px;
   padding: 5px;
   margin: 10px 0 15px;
-  border: 1px solid #685248;
+  border: 1px solid $main-color;
 }
 
 .radioInput {
@@ -44,7 +44,7 @@
   padding: 5px;
   margin: 10px 0 15px;
   resize: none;
-  border: 1px solid #685248;
+  border: 1px solid $main-color;
 }
 
 .booleanCheckBox {

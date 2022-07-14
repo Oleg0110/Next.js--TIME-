@@ -14,7 +14,7 @@ class AdminFunc {
       }).limit(10)
 
       product.map((data) => dtoValue.push({ ...new ProductDto(data) }))
-    } else if (type === 'customer') {
+    } else if (type === 'user') {
       const users = await User.find({
         $or: [{ name: { $regex: regex } }, { surname: { $regex: regex } }, { email: { $regex: regex } }],
       }).limit(10)
@@ -38,7 +38,7 @@ module.exports = new AdminFunc()
 //     }).limit(10)
 
 //     product.map((data) => dtoValue.push({ ...new ProductDto(data) }))
-//   } else if (type === 'customer') {
+//   } else if (type === 'user') {
 //     const users = await User.find({
 //       $or: [{ name: { $regex: regex } }, { surname: { $regex: regex } }, { email: { $regex: regex } }],
 //     }).limit(10)

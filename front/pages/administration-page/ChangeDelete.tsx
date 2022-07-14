@@ -5,9 +5,9 @@ import {
   ChangeDeleteBox,
   ChangeDeleteFormBox,
   ChangeDeleteMainFormBox,
-  Davay,
   FoundProductBox,
   InfoChangeDeleteBox,
+  UserSearchBox,
 } from '../../styles/administration';
 import { Colors } from '../../styles/theme';
 import { Typography } from '@mui/material';
@@ -88,13 +88,13 @@ const ChangeDelete: NextPage = () => {
         </ChangeDeleteFormBox>
         {productSearch[0] !== undefined && (
           <FoundProductBox>
-            <Davay>
+            <UserSearchBox>
               {productSearch.map((data) => (
                 <div key={data.id}>
                   <ProductSearch product={data} searchValue={isValue} />
                 </div>
               ))}
-            </Davay>
+            </UserSearchBox>
           </FoundProductBox>
         )}
       </ChangeDeleteMainFormBox>

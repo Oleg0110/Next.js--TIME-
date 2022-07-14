@@ -8,7 +8,6 @@ import {
   RemoveButton,
   PriceInBagBox,
 } from '../../styles/productInBag';
-import styles from '../../styles/icons.module.scss';
 import { Colors } from '../../styles/theme';
 import { useTranslation } from 'next-i18next';
 import { NextPage } from 'next';
@@ -16,9 +15,8 @@ import { IProductInBag } from '../../utils/interface/productInterface';
 import { BASIC_URL } from '../../utils/httpLinks';
 import { removeFromBag } from '../../utils/function';
 import { useAppDispatch } from '../../hooks/redux';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-const ProductInBag: NextPage<IProductInBag> = ({
+const ProductInBag: NextPage<Omit<IProductInBag, 'productAmount'>> = ({
   price,
   productId,
   productName,
@@ -78,7 +76,6 @@ const ProductInBag: NextPage<IProductInBag> = ({
         )}
         <RemoveBox>
           <RemoveButton onClick={() => removeFromBag(productId, dispatch)}>
-            <div className={styles.close} />
             {t('remove')}
           </RemoveButton>
         </RemoveBox>

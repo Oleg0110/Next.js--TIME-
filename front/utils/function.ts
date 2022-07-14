@@ -1,6 +1,7 @@
-import { setProductInBag } from '../store/reducers/ProductSlice';
+import { toast } from 'react-toastify';
+import { setProductInShoppingBag } from '../store/reducers/ProductSlice';
 import { shoppingBagDataName } from './constants';
-import { IProduct } from './interface/productInterface';
+import { IProduct, IProductInBag } from './interface/productInterface';
 import { SortType } from './types/product';
 
 export const firstLetterUpper = (category: string | string[]) => {
@@ -45,22 +46,30 @@ export const getAverageRating = (productReviews) => {
   return average;
 };
 
-export const removeFromBag = (productId, dispatch) => {
+export const removeFromBag = async (productId, dispatch) => {
   const ISSERVER = typeof window === 'undefined';
 
   if (!ISSERVER) {
-    const arr = JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
+    const arr: IProductInBag[] =
+      JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
 
-    const findId = arr.findIndex((f) => f === productId);
-    arr.splice(findId, 1);
+    const findIndex = arr.findIndex((f) => f.productId === productId);
+
+    arr.splice(findIndex, 1);
 
     localStorage.setItem(shoppingBagDataName, JSON.stringify(arr));
 
     const newArr = JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
 
-    dispatch(setProductInBag(newArr));
-    return true;
+    await dispatch(setProductInShoppingBag(newArr));
+    toast.success('Remove from Shopping Bag');
   }
+};
+
+export const cleanBag = (dispatch) => {
+  localStorage.setItem(shoppingBagDataName, JSON.stringify([]));
+
+  dispatch(setProductInShoppingBag([]));
 };
 
 const discountSort = (copyArrProduct: IProduct[]) => {
@@ -101,4 +110,18 @@ export const sortProduct = (product: IProduct[], sort: SortType) => {
     default:
       break;
   }
+};
+
+export const totalPriceFunc = (productInBag: IProductInBag[]) => {
+  let totalPrice: number = 0;
+
+  for (let i = 0; i < productInBag.length; i++) {
+    if (productInBag[i].salePrice !== 0) {
+      totalPrice += productInBag[i].salePrice;
+    } else {
+      totalPrice += productInBag[i].price;
+    }
+  }
+
+  return totalPrice;
 };

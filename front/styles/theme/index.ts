@@ -48,7 +48,7 @@ export const Colors = {
 
   //Sale and Discount colors
   darkGray: '#848484',
-  saleColor: '#c63d3d',
+  saleColor: '#ff3a3a',
 
   // Another Color
   lightGray: '#c4c4c4',
@@ -77,7 +77,7 @@ export const defaultTheme = createTheme({
       // medium
       md: 900,
       // large
-      lg: 1201,
+      lg: 1200,
       // extra-large
       xl: 1920,
     },

@@ -12,13 +12,13 @@ import theme, { Colors } from '../../styles/theme';
 import MainLayout from '../../layouts/MainLayout';
 import AddProduct from './AddProduct';
 import ChangeDelete from './ChangeDelete';
-import CustomManagement from './CustomManagement';
+import CustomManagement from './UserManagement';
 
 const AdministrationPage = () => {
   const { t } = useTranslation('admin');
 
   const [isActive, setIsActive] = useState<
-    'add' | 'change' | 'customer' | 'orders' | 'empty'
+    'add' | 'change' | 'user' | 'orders' | 'empty'
   >('empty');
 
   return (
@@ -77,17 +77,17 @@ const AdministrationPage = () => {
             </ButtonAdminStyle>
             <ButtonAdminStyle
               onClick={(e) => {
-                setIsActive('customer');
+                setIsActive('user');
                 e.stopPropagation();
               }}
               sx={
-                isActive === 'customer' && {
+                isActive === 'user' && {
                   color: Colors.black,
                   borderBottom: `3px solid ${Colors.black}`,
                 }
               }
             >
-              {t('customers-management')}
+              {t('users-management')}
             </ButtonAdminStyle>
             <ButtonAdminStyle
               onClick={(e) => {
@@ -106,7 +106,7 @@ const AdministrationPage = () => {
           </ButtonAdminBox>
           {isActive === 'add' && <AddProduct />}
           {isActive === 'change' && <ChangeDelete />}
-          {isActive === 'customer' && <CustomManagement />}
+          {isActive === 'user' && <CustomManagement />}
         </AdminContent>
       </MainAdminBox>
     </MainLayout>

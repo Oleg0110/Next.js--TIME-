@@ -11,7 +11,7 @@ export interface IProduct {
   productNew: boolean;
   productSize: number[];
   productColor: ProductColor;
-  productMainPictures: string;
+  productMainPictures: any;
   productDescription: string;
   productStyleName: ProductStyle;
   productStyleMaterial: ProductMaterial;
@@ -31,6 +31,7 @@ export interface IProductInBag {
   productPhoto: string;
   salePrice: number;
   sizeProduct: number;
+  productAmount: number;
 }
 
 export interface IProductFilter {

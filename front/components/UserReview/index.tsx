@@ -3,22 +3,22 @@ import { Button, Rating, Typography } from '@mui/material';
 import {
   CommentDate,
   CommentField,
-  CustomerReviewManiContainer,
-  ReviewCustomer,
+  UserReviewManiContainer,
+  ReviewUser,
   TextButton,
   TextButtonPosition,
-} from '../../styles/customerReview';
+} from '../../styles/userReview';
 import { Colors } from '../../styles/theme';
 import { NextPage } from 'next';
 
-interface ICustomerReview {
+interface IUserReview {
   userName: string;
   rating: number | null;
   comment: string;
   date: number;
 }
 
-const CustomerReview: NextPage<ICustomerReview> = ({
+const UserReview: NextPage<IUserReview> = ({
   userName,
   rating,
   comment,
@@ -35,8 +35,8 @@ const CustomerReview: NextPage<ICustomerReview> = ({
   };
 
   return (
-    <CustomerReviewManiContainer>
-      <ReviewCustomer>
+    <UserReviewManiContainer>
+      <ReviewUser>
         <Rating
           name="read-only"
           value={rating}
@@ -46,7 +46,7 @@ const CustomerReview: NextPage<ICustomerReview> = ({
         <Typography variant="roboto20400" sx={{ color: Colors.black }}>
           {userName}
         </Typography>
-      </ReviewCustomer>
+      </ReviewUser>
       <CommentField>
         {lettersCount.length > 150 && !isMore ? (
           <Typography variant="roboto16200" sx={commentStyle}>
@@ -80,8 +80,8 @@ const CustomerReview: NextPage<ICustomerReview> = ({
           </Typography>
         </CommentDate>
       </CommentField>
-    </CustomerReviewManiContainer>
+    </UserReviewManiContainer>
   );
 };
 
-export default CustomerReview;
+export default UserReview;

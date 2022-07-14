@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React from 'react';
 import CustomButton from '../components/CustomButton';
 import MainLayout from '../layouts/MainLayout';
-import { ErrorContainer, ErrorContent, WarningBox } from '../styles/404/404';
+import { ErrorContainer, ErrorContent, WarningBox } from '../styles/404';
 import { Colors } from '../styles/theme';
 import { ROUTES } from '../utils/constants';
 

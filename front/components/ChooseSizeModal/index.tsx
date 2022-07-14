@@ -10,6 +10,8 @@ import { Field, Form, Formik } from 'formik';
 import { setProductInShoppingBag } from '../../store/reducers/ProductSlice';
 import { useAppDispatch } from '../../hooks/redux';
 import CheckBoxRadioInput from '../CheckBoxRadioInput';
+import { IProductInBag } from '../../utils/interface/productInterface';
+import { toast } from 'react-toastify';
 
 interface IChooseSizeModal {
   isModalOpened: boolean;
@@ -38,9 +40,10 @@ const ChooseSizeModal: NextPage<IChooseSizeModal> = ({
 
   const ISSERVER = typeof window === 'undefined';
 
-  const setInShoppingBag = (sizeProduct) => {
+  const setInShoppingBag = async (sizeProduct) => {
     if (!ISSERVER) {
-      const arr = JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
+      const arr: IProductInBag[] =
+        JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
 
       arr.push({
         productId,
@@ -49,13 +52,15 @@ const ChooseSizeModal: NextPage<IChooseSizeModal> = ({
         productPhoto,
         salePrice,
         price,
+        productAmount: 1,
       });
 
       localStorage.setItem(shoppingBagDataName, JSON.stringify(arr));
 
       const newArr =
         JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
-      dispatch(setProductInShoppingBag(newArr));
+      await dispatch(setProductInShoppingBag(newArr));
+      toast.success('Add to Shopping Bag');
     }
   };
 

@@ -1,0 +1,18 @@
+{
+  "title": "PLEASE ENTER THE DELIVERY DETAILS",
+  "yourOrder": "Your Order",
+  "ordering": "Ordering",
+  "order": "Order",
+  "total": "TOTAL",
+  "attention": "After ordering, our manager will call you back to clarify the data",
+  "size": "Size",
+  "amount": "Amount",
+  "name": "Name*",
+  "surname": "Surname*",
+  "region": "Region*",
+  "address": "Address*",
+  "phone": "Phone* +380",
+  "city": "City*",
+  "email": "Email*",
+  "bagTitle": "Bag"
+}

@@ -5,7 +5,7 @@ import {
   ChangeDeleteBox,
   ChangeDeleteFormBox,
   ChangeDeleteMainFormBox,
-  CustomerSearchBox,
+  UserSearchBox,
   FoundProductBox,
   InfoChangeDeleteBox,
 } from '../../styles/administration';
@@ -13,16 +13,16 @@ import { Colors } from '../../styles/theme';
 import { Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { NextPage } from 'next';
-import { getSearchCustomer } from '../../store/services/CustomerService';
+import { getSearchUser } from '../../store/services/UserService';
 import { useTranslation } from 'next-i18next';
-import CustomerSearch from '../../components/CustomerSearch';
+import UserSearch from '../../components/UserSearch';
 import styles from '../../styles/AdminPage.module.scss';
 
 const CustomManagement: NextPage = () => {
   const { t } = useTranslation('admin');
 
   const dispatch = useAppDispatch();
-  const { customerSearch } = useAppSelector((state) => state.customer);
+  const { userSearch } = useAppSelector((state) => state.user);
 
   const validationSchema = object().shape({
     searchValue: string()
@@ -48,14 +48,14 @@ const CustomManagement: NextPage = () => {
             color: Colors.primary,
           }}
         >
-          {t('find-customer')}
+          {t('find-user')}
         </Typography>
         <ChangeDeleteFormBox>
           <Formik
             initialValues={{ searchValue: '' }}
             validationSchema={validationSchema}
             onSubmit={async (values) => {
-              await dispatch(getSearchCustomer(values.searchValue));
+              await dispatch(getSearchUser(values.searchValue));
             }}
           >
             {() => {
@@ -63,7 +63,7 @@ const CustomManagement: NextPage = () => {
                 <Form>
                   <InfoChangeDeleteBox>
                     <Typography variant="roboto24500" sx={styleSpan}>
-                      {t('customer')}
+                      {t('user')}
                     </Typography>
                     <ErrorMessage
                       name="searchValue"
@@ -82,19 +82,19 @@ const CustomManagement: NextPage = () => {
             }}
           </Formik>
         </ChangeDeleteFormBox>
-        {customerSearch[0] !== undefined && (
+        {userSearch[0] !== undefined && (
           <FoundProductBox>
-            <CustomerSearchBox>
-              {customerSearch.map((data) => (
+            <UserSearchBox>
+              {userSearch.map((data) => (
                 <div key={data.id}>
-                  <CustomerSearch
-                    customerEmail={data.email}
-                    customerName={data.name}
-                    customerSurname={data.surname}
+                  <UserSearch
+                    userEmail={data.email}
+                    userName={data.name}
+                    userSurname={data.surname}
                   />
                 </div>
               ))}
-            </CustomerSearchBox>
+            </UserSearchBox>
           </FoundProductBox>
         )}
       </ChangeDeleteMainFormBox>
