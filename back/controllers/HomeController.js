@@ -20,6 +20,20 @@ class HomeController {
       res.status(500).json(e.message)
     }
   }
+
+  async getFavorite(req, res) {
+    try {
+      const { userId } = req.params
+
+      if (!userId) res.status(400).json({ error: 'invalid data' })
+
+      const favorites = await HomeService.getFavorite(userId)
+
+      res.status(200).json(favorites)
+    } catch (e) {
+      res.status(500).json(e.message)
+    }
+  }
 }
 
 module.exports = new HomeController()

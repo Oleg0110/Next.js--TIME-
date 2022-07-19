@@ -8,11 +8,16 @@ import {
   MainFooterContainer,
 } from '../styles/global';
 import { NextPage } from 'next';
-import { useAppDispatch } from '../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { IProductInBag } from '../utils/interface/productInterface';
 import { setProductInShoppingBag } from '../store/reducers/ProductSlice';
-import { shoppingBagDataName } from '../utils/constants';
-import { getUnconfirmedOrders } from '../store/services/ProductService';
+import { shoppingBagDataName, token } from '../utils/constants';
+import {
+  getFavorite,
+  getUnconfirmedOrders,
+} from '../store/services/ProductService';
+import { checkAuth } from '../store/services/UserService';
+import { AuthResponse } from '../utils/interface/userInterface';
 
 interface MainLayoutProps {
   title?: string;
@@ -27,22 +32,34 @@ const MainLayout: NextPage<MainLayoutProps> = ({
   keywords = 'shoe, shop, buy, style, fashion. clothing',
   description,
 }) => {
-  const ISSERVER = typeof window === 'undefined';
   const dispatch = useAppDispatch();
+
+  const { user } = useAppSelector((state) => state.user);
+  const { productsFavorite } = useAppSelector((state) => state.product);
 
   useEffect(() => {
     const asyncFunc = async () => {
-      if (!ISSERVER) {
-        const arr: IProductInBag[] =
-          JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
+      const arr: IProductInBag[] =
+        JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
 
-        await dispatch(setProductInShoppingBag(arr));
-        await dispatch(getUnconfirmedOrders());
-      }
+      const isAuth: string = localStorage.getItem(token);
+
+      !!isAuth && (await dispatch(checkAuth()));
+
+      await dispatch(setProductInShoppingBag(arr));
+      await dispatch(getUnconfirmedOrders());
     };
 
     asyncFunc();
-  }, []);
+  }, [dispatch, productsFavorite]);
+
+  const getFavoriteProduct = async () => {
+    user.id &&
+      productsFavorite[0] === undefined &&
+      (await dispatch(getFavorite(user.id)));
+  };
+
+  getFavoriteProduct();
 
   return (
     <>

@@ -2,6 +2,8 @@ const ProductDto = require('../dtos/product-dto')
 const OrderDto = require('../dtos/order-dto')
 const Product = require('../models/Product')
 const Order = require('../models/Order')
+const FavoriteProductDto = require('../dtos/favoriteProduc-dto')
+const FavoriteProduct = require('../models/FavoriteProduct')
 
 class HomeService {
   async getProductSale() {
@@ -20,6 +22,16 @@ class HomeService {
     orders.map((data) => dtoOrders.push({ ...new OrderDto(data) }))
 
     return dtoOrders
+  }
+
+  async getFavorite(userId) {
+    const favoriteProducts = await FavoriteProduct.find({ userId })
+
+    let dtoValue = []
+
+    favoriteProducts.map((data) => dtoValue.push({ ...new FavoriteProductDto(data) }))
+
+    return dtoValue
   }
 }
 

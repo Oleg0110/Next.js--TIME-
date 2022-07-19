@@ -11,21 +11,35 @@ import {
 import { Colors } from '../../styles/theme';
 import { useTranslation } from 'next-i18next';
 import { NextPage } from 'next';
-import { IProductInBag } from '../../utils/interface/productInterface';
 import { BASIC_URL } from '../../utils/httpLinks';
 import { removeFromBag } from '../../utils/function';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { removeFromFavorite } from '../../store/services/ProductService';
 
-const ProductInBag: NextPage<Omit<IProductInBag, 'productAmount'>> = ({
+interface IProductInBag {
+  price: number;
+  productId?: string;
+  favoriteId?: string;
+  productName: string;
+  productPhoto: string;
+  salePrice: number;
+  sizeProduct?: number;
+  who: 'bag' | 'favorite';
+}
+
+const ProductInBag: NextPage<IProductInBag> = ({
   price,
   productId,
+  favoriteId,
   productName,
   productPhoto,
   salePrice,
   sizeProduct,
+  who,
 }) => {
   const { t } = useTranslation('common');
   const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.user);
 
   return (
     <MainContainer>
@@ -45,9 +59,11 @@ const ProductInBag: NextPage<Omit<IProductInBag, 'productAmount'>> = ({
         >
           {productName}
         </Typography>
-        <Typography variant="roboto20200" color={Colors.darkGray}>
-          {t('size')}: {sizeProduct}
-        </Typography>
+        {who === 'bag' && (
+          <Typography variant="roboto20200" color={Colors.darkGray}>
+            {t('size')}: {sizeProduct}
+          </Typography>
+        )}
         {salePrice === 0 ? (
           <Typography
             variant="roboto20200"
@@ -75,7 +91,18 @@ const ProductInBag: NextPage<Omit<IProductInBag, 'productAmount'>> = ({
           </PriceInBagBox>
         )}
         <RemoveBox>
-          <RemoveButton onClick={() => removeFromBag(productId, dispatch)}>
+          <RemoveButton
+            onClick={async () =>
+              who === 'bag'
+                ? removeFromBag(productId, dispatch)
+                : await dispatch(
+                    removeFromFavorite({
+                      favoriteId,
+                      userId: user.id,
+                    })
+                  )
+            }
+          >
             {t('remove')}
           </RemoveButton>
         </RemoveBox>

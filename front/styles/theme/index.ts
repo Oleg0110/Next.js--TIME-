@@ -97,7 +97,7 @@ const theme = createTheme({
             overflow: 'visible',
             mt: 500,
             top: 0,
-            left: 1,
+            left: 2,
             filter: `drop-shadow(0px 2px 8px ${Colors.primary})`,
             '& .MuiAvatar-root': {
               width: 32,
@@ -107,8 +107,7 @@ const theme = createTheme({
             },
             '& .scss-1poimk-MuiPaper-root-MuiMenu-paper-MuiPaper-root-MuiPopover-paper ':
               {
-                marginTop: 24,
-                minWidth: '200px',
+                marginTop: '20px',
                 minHeight: '100px',
                 borderRadius: '0px',
                 boxShadow: 'none',

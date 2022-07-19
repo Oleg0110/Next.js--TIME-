@@ -100,6 +100,34 @@ class ProductController {
       res.status(500).json(e.message)
     }
   }
+
+  async addProductToFavorite(req, res) {
+    try {
+      const { productId, userId } = req.body
+
+      if (!productId && !userId) res.status(400).json({ error: 'invalid data' })
+
+      const favoriteProducts = await ProductService.addProductToFavorite(productId, userId)
+
+      res.status(200).json(favoriteProducts)
+    } catch (e) {
+      res.status(500).json(e.message)
+    }
+  }
+
+  async removeProductToFavorite(req, res) {
+    try {
+      const { favoriteId, userId } = req.params
+
+      if (!favoriteId && !userId) res.status(400).json({ error: 'invalid data' })
+
+      const favoriteProducts = await ProductService.removeProductToFavorite(favoriteId, userId)
+
+      res.status(200).json(favoriteProducts)
+    } catch (e) {
+      res.status(500).json(e.message)
+    }
+  }
 }
 
 module.exports = new ProductController()

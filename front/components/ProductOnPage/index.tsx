@@ -19,6 +19,10 @@ import ChooseSizeModal from '../ChooseSizeModal';
 import Link from 'next/link';
 import styles from '../../styles/icons.module.scss';
 import { useRouter } from 'next/router';
+import {
+  addToFavorite,
+  removeFromFavorite,
+} from '../../store/services/ProductService';
 
 interface IProductOnPageProps {
   name: string;
@@ -39,15 +43,17 @@ const ProductOnPage: NextPage<IProductOnPageProps> = ({
   productSize,
   mainPicture,
 }) => {
-  const [isLiked, setIsLiked] = useState(false);
-
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const isAuth = false;
+  const { productInBag, productsFavorite } = useAppSelector(
+    (state) => state.product
+  );
+  const { isAuth, user } = useAppSelector((state) => state.user);
 
-  const { productInBag } = useAppSelector((state) => state.product);
-
+  const isFavorite =
+    productsFavorite &&
+    productsFavorite.find((f) => f.product?.id === productId);
   const isAdded = !!productInBag.find((f) => f.productId === productId);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -83,21 +89,36 @@ const ProductOnPage: NextPage<IProductOnPageProps> = ({
           }
           style={{ cursor: 'pointer' }}
         />
-        <IconPosition
-          onClick={() => {
-            if (isAuth) {
-              setIsLiked(!isLiked);
-            } else {
-              toast.warning('Please log in to add');
-            }
-          }}
-        >
-          {isLiked ? (
-            <TooltipIcon title="remove-from-favorites">
+        <IconPosition>
+          {!!isFavorite ? (
+            <TooltipIcon
+              title="remove-from-favorites"
+              onClick={async () => {
+                if (isAuth) {
+                  await dispatch(
+                    removeFromFavorite({
+                      favoriteId: isFavorite.id,
+                      userId: user.id,
+                    })
+                  );
+                } else {
+                  toast.warning('Please log in to add');
+                }
+              }}
+            >
               <div className={styles.likeProductFilled} />
             </TooltipIcon>
           ) : (
-            <TooltipIcon title="add-to-favorites">
+            <TooltipIcon
+              title="add-to-favorites"
+              onClick={async () => {
+                if (isAuth) {
+                  await dispatch(addToFavorite({ productId, userId: user.id }));
+                } else {
+                  toast.warning('Please log in to add');
+                }
+              }}
+            >
               <div className={styles.likeProduct} />
             </TooltipIcon>
           )}

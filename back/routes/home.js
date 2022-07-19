@@ -5,5 +5,6 @@ const router = new Router()
 
 router.get('/', HomeController.getProductSale)
 router.get('/get-unconfirmed-orders', HomeController.getUnconfirmedOrders)
+router.get('/get-favorite/:userId', HomeController.getFavorite)
 
 module.exports = router

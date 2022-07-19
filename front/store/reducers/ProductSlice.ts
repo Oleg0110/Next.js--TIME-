@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
+  IFavorite,
   IProduct,
   IProductInBag,
   IProductOrder,
   IProductReview,
   ProductState,
 } from '../../utils/interface/productInterface';
-import { ICreateOrder } from '../../utils/interface/serviceInterface';
 import {
   addReview,
   changeOrderStatus,
@@ -20,6 +20,9 @@ import {
   getReview,
   getSaleProduct,
   getSearchProduct,
+  addToFavorite,
+  getFavorite,
+  removeFromFavorite,
 } from '../services/ProductService';
 
 const initialState: ProductState = {
@@ -31,6 +34,7 @@ const initialState: ProductState = {
   ordersUnconfirmed: [],
   ordersConfirmed: [],
   productInBag: [],
+  productsFavorite: [],
   isLoading: false,
   error: '',
 };
@@ -44,6 +48,11 @@ export const productReducer = createSlice({
       action: PayloadAction<IProductInBag[]>
     ) => {
       state.productInBag = action.payload;
+    },
+    clearFavorite: (state, action: PayloadAction<[]>) => {
+      console.log(action.payload);
+
+      state.productsFavorite = action.payload;
     },
   },
   extraReducers: {
@@ -180,6 +189,21 @@ export const productReducer = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    [getFavorite.fulfilled.type]: (
+      state,
+      action: PayloadAction<IFavorite[]>
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.productsFavorite = action.payload;
+    },
+    [getFavorite.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [getFavorite.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     // Post Requests
     [addReview.fulfilled.type]: (
       state,
@@ -193,6 +217,21 @@ export const productReducer = createSlice({
       state.isLoading = true;
     },
     [addReview.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [addToFavorite.fulfilled.type]: (
+      state,
+      action: PayloadAction<IFavorite[]>
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.productsFavorite = action.payload;
+    },
+    [addToFavorite.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [addToFavorite.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -246,9 +285,28 @@ export const productReducer = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    [removeFromFavorite.fulfilled.type]: (
+      state,
+      action: PayloadAction<IFavorite[]>
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.productsFavorite = action.payload;
+    },
+    [removeFromFavorite.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [removeFromFavorite.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 
-export const { setProductInShoppingBag } = productReducer.actions;
+export const { setProductInShoppingBag, clearFavorite } =
+  productReducer.actions;
 
 export default productReducer.reducer;

@@ -122,6 +122,7 @@ export const materialArray: MaterialType[] = [
 export const filterDataName = 'filterData';
 export const sortingDataName = 'sorting';
 export const shoppingBagDataName = 'products in Shopping Bag';
+export const token = 'token';
 
 export const sizesArray = [35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
 
