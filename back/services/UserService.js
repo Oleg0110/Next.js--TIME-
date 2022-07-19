@@ -8,10 +8,13 @@ const tokensMakeFunc = require('../utils/UserServiceFunc')
 const ApiErrors = require('../utils/apiErrors')
 const TokenService = require('./TokenService')
 const UserDto = require('../dtos/user-dto')
+const OrderDto = require('../dtos/order-dto')
+const Order = require('../models/Order')
 
 class UserService {
   async registration(req, res, next) {
     const { name, surname, email, password } = req.body
+
     if (!name && !surname && !email && !password) {
       return next(ApiErrors.BadRequest('invalid data'))
     }
@@ -44,10 +47,8 @@ class UserService {
 
     await user.save()
 
-    //!!! Problem
-    // await MailService.sendActivationMail(email, `${process.env.API_URL}/auth/activate/${activationLink}`)
+    await MailService.sendActivationMail(email, `${process.env.API_URL}/activate/${activationLink}`)
 
-    console.log(1111, user)
     return tokensMakeFunc(user, res, 'Please confirm your email')
   }
 
@@ -67,15 +68,13 @@ class UserService {
     const user = await User.findOne({ email })
 
     if (!user) {
-      throw ApiErrors.BadRequest('Invalid email or password')
-      return res.status(400).json({ message: 'Invalid email or password' })
+      throw next(ApiErrors.BadRequest('Invalid email or password'))
     }
 
     const validPassword = await bcrypt.compareSync(password, user.password)
 
     if (!validPassword) {
-      throw ApiErrors.BadRequest('Invalid email or password')
-      return res.status(400).json({ message: 'Invalid email or password' })
+      throw next(ApiErrors.BadRequest('Invalid email or password'))
     }
 
     return tokensMakeFunc(user, res, 'Successful login')
@@ -106,6 +105,34 @@ class UserService {
     await TokenService.saveToken(userDto.id, tokens.refreshToken)
 
     return { user: { ...tokens, ...userDto } }
+  }
+
+  async createOrder(userOrderData, orderProducts, totalPrice) {
+    const orderNumber = Number(`1${Math.floor(Math.random() * (999999 - 100000 + 1) + 1000000)}`)
+
+    const { userName, userSurname, userRegion, userAddress, userPhone, userCity, userEmail } = userOrderData
+
+    const order = new Order({
+      orderNumber,
+      userName,
+      userSurname,
+      userRegion,
+      userAddress,
+      userPhone,
+      userCity,
+      userEmail,
+      orderProducts,
+      totalPrice,
+    })
+
+    await order.save()
+
+    const dtoOrder = new OrderDto(order)
+
+    await MailService.sendOrderToUs(dtoOrder.orderNumber, dtoOrder.userName, dtoOrder.userSurname)
+    await MailService.sendOrderToUser(dtoOrder)
+
+    return dtoOrder
   }
 }
 

@@ -2,6 +2,8 @@ const Product = require('../../models/Product')
 const User = require('../../models/User')
 const ProductDto = require('../../dtos/product-dto')
 const UserDto = require('../../dtos/user-dto')
+const Order = require('../../models/Order')
+const OrderDto = require('../../dtos/order-dto')
 
 class AdminFunc {
   regexFunc = async (searchValue, type) => {
@@ -20,6 +22,10 @@ class AdminFunc {
       }).limit(10)
 
       users.map((data) => dtoValue.push({ ...new UserDto(data) }))
+    } else if (type === 'order') {
+      const orders = await Order.find({ orderStatus: true, $or: [{ orderNumber: { $regex: regex } }] }).limit(10)
+
+      orders.map((data) => dtoValue.push({ ...new OrderDto(data) }))
     }
 
     return dtoValue

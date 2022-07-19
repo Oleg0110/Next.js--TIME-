@@ -106,7 +106,6 @@ const ProductOnBagPage: NextPage<IProductInBag> = ({
               .required('Required'),
           })}
           onSubmit={async (values) => {
-            console.log(values);
             addProductAmount(values.productAmount);
           }}
         >

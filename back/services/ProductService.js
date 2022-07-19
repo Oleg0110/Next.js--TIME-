@@ -25,59 +25,58 @@ class ProductService {
     return dtoValue
   }
 
-  async getProducts(category) {
-    const product = await ProductFunc.chooseCurrentPageFunc(category)
-
+  async getProducts(category, page) {
+    let product
+    if (page === 'new' || page === 'sale') {
+      product = await ProductFunc.getNewSaleProducts(category, page)
+    } else {
+      product = await ProductFunc.chooseCurrentPageFunc(category)
+    }
     let dtoValue = []
 
     product.map((data) => dtoValue.push({ ...new ProductDto(data) }))
     return dtoValue
   }
 
-  async filterProducts(category, filters) {
+  async filterProducts(category, filters, page) {
     const { productColor, productStyleName, productSize, productStyleMaterial, productPriceFrom, productPriceTo } =
       filters
 
-    const currentPage = await ProductFunc.chooseCurrentPageFunc(category)
+    const isProductColor = productColor[0] !== undefined
+    const isProductStyleName = productStyleName[0] !== undefined
+    const isProductStyleMaterial = productStyleMaterial[0] !== undefined
+    const isProductSize = productSize[0] !== undefined
+
+    let currentPage
+    if (page === 'new' || page === 'sale') {
+      currentPage = await ProductFunc.getNewSaleProducts(category, page)
+    } else {
+      currentPage = await ProductFunc.chooseCurrentPageFunc(category)
+    }
 
     let filtered = []
 
     //Color
-    productColor[0] !== undefined
-      ? (filtered = ProductFunc.colorFunc(currentPage, productColor))
-      : (filtered = currentPage)
+    isProductColor ? (filtered = ProductFunc.colorFunc(currentPage, productColor)) : (filtered = currentPage)
 
     // Style
-    productStyleName[0] !== undefined && productColor
-      ? (filtered = ProductFunc.styleFunc(filtered, currentPage, productStyleName, true))
-      : productStyleName[0] !== undefined &&
-        (filtered = ProductFunc.styleFunc(filtered, currentPage, productStyleName, false))
+    isProductStyleName && (filtered = ProductFunc.styleFunc(filtered, productStyleName))
 
     // Material
-    productStyleMaterial[0] !== undefined && (productColor || productStyleName)
-      ? (filtered = ProductFunc.materialFunc(filtered, currentPage, productStyleMaterial, true))
-      : productStyleMaterial[0] !== undefined &&
-        (filtered = ProductFunc.materialFunc(filtered, currentPage, productStyleMaterial, false))
+    isProductStyleMaterial && (filtered = ProductFunc.materialFunc(filtered, productStyleMaterial))
 
     // Price
-    productPriceFrom && productPriceTo !== undefined && (productColor || productStyleName || productStyleMaterial)
-      ? (filtered = ProductFunc.priceFunc(filtered, currentPage, productPriceFrom, productPriceTo, true))
-      : productPriceFrom &&
-        productPriceTo !== undefined &&
-        (filtered = ProductFunc.priceFunc(filtered, currentPage, productPriceFrom, productPriceTo, false))
+    productPriceFrom !== undefined &&
+      productPriceTo !== undefined &&
+      (filtered = ProductFunc.priceFunc(filtered, productPriceFrom, productPriceTo))
 
     //Size
-    productSize[0] !== undefined &&
-    (productColor || productStyleName || productStyleMaterial || productPriceFrom || productPriceTo)
-      ? (filtered = ProductFunc.sizeFunc(filtered, currentPage, productSize, true))
-      : productSize[0] !== undefined && (filtered = ProductFunc.sizeFunc(filtered, currentPage, productSize, false))
+    isProductSize && (filtered = ProductFunc.sizeFunc(filtered, productSize))
 
     let dtoValue = []
 
     if (filtered[0] !== undefined) {
       filtered.map((data) => dtoValue.push({ ...new ProductDto(data) }))
-    } else {
-      currentPage.map((data) => dtoValue.push({ ...new ProductDto(data) }))
     }
 
     return dtoValue

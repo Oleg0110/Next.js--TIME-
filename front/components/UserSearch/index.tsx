@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Avatar, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import theme, { Colors } from '../../styles/theme';
 import { useTranslation } from 'next-i18next';
 import { NextPage } from 'next';
@@ -11,7 +11,6 @@ import {
   InfoUserContainer,
 } from '../../styles/userSearch';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import ChangeModal from '../ChangeModal';
 import styles from '../../styles/icons.module.scss';
 
@@ -49,31 +48,6 @@ const UserSearch: NextPage<IUserSearch> = ({
     },
   };
 
-  const stringToColor = (string: string) => {
-    let hash = 0;
-    let color = '#';
-
-    for (let i = 0; i < string.length; i += 1) {
-      hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-
-    for (let i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += `00${value.toString(16)}`.slice(-2);
-    }
-    return color;
-  };
-
-  const stringAvatar = (name: string) => {
-    return {
-      sx: {
-        bgcolor: stringToColor(name),
-        marginRight: '15px',
-      },
-      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-    };
-  };
-
   const copyEmail = async () => {
     if (userEmail === undefined) {
       toast.error(t('failed-copy', { ns: 'toast' }));
@@ -91,7 +65,6 @@ const UserSearch: NextPage<IUserSearch> = ({
         product={product}
         searchValue={searchValue}
       /> */}
-      <Avatar {...stringAvatar(`${userName} ${userSurname}`)} />
       <InfoUserContainer>
         <Typography variant="roboto20200" sx={spanStyle}>
           {`${userName} ${userSurname}`}

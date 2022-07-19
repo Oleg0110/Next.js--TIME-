@@ -34,7 +34,7 @@ import Information from './Information';
 
 export const getServerSideProps = async (context) => {
   const productId = context.query.id;
-  const category = context.query.category;
+  const category: string = JSON.parse(JSON.stringify(context.query.category));
 
   const res = await fetch(`${GET_PRODUCTS}/product/${productId}`);
   const product: IProduct = await res.json();
@@ -68,8 +68,7 @@ const Product: NextPage<IProductProps> = ({
 }) => {
   const { t } = useTranslation('accordion');
 
-  const categoryStr = JSON.parse(JSON.stringify(category));
-  const categoryTitle = firstLetterUpper(categoryStr);
+  const categoryTitle = firstLetterUpper(category);
 
   const router = useRouter();
   const productId = `${router.query.id}`;

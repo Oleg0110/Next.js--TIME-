@@ -1,27 +1,25 @@
 import React from 'react';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { object, string } from 'yup';
 import {
-  ChangeDeleteBox,
-  ChangeDeleteFormBox,
-  ChangeDeleteMainFormBox,
   UserSearchBox,
   FoundProductBox,
-  InfoChangeDeleteBox,
+  UserManagementBox,
+  UserManagementMainFormBox,
+  UserManagementFormBox,
+  InfoUserManagementBox,
 } from '../../styles/administration';
 import { Colors } from '../../styles/theme';
 import { Typography } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppSelector } from '../../hooks/redux';
 import { NextPage } from 'next';
 import { getSearchUser } from '../../store/services/UserService';
 import { useTranslation } from 'next-i18next';
 import UserSearch from '../../components/UserSearch';
-import styles from '../../styles/AdminPage.module.scss';
+import AdminSearchForm from '../../components/AdminSearchForm';
 
-const CustomManagement: NextPage = () => {
+const UserManagement: NextPage = () => {
   const { t } = useTranslation('admin');
 
-  const dispatch = useAppDispatch();
   const { userSearch } = useAppSelector((state) => state.user);
 
   const validationSchema = object().shape({
@@ -31,57 +29,26 @@ const CustomManagement: NextPage = () => {
       .required('Required'),
   });
 
-  const styleSpan = {
-    width: '45%',
-    color: Colors.primary,
-    marginRight: '10px',
-  };
-
   return (
-    <ChangeDeleteBox>
-      <ChangeDeleteMainFormBox>
+    <UserManagementBox>
+      <UserManagementMainFormBox>
         <Typography
-          variant="roboto30300"
+          variant="roboto24500"
           sx={{
-            textAlign: 'center',
-            marginBottom: '10px',
+            textAlign: 'start',
+            margin: '10px',
+            width: '100%',
             color: Colors.primary,
           }}
         >
           {t('find-user')}
         </Typography>
-        <ChangeDeleteFormBox>
-          <Formik
-            initialValues={{ searchValue: '' }}
-            validationSchema={validationSchema}
-            onSubmit={async (values) => {
-              await dispatch(getSearchUser(values.searchValue));
-            }}
-          >
-            {() => {
-              return (
-                <Form>
-                  <InfoChangeDeleteBox>
-                    <Typography variant="roboto24500" sx={styleSpan}>
-                      {t('user')}
-                    </Typography>
-                    <ErrorMessage
-                      name="searchValue"
-                      component="span"
-                      className={styles.errorStyle}
-                    />
-                  </InfoChangeDeleteBox>
-                  <Field
-                    name="searchValue"
-                    id="searchValue"
-                    placeholder={t('placeholderName-Email')}
-                    className={styles.inputText}
-                  />
-                </Form>
-              );
-            }}
-          </Formik>
-        </ChangeDeleteFormBox>
+        <AdminSearchForm
+          placeholder={t('placeholderName-Email')}
+          serviceFunc={getSearchUser}
+          validationSchema={validationSchema}
+          formName={t('user')}
+        />
         {userSearch[0] !== undefined && (
           <FoundProductBox>
             <UserSearchBox>
@@ -97,9 +64,9 @@ const CustomManagement: NextPage = () => {
             </UserSearchBox>
           </FoundProductBox>
         )}
-      </ChangeDeleteMainFormBox>
-    </ChangeDeleteBox>
+      </UserManagementMainFormBox>
+    </UserManagementBox>
   );
 };
 
-export default CustomManagement;
+export default UserManagement;

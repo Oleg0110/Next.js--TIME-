@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const { body } = require('express-validator')
-const CommonController = require('../controllers/CommonController')
+const HomeController = require('../controllers/HomeController')
 const UserController = require('../controllers/UserController')
 
 const router = new Router()
@@ -32,6 +32,6 @@ router.post(
 )
 router.post('/logout', UserController.logout)
 router.get('/refreshToken', UserController.refreshToken)
-router.post('/delivery-details/create-order', CommonController.createOrder)
+router.post('/delivery-details/create-order', UserController.createOrder)
 
 module.exports = router

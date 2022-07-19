@@ -2,14 +2,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   IProduct,
   IProductInBag,
+  IProductOrder,
   IProductReview,
   ProductState,
 } from '../../utils/interface/productInterface';
+import { ICreateOrder } from '../../utils/interface/serviceInterface';
 import {
   addReview,
+  changeOrderStatus,
   changeProduct,
   deleteProduct,
   filterProducts,
+  getConfirmedOrders,
+  getUnconfirmedOrders,
   getProducts,
   getRecommendedProducts,
   getReview,
@@ -23,6 +28,8 @@ const initialState: ProductState = {
   productSearch: [],
   productReviews: [],
   productsRecommended: [],
+  ordersUnconfirmed: [],
+  ordersConfirmed: [],
   productInBag: [],
   isLoading: false,
   error: '',
@@ -40,6 +47,7 @@ export const productReducer = createSlice({
     },
   },
   extraReducers: {
+    // Get Requests
     [getSaleProduct.fulfilled.type]: (
       state,
       action: PayloadAction<IProduct[]>
@@ -85,36 +93,6 @@ export const productReducer = createSlice({
       state,
       action: PayloadAction<string>
     ) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-    [changeProduct.fulfilled.type]: (
-      state,
-      action: PayloadAction<IProduct[]>
-    ) => {
-      state.isLoading = false;
-      state.error = '';
-      state.productSearch = action.payload;
-    },
-    [changeProduct.pending.type]: (state) => {
-      state.isLoading = true;
-    },
-    [changeProduct.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-    [deleteProduct.fulfilled.type]: (
-      state,
-      action: PayloadAction<IProduct[]>
-    ) => {
-      state.isLoading = false;
-      state.error = '';
-      state.productSearch = action.payload;
-    },
-    [deleteProduct.pending.type]: (state) => {
-      state.isLoading = true;
-    },
-    [deleteProduct.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -166,6 +144,43 @@ export const productReducer = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    [getUnconfirmedOrders.fulfilled.type]: (
+      state,
+      action: PayloadAction<IProductOrder[]>
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.ordersUnconfirmed = action.payload;
+    },
+    [getUnconfirmedOrders.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [getUnconfirmedOrders.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [getConfirmedOrders.fulfilled.type]: (
+      state,
+      action: PayloadAction<IProductOrder[]>
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.ordersConfirmed = action.payload;
+    },
+    [getConfirmedOrders.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [getConfirmedOrders.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // Post Requests
     [addReview.fulfilled.type]: (
       state,
       action: PayloadAction<IProductReview[]>
@@ -178,6 +193,56 @@ export const productReducer = createSlice({
       state.isLoading = true;
     },
     [addReview.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // Patch Requests
+    [changeProduct.fulfilled.type]: (
+      state,
+      action: PayloadAction<IProduct[]>
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.productSearch = action.payload;
+    },
+    [changeProduct.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [changeProduct.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [changeOrderStatus.fulfilled.type]: (
+      state,
+      action: PayloadAction<IProductOrder[]>
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.ordersUnconfirmed = action.payload;
+    },
+    [changeOrderStatus.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [changeOrderStatus.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    // Delete Requests
+    [deleteProduct.fulfilled.type]: (
+      state,
+      action: PayloadAction<IProduct[]>
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.productSearch = action.payload;
+    },
+    [deleteProduct.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [deleteProduct.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = action.payload;
     },

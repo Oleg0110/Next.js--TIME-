@@ -22,6 +22,11 @@ class ProductFunc {
     return await Product.find({ productFor: category })
   }
 
+  getNewSaleProducts = async (category, page) => {
+    if (page === 'new') return await Product.find({ productNew: true, productFor: category })
+    if (page === 'sale') return await Product.find({ productSale: true, productFor: category })
+  }
+
   colorFunc = (currentPage, productColor) => {
     let currentData = []
 
@@ -29,64 +34,51 @@ class ProductFunc {
     return currentData
   }
 
-  styleFunc = (filtered, currentPage, productStyleName, value) => {
+  styleFunc = (filtered, productStyleName) => {
     let currentData = []
 
-    value &&
-      filtered.map((data) => {
-        comparativeFunc(data.productStyleName, productStyleName) && currentData.push(data)
-      })
+    filtered.map((data) => {
+      comparativeFunc(data.productStyleName, productStyleName) && currentData.push(data)
+    })
 
-    !value &&
-      currentPage.map((data) => {
-        comparativeFunc(data.productStyleName, productStyleName) && currentData.push(data)
-      })
     return currentData
   }
 
-  materialFunc = (filtered, currentPage, productStyleMaterial, value) => {
+  materialFunc = (filtered, productStyleMaterial) => {
     let currentData = []
 
-    value &&
-      filtered.map((data) => {
-        comparativeFunc(data.productStyleMaterial, productStyleMaterial) && currentData.push(data)
-      })
-
-    !value &&
-      currentPage.map((data) => {
-        comparativeFunc(data.productStyleMaterial, productStyleMaterial) && currentData.push(data)
-      })
+    filtered.map((data) => {
+      comparativeFunc(data.productStyleMaterial, productStyleMaterial) && currentData.push(data)
+    })
 
     return currentData
   }
 
-  priceFunc = (filtered, currentPage, productPriceFrom, productPriceTo, value) => {
-    let currentData
+  priceFunc = (filtered, productPriceFrom, productPriceTo) => {
+    let currentData = []
 
-    value &&
-      (currentData = filtered.filter((f) => f.productPrice >= productPriceFrom && f.productPrice <= productPriceTo))
-
-    !value &&
-      (currentData = currentPage.filter((f) => f.productPrice >= productPriceFrom && f.productPrice <= productPriceTo))
+    filtered.map((data) => {
+      if (data.productSale === true) {
+        return (
+          data.productDiscountPrice >= productPriceFrom &&
+          data.productDiscountPrice <= productPriceTo &&
+          currentData.push(data)
+        )
+      } else {
+        return data.productPrice >= productPriceFrom && data.productPrice <= productPriceTo && currentData.push(data)
+      }
+    })
 
     return currentData
   }
 
-  sizeFunc = (filtered, currentPage, productSize, value) => {
+  sizeFunc = (filtered, productSize) => {
     let currentData = []
 
     const size = []
     productSize.map((data) => size.push(+data))
 
-    value &&
-      filtered.map(
-        (data) => data.productSize.filter((i) => size.includes(i))[0] !== undefined && currentData.push(data)
-      )
-
-    !value &&
-      currentPage.map(
-        (data) => data.productSize.filter((i) => size.includes(i))[0] !== undefined && currentData.push(data)
-      )
+    filtered.map((data) => data.productSize.filter((i) => size.includes(i))[0] !== undefined && currentData.push(data))
 
     return currentData
   }

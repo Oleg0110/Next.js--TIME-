@@ -5,9 +5,13 @@ import Swiper from 'swiper';
 export const ROUTES = {
   home: '/',
   new: '/product/new',
+  newWomen: '/product/new-women',
+  newMen: '/product/new-men',
   women: '/product/women',
   men: '/product/men',
   sale: '/product/sale',
+  saleWomen: '/product/sale-women',
+  saleMen: '/product/sale-men',
   authRegistration: '/auth/registration',
   authActivate: '/auth/activate',
   authLogin: '/auth/login',
@@ -33,22 +37,32 @@ export const BUTTONS: IButtonProps[] = [
   {
     id: '1',
     name: 'new',
-    link: ROUTES.new,
+    hoverBlock: true,
+    buttonsHoverArr: [
+      { id: '1', name: 'Men New', link: ROUTES.newMen },
+      { id: '2', name: 'Women New', link: ROUTES.newWomen },
+    ],
   },
   {
     id: '2',
     name: 'women',
     link: ROUTES.women,
+    hoverBlock: false,
   },
   {
     id: '3',
     name: 'men',
     link: ROUTES.men,
+    hoverBlock: false,
   },
   {
     id: '4',
     name: 'sale',
-    link: ROUTES.sale,
+    hoverBlock: true,
+    buttonsHoverArr: [
+      { id: '1', name: 'Men Sale', link: ROUTES.saleMen },
+      { id: '2', name: 'Women Sale', link: ROUTES.saleWomen },
+    ],
   },
 ];
 

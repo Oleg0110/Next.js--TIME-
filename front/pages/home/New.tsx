@@ -27,7 +27,7 @@ const New = () => {
         </Typography>
         <CategoryPositionBox>
           <WomanNewBox>
-            <Link href={`${ROUTES.new}${ROUTES.women}`}>
+            <Link href={`${ROUTES.newWomen}`}>
               <a>
                 <ImageOpacity>
                   <Image src={Woman} width="370px" height="570px" />
@@ -35,7 +35,7 @@ const New = () => {
               </a>
             </Link>
             <CustomButton style={{ marginTop: '30px' }} size="LG">
-              <Link href={`${ROUTES.new}${ROUTES.women}`}>
+              <Link href={`${ROUTES.newWomen}`}>
                 <Typography variant="inherit" color="inherit">
                   {t('women')}
                 </Typography>
@@ -43,7 +43,7 @@ const New = () => {
             </CustomButton>
           </WomanNewBox>
           <ManNewBox>
-            <Link href={`${ROUTES.new}${ROUTES.men}`}>
+            <Link href={`${ROUTES.newMen}`}>
               <a>
                 <ImageOpacity>
                   <Image src={Man} width="370px" height="570px" />
@@ -51,7 +51,7 @@ const New = () => {
               </a>
             </Link>
             <CustomButton style={{ marginTop: '30px' }} size="LG">
-              <Link href={`${ROUTES.new}${ROUTES.men}`}>
+              <Link href={`${ROUTES.newMen}`}>
                 <Typography variant="inherit" color="inherit">
                   {t('men')}
                 </Typography>

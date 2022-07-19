@@ -1,4 +1,5 @@
 import { ProductColor, ProductMaterial, ProductStyle } from '../types/product';
+import { ICreateOrder } from './serviceInterface';
 
 export interface IProduct {
   id: string;
@@ -53,6 +54,21 @@ export interface IProductReview {
   date: number;
 }
 
+export interface IProductOrder {
+  id: string;
+  orderNumber: string;
+  userName: string;
+  userSurname: string;
+  userRegion: string;
+  userAddress: string;
+  userPhone: string;
+  userCity: string;
+  userEmail: string;
+  orderProducts: IProductInBag[];
+  orderStatus: boolean;
+  totalPrice: number;
+}
+
 export interface ProductState {
   products: IProduct[];
   productsSale: IProduct[];
@@ -60,6 +76,8 @@ export interface ProductState {
   productReviews: IProductReview[];
   productsRecommended: IProduct[];
   productInBag: IProductInBag[];
+  ordersUnconfirmed: IProductOrder[];
+  ordersConfirmed: IProductOrder[];
   isLoading: boolean;
   error: string;
 }

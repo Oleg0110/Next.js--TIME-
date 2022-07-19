@@ -1,6 +1,7 @@
 import { styled } from '@mui/material/styles';
 import { Box, Button } from '@mui/material';
 import theme, { Colors } from '../theme';
+import { ErrorMessage, Field } from 'formik';
 
 export const MainAccountModalBox = styled(Box)(() => ({
   position: 'absolute' as 'absolute',
@@ -48,5 +49,25 @@ export const InputsAccountMenuBox = styled(Box)(() => ({
   alignItems: 'center',
   display: 'flex',
   flexDirection: 'column',
-  marginTop: '15px',
 })) as typeof Box;
+
+export const FormAuthBox = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  position: 'relative',
+  alignItems: 'center',
+})) as typeof Box;
+
+export const InputAuth = styled(Field)(() => ({
+  border: `1px solid ${Colors.primary}`,
+  width: '260px',
+  padding: '3px 10px',
+  fontSize: '18px',
+  margin: '5px 0px',
+})) as typeof Field;
+
+export const AuthErrorMessage = styled(ErrorMessage)(() => ({
+  position: 'absolute',
+  top: '-20px',
+  color: '#e64848',
+})) as typeof ErrorMessage;

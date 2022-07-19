@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const UserService = require('../services/UserService.js')
+const ApiErrors = require('../utils/apiErrors')
 
 class UserController {
   async registration(req, res, next) {
@@ -64,6 +65,20 @@ class UserController {
       return res.status(200).json({ message: 'Successful refresh token', userData })
     } catch (e) {
       return next(e)
+    }
+  }
+
+  async createOrder(req, res) {
+    try {
+      const { userOrderData, orderProducts, totalPrice } = req.body
+      if (!userOrderData && !orderProducts && !totalPrice) {
+        return next(ApiErrors.BadRequest('invalid data'))
+      }
+      const order = await UserService.createOrder(userOrderData, orderProducts, totalPrice)
+
+      res.status(200).json(order)
+    } catch (e) {
+      res.status(500).json(e.message)
     }
   }
 }

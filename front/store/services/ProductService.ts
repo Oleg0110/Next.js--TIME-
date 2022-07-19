@@ -10,65 +10,27 @@ import {
 import {
   IProduct,
   IProductFilter,
+  IProductOrder,
   IProductReview,
 } from '../../utils/interface/productInterface';
 import axios from 'axios';
+import {
+  IAddArg,
+  IAddProductResponse,
+  IAddReviewArg,
+  IChangeOrderArg,
+  IChangeProductArg,
+  IChangeResponse,
+  ICreateOrder,
+  IDeleteArg,
+  IDeleteResponse,
+  IFilterArg,
+  IGetProductsArg,
+  IGetRecommendedArg,
+  IGetReviewArg,
+} from '../../utils/interface/serviceInterface';
 
-type ChangeType = {
-  message: string;
-  changedProduct: IProduct[];
-};
-
-type DeleteType = {
-  message: string;
-  deletedProduct: IProduct[];
-};
-
-interface IDeleteArg {
-  productId: string;
-  searchValue: string;
-}
-
-interface IChangeArg {
-  productId: string;
-  product: Omit<
-    IProduct,
-    'id' | 'date' | 'productMainPictures' | 'productNumber'
-  >;
-  searchValue: string;
-}
-
-interface IFilterArg {
-  filter: IProductFilter;
-  category: string;
-}
-
-type AddProductType = {
-  message: string;
-  product: IProduct;
-};
-
-interface IAddArg {
-  product: Omit<IProduct, 'id' | 'date' | 'productNumber'>;
-  photoFile: any[];
-}
-
-interface IAddReviewArg {
-  comment: string;
-  productId: string;
-  userId: string;
-  rating: number;
-}
-interface IGetReviewArg {
-  productId: string;
-  category: string;
-}
-
-interface IGetRecommendedArg {
-  style: string;
-  category: string;
-}
-
+// Get Requests
 export const getSaleProduct = createAsyncThunk(
   'home/getSaleProduct',
   async (_, thunkApi) => {
@@ -84,9 +46,11 @@ export const getSaleProduct = createAsyncThunk(
 
 export const getProducts = createAsyncThunk(
   'product/getProducts',
-  async (category: string | string[], thunkApi) => {
+  async ({ category, page }: IGetProductsArg, thunkApi) => {
     try {
-      const res = await axios.get<IProduct[]>(`${GET_PRODUCTS}/${category}`);
+      const res = await axios.get<IProduct[]>(
+        `${GET_PRODUCTS}/${category}/${page}`
+      );
 
       return res.data;
     } catch (error) {
@@ -97,70 +61,11 @@ export const getProducts = createAsyncThunk(
 
 export const getProduct = createAsyncThunk(
   'product/getProduct',
-  async (productId: string | string[], thunkApi) => {
+  async (productId: string, thunkApi) => {
     try {
       const res = await axios.get<IProduct[]>(`${GET_PRODUCTS}/${productId}`);
 
       return res.data;
-    } catch (error) {
-      return thunkApi.rejectWithValue((error as Error).message);
-    }
-  }
-);
-
-export const addProduct = createAsyncThunk(
-  'admin/addProduct',
-  async (arg: IAddArg, thunkApi) => {
-    try {
-      const { product, photoFile } = arg;
-
-      // const res = await axios.post<AddProductType>(ADMIN_ADD_PRODUCT, product);
-
-      let formData = new FormData();
-
-      formData.append('file', product.productMainPictures[0]);
-      formData.append('product', JSON.stringify({ ...product }));
-
-      const res = await axios.post<AddProductType>(
-        `${ADMIN_ADD_PRODUCT}`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data; application/json',
-          },
-        }
-      );
-
-      console.log(res.data.product);
-
-      const productData = res.data.product;
-
-      let countPhoto = 0;
-
-      if (productData) {
-        photoFile.forEach(async (data) => {
-          let formData = new FormData();
-
-          formData.append('file', data);
-          formData.append('productId', productData.id);
-
-          const res = await axios.post(
-            `${ADMIN_ADD_PRODUCT}/add-photos`,
-            formData,
-            {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            }
-          );
-
-          res.data && countPhoto++;
-        });
-      }
-
-      if (countPhoto === photoFile.length) {
-        return res.data.product;
-      }
     } catch (error) {
       return thunkApi.rejectWithValue((error as Error).message);
     }
@@ -180,57 +85,19 @@ export const getSearchProduct = createAsyncThunk(
   }
 );
 
-export const changeProduct = createAsyncThunk(
-  'admin/changeProduct',
-  async (arg: IChangeArg, thunkApi) => {
-    try {
-      const { productId, product, searchValue } = arg;
-
-      const res = await axios.patch<ChangeType>(ADMIN_CHANGE_PRODUCT, {
-        productId,
-        product,
-        searchValue,
-      });
-
-      return res.data.changedProduct;
-    } catch (error) {
-      return thunkApi.rejectWithValue((error as Error).message);
-    }
-  }
-);
-
-export const deleteProduct = createAsyncThunk(
-  'admin/deleteProduct',
-  async (arg: IDeleteArg, thunkApi) => {
-    try {
-      const { productId, searchValue } = arg;
-
-      const res = await axios.delete<DeleteType>(
-        `${ADMIN_DELETE_PRODUCT}/${productId}/${searchValue}`
-      );
-
-      return res.data.deletedProduct;
-    } catch (error) {
-      return thunkApi.rejectWithValue((error as Error).message);
-    }
-  }
-);
-
 export const filterProducts = createAsyncThunk(
   'product/filterProducts',
   async (arg: IFilterArg, thunkApi) => {
     try {
-      const { filter, category } = arg;
+      const { filter, category, page } = arg;
 
-      const res = await axios.get<IProduct[]>(
-        `${GET_PRODUCTS}/${category}/${filter}`,
-        {
-          params: {
-            filter,
-            category,
-          },
-        }
-      );
+      const res = await axios.get<IProduct[]>(`${GET_PRODUCTS}/${category}`, {
+        params: {
+          filter,
+          category,
+          page,
+        },
+      });
 
       return res.data;
     } catch (error) {
@@ -273,6 +140,93 @@ export const getRecommendedProducts = createAsyncThunk(
   }
 );
 
+export const getUnconfirmedOrders = createAsyncThunk(
+  'product/getUnconfirmedOrders',
+  async (_, thunkApi) => {
+    try {
+      const res = await axios.get<IProductOrder[]>(
+        `${BASIC_URL}/get-unconfirmed-orders`
+      );
+
+      return res.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+export const getConfirmedOrders = createAsyncThunk(
+  'product/getConfirmedOrders',
+  async (searchValue: string, thunkApi) => {
+    try {
+      const res = await axios.get<IProductOrder[]>(
+        `${BASIC_URL}/administration-page/get-confirmed-orders/${searchValue}`
+      );
+
+      return res.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+// Post Requests
+
+export const addProduct = createAsyncThunk(
+  'admin/addProduct',
+  async (arg: IAddArg, thunkApi) => {
+    try {
+      const { product, photoFile } = arg;
+
+      let formData = new FormData();
+
+      formData.append('file', product.productMainPictures[0]);
+      formData.append('product', JSON.stringify({ ...product }));
+
+      const res = await axios.post<IAddProductResponse>(
+        `${ADMIN_ADD_PRODUCT}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data; application/json',
+          },
+        }
+      );
+
+      const productData = res.data.product;
+
+      let countPhoto = 0;
+
+      if (productData) {
+        photoFile.forEach(async (data) => {
+          let formData = new FormData();
+
+          formData.append('file', data);
+          formData.append('productId', productData.id);
+
+          const res = await axios.post(
+            `${ADMIN_ADD_PRODUCT}/add-photos`,
+            formData,
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            }
+          );
+
+          res.data && countPhoto++;
+        });
+      }
+
+      if (countPhoto === photoFile.length) {
+        return res.data.product;
+      }
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
 export const addReview = createAsyncThunk(
   'product/addReview',
   async (arg: IAddReviewArg, thunkApi) => {
@@ -281,9 +235,69 @@ export const addReview = createAsyncThunk(
         `${GET_PRODUCTS}/add-review`,
         arg
       );
-      console.log(res.data);
 
       return res.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+// Patch Requests
+
+export const changeProduct = createAsyncThunk(
+  'admin/changeProduct',
+  async (arg: IChangeProductArg, thunkApi) => {
+    try {
+      const { productId, product, searchValue } = arg;
+
+      const res = await axios.patch<IChangeResponse>(ADMIN_CHANGE_PRODUCT, {
+        productId,
+        product,
+        searchValue,
+      });
+
+      return res.data.changedProduct;
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+export const changeOrderStatus = createAsyncThunk(
+  'admin/changeOrderStatus',
+  async (arg: IChangeOrderArg, thunkApi) => {
+    try {
+      const { orderId, orderStatus } = arg;
+
+      const res = await axios.patch<IProductOrder[]>(
+        `${BASIC_URL}/administration-page/change-order-status`,
+        {
+          orderId,
+          orderStatus,
+        }
+      );
+
+      return res.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+// Delete Request
+
+export const deleteProduct = createAsyncThunk(
+  'admin/deleteProduct',
+  async (arg: IDeleteArg, thunkApi) => {
+    try {
+      const { productId, searchValue } = arg;
+
+      const res = await axios.delete<IDeleteResponse>(
+        `${ADMIN_DELETE_PRODUCT}/${productId}/${searchValue}`
+      );
+
+      return res.data.deletedProduct;
     } catch (error) {
       return thunkApi.rejectWithValue((error as Error).message);
     }

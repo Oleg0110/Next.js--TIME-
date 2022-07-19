@@ -27,3 +27,9 @@ export const ProductOnBagBox = styled(Box)(() => ({
   flexDirection: 'column',
   borderTop: `1px solid ${Colors.secondaryWhite}`,
 })) as typeof Box;
+
+export const ProductOnBagContainer = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  width: '100%',
+})) as typeof Box;
