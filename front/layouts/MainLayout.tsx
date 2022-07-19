@@ -12,6 +12,7 @@ import { useAppDispatch } from '../hooks/redux';
 import { IProductInBag } from '../utils/interface/productInterface';
 import { setProductInShoppingBag } from '../store/reducers/ProductSlice';
 import { shoppingBagDataName } from '../utils/constants';
+import { getUnconfirmedOrders } from '../store/services/ProductService';
 
 interface MainLayoutProps {
   title?: string;
@@ -30,12 +31,17 @@ const MainLayout: NextPage<MainLayoutProps> = ({
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!ISSERVER) {
-      const arr: IProductInBag[] =
-        JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
+    const asyncFunc = async () => {
+      if (!ISSERVER) {
+        const arr: IProductInBag[] =
+          JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
 
-      dispatch(setProductInShoppingBag(arr));
-    }
+        await dispatch(setProductInShoppingBag(arr));
+        await dispatch(getUnconfirmedOrders());
+      }
+    };
+
+    asyncFunc();
   }, []);
 
   return (

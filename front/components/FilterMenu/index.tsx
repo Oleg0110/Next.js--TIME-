@@ -95,8 +95,16 @@ const FilterMenu: NextPage<IFilterMenuProps> = ({
           initialValues={initialValues}
           // validationSchema={validationSchema}
           onSubmit={async (values) => {
-            localStorage.setItem(filterDataName, JSON.stringify(values));
-            await dispatch(filterProducts({ filter: values, category }));
+            await localStorage.setItem(filterDataName, JSON.stringify(values));
+            if (category === 'women' || category === 'men') {
+              await dispatch(filterProducts({ filter: values, category }));
+            } else {
+              const categoryName = category.split('-')[1];
+              const page = category.split('-')[0];
+              await dispatch(
+                filterProducts({ filter: values, category: categoryName, page })
+              );
+            }
             setIsOpen(false);
           }}
         >

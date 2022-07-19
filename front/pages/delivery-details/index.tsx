@@ -11,6 +11,7 @@ import {
   DeliveryContent,
   DeliveryMainBox,
   ProductOnDeliveryBox,
+  ProductOnDeliveryContainer,
   ProductOnDeliveryScroll,
 } from '../../styles/deliveryDetails';
 import DeliveryForm from './DeliveryForm';
@@ -39,7 +40,7 @@ const Bag = () => {
               <ProductOnDeliveryScroll>
                 {productInBag &&
                   productInBag.map((data) => (
-                    <>
+                    <ProductOnDeliveryContainer key={data.productId}>
                       <ProductOnDelivery
                         price={data.price}
                         productName={data.productName}
@@ -48,7 +49,7 @@ const Bag = () => {
                         sizeProduct={data.sizeProduct}
                         productAmount={data.productAmount}
                       />
-                    </>
+                    </ProductOnDeliveryContainer>
                   ))}
               </ProductOnDeliveryScroll>
               <Typography

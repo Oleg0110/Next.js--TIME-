@@ -99,8 +99,10 @@ const DeliveryForm: NextPage<IDeliveryForm> = ({ totalPrice }) => {
           );
           if (data.meta.requestStatus !== 'rejected') {
             toast.success('Successful Order');
-            cleanBag(dispatch);
             router.push('/');
+            cleanBag(dispatch);
+          } else {
+            toast.error('Problem Order, please try again');
           }
         }}
       >

@@ -31,11 +31,11 @@ class ProductController {
 
   async getProducts(req, res) {
     try {
-      const { category } = req.params
+      const { category, page } = req.params
 
       if (!category) res.status(400).json({ error: 'invalid data' })
 
-      const products = await ProductService.getProducts(category)
+      const products = await ProductService.getProducts(category, page)
 
       res.status(200).json(products)
     } catch (e) {
@@ -45,13 +45,13 @@ class ProductController {
 
   async filterProducts(req, res) {
     try {
-      const { category, filter } = req.query
-
-      const filters = JSON.parse(filter)
+      const { category, filter, page } = req.query
 
       if (!category && !filter) res.status(400).json({ error: 'invalid data' })
 
-      const filteredProducts = await ProductService.filterProducts(category, filters)
+      const filters = JSON.parse(filter)
+
+      const filteredProducts = await ProductService.filterProducts(category, filters, page)
 
       res.status(200).json(filteredProducts)
     } catch (e) {

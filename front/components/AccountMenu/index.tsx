@@ -12,16 +12,26 @@ import { Typography, useMediaQuery } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import AccountMenuModal from '../AccountMenuModal';
 import {
+  AuthErrorMessage,
   ButtonAccountMenuBox,
   ButtonAccountMenuStyle,
+  FormAuthBox,
+  InputAuth,
   InputsAccountMenuBox,
 } from '../../styles/accountMenu';
 import CustomButton from '../CustomButton';
 import { NextPage } from 'next';
+import { Form, Formik } from 'formik';
+import { object, string } from 'yup';
+import { useAppDispatch } from '../../hooks/redux';
+import { login, registration } from '../../store/services/UserService';
+import { stringRegExp } from '../../utils/constants';
 
 const AccountMenu: NextPage = ({}) => {
   const media = useMediaQuery(theme.breakpoints.down('md'));
   const { t } = useTranslation('common');
+
+  const dispatch = useAppDispatch();
 
   const [isEntry, setIsEntry] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -34,6 +44,61 @@ const AccountMenu: NextPage = ({}) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const initialLoginValues = {
+    email: '',
+    password: '',
+  };
+
+  const initialRegistrationValues = {
+    name: '',
+    surname: '',
+    email: '',
+    password: '',
+  };
+
+  const validationLoginSchema = object().shape({
+    email: string().email('Not a proper email').required('Required'),
+    password: string()
+      .min(8, 'Password too short')
+      .matches(/\d+/, 'Password no number')
+      .matches(/[a-z]+/, 'Password no lowercase')
+      .matches(/[A-Z]+/, 'Password no uppercase')
+      .test(
+        'Password has spaces',
+        'Password has spaces',
+        (value) => !/\s+/.test(value)
+      )
+      .required('password is required'),
+  });
+
+  const validationRegistrationSchema = object().shape({
+    name: string()
+      .max(15, 'Too Long')
+      .matches(stringRegExp, 'Name is not valid')
+      .required('Required')
+      .test(
+        'Password has spaces',
+        'Password has spaces',
+        (value) => !/\s+/.test(value)
+      ),
+    surname: string()
+      .max(15, 'Too Long')
+      .matches(stringRegExp, 'Surname is not valid')
+      .required('Required'),
+    email: string().email('Not a proper email').required('Required'),
+    password: string()
+      .min(8, 'Password too short')
+      .matches(/\d+/, 'Password no number')
+      .matches(/[a-z]+/, 'Password no lowercase')
+      .matches(/[A-Z]+/, 'Password no uppercase')
+      .test(
+        'Password has spaces',
+        'Password has spaces',
+        (value) => !/\s+/.test(value)
+      )
+      .required('password is required'),
+  });
 
   return (
     <>
@@ -56,8 +121,8 @@ const AccountMenu: NextPage = ({}) => {
             id="account-menu"
             open={open}
             onClose={handleClose}
-            onClick={handleClose}
             disableScrollLock={true}
+            sx={{ overflow: 'none' }}
           >
             {/* <MenuItem>
           <Avatar>M</Avatar>
@@ -111,46 +176,103 @@ const AccountMenu: NextPage = ({}) => {
                 <Typography variant="roboto36400" color={Colors.primary}>
                   {t('loginToUpper')}
                 </Typography>
-                <label htmlFor="email"></label>
-                <input type="email" />
-                <CustomButton size="LG" variant="secondary">
-                  {t('login')}
-                </CustomButton>
+                <Formik
+                  initialValues={initialLoginValues}
+                  validationSchema={validationLoginSchema}
+                  onSubmit={async (values) => {
+                    await dispatch(
+                      login({ email: values.email, password: values.password })
+                    );
+                  }}
+                >
+                  {({ handleSubmit }) => {
+                    return (
+                      <Form onSubmit={handleSubmit}>
+                        <FormAuthBox>
+                          <AuthErrorMessage name="email" component="span" />
+                          <InputAuth
+                            name="email"
+                            id="email"
+                            placeholder="Email"
+                          />
+                          <AuthErrorMessage name="password" component="span" />
+                          <InputAuth
+                            name="password"
+                            id="password"
+                            placeholder="Password"
+                          />
+                        </FormAuthBox>
+                        <CustomButton
+                          size="SM"
+                          variant="secondary"
+                          type="submit"
+                          style={{ margin: '20px 0px' }}
+                        >
+                          {t('login')}
+                        </CustomButton>
+                      </Form>
+                    );
+                  }}
+                </Formik>
               </InputsAccountMenuBox>
             ) : (
               <InputsAccountMenuBox>
                 <Typography variant="roboto36400" color={Colors.primary}>
                   {t('registration')}
                 </Typography>
-                <label htmlFor="password"></label>
-                <input type="password" id="password" />
-                <CustomButton size="LG" variant="secondary">
-                  {t('registration')}
-                </CustomButton>
+                <Formik
+                  initialValues={initialRegistrationValues}
+                  validationSchema={validationRegistrationSchema}
+                  onSubmit={async (values) => {
+                    await dispatch(
+                      registration({
+                        email: values.email,
+                        password: values.password,
+                        name: values.name,
+                        surname: values.surname,
+                      })
+                    );
+                  }}
+                >
+                  {({ handleSubmit }) => {
+                    return (
+                      <Form onSubmit={handleSubmit}>
+                        <FormAuthBox>
+                          <AuthErrorMessage name="name" component="span" />
+                          <InputAuth name="name" id="name" placeholder="Name" />
+                          <AuthErrorMessage name="surname" component="span" />
+                          <InputAuth
+                            name="surname"
+                            id="surname"
+                            placeholder="Surname"
+                          />
+                          <AuthErrorMessage name="email" component="span" />
+                          <InputAuth
+                            name="email"
+                            id="email"
+                            placeholder="Email"
+                          />
+                          <AuthErrorMessage name="password" component="span" />
+                          <InputAuth
+                            name="password"
+                            id="password"
+                            placeholder="Password"
+                          />
+                          <CustomButton
+                            size="SM"
+                            variant="secondary"
+                            type="submit"
+                            style={{ margin: '20px 0px' }}
+                          >
+                            {t('registration')}
+                          </CustomButton>
+                        </FormAuthBox>
+                      </Form>
+                    );
+                  }}
+                </Formik>
               </InputsAccountMenuBox>
             )}
-            {/* <MenuItem>
-              <ListItemIcon>
-                <LoginIcon
-                  fontSize="small"
-                  style={{ color: `${Colors.primary}` }}
-                />
-              </ListItemIcon>
-              <Typography variant="roboto20400" color={Colors.black}>
-                {t('login')}
-              </Typography>
-            </MenuItem>
-            <MenuItem>
-              <ListItemIcon>
-                <Logout
-                  fontSize="small"
-                  style={{ color: `${Colors.primary}` }}
-                />
-              </ListItemIcon>
-              <Typography variant="roboto20400" color={Colors.black}>
-                {t('registration')}
-              </Typography>
-            </MenuItem> */}
           </Menu>
         </>
       )}

@@ -13,5 +13,5 @@ module.exports = tokensMakeFunc = async (user, res, message) => {
   // in this file because when i use in UserController.js i get
   // Error: Can't set headers after they are sent to the client,
   // i use return but it doesn't help
-  return res.status(200).json({ message, user: { ...tokens, ...userDto } })
+  return res.status(200).json({ message, user: { ...userDto }, tokens })
 }

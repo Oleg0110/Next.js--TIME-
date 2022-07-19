@@ -86,7 +86,6 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
   });
 
   const dispatch = useAppDispatch();
-  const { productSearch } = useAppSelector((state) => state.product);
 
   const styleSpan = { width: '45%', color: Colors.primary };
 
@@ -118,7 +117,7 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
                 return toast.warning(t('product-modified', { ns: 'toast' }));
               }
 
-              const data = await dispatch(
+              const res = await dispatch(
                 changeProduct({
                   productId: product.id,
                   product: values,
@@ -126,14 +125,15 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
                 })
               );
 
-              data.payload[0] === undefined &&
-                toast.warning(t('product-not-change', { ns: 'toast' }));
-              handleClose();
-              data.payload[0] !== undefined &&
+              if (res.meta.requestStatus === 'rejected') {
+                toast.error(t('product-not-change', { ns: 'toast' }));
+              } else {
                 toast.success(t('product-was-change', { ns: 'toast' }));
+                handleClose();
+              }
             }}
           >
-            {({ values, setFieldValue, handleSubmit, isValid }) => {
+            {({ values, setFieldValue, handleSubmit }) => {
               return (
                 <Form onSubmit={handleSubmit}>
                   <InfoChangeBox>

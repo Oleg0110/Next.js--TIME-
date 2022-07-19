@@ -25,6 +25,8 @@ export const InfoSearchContainer = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'start',
+  marginLeft: '10px',
+  justifyContent: 'center',
   [theme.breakpoints.down('sm')]: {
     minWidth: '200px',
   },

@@ -1,18 +1,24 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { IProduct } from '../../utils/interface/productInterface';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { array, boolean, number, object, string } from 'yup';
+import { array, boolean, mixed, number, object, string } from 'yup';
 import {
   AddFormBox,
   AddMainFormBox,
+  AddMainPhotoBox,
+  AddPhotoBox,
   AddProductBox,
+  ButtonAddPhotos,
   ButtonClickPosition,
   DescriptionOptionsBox,
   InfoAddBox,
+  MainPhotoBox,
+  PhotoBox,
+  PhotosBox,
   ProductStateBox,
 } from '../../styles/administration';
 import { Colors } from '../../styles/theme';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { useAppDispatch } from '../../hooks/redux';
 import { addProduct } from '../../store/services/ProductService';
 import { NextPage } from 'next';
@@ -28,6 +34,8 @@ import CustomButton from '../../components/CustomButton';
 import CheckBoxRadioInput from '../../components/CheckBoxRadioInput';
 import styles from '../../styles/AdminPage.module.scss';
 import PreviewImage from '../../components/PreviewImage';
+import { Box } from '@mui/system';
+import TooltipIcon from '../../components/TooltipIcon/TooltipIcon';
 
 const AddProduct: NextPage = () => {
   const { t } = useTranslation(['admin', 'toast']);
@@ -43,43 +51,81 @@ const AddProduct: NextPage = () => {
     productNew: false,
     productSize: [],
     productColor: 'black',
-    productMainPictures: [],
-    productDescription:
-      'Lorem, ipsum dolo. Porro et perspiciatis vel autem? Aperiam tenetur minima nihil adipisci, eniti harum itaque asperiores.',
+    productMainPictures: null,
+    productDescription: '',
     productStyleName: 'boots',
     productStyleMaterial: 'leather',
   };
 
   const validationSchema = object().shape({
-    // productName: string()
-    //   .min(3, 'Too Short!')
-    //   .max(40, 'Too Long!')
-    //   .required('Required'),
-    // productFor: string().required('Men or Women'),
-    // productPrice: number()
-    //   .min(1, 'More than 0')
-    //   .max(15000, 'Max is 15000')
-    //   .required('Required'),
-    // productDiscountPrice: number()
-    //   .min(0)
-    //   .max(14999, 'Max is 14999')
-    //   .required('Required'),
-    // productSale: boolean(),
-    // productNew: boolean(),
-    // productSize: array().of(number()).required().min(1, 'Choose some sizes'),
-    // productColor: string().required('Choose by colors propose'),
-    // productMainPictures: array(),
-    // productDescription: string()
-    //   .min(20, 'Too Short!')
-    //   .max(150, 'Too Long!')
-    //   .required('Required'),
-    // productStyleName: string().required('Choose by style propose'),
-    // productStyleMaterial: string().required('Choose by material propose'),
+    productName: string()
+      .min(3, 'Too Short!')
+      .max(40, 'Too Long!')
+      .required('Required'),
+    productFor: string().required('Men or Women'),
+    productPrice: number()
+      .min(1, 'More than 0')
+      .max(15000, 'Max is 15000')
+      .required('Required'),
+    productDiscountPrice: number()
+      .min(0)
+      .max(14999, 'Max is 14999')
+      .required('Required'),
+    productSale: boolean(),
+    productNew: boolean(),
+    productSize: array().of(number()).required().min(1, 'Choose some sizes'),
+    productColor: string().required('Choose by colors propose'),
+    productMainPictures: array().min(1, 'Require').required('Require'),
+    productDescription: string()
+      .min(20, 'Too Short!')
+      .max(400, 'Too Long!')
+      .required('Required'),
+    productStyleName: string().required('Choose by style propose'),
+    productStyleMaterial: string().required('Choose by material propose'),
   });
 
   const styleSpan = { width: '45%', color: Colors.primary };
 
-  const fileRef = useRef(null);
+  const [isPhotos, setIsPhotos] = useState({ images: [] });
+  const [isMainPhoto, setIsMainPhoto] = useState({ images: [] });
+
+  const addPhotos = (event, setFieldValue, isBo) => {
+    event.preventDefault();
+
+    const allPhotos = [
+      ...isPhotos.images,
+      ...isMainPhoto.images,
+      ...event.target.files,
+    ];
+
+    !isBo &&
+      setIsPhotos({ images: [...isPhotos.images, ...event.target.files] });
+    isBo && setIsMainPhoto({ images: [...event.target.files] });
+    setFieldValue('productMainPictures', allPhotos);
+  };
+
+  const deletePhoto = (index, setFieldValue) => {
+    const imagesArr = isPhotos.images;
+    imagesArr.splice(index, 1);
+
+    setIsPhotos({ images: imagesArr });
+
+    setFieldValue('productMainPictures', imagesArr);
+  };
+
+  const deleteMainPhoto = (index, setFieldValue) => {
+    const imagesArr = isMainPhoto.images;
+    imagesArr.splice(index, 1);
+
+    setIsMainPhoto({ images: imagesArr });
+
+    const allPhotos = [...isPhotos.images, ...isMainPhoto.images];
+
+    setFieldValue('productMainPictures', allPhotos);
+  };
+
+  const mainPhotoRef = useRef(null);
+  const photosRef = useRef(null);
 
   return (
     <AddProductBox>
@@ -99,16 +145,22 @@ const AddProduct: NextPage = () => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={async (values, { resetForm }) => {
-              const data = await dispatch(
+              console.log(values);
+
+              const res = await dispatch(
                 addProduct({
                   product: values,
                   photoFile: values.productMainPictures,
                 })
               );
-              // resetForm();
-              //!! Problem
-              // if (data.payload !== undefined || null)
-              //   return toast.success(t('product-was-created', { ns: 'toast' }));
+              resetForm();
+              setIsMainPhoto({ images: [] });
+              setIsPhotos({ images: [] });
+              if (res.meta.requestStatus === 'fulfilled') {
+                return toast.success(t('product-was-created', { ns: 'toast' }));
+              } else {
+                return toast.error(t('Problem', { ns: 'toast' }));
+              }
             }}
           >
             {({ values, setFieldValue, handleSubmit }) => {
@@ -131,37 +183,90 @@ const AddProduct: NextPage = () => {
                     className={styles.inputText}
                   />
                   <input
-                    // hidden
-                    // ref={fileRef}
+                    ref={mainPhotoRef}
                     type="file"
-                    name="productMainPictures"
+                    accept="image/*"
+                    style={{ display: 'none' }}
                     onChange={(event) => {
-                      console.log(event.target.files[0]);
-
-                      setFieldValue(
-                        'productMainPictures',
-                        values.productMainPictures.concat(event.target.files[0])
-                      );
+                      addPhotos(event, setFieldValue, true);
                     }}
                   />
-                  {/* <input
-                    hidden
-                    ref={fileRef}
+                  <InfoAddBox>
+                    <Typography variant="roboto24500" sx={styleSpan}>
+                      Main Photo:
+                    </Typography>
+                    <ErrorMessage
+                      name="productMainPictures"
+                      component="span"
+                      className={styles.errorStyle}
+                    />
+                  </InfoAddBox>
+
+                  {isMainPhoto.images[0] === undefined ? (
+                    <AddMainPhotoBox
+                      onClick={(e) => {
+                        e.preventDefault();
+                        mainPhotoRef.current.click();
+                      }}
+                    >
+                      Click to add
+                    </AddMainPhotoBox>
+                  ) : (
+                    <MainPhotoBox>
+                      {isMainPhoto.images.map((src, index) => {
+                        const url = URL.createObjectURL(src);
+                        return (
+                          <TooltipIcon
+                            key={index}
+                            title="delete-photo"
+                            onClick={() =>
+                              deleteMainPhoto(index, setFieldValue)
+                            }
+                          >
+                            <img src={url} width="125px" height="125px" />
+                          </TooltipIcon>
+                        );
+                      })}
+                    </MainPhotoBox>
+                  )}
+                  <input
+                    multiple
+                    style={{ display: 'none' }}
+                    ref={photosRef}
+                    accept="image/*"
                     type="file"
-                    name="productMainPictures"
                     onChange={(event) => {
-                      setFieldValue(
-                        'productMainPictures',
-                        event.target.files[0]
-                      );
+                      addPhotos(event, setFieldValue, false);
                     }}
-                  /> */}
-                  {/* {values.productMainPictures && (
-                    <PreviewImage file={values.productMainPictures} />
-                  )} */}
-                  {/* <button onClick={() => fileRef.current.click()}>
-                    Upload
-                  </button> */}
+                  />
+                  <AddPhotoBox>
+                    <Typography variant="roboto24500" sx={styleSpan}>
+                      Photos:
+                    </Typography>
+                    <ButtonAddPhotos
+                      onClick={(e) => {
+                        e.preventDefault();
+                        photosRef.current.click();
+                      }}
+                    >
+                      Add Photos
+                    </ButtonAddPhotos>
+                  </AddPhotoBox>
+                  <PhotosBox>
+                    {isPhotos.images.map((src, index) => {
+                      const url = URL.createObjectURL(src);
+                      return (
+                        <PhotoBox key={index}>
+                          <TooltipIcon
+                            title="delete-photo"
+                            onClick={() => deletePhoto(index, setFieldValue)}
+                          >
+                            <img src={url} width="100px" height="100px" />
+                          </TooltipIcon>
+                        </PhotoBox>
+                      );
+                    })}
+                  </PhotosBox>
                   <ProductStateBox>
                     <Typography variant="roboto24500" sx={styleSpan}>
                       {t('sex')}

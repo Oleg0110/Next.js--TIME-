@@ -18,6 +18,7 @@ import TooltipIcon from '../TooltipIcon/TooltipIcon';
 import ChooseSizeModal from '../ChooseSizeModal';
 import Link from 'next/link';
 import styles from '../../styles/icons.module.scss';
+import { useRouter } from 'next/router';
 
 interface IProductOnPageProps {
   name: string;
@@ -41,6 +42,7 @@ const ProductOnPage: NextPage<IProductOnPageProps> = ({
   const [isLiked, setIsLiked] = useState(false);
 
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const isAuth = false;
 
@@ -72,7 +74,15 @@ const ProductOnPage: NextPage<IProductOnPageProps> = ({
         productPhoto={mainPicture}
       />
       <ProductOnPagePhoto>
-        <img src={`${BASIC_URL}/${mainPicture}`} width="370px" height="335px" />
+        <img
+          src={`${BASIC_URL}/${mainPicture}`}
+          width="370px"
+          height="335px"
+          onClick={() =>
+            router.push(`/product/${productFor}/${name}/${productId}`)
+          }
+          style={{ cursor: 'pointer' }}
+        />
         <IconPosition
           onClick={() => {
             if (isAuth) {

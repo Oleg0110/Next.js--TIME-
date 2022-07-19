@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  AdminPageBadge,
   IconsContainerDesktop,
   IconsContainerMobile,
 } from '../../styles/navBar';
@@ -11,17 +12,22 @@ import AccountMenu from '../AccountMenu';
 import theme from '../../styles/theme';
 import styles from '../../styles/icons.module.scss';
 import Link from 'next/link';
+import { useAppSelector } from '../../hooks/redux';
 
 const IconButtons = () => {
-  const media = useMediaQuery(theme.breakpoints.down('md'));
+  const mediaMD = useMediaQuery(theme.breakpoints.down('md'));
 
-  const Component = media ? IconsContainerMobile : IconsContainerDesktop;
+  const Component = mediaMD ? IconsContainerMobile : IconsContainerDesktop;
+
+  const { ordersUnconfirmed } = useAppSelector((state) => state.product);
 
   return (
     <>
       <TooltipIcon title="admin-page">
         <Link href={ROUTES.adminPage}>
-          <div className={styles.settings} />
+          <AdminPageBadge badgeContent={ordersUnconfirmed.length} color="error">
+            <div className={styles.settings} />
+          </AdminPageBadge>
         </Link>
       </TooltipIcon>
       <TooltipIcon title="search">

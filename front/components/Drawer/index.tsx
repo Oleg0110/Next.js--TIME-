@@ -53,11 +53,21 @@ const SwipeableTemporaryDrawer = () => {
       </CommunicationMenuBox>
       <List>
         {BUTTONS.map((data) => (
-          <Link key={data.id} href={data.link}>
-            <ListItem disablePadding>
+          <>
+            {/* <Link key={data.id} href={data.link}>
+              <ListItem disablePadding>
+                <ListItemButton>{t(data.name)}</ListItemButton>
+              </ListItem>
+            </Link> */}
+            //!! Problem
+            {data.link !== undefined ? (
+              <Link href={data.link}>
+                <ListItemButton>{t(data.name)}</ListItemButton>
+              </Link>
+            ) : (
               <ListItemButton>{t(data.name)}</ListItemButton>
-            </ListItem>
-          </Link>
+            )}
+          </>
         ))}
       </List>
     </Box>

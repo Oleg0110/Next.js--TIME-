@@ -6,6 +6,7 @@ import {
   BagPageContainer,
   BagPageContent,
   ProductOnBagBox,
+  ProductOnBagContainer,
 } from '../../styles/bag';
 import { Colors } from '../../styles/theme';
 import { totalPriceFunc } from '../../utils/function';
@@ -36,7 +37,7 @@ const Bag = () => {
           <ProductOnBagBox>
             {productInBag &&
               productInBag.map((data) => (
-                <>
+                <ProductOnBagContainer key={data.productId}>
                   <ProductOnBagPage
                     price={data.price}
                     productId={data.productId}
@@ -46,7 +47,7 @@ const Bag = () => {
                     sizeProduct={data.sizeProduct}
                     productAmount={data.productAmount}
                   />
-                </>
+                </ProductOnBagContainer>
               ))}
           </ProductOnBagBox>
           <Typography

@@ -192,6 +192,38 @@ class AdminController {
       next(e)
     }
   }
+
+  async changeOrderStatus(req, res, next) {
+    try {
+      const { orderId, orderStatus } = req.body
+
+      if (!orderId && !orderStatus) {
+        return next(ApiErrors.BadRequest('invalid data'))
+      }
+
+      const changedOrder = await AdminService.changeOrderStatus(orderId, orderStatus, next)
+
+      res.status(200).json(changedOrder)
+    } catch (e) {
+      res.status(500).json(e.message)
+    }
+  }
+
+  async getConfirmedOrders(req, res) {
+    try {
+      const { searchValue } = req.params
+
+      if (!searchValue) {
+        return next(ApiErrors.BadRequest('invalid data'))
+      }
+
+      const orders = await AdminService.getConfirmedOrders(searchValue)
+
+      res.status(200).json(orders)
+    } catch (e) {
+      res.status(500).json(e.message)
+    }
+  }
 }
 
 module.exports = new AdminController()

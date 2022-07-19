@@ -1,10 +1,7 @@
-import { Typography } from '@mui/material';
 import React, { useState } from 'react';
-import styles from '../../styles/icons.module.scss';
 import theme, { Colors } from '../../styles/theme';
+import { Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
-import Image from 'next/image';
-import SaleProductTest from '../../assets/saleProductTest.png';
 import {
   ChangeButton,
   DeleteButton,
@@ -16,9 +13,10 @@ import {
 import { NextPage } from 'next';
 import { useAppDispatch } from '../../hooks/redux';
 import { deleteProduct } from '../../store/services/ProductService';
-import ChangeModal from '../ChangeModal';
 import { IProduct } from '../../utils/interface/productInterface';
 import { toast } from 'react-toastify';
+import { BASIC_URL } from '../../utils/httpLinks';
+import ChangeModal from '../ChangeModal';
 
 interface IProductSearch {
   product: IProduct;
@@ -59,7 +57,11 @@ const ProductSearch: NextPage<IProductSearch> = ({ product, searchValue }) => {
         searchValue={searchValue}
       />
       <PhotoProductSearch>
-        <Image src={SaleProductTest} width="80px" height="80px" />
+        <img
+          src={`${BASIC_URL}/${product.productMainPictures}`}
+          width="80px"
+          height="80px"
+        />
       </PhotoProductSearch>
       <InfoSearchContainer>
         <Typography variant="roboto20200" sx={spanStyle}>
@@ -71,29 +73,24 @@ const ProductSearch: NextPage<IProductSearch> = ({ product, searchValue }) => {
             {product.productNumber}
           </Typography>
         </Typography>
-        <Typography
-          variant="roboto20400"
-          marginBottom="8px"
-          color={Colors.primary}
-          sx={spanStyle}
-        >
+        <Typography variant="roboto20400" color={Colors.primary} sx={spanStyle}>
           {product.productName}
         </Typography>
-        <ProductSearchButtonBox>
-          <ChangeButton onClick={handleClick}>{t('change')}</ChangeButton>
-          <DeleteButton
-            onClick={async () => {
-              const data = await dispatch(
-                deleteProduct({ productId: product.id, searchValue })
-              );
-              if (data !== undefined || null)
-                return toast.success(t('product-was-deleted', { ns: 'toast' }));
-            }}
-          >
-            {t('delete')}
-          </DeleteButton>
-        </ProductSearchButtonBox>
       </InfoSearchContainer>
+      <ProductSearchButtonBox>
+        <ChangeButton onClick={handleClick}>{t('change')}</ChangeButton>
+        <DeleteButton
+          onClick={async () => {
+            const data = await dispatch(
+              deleteProduct({ productId: product.id, searchValue })
+            );
+            if (data !== undefined || null)
+              return toast.success(t('product-was-deleted', { ns: 'toast' }));
+          }}
+        >
+          {t('delete')}
+        </DeleteButton>
+      </ProductSearchButtonBox>
     </MainProductSearchContainer>
   );
 };

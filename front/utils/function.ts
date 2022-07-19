@@ -4,14 +4,24 @@ import { shoppingBagDataName } from './constants';
 import { IProduct, IProductInBag } from './interface/productInterface';
 import { SortType } from './types/product';
 
-export const firstLetterUpper = (category: string | string[]) => {
-  const str = JSON.parse(JSON.stringify(category));
-  let word;
+export const firstLetterUpper = (category: string) => {
+  let str;
 
-  if (str) {
-    word = str.split('')[0].toLocaleUpperCase() + str.slice(1);
+  if (category === 'women' || category === 'men') {
+    str = category.split('')[0].toLocaleUpperCase() + category.slice(1);
+  } else {
+    const firstLetter =
+      category.split('-')[0].split('')[0].toLocaleUpperCase() +
+      category.split('-')[0].slice(1);
+
+    const secondLetter =
+      category.split('-')[1].split('')[0].toLocaleUpperCase() +
+      category.split('-')[1].slice(1);
+
+    str = `${firstLetter} ${secondLetter}`;
   }
-  return word;
+
+  return str;
 };
 
 export const includesSizeFunc = (where, what) => {

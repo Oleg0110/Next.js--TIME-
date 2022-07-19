@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { object, string } from 'yup';
 import {
   ChangeDeleteBox,
@@ -7,6 +6,7 @@ import {
   ChangeDeleteMainFormBox,
   FoundProductBox,
   InfoChangeDeleteBox,
+  ProductSearchScroll,
   UserSearchBox,
 } from '../../styles/administration';
 import { Colors } from '../../styles/theme';
@@ -17,13 +17,13 @@ import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import ProductSearch from '../../components/ProductSearch';
 import styles from '../../styles/AdminPage.module.scss';
+import AdminSearchForm from '../../components/AdminSearchForm';
 
 const ChangeDelete: NextPage = () => {
   const { t } = useTranslation('admin');
 
   const [isValue, setIsValue] = useState('');
 
-  const dispatch = useAppDispatch();
   const { productSearch } = useAppSelector((state) => state.product);
 
   const validationNumberSchema = object().shape({
@@ -34,67 +34,36 @@ const ChangeDelete: NextPage = () => {
       .matches(/^[0-9\b]+$/, 'Only Numbers'),
   });
 
-  const styleSpan = {
-    width: '45%',
-    color: Colors.primary,
-    marginRight: '10px',
-  };
-
   return (
     <ChangeDeleteBox>
       <ChangeDeleteMainFormBox>
         <Typography
-          variant="roboto30300"
+          variant="roboto24500"
           sx={{
-            textAlign: 'center',
-            marginBottom: '10px',
+            textAlign: 'start',
+            margin: '10px',
+            width: '100%',
             color: Colors.primary,
           }}
         >
           {t('find-product')}
         </Typography>
-        <ChangeDeleteFormBox>
-          <Formik
-            initialValues={{ searchValue: '' }}
-            validationSchema={validationNumberSchema}
-            onSubmit={async (values) => {
-              await dispatch(getSearchProduct(values.searchValue));
-              setIsValue(values.searchValue);
-            }}
-          >
-            {() => {
-              return (
-                <Form>
-                  <InfoChangeDeleteBox>
-                    <Typography variant="roboto24500" sx={styleSpan}>
-                      {t('product-number')}
-                    </Typography>
-                    <ErrorMessage
-                      name="searchValue"
-                      component="span"
-                      className={styles.errorStyle}
-                    />
-                  </InfoChangeDeleteBox>
-                  <Field
-                    name="searchValue"
-                    id="searchValue"
-                    placeholder={t('placeholderNumber')}
-                    className={styles.inputText}
-                  />
-                </Form>
-              );
-            }}
-          </Formik>
-        </ChangeDeleteFormBox>
+        <AdminSearchForm
+          placeholder={t('placeholderNumber')}
+          serviceFunc={getSearchProduct}
+          validationSchema={validationNumberSchema}
+          formName={t('product-number')}
+          setProductSearchValue={setIsValue}
+        />
         {productSearch[0] !== undefined && (
           <FoundProductBox>
-            <UserSearchBox>
+            <ProductSearchScroll>
               {productSearch.map((data) => (
                 <div key={data.id}>
                   <ProductSearch product={data} searchValue={isValue} />
                 </div>
               ))}
-            </UserSearchBox>
+            </ProductSearchScroll>
           </FoundProductBox>
         )}
       </ChangeDeleteMainFormBox>

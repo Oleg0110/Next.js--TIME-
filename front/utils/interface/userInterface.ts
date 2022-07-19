@@ -37,6 +37,7 @@ export interface IUserOrder {
 export interface UserState {
   user: IUser;
   userSearch: IUser[];
+  isAuth: boolean;
   isLoading: boolean;
   error: string;
 }

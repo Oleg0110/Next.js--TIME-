@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Badge, Box, Collapse } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import theme, { Colors } from '../theme';
 
@@ -55,9 +55,10 @@ export const LinkNavBarContainer = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  width: '102%',
+  width: '103%',
   marginTop: '5px',
   borderTop: `1px solid ${Colors.secondaryWhite}`,
+  position: 'relative',
   [theme.breakpoints.down('md')]: {
     display: 'none',
   },
@@ -65,9 +66,26 @@ export const LinkNavBarContainer = styled(Box)(() => ({
 
 export const LinkBox = styled(Box)(() => ({
   display: 'flex',
-  justifyContent: 'center',
+  justifyContent: 'space-around',
   alignItems: 'center',
-  maxWidth: '820px',
+  width: '70%',
+})) as typeof Box;
+
+export const HoverNavbarCollapse = styled(Collapse)(() => ({
+  position: 'absolute',
+  top: '22px',
+  left: '0px',
+  width: '100%',
+  background: '#685248',
+  borderBottom: '1px solid #fff',
+  paddingLeft: '22%',
+  height: '90px',
+})) as typeof Collapse;
+
+export const HoverNavbar = styled(Box)(() => ({
+  padding: '10px',
+  display: 'flex',
+  flexDirection: 'column',
 })) as typeof Box;
 
 export const IconsBox = styled(Box)(() => ({
@@ -106,3 +124,10 @@ export const IconsContainerDesktop = styled(Box)(() => ({
     display: 'none',
   },
 })) as typeof Box;
+
+export const AdminPageBadge = styled(Badge)(() => ({
+  '& .MuiBadge-badge': {
+    right: 3,
+    top: 6,
+  },
+}));

@@ -5,7 +5,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const product = require('./routes/product')
 const user = require('./routes/user')
-const common = require('./routes/common')
+const home = require('./routes/home')
 const admin = require('./routes/admin')
 const errorMiddleware = require('./middleware/errorMiddleware')
 const roleMiddleware = require('./middleware/roleMiddleware')
@@ -18,15 +18,15 @@ const PORT = process.env.PORT || 5000
 
 app.use(express.json())
 app.use(express.static(path.resolve(__dirname, 'static')))
-app.use(cookieParser())
+app.use(cookieParser({ credentials: true, origin: process.env.CLIENT_URL }))
 app.use(fileUpload())
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.CLIENT_URL,
   })
 )
 
-app.use('/', common)
+app.use('/', home)
 app.use('/', user)
 app.use('/product', product)
 app.use(

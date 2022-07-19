@@ -5,6 +5,8 @@ const { body } = require('express-validator')
 const router = new Router()
 
 router.get('/:searchValue', body('searchValue').isString(), AdminController.getProducts)
+router.get('/get-confirmed-orders/:searchValue', body('searchValue').isString(), AdminController.getConfirmedOrders)
+router.patch('/change-order-status', body('searchValue').isString(), AdminController.changeOrderStatus)
 router.post('/products-management/add-product/add-photos', body('searchValue').isString(), AdminController.addPhoto)
 router.post(
   '/products-management/add-product',

@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
@@ -9,7 +9,10 @@ import ProductOnPage from '../../components/ProductOnPage';
 import SortingMenu from '../../components/SortingMenu';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import MainLayout from '../../layouts/MainLayout';
-import { getProducts } from '../../store/services/ProductService';
+import {
+  filterProducts,
+  getProducts,
+} from '../../store/services/ProductService';
 import {
   CategoryBox,
   InfoProductBox,
@@ -25,20 +28,14 @@ import {
   sortingDataName,
 } from '../../utils/constants';
 import { firstLetterUpper, sortProduct } from '../../utils/function';
-import { BASIC_URL, GET_PRODUCTS } from '../../utils/httpLinks';
 import { IProduct } from '../../utils/interface/productInterface';
 import { SortType } from '../../utils/types/product';
-import Error from '../404';
 
 export const getServerSideProps = async (context) => {
-  const category = context.query.category;
-  const res = await fetch(`${GET_PRODUCTS}/${category}`);
-
-  const products: IProduct[] = await res.json();
+  const category: string = JSON.parse(JSON.stringify(context.query.category));
 
   return {
     props: {
-      products,
       category,
       ...(await serverSideTranslations(context.locale, ['common', 'filters'])),
     },
@@ -46,16 +43,15 @@ export const getServerSideProps = async (context) => {
 };
 
 interface ICategoryPage {
-  products: IProduct[];
-  category: string | string[];
+  category: string;
 }
 
-const CategoryPage: NextPage<ICategoryPage> = ({}) => {
+const CategoryPage: NextPage<ICategoryPage> = ({ category }) => {
   let sorting;
-  const router = useRouter();
-  const category = router.query.category;
-  const categoryStr = JSON.parse(JSON.stringify(category));
-  const categoryTitle = firstLetterUpper(categoryStr);
+  let localCategory;
+  let filters;
+
+  let categoryTitle = firstLetterUpper(category);
 
   const dispatch = useAppDispatch();
 
@@ -65,28 +61,41 @@ const CategoryPage: NextPage<ICategoryPage> = ({}) => {
   const ISSERVER = typeof window === 'undefined';
 
   if (!ISSERVER) {
-    const localCategory = localStorage.getItem('category');
+    localCategory = localStorage.getItem('category');
     sorting = localStorage.getItem(sortingDataName);
+    filters = JSON.parse(localStorage.getItem(filterDataName));
 
     if (category !== localCategory) {
       localStorage.setItem(filterDataName, JSON.stringify(filterReset));
       localStorage.setItem(sortingDataName, 'empty');
       sorting = 'empty';
     }
-    localStorage.setItem('category', categoryStr);
   }
 
   const [isActive, setIsActive] = useState<SortType>(sorting);
 
   useEffect(() => {
     const getData = async () => {
-      await dispatch(getProducts(categoryStr));
+      if (category === 'women' || category === 'men') {
+        await dispatch(getProducts({ category }));
+        category === localCategory &&
+          (await dispatch(filterProducts({ filter: filters, category })));
+      } else {
+        const categoryName = category.split('-')[1];
+        const page = category.split('-')[0];
+        await dispatch(getProducts({ category: categoryName, page }));
+        category === localCategory &&
+          (await dispatch(
+            filterProducts({ filter: filters, category: categoryName, page })
+          ));
+      }
     };
-
     getData();
 
+    category !== localCategory && localStorage.setItem('category', category);
+
     setIsActive(sorting);
-  }, [categoryStr, getProducts, dispatch]);
+  }, [category, getProducts, dispatch]);
 
   const { products } = useAppSelector((state) => state.product);
 
@@ -171,12 +180,12 @@ const CategoryPage: NextPage<ICategoryPage> = ({}) => {
           <SortingMenu
             isOpen={isSortingOpen}
             setIsOpen={setIsSortingOpen}
-            category={categoryStr}
+            category={category}
             isActive={isActive}
             setIsActive={setIsActive}
           />
           <FilterMenu
-            category={categoryStr}
+            category={category}
             isOpen={isFilterOpen}
             setIsOpen={setIsFilterOpen}
           />

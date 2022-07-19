@@ -10,7 +10,7 @@ export const UserSearchContainer = styled(Box)(() => ({
   justifyContent: 'start',
   margin: '10px 0px',
   cursor: 'pointer',
-  padding: '10px',
+  padding: '10px 20px',
   border: `1px solid ${Colors.primary}`,
   borderRadius: '15px',
   [theme.breakpoints.down('md')]: {

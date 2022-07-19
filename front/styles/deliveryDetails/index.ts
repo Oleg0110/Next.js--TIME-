@@ -59,6 +59,12 @@ export const ProductOnDeliveryScroll = styled(Box)(() => ({
   },
 })) as typeof Box;
 
+export const ProductOnDeliveryContainer = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  width: '100%',
+})) as typeof Box;
+
 // Delivery
 export const DeliveryFormMainBox = styled(Box)(() => ({
   display: 'flex',

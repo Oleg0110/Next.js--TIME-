@@ -2,6 +2,8 @@ import { useTranslation } from 'next-i18next';
 import {
   BurgerBox,
   CommunicationBox,
+  HoverNavbar,
+  HoverNavbarCollapse,
   IconsBox,
   LinkBox,
   LinkNavBarContainer,
@@ -10,15 +12,27 @@ import {
 } from '../../styles/navBar';
 import { BUTTONS } from '../../utils/constants';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  ClickAwayListener,
+  Collapse,
+  Popover,
+  Typography,
+} from '@mui/material';
 import Link from 'next/link';
 import IconButtons from './IconButtons';
 import Communication from './Communication';
 import SwipeableTemporaryDrawer from '../Drawer';
 import styles from '../../styles/icons.module.scss';
+import { useState } from 'react';
 
-const NavbarDesktop = () => {
+const Navbar = () => {
   const { t } = useTranslation('common');
+  const [show, setShow] = useState('empty');
 
   return (
     <MainNavBarBox>
@@ -41,9 +55,36 @@ const NavbarDesktop = () => {
       <LinkNavBarContainer>
         <LinkBox>
           {BUTTONS.map((data) => (
-            <Link key={data.id} href={data.link}>
-              <Typography variant="h2">{t(data.name)}</Typography>
-            </Link>
+            <div
+              key={data.id}
+              onMouseOut={() => setShow('empty')}
+              onMouseOver={() => data.hoverBlock && setShow(data.name)}
+            >
+              {data.link ? (
+                <Link href={data.link}>
+                  <Typography variant="h2">{t(data.name)}</Typography>
+                </Link>
+              ) : (
+                <Typography variant="h2">{t(data.name)}</Typography>
+              )}
+              {data.buttonsHoverArr && (
+                <HoverNavbarCollapse in={show === data.name}>
+                  <HoverNavbar>
+                    {data.buttonsHoverArr.map((data) => (
+                      <Link key={data.id} href={data.link}>
+                        <Typography
+                          onClick={() => setShow('empty')}
+                          variant="roboto24200hover"
+                          sx={{ width: '140px' }}
+                        >
+                          {data.name}
+                        </Typography>
+                      </Link>
+                    ))}
+                  </HoverNavbar>
+                </HoverNavbarCollapse>
+              )}
+            </div>
           ))}
         </LinkBox>
       </LinkNavBarContainer>
@@ -51,7 +92,7 @@ const NavbarDesktop = () => {
   );
 };
 
-export default NavbarDesktop;
+export default Navbar;
 
 export const getStaticProps = async ({ locale }) => ({
   props: {

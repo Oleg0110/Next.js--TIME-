@@ -1,27 +1,18 @@
 const Product = require('../models/Product')
 const Photo = require('../models/Photo')
+const Order = require('../models/Order')
 const AdminFunc = require('../utils/functions/AdminFunc')
 const ProductDto = require('../dtos/product-dto')
 const uuid = require('uuid')
 const path = require('path')
+const OrderDto = require('../dtos/order-dto')
+const MailService = require('./MailService')
 
 class AdminService {
   async getProducts(searchValue) {
     const productsData = await AdminFunc.regexFunc(searchValue, 'product')
-    const productPhoto = []
 
-    productsData.forEach(async (data) => {
-      const photo = await Photo.findOne({ productId: data.id })
-      productPhoto.push(photo)
-    })
-
-    const products = productsData.map((data) => {
-      data, productPhoto
-    })
-
-    console.log(1, products)
-
-    // return products
+    return productsData
   }
 
   async addPhoto(file, productId) {
@@ -119,7 +110,6 @@ class AdminService {
       },
       { new: true }
     )
-
     return await AdminFunc.regexFunc(searchValue, 'product')
   }
 
@@ -131,6 +121,29 @@ class AdminService {
 
   async getUsers(searchValue) {
     return await AdminFunc.regexFunc(searchValue, 'user')
+  }
+
+  async changeOrderStatus(orderId, status, next) {
+    const order = await Order.findOneAndUpdate({ _id: orderId }, { orderStatus: status }, { new: true })
+
+    if (order.orderStatus !== true) {
+      return next(ApiErrors.BadRequest('invalid data'))
+    }
+
+    const dtoOrder = new OrderDto(order)
+
+    await MailService.sendConfirmOrderMail(dtoOrder)
+
+    let dtoOrders = []
+    const orders = await Order.find({ orderStatus: false })
+
+    orders.map((data) => dtoOrders.push({ ...new OrderDto(data) }))
+
+    return dtoOrders
+  }
+
+  async getConfirmedOrders(searchValue) {
+    return await AdminFunc.regexFunc(searchValue, 'order')
   }
 }
 

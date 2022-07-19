@@ -17,6 +17,7 @@
   "discount-price": "Ціна знижки",
   "isNew": "Новинка:",
   "size": "Розмір",
+  "amount": "Кількість",
   "color": "Колір",
   "description": "Опис",
   "style": "Стиль",
@@ -32,5 +33,19 @@
   "change": "Змінити",
   "delete": "Видалити",
   "click-to-copy": "Клацніть на карту, щоб скопіювати пошту",
-  "change-product": "Змінити продукт"
+  "change-product": "Змінити продукт",
+  "unconfirmed": "Непідтверджені замовлення:",
+  "confirmed": "Підтверджені замовлення:",
+  "order-number": "Замовлення №:",
+  "customer-info": "Інформація покупця :",
+  "customer-name": "Ім'я:",
+  "customer-surname": "Прізвище:",
+  "customer-email": "Електронна пошта:",
+  "customer-phone": "Телефон:",
+  "customer-address": "Адреса:",
+  "order-info": "Інформація про замовлення :",
+  "total-price": "Загальна сума:",
+  "order-status": "Статус замовлення:",
+  "confirm": "Підтвердити",
+  "number": "Число"
 }

@@ -502,8 +502,6 @@ const theme = createTheme({
       fontWeight: 300,
       fontSize: '20px',
       color: Colors.secondaryWhite,
-      marginLeft: '75px',
-      marginRight: '75px',
       cursor: 'pointer',
       width: '100%',
       ':hover': {
