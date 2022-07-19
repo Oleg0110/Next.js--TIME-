@@ -78,6 +78,13 @@ export interface ProductState {
   productInBag: IProductInBag[];
   ordersUnconfirmed: IProductOrder[];
   ordersConfirmed: IProductOrder[];
+  productsFavorite: IFavorite[];
   isLoading: boolean;
   error: string;
+}
+
+export interface IFavorite {
+  id: string;
+  userId: string;
+  product: IProduct;
 }

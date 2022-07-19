@@ -35,7 +35,9 @@ const ShopFavorBag: NextPage<IShopFavorBagProps> = ({ who }) => {
   const { t } = useTranslation('common');
   const router = useRouter();
 
-  const { productInBag } = useAppSelector((state) => state.product);
+  const { productInBag, productsFavorite } = useAppSelector(
+    (state) => state.product
+  );
 
   const totalPrice = totalPriceFunc(productInBag);
 
@@ -70,11 +72,28 @@ const ShopFavorBag: NextPage<IShopFavorBagProps> = ({ who }) => {
             )}
           </TooltipIcon>
         ) : (
-          <TooltipIcon title="favorites" onClick={handleClick}>
-            {open ? (
-              <div className={styles.likeHeaderFilled} />
+          <TooltipIcon
+            title="favorites"
+            onClick={(event) => {
+              productsFavorite[0]
+                ? handleClick(event)
+                : toast.warning('Favorite is empty');
+            }}
+          >
+            {productsFavorite[0] && open ? (
+              <StyledBadge
+                badgeContent={productsFavorite.length}
+                color="secondary"
+              >
+                <div className={styles.likeHeaderFilled} />
+              </StyledBadge>
             ) : (
-              <div className={styles.likeHeader} />
+              <StyledBadge
+                badgeContent={productsFavorite.length}
+                color="secondary"
+              >
+                <div className={styles.likeHeader} />
+              </StyledBadge>
             )}
           </TooltipIcon>
         )}
@@ -108,6 +127,7 @@ const ShopFavorBag: NextPage<IShopFavorBagProps> = ({ who }) => {
                         productPhoto={data.productPhoto}
                         salePrice={data.salePrice}
                         sizeProduct={data.sizeProduct}
+                        who="bag"
                       />
                     </div>
                   ))}
@@ -143,16 +163,16 @@ const ShopFavorBag: NextPage<IShopFavorBagProps> = ({ who }) => {
               </div>
             ) : (
               <div>
-                {productInBag &&
-                  productInBag.map((data) => (
-                    <div key={data.productId}>
+                {productsFavorite &&
+                  productsFavorite.map((data) => (
+                    <div key={data.id}>
                       <ProductInBag
-                        price={data.price}
-                        productId={data.productId}
-                        productName={data.productName}
-                        productPhoto={data.productPhoto}
-                        salePrice={data.salePrice}
-                        sizeProduct={data.sizeProduct}
+                        price={data.product.productPrice}
+                        favoriteId={data.id}
+                        productName={data.product.productName}
+                        productPhoto={data.product.productMainPictures}
+                        salePrice={data.product.productDiscountPrice}
+                        who="favorite"
                       />
                     </div>
                   ))}

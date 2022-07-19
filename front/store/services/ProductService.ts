@@ -8,6 +8,7 @@ import {
   GET_PRODUCTS,
 } from '../../utils/httpLinks';
 import {
+  IFavorite,
   IProduct,
   IProductFilter,
   IProductOrder,
@@ -24,11 +25,13 @@ import {
   ICreateOrder,
   IDeleteArg,
   IDeleteResponse,
+  IFavoriteArg,
   IFilterArg,
   IGetProductsArg,
   IGetRecommendedArg,
   IGetReviewArg,
 } from '../../utils/interface/serviceInterface';
+import { IUser } from '../../utils/interface/userInterface';
 
 // Get Requests
 export const getSaleProduct = createAsyncThunk(
@@ -170,6 +173,21 @@ export const getConfirmedOrders = createAsyncThunk(
   }
 );
 
+export const getFavorite = createAsyncThunk(
+  'product/getFavorite',
+  async (userId: string, thunkApi) => {
+    try {
+      const res = await axios.get<IFavorite[]>(
+        `${BASIC_URL}/get-favorite/${userId}`
+      );
+
+      return res.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
 // Post Requests
 
 export const addProduct = createAsyncThunk(
@@ -243,6 +261,22 @@ export const addReview = createAsyncThunk(
   }
 );
 
+export const addToFavorite = createAsyncThunk(
+  'product/addToFavorite',
+  async (arg: IFavoriteArg, thunkApi) => {
+    try {
+      const res = await axios.post<IFavorite[]>(
+        `${GET_PRODUCTS}/add-to-favorite`,
+        arg
+      );
+
+      return res.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
 // Patch Requests
 
 export const changeProduct = createAsyncThunk(
@@ -298,6 +332,23 @@ export const deleteProduct = createAsyncThunk(
       );
 
       return res.data.deletedProduct;
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+export const removeFromFavorite = createAsyncThunk(
+  'product/removeFromFavorite',
+  async (arg: IFavoriteArg, thunkApi) => {
+    try {
+      const { favoriteId, userId } = arg;
+
+      const res = await axios.delete<IFavorite[]>(
+        `${GET_PRODUCTS}/remove-from-favorite/${favoriteId}/${userId}`
+      );
+
+      return res.data;
     } catch (error) {
       return thunkApi.rejectWithValue((error as Error).message);
     }

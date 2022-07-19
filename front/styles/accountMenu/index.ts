@@ -20,7 +20,7 @@ export const MainAccountModalBox = styled(Box)(() => ({
 
 export const ButtonAccountMenuBox = styled(Box)(() => ({
   display: 'flex',
-  width: '350px',
+  width: '100%',
   alignItem: 'center',
   padding: '15px',
 })) as typeof Box;
@@ -54,8 +54,11 @@ export const InputsAccountMenuBox = styled(Box)(() => ({
 export const FormAuthBox = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
-  position: 'relative',
   alignItems: 'center',
+})) as typeof Box;
+
+export const FormAuthInputBox = styled(Box)(() => ({
+  position: 'relative',
 })) as typeof Box;
 
 export const InputAuth = styled(Field)(() => ({
@@ -63,11 +66,29 @@ export const InputAuth = styled(Field)(() => ({
   width: '260px',
   padding: '3px 10px',
   fontSize: '18px',
-  margin: '5px 0px',
+  margin: '8px 0px',
 })) as typeof Field;
 
 export const AuthErrorMessage = styled(ErrorMessage)(() => ({
   position: 'absolute',
-  top: '-20px',
   color: '#e64848',
+  top: '35px',
+  left: '10px',
+  fontSize: '13px',
 })) as typeof ErrorMessage;
+
+export const FormAuthButtonPosition = styled(Box)(() => ({
+  display: 'flex',
+  width: '100%',
+  justifyContent: 'center',
+})) as typeof Box;
+
+//Auth
+
+export const AuthBox = styled(Box)(() => ({
+  display: 'flex',
+  width: '100%',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+})) as typeof Box;

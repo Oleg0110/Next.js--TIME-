@@ -6,7 +6,7 @@ const schema = new Schema({
   surname: { type: String, required: true },
   password: { type: String, required: true, min: 8 },
   favoriteProducts: { type: Types.ObjectId, ref: 'Product' },
-  role: [{ type: String, ref: 'Role' }],
+  role: { type: String, ref: 'Role' },
   isActivate: { type: Boolean, default: false },
   activationLink: { type: String },
 })

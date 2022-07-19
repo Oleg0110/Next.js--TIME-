@@ -180,7 +180,7 @@ class AdminController {
   async getUsers(req, res, next) {
     try {
       const { searchValue } = req.params
-
+      console.log(1111, searchValue)
       if (!searchValue) {
         return next(ApiErrors.BadRequest('invalid data'))
       }

@@ -1,6 +1,7 @@
 import { IProduct, IProductFilter, IProductInBag } from './productInterface';
 import { IUserInitialOrder } from './userInterface';
 
+//Product
 export interface IAddArg {
   product: Omit<IProduct, 'id' | 'date' | 'productNumber'>;
   photoFile: any[];
@@ -74,6 +75,13 @@ export interface ICreateOrder {
   totalPrice: number;
 }
 
+export interface IFavoriteArg {
+  productId?: string;
+  favoriteId?: string;
+  userId: string;
+}
+
+//User
 export interface IRegistrationArg {
   name: string;
   surname: string;

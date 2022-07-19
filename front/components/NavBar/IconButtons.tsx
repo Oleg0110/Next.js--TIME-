@@ -20,16 +20,25 @@ const IconButtons = () => {
   const Component = mediaMD ? IconsContainerMobile : IconsContainerDesktop;
 
   const { ordersUnconfirmed } = useAppSelector((state) => state.product);
+  const { user } = useAppSelector((state) => state.user);
+
+  const isAllow =
+    (user && user.userRole === 'admin') || user.userRole === 'owner';
 
   return (
     <>
-      <TooltipIcon title="admin-page">
-        <Link href={ROUTES.adminPage}>
-          <AdminPageBadge badgeContent={ordersUnconfirmed.length} color="error">
-            <div className={styles.settings} />
-          </AdminPageBadge>
-        </Link>
-      </TooltipIcon>
+      {isAllow && (
+        <TooltipIcon title="admin-page">
+          <Link href={ROUTES.adminPage}>
+            <AdminPageBadge
+              badgeContent={ordersUnconfirmed.length}
+              color="error"
+            >
+              <div className={styles.settings} />
+            </AdminPageBadge>
+          </Link>
+        </TooltipIcon>
+      )}
       <TooltipIcon title="search">
         <div className={styles.search} />
       </TooltipIcon>

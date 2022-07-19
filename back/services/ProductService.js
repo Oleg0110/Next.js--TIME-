@@ -6,6 +6,9 @@ const Product = require('../models/Product')
 const Photo = require('../models/Photo')
 const User = require('../models/User')
 const Review = require('../models/Review')
+const UserDto = require('../dtos/user-dto')
+const FavoriteProduct = require('../models/FavoriteProduct')
+const FavoriteProductDto = require('../dtos/favoriteProduc-dto')
 
 class ProductService {
   async getProduct(productId) {
@@ -132,6 +135,37 @@ class ProductService {
     let dtoValue = []
 
     reviews.map((data) => dtoValue.push({ ...new ReviewDto(data) }))
+
+    return dtoValue
+  }
+
+  async addProductToFavorite(productId, userId) {
+    const product = new ProductDto(await Product.findById({ _id: productId }))
+
+    const favoriteProduct = new FavoriteProduct({
+      userId,
+      product,
+    })
+
+    await favoriteProduct.save()
+
+    const favoriteProducts = await FavoriteProduct.find({ userId })
+
+    let dtoValue = []
+
+    favoriteProducts.map((data) => dtoValue.push({ ...new FavoriteProductDto(data) }))
+
+    return dtoValue
+  }
+
+  async removeProductToFavorite(favoriteId, userId) {
+    await FavoriteProduct.findByIdAndDelete({ _id: favoriteId })
+
+    const favorites = await FavoriteProduct.find({ userId })
+
+    let dtoValue = []
+
+    favorites.map((data) => dtoValue.push({ ...new FavoriteProductDto(data) }))
 
     return dtoValue
   }

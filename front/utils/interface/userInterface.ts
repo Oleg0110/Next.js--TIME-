@@ -1,11 +1,11 @@
-import { IProductInBag } from './productInterface';
+import { IProduct, IProductInBag } from './productInterface';
 
 export interface IUser {
   id: string;
   name: string;
   surname: string;
   email: string;
-  userRole: [];
+  userRole: 'user' | 'admin' | 'owner';
   isActive: boolean;
 }
 
@@ -40,4 +40,14 @@ export interface UserState {
   isAuth: boolean;
   isLoading: boolean;
   error: string;
+}
+
+export interface UserTokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface AuthResponse {
+  user: IUser;
+  tokens: UserTokens;
 }

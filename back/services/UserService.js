@@ -41,7 +41,7 @@ class UserService {
       surname,
       email,
       password: hashPassword,
-      role: [role.userRole],
+      role: role.userRole,
       activationLink,
     })
 
@@ -104,7 +104,7 @@ class UserService {
     const tokens = TokenService.generationToken({ ...userDto })
     await TokenService.saveToken(userDto.id, tokens.refreshToken)
 
-    return { user: { ...tokens, ...userDto } }
+    return { user: { ...userDto }, tokens }
   }
 
   async createOrder(userOrderData, orderProducts, totalPrice) {

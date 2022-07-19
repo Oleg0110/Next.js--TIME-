@@ -30,7 +30,7 @@ class UserController {
       const { email, password } = req.body
 
       if (!email && !password) {
-        return res.status(400).json({ message: 'invalid data' })
+        return next(ApiErrors.BadRequest('invalid data'))
       }
 
       return await UserService.login(email, password, res, next)
@@ -58,11 +58,9 @@ class UserController {
 
       const userData = await UserService.refreshToken(refreshToken)
 
-      res.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
+      res.cookie('refreshToken', userData.tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
 
-      res.clearCookie('refreshToken')
-
-      return res.status(200).json({ message: 'Successful refresh token', userData })
+      return res.status(200).json({ message: 'Successful refresh token', ...userData })
     } catch (e) {
       return next(e)
     }
@@ -71,6 +69,7 @@ class UserController {
   async createOrder(req, res) {
     try {
       const { userOrderData, orderProducts, totalPrice } = req.body
+
       if (!userOrderData && !orderProducts && !totalPrice) {
         return next(ApiErrors.BadRequest('invalid data'))
       }

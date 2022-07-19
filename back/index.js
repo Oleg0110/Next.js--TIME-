@@ -18,20 +18,17 @@ const PORT = process.env.PORT || 5000
 
 app.use(express.json())
 app.use(express.static(path.resolve(__dirname, 'static')))
-app.use(cookieParser({ credentials: true, origin: process.env.CLIENT_URL }))
+app.use(cookieParser())
 app.use(fileUpload())
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-  })
-)
+app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }))
 
 app.use('/', home)
 app.use('/', user)
 app.use('/product', product)
 app.use(
   '/administration-page',
-  // roleMiddleware(['admin']), authMiddleware,
+  // roleMiddleware(['admin']),
+  // authMiddleware
   admin
 )
 app.use(errorMiddleware)

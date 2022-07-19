@@ -29,6 +29,7 @@ import Communication from './Communication';
 import SwipeableTemporaryDrawer from '../Drawer';
 import styles from '../../styles/icons.module.scss';
 import { useState } from 'react';
+import { useAppSelector } from '../../hooks/redux';
 
 const Navbar = () => {
   const { t } = useTranslation('common');

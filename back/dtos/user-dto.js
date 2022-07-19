@@ -5,6 +5,7 @@ module.exports = class UserDto {
   id
   isActivated
   userRole
+  favoriteProducts
 
   constructor(model) {
     this.name = model.name
@@ -13,5 +14,6 @@ module.exports = class UserDto {
     this.id = model._id
     this.isActivated = model.isActivate
     this.userRole = model.role
+    this.favoriteProducts = model.favoriteProducts
   }
 }

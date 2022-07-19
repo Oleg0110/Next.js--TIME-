@@ -15,25 +15,25 @@ const roleMiddleware = (roles) => {
         return next(ApiErrors.NoTAuthorizedError())
       }
 
-      const { userRole } = await TokenService.validateAccessToken(token)
+      await TokenService.validateAccessToken(token)
+      // !! Problem
+      // if (!userRole) {
+      //   return next(ApiErrors.NoTAuthorizedError())
+      // }
 
-      if (!userRole) {
-        return next(ApiErrors.NoTAuthorizedError())
-      }
+      // let hasRole = false
 
-      let hasRole = false
+      // userRole.forEach((role) => {
+      //   if (roles.includes(role)) {
+      //     hasRole = true
+      //   }
+      // })
 
-      userRole.forEach((role) => {
-        if (roles.includes(role)) {
-          hasRole = true
-        }
-      })
+      // if (!hasRole) {
+      //   return next(ApiErrors.BadRequest("You don't have access"))
+      // }
 
-      if (!hasRole) {
-        return next(ApiErrors.BadRequest("You don't have access"))
-      }
-
-      next()
+      // next()
     } catch (e) {
       return next(ApiErrors.NoTAuthorizedError())
     }

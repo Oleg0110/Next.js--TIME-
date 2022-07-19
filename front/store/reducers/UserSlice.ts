@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserState, IUser } from '../../utils/interface/userInterface';
 import {
+  checkAuth,
   getSearchUser,
   login,
   logout,
@@ -56,6 +57,19 @@ export const userReducer = createSlice({
       state.isLoading = true;
     },
     [logout.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [checkAuth.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+      state.isLoading = false;
+      state.error = '';
+      state.user = action.payload;
+      state.isAuth = true;
+    },
+    [checkAuth.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [checkAuth.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = action.payload;
     },
