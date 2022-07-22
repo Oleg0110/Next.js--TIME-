@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { ErrorMessage, Field } from 'formik';
 import theme, { Colors } from '../theme';
 
 //Change Modal
@@ -81,3 +82,126 @@ export const ChooseSizeBox = styled(Box)(() => ({
   margin: '10px 0 15px',
   justifyContent: 'center',
 })) as typeof Box;
+
+//Check Password  Modal
+export const CheckPasswordModalBox = styled(Box)(() => ({
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '50%',
+  height: '170px',
+  backgroundColor: Colors.secondaryWhite,
+  border: `6px solid ${Colors.primary}`,
+  padding: '4px',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  [theme.breakpoints.down('md')]: {
+    width: '70%',
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '90%',
+  },
+})) as typeof Box;
+
+export const CheckPasswordBox = styled(Box)(() => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  alignItems: 'center',
+  position: 'relative',
+})) as typeof Box;
+
+export const ModalInputBox = styled(Box)(() => ({
+  display: 'flex',
+  position: 'relative',
+  width: '100%',
+})) as typeof Box;
+
+export const ModalErrorMessage = styled(ErrorMessage)(() => ({
+  position: 'absolute',
+  top: '40px',
+  color: '#e64848',
+})) as typeof ErrorMessage;
+
+export const InputModal = styled(Field)(() => ({
+  width: '100%',
+  fontFamily: 'Roboto',
+  fontSize: '24px',
+  fontWeight: 200,
+  color: Colors.primary,
+  lineHeight: '28.13px',
+  background: Colors.secondaryWhite,
+  border: `1px solid ${Colors.primary}`,
+  padding: '0px 45px 0px 10px',
+  margin: '10px 0px 25px',
+})) as typeof Field;
+
+//Check Password  Modal
+export const ChangePasswordModalBox = styled(Box)(() => ({
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '50%',
+  minHeight: '150px',
+  backgroundColor: Colors.secondaryWhite,
+  border: `6px solid ${Colors.primary}`,
+  padding: '10px',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  [theme.breakpoints.down('md')]: {
+    width: '70%',
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '90%',
+  },
+})) as typeof Box;
+
+export const ChangePasswordBox = styled(Box)(() => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  alignItems: 'center',
+  position: 'relative',
+})) as typeof Box;
+
+export const ContinueBox = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  alignItems: 'center',
+})) as typeof Box;
+
+export const FormChangePasswordBox = styled(Box)(() => ({
+  width: '240px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+})) as typeof Box;
+
+export const ChangePasswordErrorMessage = styled(ErrorMessage)(() => ({
+  position: 'absolute',
+  top: '40px',
+  left: '20px',
+  color: '#e64848',
+})) as typeof ErrorMessage;
+
+export const InputChangePasswordModal = styled(Field)(() => ({
+  width: '100%',
+  fontFamily: 'Roboto',
+  fontSize: '24px',
+  fontWeight: 200,
+  color: Colors.primary,
+  lineHeight: '28.13px',
+  background: Colors.secondaryWhite,
+  border: `1px solid ${Colors.primary}`,
+  padding: '0px 0px 0px 10px',
+  margin: '10px',
+})) as typeof Field;

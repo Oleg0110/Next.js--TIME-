@@ -187,6 +187,7 @@ const ProductOrderAccordion: NextPage<IProductOrderAccordion> = ({
                 productPhoto={data.productPhoto}
                 salePrice={data.salePrice}
                 sizeProduct={data.sizeProduct}
+                who="admin"
               />
             </div>
           ))}

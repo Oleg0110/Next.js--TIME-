@@ -30,6 +30,7 @@ export interface IProductInBag {
   productId: string;
   productName: string;
   productPhoto: string;
+  productFor: string;
   salePrice: number;
   sizeProduct: number;
   productAmount: number;
@@ -67,6 +68,7 @@ export interface IProductOrder {
   orderProducts: IProductInBag[];
   orderStatus: boolean;
   totalPrice: number;
+  userId?: string;
 }
 
 export interface ProductState {

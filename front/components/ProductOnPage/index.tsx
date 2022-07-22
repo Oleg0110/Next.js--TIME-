@@ -54,6 +54,7 @@ const ProductOnPage: NextPage<IProductOnPageProps> = ({
   const isFavorite =
     productsFavorite &&
     productsFavorite.find((f) => f.product?.id === productId);
+
   const isAdded = !!productInBag.find((f) => f.productId === productId);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -78,6 +79,7 @@ const ProductOnPage: NextPage<IProductOnPageProps> = ({
         productId={productId}
         productName={name}
         productPhoto={mainPicture}
+        productFor={productFor}
       />
       <ProductOnPagePhoto>
         <img

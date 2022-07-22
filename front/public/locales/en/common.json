@@ -16,6 +16,7 @@
   "remove-from-favorites": "Remove from Favorites",
   "add-to-shopping-bag": "Add to Shopping Bag",
   "remove-from-shopping-bag": "Remove from Shopping Bag",
+  "click-to-copy": "Click to copy kod",
   "delete-photo": "Click to delete Photo",
   "catalog": "Catalog",
   "women-products": "Women shoes",
@@ -36,5 +37,6 @@
   "remove": "Remove",
   "total": "Total",
   "order": "To order",
-  "continue": "Continue shopping"
+  "continue": "Continue shopping",
+  "change": "Change"
 }

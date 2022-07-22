@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Typography } from '@mui/material';
+import { CircularProgress, Divider, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { logout } from '../../store/services/UserService';
@@ -8,12 +8,16 @@ import { Colors } from '../../styles/theme';
 import Link from 'next/link';
 import CustomButton from '../CustomButton';
 import { clearFavorite } from '../../store/reducers/ProductSlice';
+import { Router } from '@mui/icons-material';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 const AuthMenu = () => {
   const { t } = useTranslation('common');
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
-  const { user } = useAppSelector((state) => state.user);
+  const { user, isLoading } = useAppSelector((state) => state.user);
 
   return (
     <AuthBox>
@@ -29,7 +33,7 @@ const AuthMenu = () => {
         <Typography
           variant="roboto16200"
           sx={{
-            width: '100%',
+            width: '95%',
             textAlign: 'start',
             margin: '10px 0px',
             padding: '5px',
@@ -45,18 +49,33 @@ const AuthMenu = () => {
         </Typography>
       </Link>
       <FormAuthButtonPosition>
-        <CustomButton
-          size="SM"
-          variant="secondary"
-          type="submit"
-          style={{ marginBottom: '10px' }}
-          onClick={async () => {
-            await dispatch(logout());
-            await dispatch(clearFavorite([]));
-          }}
-        >
-          {t('logout')}
-        </CustomButton>
+        {isLoading ? (
+          <CircularProgress
+            sx={{ color: Colors.primary, margin: '11px' }}
+            disableShrink
+            size="25px"
+          />
+        ) : (
+          <CustomButton
+            size="SM"
+            variant="secondary"
+            type="submit"
+            style={{ marginBottom: '10px' }}
+            onClick={async () => {
+              const res = await dispatch(logout());
+
+              if (res.meta.requestStatus === 'rejected') {
+                toast.error('Error, please try again');
+              } else {
+                toast.success('Successfully logout');
+                await dispatch(clearFavorite([]));
+                router.push('/');
+              }
+            }}
+          >
+            {t('logout')}
+          </CustomButton>
+        )}
       </FormAuthButtonPosition>
     </AuthBox>
   );

@@ -15,6 +15,7 @@ import {
 import { NextPage } from 'next';
 import { Button, colors, List, ListItem, Rating } from '@mui/material';
 import ReviewForm from './ReviewForm';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 type VariantAccordionType = 'elevation' | 'outlined';
 
@@ -124,7 +125,7 @@ const CustomAccordion: NextPage<ICustomAccordionPros> = ({
             <ReviewField>
               {!isOpen && (
                 <OpenComment onClick={() => setIsOpen(!isOpen)}>
-                  Add Review
+                  {t('add-review')}
                 </OpenComment>
               )}
               {isOpen && <ReviewForm setIsOpen={setIsOpen} />}
@@ -262,3 +263,10 @@ const CustomAccordion: NextPage<ICustomAccordionPros> = ({
 };
 
 export default CustomAccordion;
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    // !!!Problem with translation
+    ...(await serverSideTranslations(locale, ['common', 'accordion'])),
+  },
+});

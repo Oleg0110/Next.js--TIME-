@@ -47,19 +47,38 @@ const MainLayout: NextPage<MainLayoutProps> = ({
       !!isAuth && (await dispatch(checkAuth()));
 
       await dispatch(setProductInShoppingBag(arr));
-      await dispatch(getUnconfirmedOrders());
+      // console.log(user);
+
+      // user &&
+      //   productsFavorite[0] === undefined &&
+      //   (await dispatch(getFavorite(user.id)));
+      // console.log(user);
+      if ((user && user.userRole === 'admin') || user.userRole === 'owner') {
+        await dispatch(getUnconfirmedOrders());
+      }
+
+      // if (user && productsFavorite[0] === undefined) {
+      //   await dispatch(getFavorite(user.id));
+      // }
+
+      // ((await user) && user.userRole === 'admin') ||
+      //   ((await user) &&
+      //     user.userRole === 'owner' &&
+      //     (await dispatch(getUnconfirmedOrders())));
     };
 
     asyncFunc();
-  }, [dispatch, productsFavorite]);
+  }, [dispatch, productsFavorite, getFavorite]);
 
   const getFavoriteProduct = async () => {
-    user.id &&
+    user &&
       productsFavorite[0] === undefined &&
       (await dispatch(getFavorite(user.id)));
+    (user && user.userRole === 'admin') ||
+      (user.userRole === 'owner' && (await dispatch(getUnconfirmedOrders())));
   };
 
-  getFavoriteProduct();
+  // getFavoriteProduct();
 
   return (
     <>

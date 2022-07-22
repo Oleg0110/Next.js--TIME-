@@ -73,11 +73,13 @@ const Sale: NextPage<ISaleProps> = ({ saleCarouselProduct }) => {
             saleCarouselProduct.map((product) => (
               <SwiperSlide key={product.id}>
                 <ProductCarousel
-                  src={`${BASIC_URL}/${product.productMainPictures}`}
-                  name={product.productName}
-                  price={product.productPrice}
-                  href={product.id}
-                  salePrice={product.productDiscountPrice}
+                  productDiscountPrice={product.productDiscountPrice}
+                  productFor={product.productFor}
+                  productId={product.id}
+                  productMainPictures={product.productMainPictures}
+                  productName={product.productName}
+                  productSize={product.productSize}
+                  productPrice={product.productPrice}
                 />
               </SwiperSlide>
             ))}

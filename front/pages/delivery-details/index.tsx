@@ -48,6 +48,8 @@ const Bag = () => {
                         salePrice={data.salePrice}
                         sizeProduct={data.sizeProduct}
                         productAmount={data.productAmount}
+                        productFor={data.productFor}
+                        productId={data.productId}
                       />
                     </ProductOnDeliveryContainer>
                   ))}

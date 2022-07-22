@@ -15,6 +15,7 @@ import { BASIC_URL } from '../../utils/httpLinks';
 import { removeFromBag } from '../../utils/function';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { removeFromFavorite } from '../../store/services/ProductService';
+import { useRouter } from 'next/router';
 
 interface IProductInBag {
   price: number;
@@ -25,6 +26,7 @@ interface IProductInBag {
   salePrice: number;
   sizeProduct?: number;
   who: 'bag' | 'favorite';
+  productFor: string;
 }
 
 const ProductInBag: NextPage<IProductInBag> = ({
@@ -36,10 +38,13 @@ const ProductInBag: NextPage<IProductInBag> = ({
   salePrice,
   sizeProduct,
   who,
+  productFor,
 }) => {
   const { t } = useTranslation('common');
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.user);
+
+  const router = useRouter();
 
   return (
     <MainContainer>
@@ -48,14 +53,25 @@ const ProductInBag: NextPage<IProductInBag> = ({
           src={`${BASIC_URL}/${productPhoto}`}
           width="160px"
           height="160px"
+          onClick={() =>
+            router.push(`/product/${productFor}/${productName}/${productId}`)
+          }
+          style={{ cursor: 'pointer' }}
         />
       </PhotoContainer>
       <InfoContainer>
         <Typography
           variant="roboto20400"
-          marginBottom="8px"
-          color={Colors.black}
-          sx={{ width: '260px', textAlign: 'end', color: Colors.black }}
+          sx={{
+            width: '260px',
+            textAlign: 'end',
+            color: Colors.black,
+            marginBottom: '8px',
+            cursor: 'pointer',
+          }}
+          onClick={() =>
+            router.push(`/product/${productFor}/${productName}/${productId}`)
+          }
         >
           {productName}
         </Typography>

@@ -46,7 +46,13 @@ class AdminService {
     productStyleMaterial,
     file
   ) {
-    const productNumber = Number(`1${Math.floor(Math.random() * (999999999 - 100000000 + 1) + 1000000000)}`)
+    const givenSet = '1234567890'
+    let productNumber = '1'
+
+    for (let i = 0; i < 9; i++) {
+      let pos = Math.floor(Math.random() * givenSet.length)
+      code += givenSet[pos]
+    }
 
     const fileName = uuid.v4() + '.jpg'
 

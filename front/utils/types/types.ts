@@ -26,4 +26,6 @@ export type TooltipTitleTypes =
   | 'remove-from-favorites'
   | 'add-to-shopping-bag'
   | 'remove-from-shopping-bag'
-  | 'delete-photo';
+  | 'delete-photo'
+  | 'click-to-copy'
+  | 'change';

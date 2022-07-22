@@ -5,7 +5,7 @@ import { NextPage } from 'next';
 import { ChooseSizeBox, ChooseSizeModalBox } from '../../styles/modal';
 import { shoppingBagDataName, sizesArray } from '../../utils/constants';
 import { SizeType } from '../../utils/types/form';
-import { includesSizeFunc } from '../../utils/function';
+import { includesSizeFunc, setInShoppingBag } from '../../utils/function';
 import { Field, Form, Formik } from 'formik';
 import { setProductInShoppingBag } from '../../store/reducers/ProductSlice';
 import { useAppDispatch } from '../../hooks/redux';
@@ -20,6 +20,7 @@ interface IChooseSizeModal {
   productName: string;
   productId: string;
   productPhoto: string;
+  productFor: string;
   salePrice: number;
   price: number;
 }
@@ -28,6 +29,7 @@ const ChooseSizeModal: NextPage<IChooseSizeModal> = ({
   isModalOpened,
   handleClose,
   productSize,
+  productFor,
   productName,
   productId,
   productPhoto,
@@ -39,30 +41,6 @@ const ChooseSizeModal: NextPage<IChooseSizeModal> = ({
   const dispatch = useAppDispatch();
 
   const ISSERVER = typeof window === 'undefined';
-
-  const setInShoppingBag = async (sizeProduct) => {
-    if (!ISSERVER) {
-      const arr: IProductInBag[] =
-        JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
-
-      arr.push({
-        productId,
-        productName,
-        sizeProduct,
-        productPhoto,
-        salePrice,
-        price,
-        productAmount: 1,
-      });
-
-      localStorage.setItem(shoppingBagDataName, JSON.stringify(arr));
-
-      const newArr =
-        JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
-      await dispatch(setProductInShoppingBag(newArr));
-      toast.success('Add to Shopping Bag');
-    }
-  };
 
   return (
     <>
@@ -85,7 +63,16 @@ const ChooseSizeModal: NextPage<IChooseSizeModal> = ({
           <Formik
             initialValues={{ size: '' }}
             onSubmit={async (values) => {
-              setInShoppingBag(+values.size);
+              setInShoppingBag(
+                dispatch,
+                +values.size,
+                productId,
+                productName,
+                productPhoto,
+                salePrice,
+                price,
+                productFor
+              );
               handleClose();
             }}
           >

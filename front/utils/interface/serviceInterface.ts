@@ -73,6 +73,7 @@ export interface ICreateOrder {
   userOrderData: IUserInitialOrder;
   orderProducts: IProductInBag[];
   totalPrice: number;
+  userId?: string;
 }
 
 export interface IFavoriteArg {

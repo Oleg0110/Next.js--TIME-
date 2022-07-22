@@ -77,7 +77,7 @@ class MailService {
           </p>
           <h4 style="color:#fff;">Attention:</h4>
           <p style="text-align:center">
-            ${userName} If you have any questions or want to clarify or change your order, write or call us.
+            ${userName} If you have any questions or want to clarify or change your order, please email or call us.
           </p>
           <h4 style="color:#fff;">Phone numbers: <a style="text-decoration: none" href='tel:+310 55-555-55'>+310 55-555-55 </a>, <a style="text-decoration: none" href='tel:+380 55-555-55'> +380 55-555-55</a> </h2>
           <h3 style="color:#fff;">Thank you ${userName} ${userSurname}.</h3>
@@ -98,16 +98,112 @@ class MailService {
         <div style="background:#685248; padding:10px; border:2px solid #fff;">
           <h1 style="color:#fff;">Order number: <span style="color:#c4c4c4; font-size:30px; width:100%" >${orderNumber}</span></h1>
           <p style="text-align:start">
-           Dear ${userName} ${userSurname} your order is confirmed and was sentю
+           Dear ${userName} ${userSurname} your order is confirmed and was sent
           </p>
           <h5 style="color:#fff;">Address where sent: <span style="color:#000;">${userRegion}, ${userCity}, ${userAddress}</span></h5>
           <h4 style="color:#fff;">Attention:</h4>
           <p style="text-align:start">
-            ${userName} If you have any questions or want to clarify or change your order, write or call us.
+            ${userName} If you have any questions or want to clarify or change your order, please email or call us.
           </p>
           <h4 style="color:#fff;">Phone numbers: <a style="text-decoration: none" href='tel:+310 55-555-55'>+310 55-555-55 </a>, <a style="text-decoration: none" href='tel:+380 55-555-55'> +380 55-555-55</a> </h2>
           <h4 style="color:#fff;">Email: <span style="color:#000; text-decoration: none">${process.env.SMTP_USER}</span> </h2>
           <h3 style="color:#fff;">Thank you ${userName} ${userSurname}.</h3>
+        </div>
+      </div>
+      `,
+    })
+  }
+
+  async sendThatEmailChanged(userDto, isOldEmail) {
+    const { name, email, surname } = userDto
+
+    await this.transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to: isOldEmail ? isOldEmail : email,
+      subject: `Dear ${name} ${surname} your email was changed !`,
+      html: `
+      <div style="background:#685248; padding:10px">
+        <div style="background:#685248; padding:10px; border:2px solid #fff;">
+          <h1 style="color:#fff;">Email was successfully changed !!!</h1>
+          <h4 style="color:#fff;">Attention:</h4>
+          <p style="text-align:start">
+            ${name} If you have any questions or haven't changed your email, please email or call us.
+          </p>
+          <h4 style="color:#fff;">Phone numbers: <a style="text-decoration: none" href='tel:+310 55-555-55'>+310 55-555-55 </a>, <a style="text-decoration: none" href='tel:+380 55-555-55'> +380 55-555-55</a> </h2>
+          <h4 style="color:#fff;">Email: <span style="color:#000; text-decoration: none">${process.env.SMTP_USER}</span> </h2>
+          <h3 style="color:#fff;">Thank you ${name} ${surname}.</h3>
+        </div>
+      </div>
+      `,
+    })
+  }
+
+  async sendCodeToConfirm(user, code) {
+    const { name, email, surname } = user
+
+    await this.transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to: email,
+      subject: `Dear ${name} ${surname} open to get Code !`,
+      html: `
+      <div style="background:#685248; padding:10px">
+        <div style="background:#685248; padding:10px; border:2px solid #fff;">
+        <h1 style="color:#fff;">Code to Confirm: <span style="color:#c4c4c4; font-size:30px; width:100%" >${code}</span></h1>
+          <h4 style="color:#fff;">Attention:</h4>
+          <p style="text-align:start">
+            ${name} If you have any questions, please email or call us.
+          </p>
+          <h4 style="color:#fff;">Phone numbers: <a style="text-decoration: none" href='tel:+310 55-555-55'>+310 55-555-55 </a>, <a style="text-decoration: none" href='tel:+380 55-555-55'> +380 55-555-55</a> </h2>
+          <h4 style="color:#fff;">Email: <span style="color:#000; text-decoration: none">${process.env.SMTP_USER}</span> </h2>
+          <h3 style="color:#fff;">Thank you ${name} ${surname}.</h3>
+        </div>
+      </div>
+      `,
+    })
+  }
+
+  async sendThatPasswordChanged(user) {
+    const { name, email, surname } = user
+
+    await this.transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to: email,
+      subject: `Dear ${name} ${surname} your password was changed !`,
+      html: `
+      <div style="background:#685248; padding:10px">
+        <div style="background:#685248; padding:10px; border:2px solid #fff;">
+          <h1 style="color:#fff;">Password was successfully changed !!!</h1>
+          <h4 style="color:#fff;">Attention:</h4>
+          <p style="text-align:start">
+            ${name} If you have any questions or haven't changed your password, please email or call us.
+          </p>
+          <h4 style="color:#fff;">Phone numbers: <a style="text-decoration: none" href='tel:+310 55-555-55'>+310 55-555-55 </a>, <a style="text-decoration: none" href='tel:+380 55-555-55'> +380 55-555-55</a> </h2>
+          <h4 style="color:#fff;">Email: <span style="color:#000; text-decoration: none">${process.env.SMTP_USER}</span> </h2>
+          <h3 style="color:#fff;">Thank you ${name} ${surname}.</h3>
+        </div>
+      </div>
+      `,
+    })
+  }
+
+  async sendThatDeleteAccount(user) {
+    const { name, email, surname } = user
+
+    await this.transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to: email,
+      subject: `Dear ${name} ${surname} your account was deleted !`,
+      html: `
+      <div style="background:#685248; padding:10px">
+        <div style="background:#685248; padding:10px; border:2px solid #fff;">
+          <h1 style="color:#fff;">We apologize if something was wrong.</h1>
+          <h4 style="color:#fff;">Attention:</h4>
+          <p style="text-align:start">
+            ${name} If you have any questions, please email or call us.
+          </p>
+          <h4 style="color:#fff;">Phone numbers: <a style="text-decoration: none" href='tel:+310 55-555-55'>+310 55-555-55 </a>, <a style="text-decoration: none" href='tel:+380 55-555-55'> +380 55-555-55</a> </h2>
+          <h4 style="color:#fff;">Email: <span style="color:#000; text-decoration: none">${process.env.SMTP_USER}</span> </h2>
+          <h3 style="color:#fff;">Thank you ${name} ${surname}.</h3>
         </div>
       </div>
       `,
