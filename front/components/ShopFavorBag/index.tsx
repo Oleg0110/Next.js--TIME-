@@ -128,6 +128,7 @@ const ShopFavorBag: NextPage<IShopFavorBagProps> = ({ who }) => {
                         salePrice={data.salePrice}
                         sizeProduct={data.sizeProduct}
                         who="bag"
+                        productFor={data.productFor}
                       />
                     </div>
                   ))}
@@ -173,6 +174,8 @@ const ShopFavorBag: NextPage<IShopFavorBagProps> = ({ who }) => {
                         productPhoto={data.product.productMainPictures}
                         salePrice={data.product.productDiscountPrice}
                         who="favorite"
+                        productFor={data.product.productFor}
+                        productId={data.product.id}
                       />
                     </div>
                   ))}

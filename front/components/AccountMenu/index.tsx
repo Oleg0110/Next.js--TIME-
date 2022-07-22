@@ -77,7 +77,7 @@ const AccountMenu: NextPage = ({}) => {
           >
             {isAuth && <AuthMenu />}
             {!isAuth && (
-              <>
+              <div>
                 <ButtonAccountMenuBox>
                   <ButtonAccountMenuStyle
                     onClick={(e) => {
@@ -109,7 +109,7 @@ const AccountMenu: NextPage = ({}) => {
                   </ButtonAccountMenuStyle>
                 </ButtonAccountMenuBox>
                 {isEntry ? <Entry /> : <Registration />}
-              </>
+              </div>
             )}
           </Menu>
         </>

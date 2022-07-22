@@ -13,18 +13,36 @@ import {
   ProductOrderPrice,
 } from '../../styles/productOrderAccordion';
 
-const ProductInAccordionOrder: NextPage<Omit<IProductInBag, 'productId'>> = ({
+interface IProductInAccordionOrder {
+  price: number;
+  productName: string;
+  productPhoto: string;
+  salePrice: number;
+  sizeProduct: number;
+  productAmount: number;
+  who: 'user' | 'admin';
+}
+
+const ProductInAccordionOrder: NextPage<IProductInAccordionOrder> = ({
   price,
   productName,
   productPhoto,
   salePrice,
   sizeProduct,
   productAmount,
+  who,
 }) => {
   const { t } = useTranslation('admin');
 
   return (
-    <ProductAccordionBox>
+    <ProductAccordionBox
+      sx={{
+        border:
+          who === 'admin'
+            ? '1px dotted'
+            : `1px dotted ${Colors.secondaryWhite}`,
+      }}
+    >
       <ProductOrderPhotoBox>
         <img src={`${BASIC_URL}/${productPhoto}`} width="60px" height="60px" />
         <ProductOrderInfo>
@@ -34,7 +52,7 @@ const ProductInAccordionOrder: NextPage<Omit<IProductInBag, 'productId'>> = ({
             sx={{
               maxWidth: '260px',
               textAlign: 'start',
-              color: Colors.black,
+              color: who === 'admin' ? Colors.black : Colors.secondaryWhite,
               [theme.breakpoints.down('sm')]: {
                 fontSize: '12px',
               },
@@ -45,7 +63,7 @@ const ProductInAccordionOrder: NextPage<Omit<IProductInBag, 'productId'>> = ({
           <Typography
             variant="roboto16200"
             sx={{
-              color: Colors.black,
+              color: who === 'admin' ? Colors.black : Colors.secondaryWhite,
               [theme.breakpoints.down('sm')]: {
                 fontSize: '12px',
               },
@@ -60,7 +78,7 @@ const ProductInAccordionOrder: NextPage<Omit<IProductInBag, 'productId'>> = ({
           variant="roboto16200"
           sx={{
             marginRight: '10px',
-            color: Colors.black,
+            color: who === 'admin' ? Colors.black : Colors.secondaryWhite,
             [theme.breakpoints.down('sm')]: {
               fontSize: '12px',
             },
@@ -75,7 +93,7 @@ const ProductInAccordionOrder: NextPage<Omit<IProductInBag, 'productId'>> = ({
             variant="roboto16200"
             sx={{
               width: '240px',
-              color: Colors.black,
+              color: who === 'admin' ? Colors.black : Colors.secondaryWhite,
               [theme.breakpoints.down('sm')]: {
                 fontSize: '12px',
               },
@@ -88,8 +106,8 @@ const ProductInAccordionOrder: NextPage<Omit<IProductInBag, 'productId'>> = ({
         <ProductOrderPrice>
           <Typography
             variant="roboto16200"
-            color={Colors.black}
             sx={{
+              color: who === 'admin' ? Colors.black : Colors.secondaryWhite,
               textDecoration: 'line-through',
               textDecorationThickness: '1px',
               marginRight: '10px',

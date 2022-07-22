@@ -23,7 +23,7 @@ const IconButtons = () => {
   const { user } = useAppSelector((state) => state.user);
 
   const isAllow =
-    (user && user.userRole === 'admin') || user.userRole === 'owner';
+    (user && user.userRole === 'admin') || (user && user.userRole === 'owner');
 
   return (
     <>

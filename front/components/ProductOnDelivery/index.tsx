@@ -11,34 +11,47 @@ import {
   ProductOnDeliveryPhotoBox,
   ProductOnDeliveryPrice,
 } from '../../styles/productOnDeliveryPage';
+import { useRouter } from 'next/router';
 
-const ProductOnDelivery: NextPage<Omit<IProductInBag, 'productId'>> = ({
+const ProductOnDelivery: NextPage<IProductInBag> = ({
   price,
   productName,
   productPhoto,
   salePrice,
   sizeProduct,
   productAmount,
+  productFor,
+  productId,
 }) => {
   const { t } = useTranslation('delivery');
+  const router = useRouter();
+
   return (
     <ProductOnDeliveryContainer>
       <ProductOnDeliveryPhotoBox>
         <img
           src={`${BASIC_URL}/${productPhoto}`}
-          width="160px"
-          height="160px"
+          onClick={() =>
+            router.push(`/product/${productFor}/${productName}/${productId}`)
+          }
+          style={{ cursor: 'pointer', width: '160px', height: '160px' }}
         />
         <ProductOnDeliveryInfo>
           <Typography
             variant="roboto20400"
-            marginBottom="8px"
-            color={Colors.black}
             sx={{
               width: '100%',
               textAlign: 'start',
               color: Colors.secondaryWhite,
+              cursor: 'pointer',
+              marginBottom: '8px',
+              ':hover': {
+                color: Colors.lightGray,
+              },
             }}
+            onClick={() =>
+              router.push(`/product/${productFor}/${productName}/${productId}`)
+            }
           >
             {productName}
           </Typography>

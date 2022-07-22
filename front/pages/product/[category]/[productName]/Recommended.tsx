@@ -12,8 +12,11 @@ import styles from '../../../../styles/icons.module.scss';
 import { useAppSelector } from '../../../../hooks/redux';
 import { Autoplay, Navigation } from 'swiper';
 import { BASIC_URL } from '../../../../utils/httpLinks';
+import { useTranslation } from 'next-i18next';
 
 const Recommended = () => {
+  const { t } = useTranslation('product');
+
   const swiper = useSwiper();
   const [swiperRef, setSwiperRef] = useState<typeof swiper>();
 
@@ -34,8 +37,7 @@ const Recommended = () => {
       {productsRecommended[0] !== undefined && (
         <ProductRecommended>
           <Typography variant="h1" color={Colors.black}>
-            {/* {t('sale')} */}
-            RECOMMENDED FOR YOU
+            {t('recommended')}
           </Typography>
           <ButtonArrowPrev onClick={handleLeftClick}>
             <div className={styles.carouselArrowPrev} />

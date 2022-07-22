@@ -1,4 +1,4 @@
-import { IProduct, IProductInBag } from './productInterface';
+import { IProduct, IProductInBag, IProductOrder } from './productInterface';
 
 export interface IUser {
   id: string;
@@ -7,6 +7,7 @@ export interface IUser {
   email: string;
   userRole: 'user' | 'admin' | 'owner';
   isActive: boolean;
+  phone?: string;
 }
 
 export interface IUserInitialOrder {
@@ -37,8 +38,11 @@ export interface IUserOrder {
 export interface UserState {
   user: IUser;
   userSearch: IUser[];
+  userOrders: IProductOrder[];
   isAuth: boolean;
   isLoading: boolean;
+  isOrdersLoading: boolean;
+  isCodeLoading: boolean;
   error: string;
 }
 
@@ -50,4 +54,13 @@ export interface UserTokens {
 export interface AuthResponse {
   user: IUser;
   tokens: UserTokens;
+}
+
+export interface IChangeProps {
+  name?: boolean;
+  surname?: boolean;
+  email?: boolean;
+  phone?: boolean;
+  delete?: boolean;
+  password?: boolean;
 }

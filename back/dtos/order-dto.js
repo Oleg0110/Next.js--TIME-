@@ -11,6 +11,7 @@ module.exports = class OrderDto {
   orderProducts
   orderStatus
   totalPrice
+  userId
 
   constructor(model) {
     this.id = model._id
@@ -25,5 +26,6 @@ module.exports = class OrderDto {
     this.orderProducts = model.orderProducts
     this.orderStatus = model.orderStatus
     this.totalPrice = model.totalPrice
+    this.userId = model?.userId
   }
 }

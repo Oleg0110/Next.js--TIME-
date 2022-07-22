@@ -23,6 +23,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { number, object } from 'yup';
 import { shoppingBagDataName } from '../../utils/constants';
 import { setProductInShoppingBag } from '../../store/reducers/ProductSlice';
+import { useRouter } from 'next/router';
 
 const ProductOnBagPage: NextPage<IProductInBag> = ({
   price,
@@ -32,10 +33,12 @@ const ProductOnBagPage: NextPage<IProductInBag> = ({
   salePrice,
   sizeProduct,
   productAmount,
+  productFor,
 }) => {
   const MediaSM = useMediaQuery(theme.breakpoints.down('sm'));
   const { t } = useTranslation('delivery');
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const addProductAmount = (productAmountValue) => {
     const ISSERVER = typeof window === 'undefined';
@@ -66,6 +69,10 @@ const ProductOnBagPage: NextPage<IProductInBag> = ({
           src={`${BASIC_URL}/${productPhoto}`}
           width={MediaSM ? '60px' : '100px'}
           height={MediaSM ? '60px' : '100px'}
+          onClick={() =>
+            router.push(`/product/${productFor}/${productName}/${productId}`)
+          }
+          style={{ cursor: 'pointer' }}
         />
         <ProductOnBagInfo>
           <Typography
@@ -76,10 +83,17 @@ const ProductOnBagPage: NextPage<IProductInBag> = ({
               maxWidth: '260px',
               textAlign: 'start',
               color: Colors.secondaryWhite,
+              cursor: 'pointer',
               [theme.breakpoints.down('sm')]: {
                 fontSize: '12px',
               },
+              ':hover': {
+                color: Colors.lightGray,
+              },
             }}
+            onClick={() =>
+              router.push(`/product/${productFor}/${productName}/${productId}`)
+            }
           >
             {productName}
           </Typography>

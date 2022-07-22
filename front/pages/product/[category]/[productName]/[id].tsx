@@ -47,10 +47,7 @@ export const getServerSideProps = async (context) => {
       product,
       productPhotos,
       category,
-      ...(await serverSideTranslations(context.locale, [
-        'common',
-        'accordion',
-      ])),
+      ...(await serverSideTranslations(context.locale, ['common', 'product'])),
     },
   };
 };
@@ -66,25 +63,22 @@ const Product: NextPage<IProductProps> = ({
   category,
   productPhotos,
 }) => {
-  const { t } = useTranslation('accordion');
+  const { t } = useTranslation(['product']);
 
   const categoryTitle = firstLetterUpper(category);
-
-  const router = useRouter();
-  const productId = `${router.query.id}`;
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getReviewFunc = async () => {
-      await dispatch(getReview({ productId, category }));
+      await dispatch(getReview({ productId: product.id, category }));
       await dispatch(
         getRecommendedProducts({ style: product.productStyleName, category })
       );
     };
 
     getReviewFunc();
-  }, [dispatch, getReview, productId]);
+  }, [dispatch, getReview, product]);
 
   const { productReviews } = useAppSelector((state) => state.product);
 
@@ -109,7 +103,7 @@ const Product: NextPage<IProductProps> = ({
                       marginRight: '5px',
                     }}
                   >
-                    {categoryTitle} shoes
+                    {t(category)} {t('shoes')}
                   </Typography>
                 </Link>
                 <Typography
@@ -155,7 +149,6 @@ const Product: NextPage<IProductProps> = ({
                           />
                         </div>
                       ))}
-                    {/* <UserReview /> */}
                   </CustomAccordion>
                 </PhotoDescriptionBox>
                 <Information product={product} />

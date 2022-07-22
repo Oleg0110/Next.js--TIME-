@@ -14,39 +14,115 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import TooltipIcon from '../TooltipIcon/TooltipIcon';
 import styles from '../../styles/icons.module.scss';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { BASIC_URL } from '../../utils/httpLinks';
+import { removeFromBag } from '../../utils/function';
+import ChooseSizeModal from '../ChooseSizeModal';
+import { IProduct } from '../../utils/interface/productInterface';
+import {
+  addToFavorite,
+  removeFromFavorite,
+} from '../../store/services/ProductService';
+import { toast } from 'react-toastify';
 
 interface IProductCarouselProps {
-  name: string;
-  price: number;
-  href: string;
-  salePrice: number;
-  src: any;
+  productSize: number[];
+  productPrice: number;
+  productDiscountPrice: number;
+  productId: string;
+  productName: string;
+  productMainPictures: string;
+  productFor: string;
 }
 
 const ProductCarousel: NextPage<IProductCarouselProps> = ({
-  name,
-  price,
-  href,
-  salePrice,
-  src,
+  productSize,
+  productPrice,
+  productDiscountPrice,
+  productId,
+  productName,
+  productMainPictures,
+  productFor,
 }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const [isAddToBag, setIsAddToBag] = useState(false);
-
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const category = router.query.category;
+
+  const { productInBag, productsFavorite } = useAppSelector(
+    (state) => state.product
+  );
+  const { isAuth, user } = useAppSelector((state) => state.user);
+
+  const isFavorite =
+    productsFavorite &&
+    productsFavorite.find((f) => f.product?.id === productId);
+
+  const isAdded = !!productInBag.find((f) => f.productId === productId);
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <CarouselProductBox>
+      <ChooseSizeModal
+        isModalOpened={open}
+        handleClose={handleClose}
+        productSize={productSize}
+        price={productPrice}
+        salePrice={productDiscountPrice}
+        productId={productId}
+        productName={productName}
+        productPhoto={productMainPictures}
+        productFor={productFor}
+      />
       <CarouselProductPhoto>
-        <img src={src} width="300px" height="300px" />
-        <IconPosition onClick={() => setIsLiked(!isLiked)}>
-          {isLiked ? (
-            <TooltipIcon title="remove-from-favorites">
+        <img
+          src={`${BASIC_URL}/${productMainPictures}`}
+          width="300px"
+          height="300px"
+          onClick={() =>
+            router.push(`/product/${category}/${productName}/${productId}`)
+          }
+          style={{ cursor: 'pointer' }}
+        />
+        <IconPosition>
+          {!!isFavorite ? (
+            <TooltipIcon
+              title="remove-from-favorites"
+              onClick={async () => {
+                if (isAuth) {
+                  await dispatch(
+                    removeFromFavorite({
+                      favoriteId: isFavorite.id,
+                      userId: user.id,
+                    })
+                  );
+                } else {
+                  toast.warning('Please log in to add');
+                }
+              }}
+            >
               <div className={styles.likeProductFilled} />
             </TooltipIcon>
           ) : (
-            <TooltipIcon title="add-to-favorites">
+            <TooltipIcon
+              title="add-to-favorites"
+              onClick={async () => {
+                if (isAuth) {
+                  await dispatch(addToFavorite({ productId, userId: user.id }));
+                } else {
+                  toast.warning('Please log in to add');
+                }
+              }}
+            >
               <div className={styles.likeProduct} />
             </TooltipIcon>
           )}
@@ -56,8 +132,8 @@ const ProductCarousel: NextPage<IProductCarouselProps> = ({
         <Link
           href={
             category !== undefined
-              ? `/product/${category}/${name}/${href}`
-              : `/product/sale/${name}/${href}`
+              ? `/product/${category}/${productName}/${productId}`
+              : `/product/sale/${productName}/${productId}`
           }
         >
           <Typography
@@ -70,15 +146,15 @@ const ProductCarousel: NextPage<IProductCarouselProps> = ({
               width: '260px',
             }}
           >
-            {name}
+            {productName}
           </Typography>
         </Link>
-        {salePrice === 0 ? (
+        {productDiscountPrice === 0 ? (
           <Typography
             variant="roboto20200"
             sx={{ color: Colors.black, textAlign: 'start' }}
           >
-            {price} UAH
+            {productPrice} UAH
           </Typography>
         ) : (
           <PriceCarouselProductBox>
@@ -91,20 +167,23 @@ const ProductCarousel: NextPage<IProductCarouselProps> = ({
                 marginRight: '10px',
               }}
             >
-              {price} UAH
+              {productPrice} UAH
             </Typography>
             <Typography variant="roboto24200" color={Colors.saleColor}>
-              {salePrice} UAH
+              {productDiscountPrice} UAH
             </Typography>
           </PriceCarouselProductBox>
         )}
-        <BagIconPosition onClick={() => setIsAddToBag(!isAddToBag)}>
-          {isAddToBag ? (
-            <TooltipIcon title="remove-from-shopping-bag">
+        <BagIconPosition>
+          {isAdded ? (
+            <TooltipIcon
+              title="remove-from-shopping-bag"
+              onClick={() => removeFromBag(productId, dispatch)}
+            >
               <div className={styles.bagProductFilled} />
             </TooltipIcon>
           ) : (
-            <TooltipIcon title="add-to-shopping-bag">
+            <TooltipIcon title="add-to-shopping-bag" onClick={handleClick}>
               <div className={styles.bagProduct} />
             </TooltipIcon>
           )}

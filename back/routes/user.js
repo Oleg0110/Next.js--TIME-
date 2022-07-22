@@ -1,10 +1,17 @@
 const { Router } = require('express')
 const { body } = require('express-validator')
-const HomeController = require('../controllers/HomeController')
 const UserController = require('../controllers/UserController')
 
 const router = new Router()
 
+// Get
+router.get('/activate/:link', UserController.activate)
+router.get('/refreshToken', UserController.refreshToken)
+router.get('/get-orders/:userId', UserController.getOrders)
+router.get('/check-password/:userId/:password', UserController.checkPassword)
+router.get('/send-confirm-code/:userId/:code', UserController.sendConfirmCode)
+
+// Post
 router.post(
   '/registration',
   body('name', "Name user can't be empty").notEmpty(),
@@ -18,7 +25,6 @@ router.post(
     .notEmpty(),
   UserController.registration
 )
-router.get('/activate/:link', UserController.activate)
 router.post(
   '/login',
   body('email').isEmail().notEmpty(),
@@ -31,7 +37,13 @@ router.post(
   UserController.login
 )
 router.post('/logout', UserController.logout)
-router.get('/refreshToken', UserController.refreshToken)
 router.post('/delivery-details/create-order', UserController.createOrder)
+
+// Patch
+router.patch('/change-user-data', UserController.changeUserData)
+router.patch('/add-user-phone', UserController.addUserPhone)
+
+// Delete
+router.delete('/delete-user/:userId', UserController.deleteUser)
 
 module.exports = router

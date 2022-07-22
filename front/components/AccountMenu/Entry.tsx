@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'next-i18next';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { object, string } from 'yup';
 import {
   AuthErrorMessage,
@@ -10,7 +10,7 @@ import {
   InputAuth,
   InputsAccountMenuBox,
 } from '../../styles/accountMenu';
-import { Typography } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { Colors } from '../../styles/theme';
 import { login } from '../../store/services/UserService';
@@ -19,6 +19,8 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CustomButton from '../CustomButton';
 
 const Entry = () => {
+  const { isLoading } = useAppSelector((state) => state.user);
+
   const { t } = useTranslation('common');
   const dispatch = useAppDispatch();
 
@@ -114,14 +116,22 @@ const Entry = () => {
                 </FormAuthInputBox>
               </FormAuthBox>
               <FormAuthButtonPosition>
-                <CustomButton
-                  size="SM"
-                  variant="secondary"
-                  type="submit"
-                  style={{ margin: '20px 0px' }}
-                >
-                  {t('login')}
-                </CustomButton>
+                {isLoading ? (
+                  <CircularProgress
+                    sx={{ color: Colors.primary, margin: '25px 0px' }}
+                    disableShrink
+                    size="25px"
+                  />
+                ) : (
+                  <CustomButton
+                    size="SM"
+                    variant="secondary"
+                    type="submit"
+                    style={{ margin: '20px 0px' }}
+                  >
+                    {t('login')}
+                  </CustomButton>
+                )}
               </FormAuthButtonPosition>
             </Form>
           );

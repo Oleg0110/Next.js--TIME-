@@ -1,0 +1,244 @@
+.likeHeader {
+  background-image: url(../assets/icon/likeHeader.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.likeHeaderFilled {
+  background-image: url(../assets/icon/likeHeaderFilled.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.likeProduct {
+  background-image: url(../assets/icon/likeProduct.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px;
+  width: 35px;
+  height: 35px;
+}
+
+.likeProductFilled {
+  background-image: url(../assets/icon/likeProductFilled.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px;
+  width: 35px;
+  height: 35px;
+}
+
+.person {
+  background-image: url(../assets/icon/person.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.personFilled {
+  background-image: url(../assets/icon/personFilled.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.bagHeader {
+  background-image: url(../assets/icon/bagHeader.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.bagHeaderFilled {
+  background-image: url(../assets/icon/bagHeaderFilled.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.bagProduct {
+  background-image: url(../assets/icon/bagProduct.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px;
+  width: 35px;
+  height: 35px;
+}
+
+.bagProductFilled {
+  background-image: url(../assets/icon/bagProductFilled.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px;
+  width: 35px;
+  height: 35px;
+}
+
+.search {
+  background-image: url(../assets/icon/search.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.settings {
+  background-image: url(../assets/icon/settings.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.earth {
+  background-image: url(../assets/icon/earth.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.phone {
+  background-image: url(../assets/icon/phone.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.phoneMenu {
+  background-image: url(../assets/icon/phone.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px;
+  width: 30px;
+  height: 30px;
+}
+
+.burgerMenu {
+  background-image: url(../assets/icon/burgerMenu.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 30px;
+  width: 30px;
+  height: 30px;
+}
+
+.close {
+  background-image: url(../assets/icon/close.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 17px;
+  width: 30px;
+  height: 30px;
+}
+
+.closeWhite {
+  background-image: url(../assets/icon/closeWhite.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 35px;
+  width: 30px;
+  height: 30px;
+}
+
+.carouselArrowPrev {
+  background-image: url(../assets/icon/carouselArrow.svg);
+  background-repeat: no-repeat;
+  background-size: 85px !important;
+  background-position: center;
+  width: 90px !important;
+  height: 125px !important;
+}
+
+.carouselArrowNext {
+  background-image: url(../assets/icon/carouselArrow.svg);
+  background-repeat: no-repeat;
+  background-size: 85px !important;
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
+  background-position: center;
+  width: 90px !important;
+  height: 125px !important;
+}
+
+.mailIcon {
+  background-image: url(../assets/icon/mail.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  width: 30px;
+  height: 30px;
+}
+
+.visa {
+  background-image: url(../assets/icon/visa.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 75px;
+  width: 80px;
+  height: 80px;
+}
+
+.applePay {
+  background-image: url(../assets/icon/applePay.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 75px;
+  width: 80px;
+  height: 80px;
+}
+
+.facebook {
+  background-image: url(../assets/icon/facebook.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  width: 30px;
+  height: 30px;
+}
+
+.google {
+  background-image: url(../assets/icon/google.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  width: 30px;
+  height: 30px;
+}
+
+.instagram {
+  background-image: url(../assets/icon/instagram.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  width: 30px;
+  height: 30px;
+}
+
+.twitter {
+  background-image: url(../assets/icon/twitter.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 25px;
+  width: 30px;
+  height: 30px;
+}

@@ -13,6 +13,7 @@ interface TooltipIconProps {
   children: any;
   title: TooltipTitleTypes;
   placement?: TooltipPositionTypes;
+  style?: object;
 }
 
 const TooltipIcon: NextPage<TooltipIconProps> = ({
@@ -20,10 +21,11 @@ const TooltipIcon: NextPage<TooltipIconProps> = ({
   title,
   placement = 'top',
   onClick,
+  style,
 }) => {
   const { t } = useTranslation('common');
   return (
-    <Tooltip title={t(title)} placement={placement}>
+    <Tooltip title={t(title)} placement={placement} sx={style}>
       <IconButton onClick={onClick}>{children}</IconButton>
     </Tooltip>
   );

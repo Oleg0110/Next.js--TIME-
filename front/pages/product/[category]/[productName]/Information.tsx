@@ -12,7 +12,7 @@ import {
 } from '../../../../styles/productPage';
 import { Colors } from '../../../../styles/theme';
 import { sizesArray } from '../../../../utils/constants';
-import { includesSizeFunc } from '../../../../utils/function';
+import { includesSizeFunc, setInShoppingBag } from '../../../../utils/function';
 import { IProduct } from '../../../../utils/interface/productInterface';
 import { SizeType } from '../../../../utils/types/form';
 import { ErrorMessage, Form, Formik } from 'formik';
@@ -21,18 +21,45 @@ import TooltipIcon from '../../../../components/TooltipIcon/TooltipIcon';
 import CheckBoxRadioInput from '../../../../components/CheckBoxRadioInput';
 import CustomButton from '../../../../components/CustomButton';
 import styles from '../../../../styles/product.module.scss';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import {
+  addToFavorite,
+  removeFromFavorite,
+} from '../../../../store/services/ProductService';
+import { toast } from 'react-toastify';
+import { useTranslation } from 'next-i18next';
 
 interface IInformation {
   product: IProduct;
 }
 
 const Information: NextPage<IInformation> = ({ product }) => {
-  const [isLiked, setIsLiked] = useState(false);
+  const { isAuth, user } = useAppSelector((state) => state.user);
+  const { productsFavorite } = useAppSelector((state) => state.product);
+
+  const { t } = useTranslation(['product', 'toast']);
+
+  const isFavorite =
+    productsFavorite &&
+    productsFavorite.find((f) => f.product?.id === product.id);
+
+  const dispatch = useAppDispatch();
 
   const sizesArr: SizeType[] = includesSizeFunc(
     sizesArray,
     product.productSize
   );
+
+  const copyEmail = async () => {
+    if (product.productNumber === undefined) {
+      toast.error(t('failed-copy', { ns: 'toast' }));
+    } else {
+      await navigator.clipboard.writeText(product.productNumber);
+      toast.success(
+        `${t('successful-copy', { ns: 'toast' })} ${product.productNumber}`
+      );
+    }
+  };
 
   return (
     <>
@@ -41,13 +68,38 @@ const Information: NextPage<IInformation> = ({ product }) => {
           <Typography variant="roboto30300" sx={{ color: Colors.black }}>
             {product.productName}
           </Typography>
-          <LikeIconPosition onClick={() => setIsLiked(!isLiked)}>
-            {isLiked ? (
-              <TooltipIcon title="remove-from-favorites">
+          <LikeIconPosition>
+            {!!isFavorite ? (
+              <TooltipIcon
+                title="remove-from-favorites"
+                onClick={async () => {
+                  if (isAuth) {
+                    await dispatch(
+                      removeFromFavorite({
+                        favoriteId: isFavorite.id,
+                        userId: user.id,
+                      })
+                    );
+                  } else {
+                    toast.warning('Please log in to add');
+                  }
+                }}
+              >
                 <div className={styles.likeProductFilled} />
               </TooltipIcon>
             ) : (
-              <TooltipIcon title="add-to-favorites">
+              <TooltipIcon
+                title="add-to-favorites"
+                onClick={async () => {
+                  if (isAuth) {
+                    await dispatch(
+                      addToFavorite({ productId: product.id, userId: user.id })
+                    );
+                  } else {
+                    toast.warning('Please log in to add');
+                  }
+                }}
+              >
                 <div className={styles.likeProduct} />
               </TooltipIcon>
             )}
@@ -78,14 +130,17 @@ const Information: NextPage<IInformation> = ({ product }) => {
               </PriceProductPageBox>
             </PriceBottomLineBox>
           )}
+
           <Typography variant="roboto24200" color={Colors.black}>
             Kod:
-            <Typography
-              variant="roboto24200"
-              sx={{ color: Colors.darkGray, marginLeft: '5px' }}
-            >
-              {product.productNumber}
-            </Typography>
+            <TooltipIcon title="click-to-copy">
+              <Typography
+                variant="roboto24200"
+                sx={{ color: Colors.darkGray, marginLeft: '5px' }}
+              >
+                {product.productNumber}
+              </Typography>
+            </TooltipIcon>
           </Typography>
           {/* {product.productSize.map((data) => (
 <div key={data} className={styles.sizeCheckbox}>
@@ -100,7 +155,15 @@ const Information: NextPage<IInformation> = ({ product }) => {
               size: string().required('Choose some sizes'),
             })}
             onSubmit={async (values) => {
-              console.log(values);
+              setInShoppingBag(
+                dispatch,
+                +values.size,
+                product.id,
+                product.productName,
+                product.productMainPictures,
+                product.productDiscountPrice,
+                product.productPrice
+              );
             }}
           >
             {({ handleSubmit }) => {
@@ -113,7 +176,16 @@ const Information: NextPage<IInformation> = ({ product }) => {
                       margin: '20px 10px 0px 0px',
                     }}
                   >
-                    Size
+                    {t('size')}
+                  </Typography>
+                  <Typography
+                    variant="roboto30300"
+                    sx={{
+                      color: Colors.black,
+                      margin: '20px 10px 0px 0px',
+                    }}
+                  >
+                    {t('sizeTable')}
                   </Typography>
                   <ErrorMessage
                     name="size"
@@ -141,7 +213,7 @@ const Information: NextPage<IInformation> = ({ product }) => {
                       margin: '10px 0px 20px',
                     }}
                   >
-                    Color
+                    {t('color')}
                   </Typography>
                   <ProductPageColorBox>
                     <div className={styles.colorBox}>
@@ -154,8 +226,7 @@ const Information: NextPage<IInformation> = ({ product }) => {
                   </ProductPageColorBox>
                   <AddButtonProductPage>
                     <CustomButton isIcon={true} size="LG" type="submit">
-                      {/* {t('add-product')} */}
-                      Add to Shopping Bag
+                      {t('add-to-shopping-bag')}
                     </CustomButton>
                   </AddButtonProductPage>
                 </Form>
@@ -166,7 +237,7 @@ const Information: NextPage<IInformation> = ({ product }) => {
             variant="roboto30300"
             sx={{ color: Colors.black, margin: '20px 0px' }}
           >
-            Description
+            {t('description')}
           </Typography>
           <Typography
             variant="roboto24200"
@@ -179,7 +250,7 @@ const Information: NextPage<IInformation> = ({ product }) => {
               variant="roboto20400"
               sx={{ color: Colors.black, padding: '0px' }}
             >
-              Color: {product.productColor}
+              {t('color')}: {product.productColor}
             </Typography>
           </ListItem>
           <ListItem sx={{ display: 'list-item' }}>
@@ -187,7 +258,7 @@ const Information: NextPage<IInformation> = ({ product }) => {
               variant="roboto20400"
               sx={{ color: Colors.black, padding: '0px' }}
             >
-              Style: {product.productStyleName}
+              {t('style')}: {product.productStyleName}
             </Typography>
           </ListItem>
           <ListItem sx={{ display: 'list-item' }}>
@@ -195,7 +266,7 @@ const Information: NextPage<IInformation> = ({ product }) => {
               variant="roboto20400"
               sx={{ color: Colors.black, padding: '0px' }}
             >
-              Material: {product.productStyleMaterial}
+              {t('material')}: {product.productStyleMaterial}
             </Typography>
           </ListItem>
         </InfoProductPageBox>

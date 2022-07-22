@@ -28,11 +28,11 @@ export const includesSizeFunc = (where, what) => {
   let obj;
 
   const notAreInArray = where
-    .filter((i) => !what.includes(i))
+    .filter((i) => !what?.includes(i))
     .map((data) => (obj = { size: data, is: false }));
 
   const areInArray = where
-    .filter((i) => what.includes(i))
+    .filter((i) => what?.includes(i))
     .map((data) => (obj = { size: data, is: true }));
 
   const sizes = []
@@ -54,6 +54,40 @@ export const getAverageRating = (productReviews) => {
   }
 
   return average;
+};
+
+export const setInShoppingBag = async (
+  dispatch,
+  sizeProduct,
+  productId,
+  productName,
+  productPhoto,
+  salePrice,
+  price,
+  productFor
+) => {
+  const ISSERVER = typeof window === 'undefined';
+  if (!ISSERVER) {
+    const arr: IProductInBag[] =
+      JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
+
+    arr.push({
+      productId,
+      productName,
+      sizeProduct,
+      productPhoto,
+      salePrice,
+      price,
+      productAmount: 1,
+      productFor,
+    });
+
+    localStorage.setItem(shoppingBagDataName, JSON.stringify(arr));
+
+    const newArr = JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
+    await dispatch(setProductInShoppingBag(newArr));
+    toast.success('Add to Shopping Bag');
+  }
 };
 
 export const removeFromBag = async (productId, dispatch) => {

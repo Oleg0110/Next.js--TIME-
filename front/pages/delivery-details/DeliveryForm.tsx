@@ -41,19 +41,20 @@ interface IDeliveryForm {
 
 const DeliveryForm: NextPage<IDeliveryForm> = ({ totalPrice }) => {
   const { productInBag } = useAppSelector((state) => state.product);
+  const { user } = useAppSelector((state) => state.user);
 
   const { t } = useTranslation('delivery');
   const dispatch = useAppDispatch();
   const router = useRouter();
 
   const initialValues: IUserInitialOrder = {
-    userName: '',
-    userSurname: '',
+    userName: user.name || '',
+    userSurname: user.surname || '',
     userRegion: '',
     userAddress: '',
-    userPhone: '',
+    userPhone: user.phone || '',
     userCity: '',
-    userEmail: '',
+    userEmail: user.email || '',
   };
 
   const validationSchema = object().shape({
@@ -95,6 +96,7 @@ const DeliveryForm: NextPage<IDeliveryForm> = ({ totalPrice }) => {
               userOrderData: values,
               orderProducts: productInBag,
               totalPrice,
+              userId: user.id,
             })
           );
           if (data.meta.requestStatus !== 'rejected') {

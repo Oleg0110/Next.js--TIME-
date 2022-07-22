@@ -1,18 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IProductOrder } from '../../utils/interface/productInterface';
 import { UserState, IUser } from '../../utils/interface/userInterface';
 import {
+  addPhoneNumber,
+  changeUserData,
   checkAuth,
+  checkPassword,
+  deleteUser,
+  getOrders,
   getSearchUser,
   login,
   logout,
   registration,
+  sendConfirmCode,
 } from '../services/UserService';
 
 const initialState: UserState = {
   user: {} as IUser,
   userSearch: [],
+  userOrders: [],
   isAuth: false,
   isLoading: false,
+  isOrdersLoading: false,
+  isCodeLoading: false,
   error: '',
 };
 
@@ -83,6 +93,80 @@ export const userReducer = createSlice({
     },
     [getSearchUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
+      state.error = action.payload;
+    },
+    [getOrders.fulfilled.type]: (
+      state,
+      action: PayloadAction<IProductOrder[]>
+    ) => {
+      state.isOrdersLoading = false;
+      state.error = '';
+      state.userOrders = action.payload;
+    },
+    [getOrders.pending.type]: (state) => {
+      state.isOrdersLoading = true;
+    },
+    [getOrders.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isOrdersLoading = false;
+      state.error = action.payload;
+    },
+    [changeUserData.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+      state.isLoading = false;
+      state.error = '';
+      state.user = action.payload;
+    },
+    [changeUserData.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [changeUserData.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [addPhoneNumber.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+      state.isLoading = false;
+      state.error = '';
+      state.user = action.payload;
+    },
+    [addPhoneNumber.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [addPhoneNumber.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [checkPassword.fulfilled.type]: (state) => {
+      state.isLoading = false;
+      state.error = '';
+    },
+    [checkPassword.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [checkPassword.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [deleteUser.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+      state.isLoading = false;
+      state.error = '';
+      state.user = action.payload;
+      state.isAuth = false;
+    },
+    [deleteUser.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [deleteUser.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [sendConfirmCode.fulfilled.type]: (state) => {
+      state.isCodeLoading = false;
+      state.error = '';
+    },
+    [sendConfirmCode.pending.type]: (state) => {
+      state.isCodeLoading = true;
+    },
+    [sendConfirmCode.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isCodeLoading = false;
       state.error = action.payload;
     },
   },
