@@ -13,12 +13,12 @@ import { Form, Formik } from 'formik';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { toast } from 'react-toastify';
 import { object, string } from 'yup';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { checkPassword, deleteUser } from '../../store/services/UserService';
-import CustomButton from '../CustomButton';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import CustomButton from '../CustomButton';
 
 interface ICheckPasswordModal {
   isModalOpened: boolean;
@@ -28,6 +28,17 @@ interface ICheckPasswordModal {
   setIsNewPasswordModal: (boolean: boolean) => void;
   what: 'delete' | 'email' | 'password' | 'empty';
 }
+
+const showPasswordIcon = {
+  color: Colors.primary,
+  position: 'absolute',
+  right: '13px',
+  top: '15px',
+  cursor: 'pointer',
+  ':hover': {
+    opacity: '0.8',
+  },
+};
 
 const CheckPasswordModal: NextPage<ICheckPasswordModal> = ({
   isModalOpened,
@@ -47,17 +58,6 @@ const CheckPasswordModal: NextPage<ICheckPasswordModal> = ({
   const [passwordType, setPasswordType] = useState<'text' | 'password'>(
     'password'
   );
-
-  const showPasswordIcon = {
-    color: Colors.primary,
-    position: 'absolute',
-    right: '13px',
-    top: '15px',
-    cursor: 'pointer',
-    ':hover': {
-      opacity: '0.8',
-    },
-  };
 
   const togglePassword = () => {
     if (passwordType === 'password') {

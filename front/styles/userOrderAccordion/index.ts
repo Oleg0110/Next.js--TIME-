@@ -1,3 +1,4 @@
+import theme, { Colors } from '../theme';
 import {
   Accordion,
   AccordionDetails,
@@ -5,7 +6,6 @@ import {
   Box,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import theme, { Colors } from '../theme';
 
 export const UserOrderAccordionBox = styled(Accordion)(() => ({
   position: 'unset',

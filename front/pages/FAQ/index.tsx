@@ -1,12 +1,12 @@
 // import useTranslation from 'next-translate/useTranslation';
+import React from 'react';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import React, { ReactNode } from 'react';
-import MainLayout from '../../layouts/MainLayout';
 import { ContentFAQBox, MainFAQBox } from '../../styles/faq';
-import CustomAccordion from '../../components/Accordion/index';
 import { Typography } from '@mui/material';
 import { Colors } from '../../styles/theme';
+import MainLayout from '../../layouts/MainLayout';
+import CustomAccordion from '../../components/Accordion/index';
 
 const accordions = [
   { id: '1', title: 'sizing', text: { lorem: 'accordion-lorem' } },

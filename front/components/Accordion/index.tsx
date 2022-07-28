@@ -1,9 +1,4 @@
 import React, { ReactNode, useState } from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import { useTranslation } from 'next-i18next';
 import { Colors } from '../../styles/theme';
 import {
@@ -13,9 +8,14 @@ import {
   SummaryAccordion,
 } from '../../styles/accordion';
 import { NextPage } from 'next';
-import { Button, colors, List, ListItem, Rating } from '@mui/material';
-import ReviewForm from './ReviewForm';
+import { ListItem, Rating } from '@mui/material';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import ReviewForm from './ReviewForm';
 
 type VariantAccordionType = 'elevation' | 'outlined';
 
@@ -52,6 +52,7 @@ const CustomAccordion: NextPage<ICustomAccordionPros> = ({
   countReviews,
 }) => {
   const { t } = useTranslation('accordion');
+
   const [expanded, setExpanded] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 

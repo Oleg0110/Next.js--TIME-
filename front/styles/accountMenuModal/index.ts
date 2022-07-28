@@ -1,14 +1,15 @@
+import theme, { Colors } from '../theme';
 import { styled } from '@mui/material/styles';
 import { Box, Button } from '@mui/material';
-import theme, { Colors } from '../theme';
 
 export const MainAccountModalBox = styled(Box)(() => ({
   position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 550,
-  maxHeight: '370px',
+  maxWidth: '550px',
+  minWidth: '280px',
+  maxHeight: '380px',
   backgroundColor: Colors.secondaryWhite,
   border: `6px solid ${Colors.primary}`,
   padding: '4px',
@@ -42,11 +43,3 @@ export const ButtonStyle = styled(Button)(() => ({
     borderBottom: `3px solid ${Colors.primary}`,
   },
 }));
-
-export const InputsBox = styled(Box)(() => ({
-  minHeight: '150px',
-  alignItems: 'center',
-  display: 'flex',
-  flexDirection: 'column',
-  marginTop: '15px',
-})) as typeof Box;

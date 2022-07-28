@@ -12,27 +12,16 @@ import {
 } from '../../styles/navBar';
 import { BUTTONS } from '../../utils/constants';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  ClickAwayListener,
-  Collapse,
-  Popover,
-  Typography,
-} from '@mui/material';
+import { Typography } from '@mui/material';
+import { useState } from 'react';
 import Link from 'next/link';
 import IconButtons from './IconButtons';
 import Communication from './Communication';
 import SwipeableTemporaryDrawer from '../Drawer';
-import styles from '../../styles/icons.module.scss';
-import { useState } from 'react';
-import { useAppSelector } from '../../hooks/redux';
 
 const Navbar = () => {
   const { t } = useTranslation('common');
+
   const [show, setShow] = useState('empty');
 
   return (
@@ -76,7 +65,7 @@ const Navbar = () => {
                         <Typography
                           onClick={() => setShow('empty')}
                           variant="roboto24200hover"
-                          sx={{ width: '140px' }}
+                          sx={{ width: '140px', cursor: 'pointer' }}
                         >
                           {data.name}
                         </Typography>

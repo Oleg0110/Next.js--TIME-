@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import TooltipIcon from '../TooltipIcon/TooltipIcon';
-import styles from '../../styles/icons.module.scss';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { Typography } from '@mui/material';
 import { Colors } from '../../styles/theme';
+import TooltipIcon from '../TooltipIcon/TooltipIcon';
+import styles from '../../styles/icons.module.scss';
+import Link from 'next/link';
 
 const Communication = () => {
   const [isOpenNumbers, setIsOpenNumbers] = useState(false);

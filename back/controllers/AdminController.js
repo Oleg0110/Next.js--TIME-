@@ -1,4 +1,3 @@
-const { json } = require('express')
 const { validationResult } = require('express-validator')
 const AdminService = require('../services/AdminService')
 const ApiErrors = require('../utils/apiErrors')
@@ -104,7 +103,11 @@ class AdminController {
 
   async changeProduct(req, res, next) {
     try {
-      const { productId, product, searchValue } = req.body
+      const { file } = req.files
+      const { productId, searchValue } = req.body
+
+      const productData = JSON.parse(req.body.product)
+
       const {
         productName,
         productFor,
@@ -117,7 +120,7 @@ class AdminController {
         productDescription,
         productStyleName,
         productStyleMaterial,
-      } = product
+      } = productData
 
       if (
         !productId &&
@@ -133,12 +136,15 @@ class AdminController {
         !productDescription &&
         !productStyleName &&
         !productStyleMaterial &&
-        !searchValue
+        !searchValue &&
+        !file
       ) {
         return next(ApiErrors.BadRequest('invalid data'))
       }
 
-      const changedProduct = await AdminService.changeProduct(
+      const sortedSizes = productSize.sort()
+
+      const resData = await AdminService.changeProduct(
         productId,
         productName,
         productFor,
@@ -146,15 +152,20 @@ class AdminController {
         productPrice,
         productDiscountPrice,
         productSale,
-        productSize,
+        sortedSizes,
         productColor,
         productDescription,
         productStyleName,
         productStyleMaterial,
-        searchValue
+        searchValue,
+        file
       )
 
-      res.status(200).json({ message: 'Product changed successfully', changedProduct })
+      res.status(200).json({
+        message: 'Product changed successfully',
+        changedProduct: resData.dtoValue,
+        products: resData.products,
+      })
     } catch (e) {
       next(e)
     }
@@ -180,12 +191,54 @@ class AdminController {
   async getUsers(req, res, next) {
     try {
       const { searchValue } = req.params
-      console.log(1111, searchValue)
+
       if (!searchValue) {
         return next(ApiErrors.BadRequest('invalid data'))
       }
 
       const users = await AdminService.getUsers(searchValue)
+
+      res.status(200).json(users)
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  async getUserInTeam(req, res, next) {
+    try {
+      const users = await AdminService.getUserInTeam()
+
+      res.status(200).json(users)
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  async userAssignment(req, res, next) {
+    try {
+      const { userId } = req.body
+
+      if (!userId) {
+        return next(ApiErrors.BadRequest('invalid data'))
+      }
+
+      const users = await AdminService.userAssignment(userId)
+
+      res.status(200).json(users)
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  async removeAssignmentAdmin(req, res, next) {
+    try {
+      const { userId } = req.body
+
+      if (!userId) {
+        return next(ApiErrors.BadRequest('invalid data'))
+      }
+
+      const users = await AdminService.removeAssignmentAdmin(userId)
 
       res.status(200).json(users)
     } catch (e) {

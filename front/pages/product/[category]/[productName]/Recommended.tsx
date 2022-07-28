@@ -67,11 +67,13 @@ const Recommended = () => {
             {productsRecommended.map((product) => (
               <SwiperSlide key={product.id}>
                 <ProductCarousel
-                  src={`${BASIC_URL}/${product.productMainPictures}`}
-                  name={product.productName}
-                  price={product.productPrice}
-                  href={product.id}
-                  salePrice={product.productDiscountPrice}
+                  productMainPictures={product.productMainPictures}
+                  productFor={product.productFor}
+                  productId={product.id}
+                  productDiscountPrice={product.productDiscountPrice}
+                  productName={product.productName}
+                  productPrice={product.productPrice}
+                  productSize={product.productSize}
                 />
               </SwiperSlide>
             ))}

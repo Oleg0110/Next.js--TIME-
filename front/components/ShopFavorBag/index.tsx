@@ -1,45 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import Menu from '@mui/material/Menu';
+import React, { useState } from 'react';
 import theme, { Colors } from '../../styles/theme';
-import TooltipIcon from '../TooltipIcon/TooltipIcon';
-import styles from '../../styles/icons.module.scss';
-import { Slide, Typography, useMediaQuery } from '@mui/material';
+import { Typography, useMediaQuery } from '@mui/material';
 import { useTranslation } from 'next-i18next';
-import CustomButton from '../CustomButton';
 import { NextPage } from 'next';
 import { useAppSelector } from '../../hooks/redux';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import {
   ButtonBox,
   ResultBox,
   StyledBadge,
   TotalBox,
 } from '../../styles/shopFavorBag';
-import ShopFavorBagModal from '../ShopFavorCartModal';
-import ProductInBag from '../ProductInBag';
 import { toast } from 'react-toastify';
 import { totalPriceFunc } from '../../utils/function';
 import { useRouter } from 'next/router';
 import { ROUTES } from '../../utils/constants';
+import Box from '@mui/material/Box';
+import Menu from '@mui/material/Menu';
+import TooltipIcon from '../TooltipIcon/TooltipIcon';
+import CustomButton from '../CustomButton';
+import ShopFavorBagModal from '../ShopFavorCartModal';
+import ProductInBag from '../ProductInBag';
+import styles from '../../styles/icons.module.scss';
 
 interface IShopFavorBagProps {
   who: 'bag' | 'favorite';
 }
 
 const ShopFavorBag: NextPage<IShopFavorBagProps> = ({ who }) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
+  const { t } = useTranslation('common');
 
   const media = useMediaQuery(theme.breakpoints.down('md'));
-  const { t } = useTranslation('common');
-  const router = useRouter();
 
   const { productInBag, productsFavorite } = useAppSelector(
     (state) => state.product
   );
 
+  const router = useRouter();
   const totalPrice = totalPriceFunc(productInBag);
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

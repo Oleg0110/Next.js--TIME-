@@ -116,45 +116,45 @@ export const cleanBag = (dispatch) => {
   dispatch(setProductInShoppingBag([]));
 };
 
-const discountSort = (copyArrProduct: IProduct[]) => {
-  const sorted = copyArrProduct
-    .map((data) => {
-      let percentageSale;
-      if (data.productSale === true) {
-        percentageSale = Math.floor(
-          100 - (data.productDiscountPrice * 100) / data.productPrice
-        );
-      } else {
-        percentageSale = 0;
-      }
+// const discountSort = (copyArrProduct: IProduct[]) => {
+//   const sorted = copyArrProduct
+//     .map((data) => {
+//       let percentageSale;
+//       if (data.productSale === true) {
+//         percentageSale = Math.floor(
+//           100 - (data.productDiscountPrice * 100) / data.productPrice
+//         );
+//       } else {
+//         percentageSale = 0;
+//       }
 
-      return { ...data, percentageSale };
-    })
-    .sort((a, b) => b.percentageSale - a.percentageSale);
+//       return { ...data, percentageSale };
+//     })
+//     .sort((a, b) => b.percentageSale - a.percentageSale);
 
-  return sorted;
-};
+//   return sorted;
+// };
 
-export const sortProduct = (product: IProduct[], sort: SortType) => {
-  const copyArrProduct: IProduct[] = JSON.parse(JSON.stringify(product));
+// export const sortProduct = (product: IProduct[], sort: SortType) => {
+//   const copyArrProduct: IProduct[] = JSON.parse(JSON.stringify(product));
 
-  switch (sort) {
-    case 'cheap to expensive':
-      return copyArrProduct.sort((a, b) => a.productPrice - b.productPrice);
+//   switch (sort) {
+//     case 'cheap to expensive':
+//       return copyArrProduct.sort((a, b) => a.productPrice - b.productPrice);
 
-    case 'expensive to cheap':
-      return copyArrProduct.sort((a, b) => b.productPrice - a.productPrice);
+//     case 'expensive to cheap':
+//       return copyArrProduct.sort((a, b) => b.productPrice - a.productPrice);
 
-    case 'novelty':
-      return copyArrProduct.sort((a, b) => b.date - a.date);
+//     case 'novelty':
+//       return copyArrProduct.sort((a, b) => b.date - a.date);
 
-    case 'maximum discount':
-      return discountSort(copyArrProduct);
+//     case 'maximum discount':
+//       return discountSort(copyArrProduct);
 
-    default:
-      break;
-  }
-};
+//     default:
+//       break;
+//   }
+// };
 
 export const totalPriceFunc = (productInBag: IProductInBag[]) => {
   let totalPrice: number = 0;

@@ -1,7 +1,7 @@
+import theme, { Colors } from '../theme';
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { ErrorMessage, Field } from 'formik';
-import theme, { Colors } from '../theme';
 
 //Change Modal
 
@@ -205,3 +205,33 @@ export const InputChangePasswordModal = styled(Field)(() => ({
   padding: '0px 0px 0px 10px',
   margin: '10px',
 })) as typeof Field;
+
+//Appoint  Modal
+export const AppointModalBox = styled(Box)(() => ({
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '50%',
+  height: '170px',
+  backgroundColor: Colors.secondaryWhite,
+  border: `6px solid ${Colors.primary}`,
+  padding: '4px',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  [theme.breakpoints.down('md')]: {
+    width: '70%',
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '90%',
+  },
+})) as typeof Box;
+
+export const OptionsAppointBox = styled(Box)(() => ({
+  display: 'flex',
+  width: '40%',
+  alignItems: 'center',
+  justifyContent: 'space-around',
+})) as typeof Box;

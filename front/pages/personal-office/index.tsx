@@ -1,48 +1,19 @@
 import React, { useState } from 'react';
-import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import theme, { Colors } from '../../styles/theme';
+import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppSelector } from '../../hooks/redux';
 import {
-  ChangeUserErrorMessage,
-  ChangeUserInputBox,
-  CheckBoxButton,
   ContentOfficeBox,
-  InputChangeUser,
-  LoadingPosition,
   MainOfficeBox,
   OfficeLine,
   TypographyUserOffice,
   UserInfoBox,
-  UserOrdersBox,
-  UserOrdersScrollBox,
-  UserProductsOrdersBox,
   UserTypographyBox,
 } from '../../styles/personalOffice';
-import theme, { Colors } from '../../styles/theme';
 import MainLayout from '../../layouts/MainLayout';
-import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
-import TooltipIcon from '../../components/TooltipIcon/TooltipIcon';
-import CustomButton from '../../components/CustomButton';
-import {
-  addPhoneNumber,
-  changeUserData,
-  deleteUser,
-  getOrders,
-} from '../../store/services/UserService';
-import {
-  OrdersProductsBox,
-  OrdersScrollBox,
-} from '../../styles/administration';
-import ProductOrderAccordion from '../../components/ProductOrderAccordion';
-import UserOrderAccordion from '../../components/UserOrderAccordion';
-import { Form, Formik } from 'formik';
-import { phoneRegExp, stringRegExp } from '../../utils/constants';
-import { object, string } from 'yup';
-import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import CheckPasswordModal from '../../components/CheckPasswordModal';
-import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
 import { IChangeProps } from '../../utils/interface/userInterface';
 import UserNameField from './UserNameField';
 import UserSurnameField from './UserSurnameField';

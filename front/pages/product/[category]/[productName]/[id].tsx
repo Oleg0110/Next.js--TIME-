@@ -17,7 +17,6 @@ import {
   IProductPhoto,
 } from '../../../../utils/interface/productInterface';
 import { useTranslation } from 'next-i18next';
-import { useRouter } from 'next/router';
 import {
   getRecommendedProducts,
   getReview,
@@ -28,7 +27,6 @@ import MainLayout from '../../../../layouts/MainLayout';
 import ProductPhotoCarousel from '../../../../components/ProductPhotoCarousel';
 import CustomAccordion from '../../../../components/Accordion';
 import UserReview from '../../../../components/UserReview';
-import styles from '../../../../styles/product.module.scss';
 import Recommended from './Recommended';
 import Information from './Information';
 

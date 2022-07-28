@@ -19,12 +19,14 @@ import styles from '../../styles/icons.module.scss';
 
 const AccountMenu: NextPage = ({}) => {
   const media = useMediaQuery(theme.breakpoints.down('md'));
+
   const { t } = useTranslation('common');
 
   const { isAuth } = useAppSelector((state) => state.user);
 
   const [isEntry, setIsEntry] = useState(true);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
   const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {

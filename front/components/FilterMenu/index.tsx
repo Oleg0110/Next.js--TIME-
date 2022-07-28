@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import theme, { Colors } from '../../styles/theme';
-import { Slide, Slider, Typography, useMediaQuery } from '@mui/material';
+import { Slide, Slider, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { NextPage } from 'next';
 import { Form, Formik } from 'formik';
@@ -22,8 +22,9 @@ import {
   styleArray,
 } from '../../utils/constants';
 import { useAppDispatch } from '../../hooks/redux';
-import { filterProducts } from '../../store/services/ProductService';
+import { getProducts } from '../../store/services/ProductService';
 import { IProductFilter } from '../../utils/interface/productInterface';
+import { SortType } from '../../utils/types/product';
 import styles from '../../styles/icons.module.scss';
 import CustomButton from '../CustomButton';
 import CheckBoxRadioInput from '../../components/CheckBoxRadioInput';
@@ -32,23 +33,26 @@ interface IFilterMenuProps {
   category: string;
   isOpen: boolean;
   setIsOpen: (boolean: boolean) => void;
+  sorting: SortType;
 }
+
+const styleSpan = { width: '45%', color: Colors.primary };
 
 const FilterMenu: NextPage<IFilterMenuProps> = ({
   category,
   isOpen,
   setIsOpen,
+  sorting,
 }) => {
-  const { t } = useTranslation('filters');
-  const media = useMediaQuery(theme.breakpoints.down('md'));
-
-  const ISSERVER = typeof window === 'undefined';
-
-  const dispatch = useAppDispatch();
-
   let filters: IProductFilter;
   let productPriceTo;
   let productPriceFrom;
+
+  const { t } = useTranslation('filters');
+
+  const dispatch = useAppDispatch();
+
+  const ISSERVER = typeof window === 'undefined';
 
   if (!ISSERVER) {
     filters = JSON.parse(localStorage.getItem(filterDataName));
@@ -86,8 +90,6 @@ const FilterMenu: NextPage<IFilterMenuProps> = ({
     productSize: filters.productSize,
   };
 
-  const styleSpan = { width: '45%', color: Colors.primary };
-
   return (
     <Slide direction="left" in={isOpen} mountOnEnter unmountOnExit>
       <FilterOpenBox>
@@ -96,15 +98,24 @@ const FilterMenu: NextPage<IFilterMenuProps> = ({
           // validationSchema={validationSchema}
           onSubmit={async (values) => {
             await localStorage.setItem(filterDataName, JSON.stringify(values));
+
             if (category === 'women' || category === 'men') {
-              await dispatch(filterProducts({ filter: values, category }));
+              await dispatch(
+                getProducts({ category, filters: values, sorting })
+              );
             } else {
               const categoryName = category.split('-')[1];
               const page = category.split('-')[0];
               await dispatch(
-                filterProducts({ filter: values, category: categoryName, page })
+                getProducts({
+                  filters: values,
+                  category: categoryName,
+                  page,
+                  sorting,
+                })
               );
             }
+
             setIsOpen(false);
           }}
         >

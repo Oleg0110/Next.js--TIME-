@@ -38,5 +38,14 @@
   "total": "Total",
   "order": "To order",
   "continue": "Continue shopping",
-  "change": "Change"
+  "change": "Change",
+  "select-size": "Select an available size",
+  "seen-all": "Yay! You have seen it all",
+  "sorting": "Sorting",
+  "shoe": "shoe",
+  "cheap-to-expensive": "from cheap to expensive",
+  "expensive-to-cheap": "from expensive to cheap",
+  "novelty": "for novelty",
+  "maximum-discount": "maximum discount",
+  "without-sort": "without sort"
 }

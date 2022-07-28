@@ -1,37 +1,9 @@
-import { CircularProgress, Typography, useMediaQuery } from '@mui/material';
+import React, { useState } from 'react';
+import { Colors } from '../../styles/theme';
+import { Typography } from '@mui/material';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
-import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import {
-  InputProductAmount,
-  ProductAmountBox,
-  ProductOnBagContainer,
-  ProductOnBagCount,
-  ProductOnBagInfo,
-  ProductOnBagPhotoBox,
-  ProductOnBagPrice,
-  ProductOnBagRemove,
-} from '../../styles/productOnBagPage';
-import theme, { Colors } from '../../styles/theme';
-import { removeFromBag } from '../../utils/function';
-import { BASIC_URL } from '../../utils/httpLinks';
-import {
-  IProductInBag,
-  IProductOrder,
-} from '../../utils/interface/productInterface';
-import styles from '../../styles/icons.module.scss';
-import TooltipIcon from '../TooltipIcon/TooltipIcon';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { number, object } from 'yup';
-import { shoppingBagDataName } from '../../utils/constants';
-import { setProductInShoppingBag } from '../../store/reducers/ProductSlice';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
-import ProductInAccordionOrder from '../ProductInAccordionOrder';
-import CustomButton from '../CustomButton';
-import { changeOrderStatus } from '../../store/services/ProductService';
-import { toast } from 'react-toastify';
+import { IProductOrder } from '../../utils/interface/productInterface';
 import {
   DetailsUserOrderAccordion,
   SummaryUserOrderAccordion,
@@ -41,16 +13,18 @@ import {
   UserOrderPriceBox,
   UserAccordionScroll,
 } from '../../styles/userOrderAccordion';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import ProductInAccordionOrder from '../ProductInAccordionOrder';
 
 interface IUserOrderAccordion {
   orderData: IProductOrder;
 }
 
 const UserOrderAccordion: NextPage<IUserOrderAccordion> = ({ orderData }) => {
-  const [expanded, setExpanded] = useState(true);
-  const dispatch = useAppDispatch();
-  const { isLoading } = useAppSelector((state) => state.product);
   const { t } = useTranslation('office');
+
+  const [expanded, setExpanded] = useState(true);
 
   const {
     orderNumber,
@@ -93,8 +67,7 @@ const UserOrderAccordion: NextPage<IUserOrderAccordion> = ({ orderData }) => {
       </SummaryUserOrderAccordion>
       <DetailsUserOrderAccordion>
         <Typography variant="roboto20400" sx={{ padding: '0px 0px 10px 10px' }}>
-          {/* {t('customer-info')} */}
-          Your Information
+          {t('your-information')}
         </Typography>
         <UserOrderInfoBox>
           <Typography variant="roboto20200" sx={{ marginLeft: '10px' }}>

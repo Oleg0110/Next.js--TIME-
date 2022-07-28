@@ -27,7 +27,5 @@ export const StyledBadge = styled(Badge)(() => ({
     color: Colors.secondaryWhite,
     right: 3,
     top: 6,
-    // padding: '0px',
-    // fontSize: '13px',
   },
 }));

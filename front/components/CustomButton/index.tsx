@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Button } from '@mui/material';
-import styles from '../../styles/button.module.scss';
 import { NextPage } from 'next';
+import styles from '../../styles/button.module.scss';
 
 type SizeType = 'XL' | 'LG' | 'MD' | 'SM';
 type VariantType = 'primary' | 'secondary';

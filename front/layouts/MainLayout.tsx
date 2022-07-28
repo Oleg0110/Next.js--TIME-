@@ -1,7 +1,4 @@
 import React, { useEffect } from 'react';
-import Head from 'next/head';
-import Navbar from '../components/NavBar/index';
-import Footer from '../components/Footer';
 import {
   MainContentBox,
   MainNavBarContainer,
@@ -17,7 +14,9 @@ import {
   getUnconfirmedOrders,
 } from '../store/services/ProductService';
 import { checkAuth } from '../store/services/UserService';
-import { AuthResponse } from '../utils/interface/userInterface';
+import Head from 'next/head';
+import Navbar from '../components/NavBar/index';
+import Footer from '../components/Footer';
 
 interface MainLayoutProps {
   title?: string;

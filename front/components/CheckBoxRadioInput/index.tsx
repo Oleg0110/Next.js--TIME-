@@ -1,9 +1,9 @@
 import React from 'react';
 import { Field } from 'formik';
 import { NextPage } from 'next';
-import styles from '../../styles/radioInput.module.scss';
 import { Typography } from '@mui/material';
 import { Colors } from '../../styles/theme';
+import styles from '../../styles/radioInput.module.scss';
 
 interface IRadioInput {
   type: 'color' | 'size' | 'material' | 'style';

@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import { Box, Input } from '@mui/material';
-import theme, { Colors } from '../theme';
+import { Colors } from '../theme';
 
 export const FilterOpenBox = styled(Box)(() => ({
   width: '390px',
@@ -8,14 +8,6 @@ export const FilterOpenBox = styled(Box)(() => ({
   background: Colors.secondaryWhite,
   position: 'sticky',
   top: '74px',
-  padding: '5px',
-})) as typeof Box;
-
-export const FilterFormBox = styled(Box)(() => ({
-  display: 'flex',
-  alignItem: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column',
   padding: '5px',
 })) as typeof Box;
 

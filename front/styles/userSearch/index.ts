@@ -26,15 +26,13 @@ export const InfoUserContainer = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'start',
   flexDirection: 'column',
-  [theme.breakpoints.down('sm')]: {
-    minWidth: '200px',
-  },
 })) as typeof Box;
 
-export const UserSearchButtonBox = styled(Box)(() => ({
+export const UserStatusBox = styled(Box)(() => ({
   display: 'flex',
-  justifyContent: 'space-around',
+  justifyContent: 'center',
   alignItems: 'center',
+  width: '40%',
 })) as typeof Box;
 
 export const ChangeButton = styled(Button)(() => ({

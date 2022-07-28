@@ -1,6 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
 import { IconsBox, MainIcons, MainIconsBox } from '../../styles/footer/index';
+import Link from 'next/link';
 import styles from '../../styles/icons.module.scss';
 
 const IconsField = () => {

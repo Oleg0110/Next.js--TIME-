@@ -28,16 +28,19 @@ router.post(
 )
 router.patch(
   '/products-management/change-product',
-  body('productId').isString(),
-  body('productSale', 'Product Sale is boolean').notEmpty().isBoolean(),
-  body('productNew', 'Product New is boolean').notEmpty().isBoolean(),
-  body('productSize', "Product Size can't be empty and this is array of numbers").notEmpty().isNumeric().isArray(),
-  body('productPrice', "Product Price can't be empty and this is a number").notEmpty().isNumeric(),
-  body('productDiscountPrice', "Product Discount Price can't be empty and this is a number").notEmpty().isNumeric(),
+  // body('productId').isString(),
+  // body('productSale', 'Product Sale is boolean').notEmpty().isBoolean(),
+  // body('productNew', 'Product New is boolean').notEmpty().isBoolean(),
+  // body('productSize', "Product Size can't be empty and this is array of numbers").notEmpty().isNumeric().isArray(),
+  // body('productPrice', "Product Price can't be empty and this is a number").notEmpty().isNumeric(),
+  // body('productDiscountPrice', "Product Discount Price can't be empty and this is a number").notEmpty().isNumeric(),
   AdminController.changeProduct
 )
 router.delete('/products-management/delete-product/:productId/:searchValue', AdminController.deleteProduct)
 router.get('/users-management/:searchValue', body('searchValue').isString(), AdminController.getUsers)
+router.get('/users-management/team/get-user-in-team', AdminController.getUserInTeam)
+router.patch('/users-management/team/user-assignment', AdminController.userAssignment)
+router.patch('/users-management/team/remove-user-assignment', AdminController.removeAssignmentAdmin)
 // router.get('/orders-management', body('text').isString(), AdminController.getUsers)
 
 module.exports = router

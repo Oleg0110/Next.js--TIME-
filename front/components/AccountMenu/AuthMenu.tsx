@@ -5,15 +5,16 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { logout } from '../../store/services/UserService';
 import { AuthBox, FormAuthButtonPosition } from '../../styles/accountMenu';
 import { Colors } from '../../styles/theme';
-import Link from 'next/link';
-import CustomButton from '../CustomButton';
 import { clearFavorite } from '../../store/reducers/ProductSlice';
 import { Router } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
+import CustomButton from '../CustomButton';
 
 const AuthMenu = () => {
   const { t } = useTranslation('common');
+
   const dispatch = useAppDispatch();
   const router = useRouter();
 

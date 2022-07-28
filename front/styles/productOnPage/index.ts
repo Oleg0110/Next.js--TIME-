@@ -1,6 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Box, Button } from '@mui/material';
-import theme, { Colors } from '../theme';
+import { Box } from '@mui/material';
 
 export const ProductOnPageBox = styled(Box)(() => ({
   width: '370px',

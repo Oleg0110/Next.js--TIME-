@@ -1,6 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Box, Button } from '@mui/material';
-import theme, { Colors } from '../theme';
+import { Box } from '@mui/material';
 
 export const CarouselProductBox = styled(Box)(() => ({
   width: '400px',

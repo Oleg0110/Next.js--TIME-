@@ -23,6 +23,7 @@
   "style": "Style",
   "material": "Material",
   "find-user": "Find User",
+  "team": "Time Team",
   "user": "User",
   "find-product": "Find Product",
   "product-number": "Product №",
@@ -33,6 +34,8 @@
   "change": "Change",
   "delete": "Delete",
   "click-to-copy": "Click card to copy Email",
+  "click-to-change": "Click to change Status",
+  "click-to-add": "Click to add",
   "change-product": "Change Product",
   "unconfirmed": "Unconfirmed orders:",
   "confirmed": "Confirmed Orders:",
@@ -46,5 +49,12 @@
   "order-info": "Order information :",
   "total-price": "Total Price:",
   "order-status": "Order Status:",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "role-owner": "Owner",
+  "role-admin": "Administration",
+  "role-user": "User",
+  "status": "Status",
+  "main-photo": "Main Photo",
+  "photos": "Photos",
+  "add-photos": "Add Photos"
 }

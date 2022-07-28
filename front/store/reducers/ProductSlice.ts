@@ -7,12 +7,12 @@ import {
   IProductReview,
   ProductState,
 } from '../../utils/interface/productInterface';
+import { GetProductsResponse } from '../../utils/interface/serviceInterface';
 import {
   addReview,
   changeOrderStatus,
   changeProduct,
   deleteProduct,
-  filterProducts,
   getConfirmedOrders,
   getUnconfirmedOrders,
   getProducts,
@@ -23,6 +23,7 @@ import {
   addToFavorite,
   getFavorite,
   removeFromFavorite,
+  paginationProductFunc,
 } from '../services/ProductService';
 
 const initialState: ProductState = {
@@ -35,7 +36,9 @@ const initialState: ProductState = {
   ordersConfirmed: [],
   productInBag: [],
   productsFavorite: [],
+  countProducts: 0,
   isLoading: false,
+  isPaginationLoading: false,
   error: '',
 };
 
@@ -50,8 +53,6 @@ export const productReducer = createSlice({
       state.productInBag = action.payload;
     },
     clearFavorite: (state, action: PayloadAction<[]>) => {
-      console.log(action.payload);
-
       state.productsFavorite = action.payload;
     },
   },
@@ -74,17 +75,36 @@ export const productReducer = createSlice({
     },
     [getProducts.fulfilled.type]: (
       state,
-      action: PayloadAction<IProduct[]>
+      action: PayloadAction<GetProductsResponse>
     ) => {
       state.isLoading = false;
       state.error = '';
-      state.products = action.payload;
+      state.products = action.payload.products;
+      state.countProducts = action.payload.countProducts;
     },
     [getProducts.pending.type]: (state) => {
       state.isLoading = true;
     },
     [getProducts.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
+      state.error = action.payload;
+    },
+    [paginationProductFunc.fulfilled.type]: (
+      state,
+      action: PayloadAction<IProduct[]>
+    ) => {
+      state.isPaginationLoading = false;
+      state.error = '';
+      state.products = [...state.products, ...action.payload];
+    },
+    [paginationProductFunc.pending.type]: (state) => {
+      state.isPaginationLoading = true;
+    },
+    [paginationProductFunc.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isPaginationLoading = false;
       state.error = action.payload;
     },
     [getSearchProduct.fulfilled.type]: (
@@ -102,21 +122,6 @@ export const productReducer = createSlice({
       state,
       action: PayloadAction<string>
     ) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-    [filterProducts.fulfilled.type]: (
-      state,
-      action: PayloadAction<IProduct[]>
-    ) => {
-      state.isLoading = false;
-      state.error = '';
-      state.products = action.payload;
-    },
-    [filterProducts.pending.type]: (state) => {
-      state.isLoading = true;
-    },
-    [filterProducts.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -204,6 +209,7 @@ export const productReducer = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
     // Post Requests
     [addReview.fulfilled.type]: (
       state,
@@ -235,6 +241,7 @@ export const productReducer = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
     // Patch Requests
     [changeProduct.fulfilled.type]: (
       state,
@@ -269,6 +276,7 @@ export const productReducer = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
     // Delete Requests
     [deleteProduct.fulfilled.type]: (
       state,

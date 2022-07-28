@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import theme, { Colors } from '../../styles/theme';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -10,27 +11,27 @@ import {
   MainAdminBox,
   StyledOrdersBadge,
 } from '../../styles/administration';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import theme, { Colors } from '../../styles/theme';
+import { useAppSelector } from '../../hooks/redux';
 import MainLayout from '../../layouts/MainLayout';
 import AddProduct from './AddProduct';
 import ChangeDelete from './ChangeDelete';
 import UserManagement from './UserManagement';
 import Order from './Order';
 
+const activeButtonStyle = {
+  fontWeight: '500',
+  color: Colors.primary,
+  borderBottom: `2px solid ${Colors.primary}`,
+};
+
 const AdministrationPage = () => {
   const { t } = useTranslation('admin');
+
   const { ordersUnconfirmed } = useAppSelector((state) => state.product);
 
   const [isActive, setIsActive] = useState<
     'add' | 'change' | 'user' | 'orders'
   >('orders');
-
-  const activeButtonStyle = {
-    fontWeight: '500',
-    color: Colors.primary,
-    borderBottom: `2px solid ${Colors.primary}`,
-  };
 
   return (
     <MainLayout>
@@ -46,18 +47,6 @@ const AdministrationPage = () => {
           >
             {t('administration-page')}
           </Typography>
-          {/* {isActive === 'empty' && (
-            <Typography
-              variant="roboto24200"
-              sx={{
-                color: Colors.primary,
-                textAlign: 'center',
-                margin: '20px 0px',
-              }}
-            >
-              {t('what')}
-            </Typography>
-          )} */}
           <AdminContent>
             <ButtonAdminBox>
               <ButtonAdminStyle

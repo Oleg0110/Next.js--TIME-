@@ -7,9 +7,13 @@ import {
   IUserOrder,
 } from '../../utils/interface/userInterface';
 import {
+  IAddPhoneArg,
+  IChangeUserArg,
+  ICheckPasswordArg,
   ICreateOrder,
   ILoginArg,
   IRegistrationArg,
+  ISendCodeArg,
 } from '../../utils/interface/serviceInterface';
 import { ROUTES, token } from '../../utils/constants';
 import $api from '../../http';
@@ -45,8 +49,6 @@ export const getSearchUser = createAsyncThunk(
         `${ROUTES.adminPage}${ROUTES.adminUsersManagement}/${searchValue}`
       );
 
-      console.log(res);
-
       return res.data;
     } catch (error) {
       return thunkApi.rejectWithValue((error as Error).message);
@@ -71,13 +73,7 @@ export const getOrders = createAsyncThunk(
 
 export const checkPassword = createAsyncThunk(
   'user/checkPassword',
-  async (
-    arg: {
-      userId: string;
-      password: string;
-    },
-    thunkApi
-  ) => {
+  async (arg: ICheckPasswordArg, thunkApi) => {
     try {
       const { password, userId } = arg;
 
@@ -94,12 +90,25 @@ export const checkPassword = createAsyncThunk(
 
 export const sendConfirmCode = createAsyncThunk(
   'user/sendConfirmCode',
-  async ({ userId, code }: { userId: string; code: string }, thunkApi) => {
+  async ({ userId, code }: ISendCodeArg, thunkApi) => {
     try {
-      console.log(userId, code);
-
       const res = await axios.get<boolean>(
         `${BASIC_URL}/send-confirm-code/${userId}/${code}`
+      );
+
+      return res.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+export const getUserInTeam = createAsyncThunk(
+  'user/getUserInTeam',
+  async (_, thunkApi) => {
+    try {
+      const res = await axios.get<IUser[]>(
+        `http://localhost:5000/administration-page/users-management/team/get-user-in-team`
       );
 
       return res.data;
@@ -175,14 +184,7 @@ export const createOrder = createAsyncThunk(
 // Patch
 export const changeUserData = createAsyncThunk(
   'user/change',
-  async (
-    arg: {
-      userId: string;
-      value: string;
-      changeWhat: 'name' | 'surname' | 'email' | 'phone' | 'password';
-    },
-    thunkApi
-  ) => {
+  async (arg: IChangeUserArg, thunkApi) => {
     try {
       const res = await axios.patch<IUser>(
         `${BASIC_URL}/change-user-data`,
@@ -198,15 +200,41 @@ export const changeUserData = createAsyncThunk(
 
 export const addPhoneNumber = createAsyncThunk(
   'user/addPhoneNumber',
-  async (
-    arg: {
-      userId: string;
-      phone: string;
-    },
-    thunkApi
-  ) => {
+  async (arg: IAddPhoneArg, thunkApi) => {
     try {
       const res = await axios.patch<IUser>(`${BASIC_URL}/add-user-phone`, arg);
+
+      return res.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+export const userAssignment = createAsyncThunk(
+  'user/userAssignment',
+  async (userId: string, thunkApi) => {
+    try {
+      const res = await axios.patch<IUser[]>(
+        `http://localhost:5000/administration-page/users-management/team/user-assignment`,
+        { userId }
+      );
+
+      return res.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+export const removeAssignmentAdmin = createAsyncThunk(
+  'user/removeAssignmentAdmin',
+  async (userId: string, thunkApi) => {
+    try {
+      const res = await axios.patch<IUser[]>(
+        `http://localhost:5000/administration-page/users-management/team/remove-user-assignment`,
+        { userId }
+      );
 
       return res.data;
     } catch (error) {

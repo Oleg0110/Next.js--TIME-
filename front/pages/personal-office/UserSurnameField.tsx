@@ -1,5 +1,6 @@
 import React from 'react';
-import { CircularProgress, Typography } from '@mui/material';
+import theme, { Colors } from '../../styles/theme';
+import { CircularProgress } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
@@ -16,13 +17,12 @@ import {
   TypographyUserOffice,
   UserTypographyBox,
 } from '../../styles/personalOffice';
-import theme, { Colors } from '../../styles/theme';
 import { stringRegExp } from '../../utils/constants';
 import { IChangeProps } from '../../utils/interface/userInterface';
+import { toast } from 'react-toastify';
 import TooltipIcon from '../../components/TooltipIcon/TooltipIcon';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
-import { toast } from 'react-toastify';
 
 interface IUserSurnameField {
   isChange: IChangeProps;
@@ -38,7 +38,9 @@ const UserSurnameField: NextPage<IUserSurnameField> = ({
   setIsChange,
 }) => {
   const { t } = useTranslation('office');
+
   const dispatch = useAppDispatch();
+
   const { isLoading } = useAppSelector((state) => state.user);
 
   return (

@@ -1,8 +1,6 @@
+import React from 'react';
 import { CircularProgress, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
-import React from 'react';
-import CustomButton from '../../components/CustomButton';
-import UserOrderAccordion from '../../components/UserOrderAccordion';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { getOrders } from '../../store/services/UserService';
 import {
@@ -11,9 +9,12 @@ import {
   UserProductsOrdersBox,
 } from '../../styles/personalOffice';
 import { Colors } from '../../styles/theme';
+import CustomButton from '../../components/CustomButton';
+import UserOrderAccordion from '../../components/UserOrderAccordion';
 
 const UserOrders = () => {
   const { t } = useTranslation('office');
+
   const dispatch = useAppDispatch();
 
   const { user, userOrders, isOrdersLoading } = useAppSelector(

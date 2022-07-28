@@ -1,10 +1,10 @@
+import theme, { Colors } from '../theme';
 import { styled } from '@mui/material/styles';
 import { Box, Button } from '@mui/material';
-import theme, { Colors } from '../theme';
 
 export const SortingMainBox = styled(Box)(() => ({
   width: '220px',
-  height: '220px',
+  minHeight: '220px',
   background: Colors.secondaryWhite,
   border: `1px solid ${Colors.primary}`,
   position: 'absolute',
@@ -16,6 +16,10 @@ export const SortingMainBox = styled(Box)(() => ({
   flexDirection: 'column',
   alignItems: 'center',
   zIndex: '10',
+  [theme.breakpoints.down('sm')]: {
+    top: '200px',
+    left: '20px',
+  },
 })) as typeof Box;
 
 export const CloseBox = styled(Box)(() => ({

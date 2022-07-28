@@ -1,5 +1,5 @@
-import { Typography } from '@mui/material';
 import React from 'react';
+import { Typography } from '@mui/material';
 import {
   MainContainer,
   PhotoContainer,
@@ -41,10 +41,11 @@ const ProductInBag: NextPage<IProductInBag> = ({
   productFor,
 }) => {
   const { t } = useTranslation('common');
-  const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.user);
 
+  const dispatch = useAppDispatch();
   const router = useRouter();
+
+  const { user } = useAppSelector((state) => state.user);
 
   return (
     <MainContainer>

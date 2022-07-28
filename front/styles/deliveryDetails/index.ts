@@ -1,7 +1,7 @@
+import theme, { Colors } from '../theme';
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { ErrorMessage, Field } from 'formik';
-import theme, { Colors } from '../theme';
 
 export const DeliveryContainer = styled(Box)(() => ({
   backgroundColor: Colors.primary,

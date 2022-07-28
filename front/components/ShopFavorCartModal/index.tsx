@@ -5,9 +5,9 @@ import { Colors } from '../../styles/theme';
 import { NextPage } from 'next';
 import { MainBox } from '../../styles/ShopFavorBagModal';
 import { ButtonBox, ResultBox, TotalBox } from '../../styles/shopFavorBag';
+import { useAppSelector } from '../../hooks/redux';
 import CustomButton from '../CustomButton';
 import ProductInBag from '../ProductInBag';
-import { useAppSelector } from '../../hooks/redux';
 
 interface IShopFavorBagModalProps {
   isModalOpened: boolean;
@@ -23,7 +23,11 @@ const ShopFavorBagModal: NextPage<IShopFavorBagModalProps> = ({
   totalPrice,
 }) => {
   const { t } = useTranslation('common');
-  const { productInBag } = useAppSelector((state) => state.product);
+
+  const { productInBag, productsFavorite } = useAppSelector(
+    (state) => state.product
+  );
+
   return (
     <>
       <Modal
@@ -46,6 +50,8 @@ const ShopFavorBagModal: NextPage<IShopFavorBagModalProps> = ({
                       productPhoto={data.productPhoto}
                       salePrice={data.salePrice}
                       sizeProduct={data.sizeProduct}
+                      who="bag"
+                      productFor={data.productFor}
                     />
                   </div>
                 ))}
@@ -78,10 +84,21 @@ const ShopFavorBagModal: NextPage<IShopFavorBagModalProps> = ({
             </div>
           ) : (
             <div>
-              {/* <ProductInBag />
-              <ProductInBag />
-              <ProductInBag />
-              <ProductInBag /> */}
+              {productsFavorite &&
+                productsFavorite.map((data) => (
+                  <div key={data.id}>
+                    <ProductInBag
+                      price={data.product.productPrice}
+                      favoriteId={data.id}
+                      productName={data.product.productName}
+                      productPhoto={data.product.productMainPictures}
+                      salePrice={data.product.productDiscountPrice}
+                      who="favorite"
+                      productFor={data.product.productFor}
+                      productId={data.product.id}
+                    />
+                  </div>
+                ))}
             </div>
           )}
         </MainBox>

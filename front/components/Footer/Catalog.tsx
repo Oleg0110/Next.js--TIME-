@@ -1,8 +1,8 @@
 import React from 'react';
-import Link from 'next/link';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { ROUTES } from '../../utils/constants';
+import Link from 'next/link';
 
 const Catalog = () => {
   const { t } = useTranslation('common');

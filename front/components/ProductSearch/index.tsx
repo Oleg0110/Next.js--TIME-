@@ -23,8 +23,19 @@ interface IProductSearch {
   searchValue: string;
 }
 
+const spanStyle = {
+  width: '260px',
+  color: Colors.black,
+  [theme.breakpoints.down('md')]: {
+    width: '175px',
+    fontSize: '15px',
+    marginBottom: '0px',
+  },
+};
+
 const ProductSearch: NextPage<IProductSearch> = ({ product, searchValue }) => {
   const { t } = useTranslation(['admin', 'toast']);
+
   const dispatch = useAppDispatch();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -36,16 +47,6 @@ const ProductSearch: NextPage<IProductSearch> = ({ product, searchValue }) => {
 
   const handleClose = () => {
     setAnchorEl(null);
-  };
-
-  const spanStyle = {
-    width: '260px',
-    color: Colors.black,
-    [theme.breakpoints.down('md')]: {
-      width: '175px',
-      fontSize: '15px',
-      marginBottom: '0px',
-    },
   };
 
   return (

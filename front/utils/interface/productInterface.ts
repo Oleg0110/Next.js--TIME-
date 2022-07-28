@@ -1,5 +1,4 @@
 import { ProductColor, ProductMaterial, ProductStyle } from '../types/product';
-import { ICreateOrder } from './serviceInterface';
 
 export interface IProduct {
   id: string;
@@ -81,7 +80,9 @@ export interface ProductState {
   ordersUnconfirmed: IProductOrder[];
   ordersConfirmed: IProductOrder[];
   productsFavorite: IFavorite[];
+  countProducts: number;
   isLoading: boolean;
+  isPaginationLoading: boolean;
   error: string;
 }
 

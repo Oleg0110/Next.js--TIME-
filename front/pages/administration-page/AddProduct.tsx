@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { IProduct } from '../../utils/interface/productInterface';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { array, boolean, mixed, number, object, string } from 'yup';
+import { array, boolean, number, object, string } from 'yup';
 import {
   AddFormBox,
   AddMainFormBox,
   AddMainPhotoBox,
   AddPhotoBox,
   AddProductBox,
+  AdminLoadingBox,
   ButtonAddPhotos,
   ButtonClickPosition,
   DescriptionOptionsBox,
@@ -18,8 +19,8 @@ import {
   ProductStateBox,
 } from '../../styles/administration';
 import { Colors } from '../../styles/theme';
-import { Button, Typography } from '@mui/material';
-import { useAppDispatch } from '../../hooks/redux';
+import { CircularProgress, Typography } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { addProduct } from '../../store/services/ProductService';
 import { NextPage } from 'next';
 import {
@@ -33,14 +34,16 @@ import { toast } from 'react-toastify';
 import CustomButton from '../../components/CustomButton';
 import CheckBoxRadioInput from '../../components/CheckBoxRadioInput';
 import styles from '../../styles/AdminPage.module.scss';
-import PreviewImage from '../../components/PreviewImage';
-import { Box } from '@mui/system';
 import TooltipIcon from '../../components/TooltipIcon/TooltipIcon';
+
+const styleSpan = { width: '45%', color: Colors.primary };
 
 const AddProduct: NextPage = () => {
   const { t } = useTranslation(['admin', 'toast']);
 
   const dispatch = useAppDispatch();
+
+  const { isLoading } = useAppSelector((state) => state.product);
 
   const initialValues: Omit<IProduct, 'id' | 'date' | 'productNumber'> = {
     productName: '',
@@ -83,8 +86,6 @@ const AddProduct: NextPage = () => {
     productStyleName: string().required('Choose by style propose'),
     productStyleMaterial: string().required('Choose by material propose'),
   });
-
-  const styleSpan = { width: '45%', color: Colors.primary };
 
   const [isPhotos, setIsPhotos] = useState({ images: [] });
   const [isMainPhoto, setIsMainPhoto] = useState({ images: [] });
@@ -145,8 +146,6 @@ const AddProduct: NextPage = () => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={async (values, { resetForm }) => {
-              console.log(values);
-
               const res = await dispatch(
                 addProduct({
                   product: values,
@@ -193,7 +192,7 @@ const AddProduct: NextPage = () => {
                   />
                   <InfoAddBox>
                     <Typography variant="roboto24500" sx={styleSpan}>
-                      Main Photo:
+                      {t('main-photo')}:
                     </Typography>
                     <ErrorMessage
                       name="productMainPictures"
@@ -209,7 +208,7 @@ const AddProduct: NextPage = () => {
                         mainPhotoRef.current.click();
                       }}
                     >
-                      Click to add
+                      {t('click-to-add')}
                     </AddMainPhotoBox>
                   ) : (
                     <MainPhotoBox>
@@ -241,7 +240,7 @@ const AddProduct: NextPage = () => {
                   />
                   <AddPhotoBox>
                     <Typography variant="roboto24500" sx={styleSpan}>
-                      Photos:
+                      {t('photos')}:
                     </Typography>
                     <ButtonAddPhotos
                       onClick={(e) => {
@@ -249,7 +248,7 @@ const AddProduct: NextPage = () => {
                         photosRef.current.click();
                       }}
                     >
-                      Add Photos
+                      {t('add-photos')}
                     </ButtonAddPhotos>
                   </AddPhotoBox>
                   <PhotosBox>
@@ -527,11 +526,24 @@ const AddProduct: NextPage = () => {
                       </div>
                     ))}
                   </DescriptionOptionsBox>
-                  <ButtonClickPosition>
-                    <CustomButton size="LG" type="submit">
-                      {t('add-product')}
-                    </CustomButton>
-                  </ButtonClickPosition>
+                  {isLoading ? (
+                    <AdminLoadingBox>
+                      <CircularProgress
+                        sx={{
+                          color: Colors.primary,
+                          margin: '10px 0px',
+                        }}
+                        disableShrink
+                        size="35px"
+                      />
+                    </AdminLoadingBox>
+                  ) : (
+                    <ButtonClickPosition>
+                      <CustomButton size="LG" type="submit">
+                        {t('add-product')}
+                      </CustomButton>
+                    </ButtonClickPosition>
+                  )}
                 </Form>
               );
             }}

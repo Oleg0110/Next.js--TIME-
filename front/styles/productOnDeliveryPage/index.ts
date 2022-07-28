@@ -1,7 +1,6 @@
-import { styled } from '@mui/material/styles';
-import { Box, Button } from '@mui/material';
 import theme, { Colors } from '../theme';
-import { Field } from 'formik';
+import { styled } from '@mui/material/styles';
+import { Box } from '@mui/material';
 
 export const ProductOnDeliveryContainer = styled(Box)(() => ({
   width: '100%',

@@ -1,6 +1,6 @@
-import { Box, Button } from '@mui/material';
-import { styled } from '@mui/material/styles';
 import theme, { Colors } from '../theme';
+import { Box } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 //Photo
 

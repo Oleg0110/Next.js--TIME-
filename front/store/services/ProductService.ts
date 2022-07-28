@@ -10,28 +10,25 @@ import {
 import {
   IFavorite,
   IProduct,
-  IProductFilter,
   IProductOrder,
   IProductReview,
 } from '../../utils/interface/productInterface';
 import axios from 'axios';
 import {
+  GetProductsResponse,
   IAddArg,
   IAddProductResponse,
   IAddReviewArg,
   IChangeOrderArg,
   IChangeProductArg,
   IChangeResponse,
-  ICreateOrder,
   IDeleteArg,
   IDeleteResponse,
   IFavoriteArg,
-  IFilterArg,
   IGetProductsArg,
   IGetRecommendedArg,
   IGetReviewArg,
 } from '../../utils/interface/serviceInterface';
-import { IUser } from '../../utils/interface/userInterface';
 
 // Get Requests
 export const getSaleProduct = createAsyncThunk(
@@ -49,13 +46,49 @@ export const getSaleProduct = createAsyncThunk(
 
 export const getProducts = createAsyncThunk(
   'product/getProducts',
-  async ({ category, page }: IGetProductsArg, thunkApi) => {
+  async ({ category, page, filters, sorting }: IGetProductsArg, thunkApi) => {
     try {
-      const res = await axios.get<IProduct[]>(
-        `${GET_PRODUCTS}/${category}/${page}`
+      const limit = 2;
+      const res = await axios.get<GetProductsResponse>(
+        `${GET_PRODUCTS}/${category}`,
+        {
+          params: {
+            filters,
+            category,
+            page,
+            limit,
+            sorting,
+          },
+        }
       );
 
       return res.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue((error as Error).message);
+    }
+  }
+);
+
+export const paginationProductFunc = createAsyncThunk(
+  'product/getProductsTest',
+  async (
+    { category, page, filters, productCount, sorting }: IGetProductsArg,
+    thunkApi
+  ) => {
+    try {
+      const res = await axios.get<GetProductsResponse>(
+        `${GET_PRODUCTS}/test/${category}/posts?start=${productCount}&limit=2`,
+        {
+          params: {
+            filters,
+            category,
+            page,
+            sorting,
+          },
+        }
+      );
+
+      return res.data.products;
     } catch (error) {
       return thunkApi.rejectWithValue((error as Error).message);
     }
@@ -80,27 +113,6 @@ export const getSearchProduct = createAsyncThunk(
   async (searchValue: string, thunkApi) => {
     try {
       const res = await axios.get<IProduct[]>(`${ADMIN_PAGE}/${searchValue}`);
-
-      return res.data;
-    } catch (error) {
-      return thunkApi.rejectWithValue((error as Error).message);
-    }
-  }
-);
-
-export const filterProducts = createAsyncThunk(
-  'product/filterProducts',
-  async (arg: IFilterArg, thunkApi) => {
-    try {
-      const { filter, category, page } = arg;
-
-      const res = await axios.get<IProduct[]>(`${GET_PRODUCTS}/${category}`, {
-        params: {
-          filter,
-          category,
-          page,
-        },
-      });
 
       return res.data;
     } catch (error) {
@@ -235,10 +247,6 @@ export const addProduct = createAsyncThunk(
           res.data && countPhoto++;
         });
       }
-
-      if (countPhoto === photoFile.length) {
-        return res.data.product;
-      }
     } catch (error) {
       return thunkApi.rejectWithValue((error as Error).message);
     }
@@ -283,15 +291,51 @@ export const changeProduct = createAsyncThunk(
   'admin/changeProduct',
   async (arg: IChangeProductArg, thunkApi) => {
     try {
-      const { productId, product, searchValue } = arg;
+      const { productId, product, searchValue, photoFile } = arg;
 
-      const res = await axios.patch<IChangeResponse>(ADMIN_CHANGE_PRODUCT, {
-        productId,
-        product,
-        searchValue,
-      });
+      let formData = new FormData();
 
-      return res.data.changedProduct;
+      formData.append('file', product.productMainPictures[0]);
+      formData.append('product', JSON.stringify({ ...product }));
+      formData.append('productId', productId);
+      formData.append('searchValue', searchValue);
+
+      const res = await axios.patch<IChangeResponse>(
+        ADMIN_CHANGE_PRODUCT,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data; application/json',
+          },
+        }
+      );
+
+      const productData = res.data.changedProduct;
+
+      let countPhoto = 0;
+
+      if (productData) {
+        photoFile.forEach(async (data) => {
+          let formData = new FormData();
+
+          formData.append('file', data);
+          formData.append('productId', productData.id);
+
+          const res = await axios.post(
+            `${ADMIN_ADD_PRODUCT}/add-photos`,
+            formData,
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            }
+          );
+
+          res.data && countPhoto++;
+        });
+      }
+
+      return res.data.products;
     } catch (error) {
       return thunkApi.rejectWithValue((error as Error).message);
     }

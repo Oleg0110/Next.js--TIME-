@@ -222,14 +222,6 @@ export const DescriptionOptionsBox = styled(Box)(() => ({
   justifyContent: 'center',
 })) as typeof Box;
 
-export const ColorRadioBox = styled(Box)(() => ({
-  width: '20px',
-  height: '20px',
-  padding: '3px',
-  backgroundColor: Colors.secondaryWhite,
-  border: `1px solid ${Colors.primary}`,
-})) as typeof Box;
-
 export const ColorBox = styled(Box)(() => ({
   width: '10px',
   height: '10px',
@@ -291,6 +283,11 @@ export const InfoChangeDeleteBox = styled(Box)(() => ({
   justifyContent: 'space-betweens',
 })) as typeof Box;
 
+export const AdminLoadingBox = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+})) as typeof Box;
+
 export const UserSearchBox = styled(Box)(() => ({
   width: '100%',
   maxHeight: '265px',
@@ -343,8 +340,9 @@ export const ProductSearchScroll = styled(Box)(() => ({
 export const UserManagementBox = styled(Box)(() => ({
   display: 'flex',
   width: '80%',
-  alignItems: 'center',
-  justifyContent: 'start',
+  alignItems: 'start',
+  justifyContent: 'space-between',
+  flexWrap: 'wrap',
   padding: '15px',
   [theme.breakpoints.down('sm')]: {
     justifyContent: 'center',
@@ -355,15 +353,42 @@ export const UserManagementBox = styled(Box)(() => ({
 
 export const UserManagementMainFormBox = styled(Box)(() => ({
   display: 'flex',
-  width: '550px',
+  width: '45%',
+  minWidth: '430px',
   alignItems: 'center',
   justifyContent: 'center',
   padding: '5px',
   backgroundColor: Colors.secondaryWhite,
   flexDirection: 'column',
-  [theme.breakpoints.down('sm')]: {
-    width: '350px',
+  [theme.breakpoints.down('lg')]: {
+    alignItems: 'start',
+    minWidth: '360px',
+    width: '100%',
+    margin: '20px 0px',
   },
+})) as typeof Box;
+
+export const UserManagementTeamBox = styled(Box)(() => ({
+  display: 'flex',
+  width: '45%',
+  minWidth: '430px',
+  alignItems: 'center',
+  justifyContent: 'start',
+  padding: '5px',
+  backgroundColor: Colors.secondaryWhite,
+  flexDirection: 'column',
+  [theme.breakpoints.down('lg')]: {
+    minWidth: '360px',
+    alignItems: 'start',
+    width: '100%',
+    marginBottom: '20px',
+  },
+})) as typeof Box;
+
+export const UserManagementInputBox = styled(Box)(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'start',
 })) as typeof Box;
 
 export const UserManagementFormBox = styled(Box)(() => ({
@@ -375,18 +400,6 @@ export const UserManagementFormBox = styled(Box)(() => ({
   [theme.breakpoints.down('sm')]: {
     width: '85%',
   },
-})) as typeof Box;
-
-export const UserManagementStateBox = styled(Box)(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  margin: '10px 0 15px',
-})) as typeof Box;
-
-export const InfoUserManagementBox = styled(Box)(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-betweens',
 })) as typeof Box;
 
 // Order
@@ -468,12 +481,6 @@ export const AdminFormBox = styled(Box)(() => ({
   width: '100%',
 })) as typeof Box;
 
-export const OrderStateBox = styled(Box)(() => ({
-  display: 'flex',
-  alignItems: 'center',
-  margin: '10px 0 15px',
-})) as typeof Box;
-
 export const SearchAdminFormBox = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
@@ -492,7 +499,7 @@ export const SearchAdminFormError = styled(ErrorMessage)(() => ({
 export const SearchAdminFormInput = styled(Field)(() => ({
   fontFamily: 'Roboto',
   fontWeight: '400',
-  fontSize: '25px',
+  fontSize: '20px',
   width: '100%',
   height: '30px',
   padding: '5px',
