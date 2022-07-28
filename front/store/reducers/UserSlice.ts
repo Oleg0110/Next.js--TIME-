@@ -9,15 +9,19 @@ import {
   deleteUser,
   getOrders,
   getSearchUser,
+  getUserInTeam,
   login,
   logout,
   registration,
+  removeAssignmentAdmin,
   sendConfirmCode,
+  userAssignment,
 } from '../services/UserService';
 
 const initialState: UserState = {
   user: {} as IUser,
   userSearch: [],
+  userInTeam: [],
   userOrders: [],
   isAuth: false,
   isLoading: false,
@@ -31,6 +35,7 @@ export const userReducer = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    //Get Requests
     [registration.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
       state.isLoading = false;
       state.error = '';
@@ -41,32 +46,6 @@ export const userReducer = createSlice({
       state.isLoading = true;
     },
     [registration.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-    [login.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
-      state.isLoading = false;
-      state.error = '';
-      state.user = action.payload;
-      state.isAuth = true;
-    },
-    [login.pending.type]: (state) => {
-      state.isLoading = true;
-    },
-    [login.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
-    [logout.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
-      state.isLoading = false;
-      state.error = '';
-      state.user = action.payload;
-      state.isAuth = false;
-    },
-    [logout.pending.type]: (state) => {
-      state.isLoading = true;
-    },
-    [logout.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -95,6 +74,18 @@ export const userReducer = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    [getUserInTeam.fulfilled.type]: (state, action: PayloadAction<IUser[]>) => {
+      state.isLoading = false;
+      state.error = '';
+      state.userInTeam = action.payload;
+    },
+    [getUserInTeam.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [getUserInTeam.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     [getOrders.fulfilled.type]: (
       state,
       action: PayloadAction<IProductOrder[]>
@@ -108,6 +99,91 @@ export const userReducer = createSlice({
     },
     [getOrders.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isOrdersLoading = false;
+      state.error = action.payload;
+    },
+    [checkPassword.fulfilled.type]: (state) => {
+      state.isLoading = false;
+      state.error = '';
+    },
+    [checkPassword.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [checkPassword.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [sendConfirmCode.fulfilled.type]: (state) => {
+      state.isCodeLoading = false;
+      state.error = '';
+    },
+    [sendConfirmCode.pending.type]: (state) => {
+      state.isCodeLoading = true;
+    },
+    [sendConfirmCode.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isCodeLoading = false;
+      state.error = action.payload;
+    },
+
+    //Post Requests
+    [login.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+      state.isLoading = false;
+      state.error = '';
+      state.user = action.payload;
+      state.isAuth = true;
+    },
+    [login.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [login.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [logout.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+      state.isLoading = false;
+      state.error = '';
+      state.user = action.payload;
+      state.isAuth = false;
+    },
+    [logout.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [logout.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
+    //Patch Requests
+    [userAssignment.fulfilled.type]: (
+      state,
+      action: PayloadAction<IUser[]>
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.userInTeam = action.payload;
+    },
+    [userAssignment.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [userAssignment.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [removeAssignmentAdmin.fulfilled.type]: (
+      state,
+      action: PayloadAction<IUser[]>
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.userInTeam = action.payload;
+    },
+    [removeAssignmentAdmin.pending.type]: (state) => {
+      state.isLoading = true;
+    },
+    [removeAssignmentAdmin.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isLoading = false;
       state.error = action.payload;
     },
     [changeUserData.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
@@ -134,17 +210,8 @@ export const userReducer = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
-    [checkPassword.fulfilled.type]: (state) => {
-      state.isLoading = false;
-      state.error = '';
-    },
-    [checkPassword.pending.type]: (state) => {
-      state.isLoading = true;
-    },
-    [checkPassword.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false;
-      state.error = action.payload;
-    },
+
+    //Delete Requests
     [deleteUser.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
       state.isLoading = false;
       state.error = '';
@@ -156,17 +223,6 @@ export const userReducer = createSlice({
     },
     [deleteUser.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
-      state.error = action.payload;
-    },
-    [sendConfirmCode.fulfilled.type]: (state) => {
-      state.isCodeLoading = false;
-      state.error = '';
-    },
-    [sendConfirmCode.pending.type]: (state) => {
-      state.isCodeLoading = true;
-    },
-    [sendConfirmCode.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isCodeLoading = false;
       state.error = action.payload;
     },
   },

@@ -1,10 +1,9 @@
+import React from 'react';
+import theme, { Colors } from '../../styles/theme';
 import { Typography } from '@mui/material';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
-import React from 'react';
-import theme, { Colors } from '../../styles/theme';
 import { BASIC_URL } from '../../utils/httpLinks';
-import { IProductInBag } from '../../utils/interface/productInterface';
 import {
   ProductAccordionBox,
   ProductOrderCount,

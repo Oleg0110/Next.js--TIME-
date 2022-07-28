@@ -1,12 +1,12 @@
+import { InferGetStaticPropsType } from 'next';
+import { IProduct } from '../utils/interface/productInterface';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { BASIC_URL } from '../utils/httpLinks';
 import MainLayout from '../layouts/MainLayout';
 import PhotoBox from '../components/PhotoBox';
 import About from './home/About';
 import New from './home/New';
-import { InferGetStaticPropsType } from 'next';
-import { IProduct } from '../utils/interface/productInterface';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Sale from './home/Sale';
-import { BASIC_URL } from '../utils/httpLinks';
 
 export const getServerSideProps = async ({ locale }) => {
   const res = await fetch(`${BASIC_URL}`);

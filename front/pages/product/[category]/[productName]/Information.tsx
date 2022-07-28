@@ -34,16 +34,16 @@ interface IInformation {
 }
 
 const Information: NextPage<IInformation> = ({ product }) => {
+  const { t } = useTranslation(['product', 'toast']);
+
   const { isAuth, user } = useAppSelector((state) => state.user);
   const { productsFavorite } = useAppSelector((state) => state.product);
 
-  const { t } = useTranslation(['product', 'toast']);
+  const dispatch = useAppDispatch();
 
   const isFavorite =
     productsFavorite &&
     productsFavorite.find((f) => f.product?.id === product.id);
-
-  const dispatch = useAppDispatch();
 
   const sizesArr: SizeType[] = includesSizeFunc(
     sizesArray,
@@ -162,7 +162,8 @@ const Information: NextPage<IInformation> = ({ product }) => {
                 product.productName,
                 product.productMainPictures,
                 product.productDiscountPrice,
-                product.productPrice
+                product.productPrice,
+                product.productFor
               );
             }}
           >

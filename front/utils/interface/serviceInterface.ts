@@ -1,3 +1,4 @@
+import { SortType } from '../types/product';
 import { IProduct, IProductFilter, IProductInBag } from './productInterface';
 import { IUserInitialOrder } from './userInterface';
 
@@ -17,6 +18,9 @@ export interface IAddReviewArg {
 export interface IGetProductsArg {
   category: string;
   page?: string;
+  filters: IProductFilter;
+  sorting: SortType;
+  productCount?: number;
 }
 
 export interface IGetReviewArg {
@@ -36,11 +40,9 @@ export interface IDeleteArg {
 
 export interface IChangeProductArg {
   productId: string;
-  product: Omit<
-    IProduct,
-    'id' | 'date' | 'productMainPictures' | 'productNumber'
-  >;
+  product: Omit<IProduct, 'id' | 'date' | 'productNumber'>;
   searchValue: string;
+  photoFile: any[];
 }
 
 export interface IFilterArg {
@@ -56,7 +58,8 @@ export interface IChangeOrderArg {
 
 export interface IChangeResponse {
   message: string;
-  changedProduct: IProduct[];
+  products: IProduct[];
+  changedProduct: IProduct;
 }
 
 export interface IDeleteResponse {
@@ -82,6 +85,11 @@ export interface IFavoriteArg {
   userId: string;
 }
 
+export interface GetProductsResponse {
+  products: IProduct[];
+  countProducts: number;
+}
+
 //User
 export interface IRegistrationArg {
   name: string;
@@ -93,4 +101,24 @@ export interface IRegistrationArg {
 export interface ILoginArg {
   email: string;
   password: string;
+}
+export interface ICheckPasswordArg {
+  userId: string;
+  password: string;
+}
+
+export interface IAddPhoneArg {
+  userId: string;
+  phone: string;
+}
+
+export interface ISendCodeArg {
+  userId: string;
+  code: string;
+}
+
+export interface IChangeUserArg {
+  userId: string;
+  value: string;
+  changeWhat: 'name' | 'surname' | 'email' | 'phone' | 'password';
 }

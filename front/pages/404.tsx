@@ -1,16 +1,17 @@
-import { Button, Typography } from '@mui/material';
+import React from 'react';
+import { Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import Link from 'next/link';
-import React from 'react';
-import CustomButton from '../components/CustomButton';
-import MainLayout from '../layouts/MainLayout';
 import { ErrorContainer, ErrorContent, WarningBox } from '../styles/404';
 import { Colors } from '../styles/theme';
 import { ROUTES } from '../utils/constants';
+import Link from 'next/link';
+import CustomButton from '../components/CustomButton';
+import MainLayout from '../layouts/MainLayout';
 
 const Error = () => {
   const { t } = useTranslation('error');
+
   return (
     <MainLayout>
       <ErrorContainer>

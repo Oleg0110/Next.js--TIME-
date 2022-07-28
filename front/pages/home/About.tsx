@@ -1,10 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
-import CustomButton from '../../components/CustomButton';
-import Image from 'next/image';
-import WhiteBox from '../../assets/img/home/whiteBox.jpg';
-import TimeLogoGif from '../../assets/img/home/timeLogoGif.gif';
-import WhitePackage from '../../assets/img/home/whitePackage.jpg';
 import { Typography } from '@mui/material';
 import {
   AboutMainBox,
@@ -18,9 +12,16 @@ import {
 import { Colors } from '../../styles/theme';
 import { ROUTES } from '../../utils/constants';
 import { useTranslation } from 'next-i18next';
+import Link from 'next/link';
+import CustomButton from '../../components/CustomButton';
+import Image from 'next/image';
+import WhiteBox from '../../assets/img/home/whiteBox.jpg';
+import TimeLogoGif from '../../assets/img/home/timeLogoGif.gif';
+import WhitePackage from '../../assets/img/home/whitePackage.jpg';
 
 const About = () => {
   const { t } = useTranslation('home');
+
   return (
     <AboutMainBox>
       <AboutContentBox>

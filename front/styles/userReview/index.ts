@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import { Box, Button } from '@mui/material';
-import theme, { Colors } from '../theme';
+import { Colors } from '../theme';
 
 export const UserReviewManiContainer = styled(Box)(() => ({
   width: '95%',

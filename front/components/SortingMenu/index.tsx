@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import theme, { Colors } from '../../styles/theme';
-import { Slide, Typography, useMediaQuery } from '@mui/material';
+import { Slide, useMediaQuery } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { NextPage } from 'next';
 import { CloseBox, SortButton, SortingMainBox } from '../../styles/sorting';
 import { sortingDataName } from '../../utils/constants';
+import { useAppDispatch } from '../../hooks/redux';
+import { getProducts } from '../../store/services/ProductService';
+import { IProductFilter } from '../../utils/interface/productInterface';
 
 type ActiveType =
   | 'cheap to expensive'
@@ -19,6 +22,7 @@ interface ISortingMenuProps {
   setIsOpen: (boolean: boolean) => void;
   setIsActive: (string: ActiveType) => void;
   isActive: ActiveType;
+  filters: IProductFilter;
 }
 
 const SortingMenu: NextPage<ISortingMenuProps> = ({
@@ -27,13 +31,31 @@ const SortingMenu: NextPage<ISortingMenuProps> = ({
   category,
   setIsActive,
   isActive,
+  filters,
 }) => {
-  const media = useMediaQuery(theme.breakpoints.down('md'));
   const { t } = useTranslation('common');
 
-  const setFunc = (sort) => {
-    setIsActive(sort);
-    localStorage.setItem(sortingDataName, sort);
+  const dispatch = useAppDispatch();
+
+  const mediaSM = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const setFunc = async (sorting) => {
+    setIsActive(sorting);
+    localStorage.setItem(sortingDataName, sorting);
+    if (category === 'women' || category === 'men') {
+      await dispatch(getProducts({ category, filters, sorting }));
+    } else {
+      const categoryName = category.split('-')[1];
+      const page = category.split('-')[0];
+      await dispatch(
+        getProducts({
+          filters,
+          category: categoryName,
+          page,
+          sorting,
+        })
+      );
+    }
     setIsOpen(false);
   };
 
@@ -42,7 +64,12 @@ const SortingMenu: NextPage<ISortingMenuProps> = ({
       {isOpen && (
         <>
           <CloseBox onClick={() => setIsOpen(false)} />
-          <Slide direction="left" in={isOpen} mountOnEnter unmountOnExit>
+          <Slide
+            direction={mediaSM ? 'right' : 'left'}
+            in={isOpen}
+            mountOnEnter
+            unmountOnExit
+          >
             <SortingMainBox>
               <SortButton
                 onClick={() => setFunc('cheap to expensive')}
@@ -53,7 +80,7 @@ const SortingMenu: NextPage<ISortingMenuProps> = ({
                   }
                 }
               >
-                from cheap to expensive
+                {t('cheap-to-expensive')}
               </SortButton>
               <SortButton
                 onClick={() => setFunc('expensive to cheap')}
@@ -64,7 +91,7 @@ const SortingMenu: NextPage<ISortingMenuProps> = ({
                   }
                 }
               >
-                from expensive to cheap
+                {t('expensive-to-cheap')}
               </SortButton>
               <SortButton
                 onClick={() => setFunc('novelty')}
@@ -75,7 +102,7 @@ const SortingMenu: NextPage<ISortingMenuProps> = ({
                   }
                 }
               >
-                for novelty
+                {t('novelty')}
               </SortButton>
               <SortButton
                 onClick={() => setFunc('maximum discount')}
@@ -86,8 +113,13 @@ const SortingMenu: NextPage<ISortingMenuProps> = ({
                   }
                 }
               >
-                maximum discount
+                {t('maximum-discount')}
               </SortButton>
+              {isActive !== 'empty' && (
+                <SortButton onClick={() => setFunc('empty')}>
+                  {t('without-sort')}
+                </SortButton>
+              )}
             </SortingMainBox>
           </Slide>
         </>

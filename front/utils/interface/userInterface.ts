@@ -38,6 +38,7 @@ export interface IUserOrder {
 export interface UserState {
   user: IUser;
   userSearch: IUser[];
+  userInTeam: IUser[];
   userOrders: IProductOrder[];
   isAuth: boolean;
   isLoading: boolean;

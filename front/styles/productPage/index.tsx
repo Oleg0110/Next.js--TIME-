@@ -1,6 +1,6 @@
+import theme, { Colors } from '../theme';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
-import theme, { Colors } from '../theme';
 
 export const MainProductPageContainer = styled(Box)(() => ({
   backgroundColor: Colors.secondaryWhite,

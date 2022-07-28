@@ -1,6 +1,6 @@
-import { styled } from '@mui/material/styles';
-import { Box, Button } from '@mui/material';
 import theme, { Colors } from '../theme';
+import { styled } from '@mui/material/styles';
+import { Box } from '@mui/material';
 
 export const MainBox = styled(Box)(() => ({
   position: 'absolute' as 'absolute',

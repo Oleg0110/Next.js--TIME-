@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { Modal, Typography } from '@mui/material';
+import { Modal } from '@mui/material';
 import { useTranslation } from 'next-i18next';
-import CustomButton from '../CustomButton';
 import { Colors } from '../../styles/theme';
 import {
   ButtonAccountModalBox,
   ButtonStyle,
-  InputsBox,
   MainAccountModalBox,
 } from '../../styles/accountMenuModal';
 import { NextPage } from 'next';
+import { useAppSelector } from '../../hooks/redux';
+import Entry from '../AccountMenu/Entry';
+import Registration from '../AccountMenu/Registration';
+import AuthMenu from '../AccountMenu/AuthMenu';
 
 interface IAccountMenuModalProps {
   isModalOpened: boolean;
@@ -20,9 +22,11 @@ const AccountMenuModal: NextPage<IAccountMenuModalProps> = ({
   isModalOpened,
   handleClose,
 }) => {
-  const [isEntry, setIsEntry] = useState(true);
-
   const { t } = useTranslation('common');
+
+  const { isAuth } = useAppSelector((state) => state.user);
+
+  const [isEntry, setIsEntry] = useState(true);
 
   return (
     <>
@@ -34,53 +38,34 @@ const AccountMenuModal: NextPage<IAccountMenuModalProps> = ({
         disableScrollLock={true}
       >
         <MainAccountModalBox>
-          <ButtonAccountModalBox>
-            <ButtonStyle
-              onClick={() => setIsEntry(true)}
-              sx={
-                isEntry && {
-                  color: Colors.primary,
-                  borderBottom: `3px solid ${Colors.primary}`,
+          {isAuth && <AuthMenu />}
+          {!isAuth && (
+            <ButtonAccountModalBox>
+              <ButtonStyle
+                onClick={() => setIsEntry(true)}
+                sx={
+                  isEntry && {
+                    color: Colors.primary,
+                    borderBottom: `3px solid ${Colors.primary}`,
+                  }
                 }
-              }
-            >
-              {t('entry')}
-            </ButtonStyle>
-            <ButtonStyle
-              onClick={() => setIsEntry(false)}
-              sx={
-                !isEntry && {
-                  color: Colors.primary,
-                  borderBottom: `3px solid ${Colors.primary}`,
+              >
+                {t('entry')}
+              </ButtonStyle>
+              <ButtonStyle
+                onClick={() => setIsEntry(false)}
+                sx={
+                  !isEntry && {
+                    color: Colors.primary,
+                    borderBottom: `3px solid ${Colors.primary}`,
+                  }
                 }
-              }
-            >
-              {t('registration')}
-            </ButtonStyle>
-          </ButtonAccountModalBox>
-          {isEntry ? (
-            <InputsBox>
-              <Typography variant="roboto36400" color={Colors.primary}>
-                {t('loginToUpper')}
-              </Typography>
-              <label htmlFor="email"></label>
-              <input type="email" />
-              <CustomButton size="LG" variant="secondary">
-                {t('login')}
-              </CustomButton>
-            </InputsBox>
-          ) : (
-            <InputsBox>
-              <Typography variant="roboto36400" color={Colors.primary}>
+              >
                 {t('registration')}
-              </Typography>
-              <label htmlFor="password"></label>
-              <input type="password" id="password" />
-              <CustomButton size="LG" variant="secondary">
-                {t('registration')}
-              </CustomButton>
-            </InputsBox>
+              </ButtonStyle>
+            </ButtonAccountModalBox>
           )}
+          {isEntry ? !isAuth && <Entry /> : !isAuth && <Registration />}
         </MainAccountModalBox>
       </Modal>
     </>

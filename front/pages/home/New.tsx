@@ -1,7 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
-import Woman from '../../assets/img/home/woman.png';
-import Man from '../../assets/img/home/man.png';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import {
@@ -14,11 +11,15 @@ import {
 } from '../../styles/home';
 import { Colors } from '../../styles/theme';
 import { ROUTES } from '../../utils/constants';
+import Link from 'next/link';
+import Woman from '../../assets/img/home/woman.png';
+import Man from '../../assets/img/home/man.png';
 import Image from 'next/image';
 import CustomButton from '../../components/CustomButton';
 
 const New = () => {
   const { t } = useTranslation('home');
+
   return (
     <NewMainBox>
       <NewContentBox>

@@ -1,31 +1,10 @@
-import { CircularProgress, Typography, useMediaQuery } from '@mui/material';
+import React, { useState } from 'react';
+import { CircularProgress, Typography } from '@mui/material';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
-import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import {
-  InputProductAmount,
-  ProductAmountBox,
-  ProductOnBagContainer,
-  ProductOnBagCount,
-  ProductOnBagInfo,
-  ProductOnBagPhotoBox,
-  ProductOnBagPrice,
-  ProductOnBagRemove,
-} from '../../styles/productOnBagPage';
-import theme, { Colors } from '../../styles/theme';
-import { removeFromBag } from '../../utils/function';
-import { BASIC_URL } from '../../utils/httpLinks';
-import {
-  IProductInBag,
-  IProductOrder,
-} from '../../utils/interface/productInterface';
-import styles from '../../styles/icons.module.scss';
-import TooltipIcon from '../TooltipIcon/TooltipIcon';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { number, object } from 'yup';
-import { shoppingBagDataName } from '../../utils/constants';
-import { setProductInShoppingBag } from '../../store/reducers/ProductSlice';
+import { Colors } from '../../styles/theme';
+import { IProductOrder } from '../../utils/interface/productInterface';
 import {
   CustomerInfoBox,
   DetailsOrderAccordion,
@@ -35,12 +14,12 @@ import {
   ProductTotalPriceBox,
   SummaryOrderAccordion,
 } from '../../styles/productOrderAccordion';
+import { changeOrderStatus } from '../../store/services/ProductService';
+import { toast } from 'react-toastify';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ProductInAccordionOrder from '../ProductInAccordionOrder';
 import CustomButton from '../CustomButton';
-import { changeOrderStatus } from '../../store/services/ProductService';
-import { toast } from 'react-toastify';
 
 interface IProductOrderAccordion {
   orderData: IProductOrder;
@@ -49,10 +28,13 @@ interface IProductOrderAccordion {
 const ProductOrderAccordion: NextPage<IProductOrderAccordion> = ({
   orderData,
 }) => {
-  const [expanded, setExpanded] = useState(true);
-  const dispatch = useAppDispatch();
-  const { isLoading } = useAppSelector((state) => state.product);
   const { t } = useTranslation('admin');
+
+  const dispatch = useAppDispatch();
+
+  const [expanded, setExpanded] = useState(true);
+
+  const { isLoading } = useAppSelector((state) => state.product);
 
   const {
     orderNumber,

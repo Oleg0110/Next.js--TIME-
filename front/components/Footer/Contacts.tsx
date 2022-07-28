@@ -10,8 +10,14 @@ const Contacts = () => {
   return (
     <>
       <Typography variant="roboto24500">{t('contacts')}</Typography>
-      <Typography variant="roboto24500hover">+310 55-555-55</Typography>
-      <Typography variant="roboto24500hover">+380 55-555-55</Typography>
+      <a href="tel:+310 55-555-55">
+        <Typography variant="roboto24500hover">+310 55-555-55</Typography>
+      </a>
+
+      <a href="tel:+380 55-555-55">
+        <Typography variant="roboto24500hover">+380 55-555-55</Typography>
+      </a>
+
       <ContactBox>
         <div className={styles.mailIcon} />
         <Typography variant="footerMail">time.shoe.shop@gmail.com</Typography>

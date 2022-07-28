@@ -10,19 +10,19 @@ import {
 } from '../../styles/bag';
 import { Colors } from '../../styles/theme';
 import { totalPriceFunc } from '../../utils/function';
-import ProductOnBagPage from '../../components/ProductOnBagPage';
-import MainLayout from '../../layouts/MainLayout';
-import CustomButton from '../../components/CustomButton';
 import { useRouter } from 'next/router';
 import { ROUTES } from '../../utils/constants';
 import { useTranslation } from 'next-i18next';
+import ProductOnBagPage from '../../components/ProductOnBagPage';
+import MainLayout from '../../layouts/MainLayout';
+import CustomButton from '../../components/CustomButton';
 
 const Bag = () => {
-  const { productInBag } = useAppSelector((state) => state.product);
-  const totalPrice = totalPriceFunc(productInBag);
-
-  const router = useRouter();
   const { t } = useTranslation('delivery');
+  const { productInBag } = useAppSelector((state) => state.product);
+
+  const totalPrice = totalPriceFunc(productInBag);
+  const router = useRouter();
 
   return (
     <MainLayout>

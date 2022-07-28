@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Typography } from '@mui/material';
 import { Colors } from '../../styles/theme';
 import {
@@ -14,15 +14,15 @@ import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { BASIC_URL } from '../../utils/httpLinks';
 import { removeFromBag } from '../../utils/function';
-import TooltipIcon from '../TooltipIcon/TooltipIcon';
-import ChooseSizeModal from '../ChooseSizeModal';
-import Link from 'next/link';
-import styles from '../../styles/icons.module.scss';
 import { useRouter } from 'next/router';
 import {
   addToFavorite,
   removeFromFavorite,
 } from '../../store/services/ProductService';
+import TooltipIcon from '../TooltipIcon/TooltipIcon';
+import ChooseSizeModal from '../ChooseSizeModal';
+import Link from 'next/link';
+import styles from '../../styles/icons.module.scss';
 
 interface IProductOnPageProps {
   name: string;
@@ -43,22 +43,22 @@ const ProductOnPage: NextPage<IProductOnPageProps> = ({
   productSize,
   mainPicture,
 }) => {
-  const dispatch = useAppDispatch();
-  const router = useRouter();
-
   const { productInBag, productsFavorite } = useAppSelector(
     (state) => state.product
   );
   const { isAuth, user } = useAppSelector((state) => state.user);
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const isFavorite =
     productsFavorite &&
     productsFavorite.find((f) => f.product?.id === productId);
 
   const isAdded = !!productInBag.find((f) => f.productId === productId);
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

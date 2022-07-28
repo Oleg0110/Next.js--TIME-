@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { object, string } from 'yup';
 import {
   UserSearchBox,
   FoundProductBox,
   UserManagementBox,
   UserManagementMainFormBox,
-  UserManagementFormBox,
-  InfoUserManagementBox,
+  UserManagementTeamBox,
+  UserManagementInputBox,
+  AdminLoadingBox,
 } from '../../styles/administration';
 import { Colors } from '../../styles/theme';
-import { Typography } from '@mui/material';
-import { useAppSelector } from '../../hooks/redux';
+import { CircularProgress, Typography } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { NextPage } from 'next';
-import { getSearchUser } from '../../store/services/UserService';
+import { getSearchUser, getUserInTeam } from '../../store/services/UserService';
 import { useTranslation } from 'next-i18next';
 import UserSearch from '../../components/UserSearch';
 import AdminSearchForm from '../../components/AdminSearchForm';
@@ -20,7 +21,11 @@ import AdminSearchForm from '../../components/AdminSearchForm';
 const UserManagement: NextPage = () => {
   const { t } = useTranslation('admin');
 
-  const { userSearch } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  const { userSearch, userInTeam, isLoading } = useAppSelector(
+    (state) => state.user
+  );
 
   const validationSchema = object().shape({
     searchValue: string()
@@ -29,41 +34,94 @@ const UserManagement: NextPage = () => {
       .required('Required'),
   });
 
+  useEffect(() => {
+    const asyncFunc = async () => {
+      await dispatch(getUserInTeam());
+    };
+    asyncFunc();
+  }, []);
+
   return (
     <UserManagementBox>
-      <UserManagementMainFormBox>
+      <UserManagementTeamBox>
         <Typography
           variant="roboto24500"
           sx={{
             textAlign: 'start',
-            margin: '10px',
             width: '100%',
             color: Colors.primary,
           }}
         >
-          {t('find-user')}
+          {t('team')}
         </Typography>
-        <AdminSearchForm
-          placeholder={t('placeholderName-Email')}
-          serviceFunc={getSearchUser}
-          validationSchema={validationSchema}
-          formName={t('user')}
-        />
-        {userSearch[0] !== undefined && (
-          <FoundProductBox>
-            <UserSearchBox>
-              {userSearch.map((data) => (
+        <FoundProductBox>
+          <UserSearchBox>
+            {userInTeam[0] !== undefined &&
+              userInTeam.map((data) => (
                 <div key={data.id}>
                   <UserSearch
                     userEmail={data.email}
                     userName={data.name}
                     userSurname={data.surname}
+                    userRole={data.userRole}
+                    userId={data.id}
+                    what="team"
                   />
                 </div>
               ))}
-            </UserSearchBox>
-          </FoundProductBox>
-        )}
+          </UserSearchBox>
+        </FoundProductBox>
+      </UserManagementTeamBox>
+      <UserManagementMainFormBox>
+        <UserManagementInputBox>
+          <Typography
+            variant="roboto24500"
+            sx={{
+              textAlign: 'start',
+              margin: '0px 10px',
+              width: '50%',
+              color: Colors.primary,
+            }}
+          >
+            {t('find-user')}
+          </Typography>
+          <AdminSearchForm
+            placeholder={t('placeholderName-Email')}
+            serviceFunc={getSearchUser}
+            validationSchema={validationSchema}
+            formName="user"
+          />
+        </UserManagementInputBox>
+        <FoundProductBox>
+          <UserSearchBox>
+            {isLoading ? (
+              <AdminLoadingBox>
+                <CircularProgress
+                  sx={{
+                    color: Colors.primary,
+                    margin: '40px 0px',
+                  }}
+                  disableShrink
+                  size="35px"
+                />
+              </AdminLoadingBox>
+            ) : (
+              userSearch[0] !== undefined &&
+              userSearch.map((data) => (
+                <div key={data.id}>
+                  <UserSearch
+                    userEmail={data.email}
+                    userName={data.name}
+                    userSurname={data.surname}
+                    userRole={data.userRole}
+                    userId={data.id}
+                    what="find"
+                  />
+                </div>
+              ))
+            )}
+          </UserSearchBox>
+        </FoundProductBox>
       </UserManagementMainFormBox>
     </UserManagementBox>
   );

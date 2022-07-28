@@ -28,61 +28,28 @@ class ProductService {
     return dtoValue
   }
 
-  async getProducts(category, page) {
-    let product
-    if (page === 'new' || page === 'sale') {
-      product = await ProductFunc.getNewSaleProducts(category, page)
-    } else {
-      product = await ProductFunc.chooseCurrentPageFunc(category)
-    }
-    let dtoValue = []
+  async getProducts(category, page, filters, limit, sorting) {
+    let products
 
-    product.map((data) => dtoValue.push({ ...new ProductDto(data) }))
-    return dtoValue
+    if (page === 'new' || page === 'sale') {
+      products = await ProductFunc.getNewSaleProducts(category, page, 0, filters, limit, sorting)
+    } else {
+      products = await ProductFunc.chooseCurrentPageFunc(category, 0, filters, limit, sorting)
+    }
+
+    return products
   }
 
-  async filterProducts(category, filters, page) {
-    const { productColor, productStyleName, productSize, productStyleMaterial, productPriceFrom, productPriceTo } =
-      filters
+  async paginationProducts(category, page, filters, start, limit, sorting) {
+    let products
 
-    const isProductColor = productColor[0] !== undefined
-    const isProductStyleName = productStyleName[0] !== undefined
-    const isProductStyleMaterial = productStyleMaterial[0] !== undefined
-    const isProductSize = productSize[0] !== undefined
-
-    let currentPage
     if (page === 'new' || page === 'sale') {
-      currentPage = await ProductFunc.getNewSaleProducts(category, page)
+      products = await ProductFunc.getNewSaleProducts(category, page, start, filters, limit, sorting)
     } else {
-      currentPage = await ProductFunc.chooseCurrentPageFunc(category)
+      products = await ProductFunc.chooseCurrentPageFunc(category, start, filters, limit, sorting)
     }
 
-    let filtered = []
-
-    //Color
-    isProductColor ? (filtered = ProductFunc.colorFunc(currentPage, productColor)) : (filtered = currentPage)
-
-    // Style
-    isProductStyleName && (filtered = ProductFunc.styleFunc(filtered, productStyleName))
-
-    // Material
-    isProductStyleMaterial && (filtered = ProductFunc.materialFunc(filtered, productStyleMaterial))
-
-    // Price
-    productPriceFrom !== undefined &&
-      productPriceTo !== undefined &&
-      (filtered = ProductFunc.priceFunc(filtered, productPriceFrom, productPriceTo))
-
-    //Size
-    isProductSize && (filtered = ProductFunc.sizeFunc(filtered, productSize))
-
-    let dtoValue = []
-
-    if (filtered[0] !== undefined) {
-      filtered.map((data) => dtoValue.push({ ...new ProductDto(data) }))
-    }
-
-    return dtoValue
+    return products
   }
 
   async getReview(productId) {

@@ -1,11 +1,10 @@
-import Image from 'next/image';
 import React from 'react';
 import {
   ColumnPhotoBox,
   MainPhotoBox,
   PhotoContainer,
 } from '../../styles/home';
-import styles from '../../styles/Home.module.scss';
+import Image from 'next/image';
 import BlackHighHeel from '../../assets/img/home/blackHigh-Heel.png';
 import WiteWomanShoe from '../../assets/img/home/whiteWomanShoe.png';
 import LightSneakers from '../../assets/img/home/lightSneakers.png';

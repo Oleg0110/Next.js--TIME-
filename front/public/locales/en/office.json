@@ -14,5 +14,6 @@
   "entry-password": "Please entry your current Password",
   "submit": "Submit",
   "continue": "To continue confirm code",
-  "click-to-sent-code": "Click to email the code"
+  "click-to-sent-code": "Click to email the code",
+  "your-information": "Your Information"
 }

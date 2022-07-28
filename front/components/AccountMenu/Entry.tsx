@@ -18,11 +18,27 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CustomButton from '../CustomButton';
 
+const showPasswordIcon = {
+  color: Colors.primary,
+  position: 'absolute',
+  right: '13px',
+  top: '12px',
+  cursor: 'pointer',
+  ':hover': {
+    opacity: '0.8',
+  },
+};
+
 const Entry = () => {
+  const { t } = useTranslation('common');
+
+  const dispatch = useAppDispatch();
+
   const { isLoading } = useAppSelector((state) => state.user);
 
-  const { t } = useTranslation('common');
-  const dispatch = useAppDispatch();
+  const [passwordType, setPasswordType] = useState<'text' | 'password'>(
+    'password'
+  );
 
   const initialLoginValues = {
     email: '',
@@ -44,27 +60,12 @@ const Entry = () => {
       .required('password is required'),
   });
 
-  const [passwordType, setPasswordType] = useState<'text' | 'password'>(
-    'password'
-  );
-
   const togglePassword = () => {
     if (passwordType === 'password') {
       setPasswordType('text');
       return;
     }
     setPasswordType('password');
-  };
-
-  const showPasswordIcon = {
-    color: Colors.primary,
-    position: 'absolute',
-    right: '13px',
-    top: '12px',
-    cursor: 'pointer',
-    ':hover': {
-      opacity: '0.8',
-    },
   };
 
   return (

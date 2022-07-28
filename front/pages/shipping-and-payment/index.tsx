@@ -1,10 +1,6 @@
-// import useTranslation from 'next-translate/useTranslation';
+import React from 'react';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import Image from 'next/image';
-import React from 'react';
-import MainLayout from '../../layouts/MainLayout';
-import Desert from '../../assets/img/shipping/desert.gif';
 import {
   ContentBox,
   MainPhotoBox,
@@ -13,6 +9,9 @@ import {
 } from '../../styles/shipping-and-payment';
 import { ListItem, Typography } from '@mui/material';
 import { Colors } from '../../styles/theme';
+import Image from 'next/image';
+import MainLayout from '../../layouts/MainLayout';
+import Desert from '../../assets/img/shipping/desert.gif';
 
 const ShippingAndPayment = () => {
   const { t } = useTranslation('shipping');
@@ -197,20 +196,24 @@ const ShippingAndPayment = () => {
           >
             {t('our-manager')}
           </Typography>
-          <Typography
-            variant="roboto30300"
-            color={Colors.secondaryWhite}
-            marginBottom="20px"
-          >
-            +310 55-555-55
-          </Typography>
-          <Typography
-            variant="roboto30300"
-            color={Colors.secondaryWhite}
-            marginBottom="20px"
-          >
-            +380 55-555-55
-          </Typography>
+          <a href="tel:+310 55-555-55">
+            <Typography
+              variant="roboto30300"
+              color={Colors.secondaryWhite}
+              marginBottom="20px"
+            >
+              +310 55-555-55
+            </Typography>
+          </a>
+          <a href="tel:+380 55-555-55">
+            <Typography
+              variant="roboto30300"
+              color={Colors.secondaryWhite}
+              marginBottom="20px"
+            >
+              +380 55-555-55
+            </Typography>
+          </a>
         </ContentBox>
       </MainContentBox>
     </MainLayout>

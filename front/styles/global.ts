@@ -1,6 +1,6 @@
+import theme, { Colors } from './theme/index';
 import { Box, Container } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import theme, { Colors } from './theme/index';
 
 export const MainContentBox = styled(Container)(() => ({
   width: theme.breakpoints.down('lg'),

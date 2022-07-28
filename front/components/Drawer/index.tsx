@@ -1,28 +1,30 @@
 import {
   Box,
+  Collapse,
   IconButton,
   List,
-  ListItem,
-  ListItemButton,
   SwipeableDrawer,
   Tooltip,
+  Typography,
 } from '@mui/material';
 import { BUTTONS } from '../../utils/constants';
 import { useTranslation } from 'next-i18next';
-import Communication from '../NavBar/Communication';
 import Link from 'next/link';
 import { useState } from 'react';
+import { CommunicationMenuBox, HoverNavbar } from '../../styles/navBar';
+import { Colors } from '../../styles/theme';
+import Communication from '../NavBar/Communication';
 import styles from '../../styles/icons.module.scss';
-import { CommunicationMenuBox } from '../../styles/navBar';
 
 type Anchor = 'left';
 
 const SwipeableTemporaryDrawer = () => {
+  const { t } = useTranslation('common');
+
   const [isMenuOpen, setIsMenuOpen] = useState({
     left: false,
   });
-
-  const { t } = useTranslation('common');
+  const [show, setShow] = useState('empty');
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -41,7 +43,7 @@ const SwipeableTemporaryDrawer = () => {
 
   const list = (anchor: Anchor) => (
     <Box
-      onClick={toggleDrawer(anchor, false)}
+      // onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
       role="presentation"
       sx={{
@@ -51,23 +53,50 @@ const SwipeableTemporaryDrawer = () => {
       <CommunicationMenuBox>
         <Communication />
       </CommunicationMenuBox>
-      <List>
+      <List sx={{ padding: '15px' }}>
         {BUTTONS.map((data) => (
-          <>
-            {/* <Link key={data.id} href={data.link}>
-              <ListItem disablePadding>
-                <ListItemButton>{t(data.name)}</ListItemButton>
-              </ListItem>
-            </Link> */}
-            //!! Problem
-            {data.link !== undefined ? (
+          <Box
+            key={data.id}
+            onClick={() =>
+              show === 'new' || show === 'sale'
+                ? setShow('empty')
+                : setShow(data.name)
+            }
+            sx={{ margin: '10px 0px' }}
+          >
+            {data.link ? (
               <Link href={data.link}>
-                <ListItemButton>{t(data.name)}</ListItemButton>
+                <Typography onClick={toggleDrawer(anchor, false)} variant="h2">
+                  {t(data.name)}
+                </Typography>
               </Link>
             ) : (
-              <ListItemButton>{t(data.name)}</ListItemButton>
+              <Typography variant="h2">{t(data.name)}</Typography>
             )}
-          </>
+            {data.buttonsHoverArr && (
+              <Collapse in={show === data.name}>
+                <HoverNavbar>
+                  {data.buttonsHoverArr.map((data) => (
+                    <Link key={data.id} href={data.link}>
+                      <Typography
+                        onClick={toggleDrawer(anchor, false)}
+                        variant="roboto20200"
+                        sx={{
+                          width: '140px',
+                          cursor: 'pointer',
+                          ':hover': {
+                            color: Colors.darkGray,
+                          },
+                        }}
+                      >
+                        {data.name}
+                      </Typography>
+                    </Link>
+                  ))}
+                </HoverNavbar>
+              </Collapse>
+            )}
+          </Box>
         ))}
       </List>
     </Box>

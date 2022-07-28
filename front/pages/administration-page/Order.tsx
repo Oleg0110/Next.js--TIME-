@@ -1,22 +1,19 @@
 import React from 'react';
-import { Form, Formik } from 'formik';
 import { object, string } from 'yup';
 import {
-  UserSearchBox,
-  FoundProductBox,
   OrderBox,
   OrderMainBox,
   ConfirmedOrdersBox,
   OrdersProductsBox,
   OrdersScrollBox,
   UnConfirmedOrdersBox,
+  AdminLoadingBox,
 } from '../../styles/administration';
 import { Colors } from '../../styles/theme';
-import { Typography } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { CircularProgress, Typography } from '@mui/material';
+import { useAppSelector } from '../../hooks/redux';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
-import UserSearch from '../../components/UserSearch';
 import { getConfirmedOrders } from '../../store/services/ProductService';
 import ProductOrderAccordion from '../../components/ProductOrderAccordion';
 import AdminSearchForm from '../../components/AdminSearchForm';
@@ -24,8 +21,7 @@ import AdminSearchForm from '../../components/AdminSearchForm';
 const Order: NextPage = () => {
   const { t } = useTranslation('admin');
 
-  const dispatch = useAppDispatch();
-  const { ordersUnconfirmed, ordersConfirmed } = useAppSelector(
+  const { ordersUnconfirmed, ordersConfirmed, isLoading } = useAppSelector(
     (state) => state.product
   );
 
@@ -85,55 +81,34 @@ const Order: NextPage = () => {
           >
             {t('confirmed')}
           </Typography>
-          {/* <OrderFormBox>
-            <Formik
-              initialValues={{ searchValue: '' }}
-              validationSchema={validationNumberSchema}
-              onSubmit={async (values) => {
-                await dispatch(getConfirmedOrders(values.searchValue));
-              }}
-            >
-              {({ submitForm }) => {
-                return (
-                  <Form onChange={() => submitForm()}>
-                    <SearchConfirmedOrderBox>
-                      <Typography
-                        variant="roboto20400"
-                        sx={{
-                          width: '40%',
-                          color: Colors.primary,
-                          marginRight: '10px',
-                        }}
-                      >
-                        {t('order-number')}
-                      </Typography>
-                      <SearchError name="searchValue" component="span" />
-                      <SearchInput
-                        name="searchValue"
-                        id="searchValue"
-                        placeholder={t('number')}
-                      />
-                    </SearchConfirmedOrderBox>
-                  </Form>
-                );
-              }}
-            </Formik>
-          </OrderFormBox> */}
           <AdminSearchForm
             placeholder={t('placeholderNumber')}
             serviceFunc={getConfirmedOrders}
             validationSchema={validationNumberSchema}
-            formName={t('order-number')}
+            formName="order-number"
           />
           <OrdersProductsBox>
-            <OrdersScrollBox>
-              {ordersConfirmed &&
-                ordersConfirmed.map((data) => (
-                  <div key={data.id}>
-                    <ProductOrderAccordion orderData={data} />
-                  </div>
-                ))}
-            </OrdersScrollBox>
+            {isLoading ? (
+              <AdminLoadingBox>
+                <CircularProgress
+                  sx={{
+                    color: Colors.primary,
+                    margin: '20px 0px',
+                  }}
+                  disableShrink
+                  size="35px"
+                />
+              </AdminLoadingBox>
+            ) : (
+              <OrdersScrollBox>
+                {ordersConfirmed &&
+                  ordersConfirmed.map((data) => (
+                    <div key={data.id}>
+                      <ProductOrderAccordion orderData={data} />
+                    </div>
+                  ))}
+              </OrdersScrollBox>
+            )}
           </OrdersProductsBox>
         </ConfirmedOrdersBox>
       </OrderMainBox>

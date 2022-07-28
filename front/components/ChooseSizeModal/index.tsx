@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Modal, Typography } from '@mui/material';
 import { Colors } from '../../styles/theme';
 import { NextPage } from 'next';
 import { ChooseSizeBox, ChooseSizeModalBox } from '../../styles/modal';
-import { shoppingBagDataName, sizesArray } from '../../utils/constants';
+import { sizesArray } from '../../utils/constants';
 import { SizeType } from '../../utils/types/form';
 import { includesSizeFunc, setInShoppingBag } from '../../utils/function';
-import { Field, Form, Formik } from 'formik';
-import { setProductInShoppingBag } from '../../store/reducers/ProductSlice';
+import { Form, Formik } from 'formik';
 import { useAppDispatch } from '../../hooks/redux';
+import { useTranslation } from 'next-i18next';
 import CheckBoxRadioInput from '../CheckBoxRadioInput';
-import { IProductInBag } from '../../utils/interface/productInterface';
-import { toast } from 'react-toastify';
 
 interface IChooseSizeModal {
   isModalOpened: boolean;
@@ -36,11 +34,10 @@ const ChooseSizeModal: NextPage<IChooseSizeModal> = ({
   salePrice,
   price,
 }) => {
-  const sizesArr: SizeType[] = includesSizeFunc(sizesArray, productSize);
-
+  const { t } = useTranslation('common');
   const dispatch = useAppDispatch();
 
-  const ISSERVER = typeof window === 'undefined';
+  const sizesArr: SizeType[] = includesSizeFunc(sizesArray, productSize);
 
   return (
     <>
@@ -58,7 +55,7 @@ const ChooseSizeModal: NextPage<IChooseSizeModal> = ({
               color: Colors.primary,
             }}
           >
-            Select an available size
+            {t('select-size')}
           </Typography>
           <Formik
             initialValues={{ size: '' }}

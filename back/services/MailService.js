@@ -209,6 +209,30 @@ class MailService {
       `,
     })
   }
+
+  async sendAssignUser(user) {
+    const { name, email, surname } = user
+
+    await this.transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to: email,
+      subject: `Dear ${name} ${surname} your account was deleted !`,
+      html: `
+      <div style="background:#685248; padding:10px">
+        <div style="background:#685248; padding:10px; border:2px solid #fff;">
+          <h1 style="color:#fff;">We apologize if something was wrong.</h1>
+          <h4 style="color:#fff;">Attention:</h4>
+          <p style="text-align:start">
+            ${name} If you have any questions, please email or call us.
+          </p>
+          <h4 style="color:#fff;">Phone numbers: <a style="text-decoration: none" href='tel:+310 55-555-55'>+310 55-555-55 </a>, <a style="text-decoration: none" href='tel:+380 55-555-55'> +380 55-555-55</a> </h2>
+          <h4 style="color:#fff;">Email: <span style="color:#000; text-decoration: none">${process.env.SMTP_USER}</span> </h2>
+          <h3 style="color:#fff;">Thank you ${name} ${surname}.</h3>
+        </div>
+      </div>
+      `,
+    })
+  }
 }
 
 module.exports = new MailService()

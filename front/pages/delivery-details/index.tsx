@@ -4,8 +4,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useAppSelector } from '../../hooks/redux';
 import { Colors } from '../../styles/theme';
 import { totalPriceFunc } from '../../utils/function';
-import MainLayout from '../../layouts/MainLayout';
-import CustomButton from '../../components/CustomButton';
 import {
   DeliveryContainer,
   DeliveryContent,
@@ -14,15 +12,17 @@ import {
   ProductOnDeliveryContainer,
   ProductOnDeliveryScroll,
 } from '../../styles/deliveryDetails';
-import DeliveryForm from './DeliveryForm';
-import ProductOnDelivery from '../../components/ProductOnDelivery';
 import { useTranslation } from 'next-i18next';
+import DeliveryForm from './DeliveryForm';
+import MainLayout from '../../layouts/MainLayout';
+import ProductOnDelivery from '../../components/ProductOnDelivery';
 
 const Bag = () => {
-  const { productInBag } = useAppSelector((state) => state.product);
-  const totalPrice = totalPriceFunc(productInBag);
-
   const { t } = useTranslation('delivery');
+
+  const { productInBag } = useAppSelector((state) => state.product);
+
+  const totalPrice = totalPriceFunc(productInBag);
 
   return (
     <MainLayout>

@@ -6,21 +6,21 @@ import {
 } from '../../styles/navBar';
 import { useMediaQuery } from '@mui/material';
 import { ROUTES } from '../../utils/constants';
+import { useAppSelector } from '../../hooks/redux';
 import ShopFavorBag from '../ShopFavorBag';
 import TooltipIcon from '../TooltipIcon/TooltipIcon';
 import AccountMenu from '../AccountMenu';
 import theme from '../../styles/theme';
 import styles from '../../styles/icons.module.scss';
 import Link from 'next/link';
-import { useAppSelector } from '../../hooks/redux';
 
 const IconButtons = () => {
+  const { ordersUnconfirmed } = useAppSelector((state) => state.product);
+  const { user } = useAppSelector((state) => state.user);
+
   const mediaMD = useMediaQuery(theme.breakpoints.down('md'));
 
   const Component = mediaMD ? IconsContainerMobile : IconsContainerDesktop;
-
-  const { ordersUnconfirmed } = useAppSelector((state) => state.product);
-  const { user } = useAppSelector((state) => state.user);
 
   const isAllow =
     (user && user.userRole === 'admin') || (user && user.userRole === 'owner');

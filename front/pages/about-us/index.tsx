@@ -1,10 +1,7 @@
-// import useTranslation from 'next-translate/useTranslation';
+import React from 'react';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import Image from 'next/image';
-import React from 'react';
-import MainLayout from '../../layouts/MainLayout';
 import {
   AboutUsContainer,
   AboutUsContentBox,
@@ -13,9 +10,11 @@ import {
   MakePhotoBox,
   SinceBox,
 } from '../../styles/aboutUs';
+import { Colors } from '../../styles/theme';
+import Image from 'next/image';
+import MainLayout from '../../layouts/MainLayout';
 import CleanShoe from '../../assets/img/about/cleanShoe.png';
 import MakeShoe from '../../assets/img/about/makeShoe.png';
-import { Colors } from '../../styles/theme';
 
 const AboutUs = () => {
   const { t } = useTranslation('about');

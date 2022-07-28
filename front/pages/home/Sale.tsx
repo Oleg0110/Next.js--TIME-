@@ -1,10 +1,10 @@
 import React from 'react';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { IProduct } from '../../utils/interface/productInterface';
-import { Swiper, SwiperSlide, useSwiper, SwiperProps } from 'swiper/react';
-import { Autoplay, Navigation, SwiperOptions } from 'swiper';
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { Autoplay, Navigation } from 'swiper';
 import {
   ButtonArrowNext,
   ButtonArrowPrev,
@@ -13,10 +13,8 @@ import {
 } from '../../styles/home';
 import { Typography } from '@mui/material';
 import { Colors } from '../../styles/theme';
-import { BASIC_URL } from '../../utils/httpLinks';
 import ProductCarousel from '../../components/ProductCarousel';
 import styles from '../../styles/icons.module.scss';
-import stylesHome from '../../styles/Home.module.scss';
 
 interface ISaleProps {
   saleCarouselProduct: IProduct[];

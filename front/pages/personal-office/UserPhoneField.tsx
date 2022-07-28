@@ -1,4 +1,5 @@
 import React from 'react';
+import theme, { Colors } from '../../styles/theme';
 import { CircularProgress, Typography } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { NextPage } from 'next';
@@ -19,13 +20,12 @@ import {
   TypographyUserOffice,
   UserTypographyBox,
 } from '../../styles/personalOffice';
-import theme, { Colors } from '../../styles/theme';
-import { phoneRegExp, stringRegExp } from '../../utils/constants';
+import { phoneRegExp } from '../../utils/constants';
+import { toast } from 'react-toastify';
 import { IChangeProps } from '../../utils/interface/userInterface';
 import TooltipIcon from '../../components/TooltipIcon/TooltipIcon';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
-import { toast } from 'react-toastify';
 
 interface IUserPhoneField {
   isChange: IChangeProps;
@@ -41,7 +41,9 @@ const UserPhoneField: NextPage<IUserPhoneField> = ({
   setIsChange,
 }) => {
   const { t } = useTranslation('office');
+
   const dispatch = useAppDispatch();
+
   const { isLoading } = useAppSelector((state) => state.user);
 
   return (

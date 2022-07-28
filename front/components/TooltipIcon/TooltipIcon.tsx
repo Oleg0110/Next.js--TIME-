@@ -24,6 +24,7 @@ const TooltipIcon: NextPage<TooltipIconProps> = ({
   style,
 }) => {
   const { t } = useTranslation('common');
+
   return (
     <Tooltip title={t(title)} placement={placement} sx={style}>
       <IconButton onClick={onClick}>{children}</IconButton>

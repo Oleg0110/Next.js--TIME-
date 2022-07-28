@@ -1,14 +1,14 @@
+import React, { useState } from 'react';
 import { Rating, Typography } from '@mui/material';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
 import { number, object, string } from 'yup';
 import { useAppDispatch } from '../../hooks/redux';
 import { addReview } from '../../store/services/ProductService';
 import { RatingBox } from '../../styles/accordion';
-import styles from '../../styles/AdminPage.module.scss';
 import { Colors } from '../../styles/theme';
+import styles from '../../styles/AdminPage.module.scss';
 import CustomButton from '../CustomButton';
 
 interface IReviewForm {
@@ -17,10 +17,12 @@ interface IReviewForm {
 
 const ReviewForm: NextPage<IReviewForm> = ({ setIsOpen }) => {
   const [value, setValue] = useState<number | null>(2);
-  const router = useRouter();
-  const productId = `${router.query.id}`;
 
   const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  const productId = `${router.query.id}`;
+  const userId = '6290e06eafaf40d5247f3818';
 
   const validationSchema = object().shape({
     comment: string()
@@ -29,8 +31,6 @@ const ReviewForm: NextPage<IReviewForm> = ({ setIsOpen }) => {
       .required('Required Comment'),
     rating: number().min(1, 'Min 1 star').max(5, 'Max 5 Stars').required(),
   });
-
-  const userId = '6290e06eafaf40d5247f3818';
 
   return (
     <Formik

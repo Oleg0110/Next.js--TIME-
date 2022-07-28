@@ -1,7 +1,8 @@
+import React from 'react';
+import theme, { Colors } from '../../styles/theme';
 import { Typography, useMediaQuery } from '@mui/material';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
-import React from 'react';
 import { useAppDispatch } from '../../hooks/redux';
 import {
   InputProductAmount,
@@ -13,17 +14,16 @@ import {
   ProductOnBagPrice,
   ProductOnBagRemove,
 } from '../../styles/productOnBagPage';
-import theme, { Colors } from '../../styles/theme';
 import { removeFromBag } from '../../utils/function';
 import { BASIC_URL } from '../../utils/httpLinks';
 import { IProductInBag } from '../../utils/interface/productInterface';
-import styles from '../../styles/icons.module.scss';
-import TooltipIcon from '../TooltipIcon/TooltipIcon';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { number, object } from 'yup';
 import { shoppingBagDataName } from '../../utils/constants';
 import { setProductInShoppingBag } from '../../store/reducers/ProductSlice';
 import { useRouter } from 'next/router';
+import TooltipIcon from '../TooltipIcon/TooltipIcon';
+import styles from '../../styles/icons.module.scss';
 
 const ProductOnBagPage: NextPage<IProductInBag> = ({
   price,
@@ -35,8 +35,10 @@ const ProductOnBagPage: NextPage<IProductInBag> = ({
   productAmount,
   productFor,
 }) => {
-  const MediaSM = useMediaQuery(theme.breakpoints.down('sm'));
   const { t } = useTranslation('delivery');
+
+  const MediaSM = useMediaQuery(theme.breakpoints.down('sm'));
+
   const dispatch = useAppDispatch();
   const router = useRouter();
 

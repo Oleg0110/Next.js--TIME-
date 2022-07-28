@@ -9,23 +9,21 @@ import {
   ContinueBox,
   FormChangePasswordBox,
   InputChangePasswordModal,
-  ModalErrorMessage,
   ModalInputBox,
 } from '../../styles/modal';
 import { Form, Formik } from 'formik';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { toast } from 'react-toastify';
 import { object, string } from 'yup';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {
   changeUserData,
   sendConfirmCode,
 } from '../../store/services/UserService';
-import CustomButton from '../CustomButton';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
-import { is } from 'immer/dist/internal';
 import { useTranslation } from 'next-i18next';
+import CustomButton from '../CustomButton';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 interface IChangePasswordModal {
   isModalOpened: boolean;
@@ -33,15 +31,27 @@ interface IChangePasswordModal {
   userId: string;
 }
 
+const showPasswordIcon = {
+  color: Colors.primary,
+  position: 'absolute',
+  right: '25px',
+  top: '15px',
+  cursor: 'pointer',
+  ':hover': {
+    opacity: '0.8',
+  },
+};
+
 const ChangePasswordModal: NextPage<IChangePasswordModal> = ({
   isModalOpened,
   handleCloseChangePassword,
   userId,
 }) => {
-  const { isLoading, isCodeLoading } = useAppSelector((state) => state.user);
+  const { t } = useTranslation('office');
 
   const dispatch = useAppDispatch();
-  const { t } = useTranslation('office');
+
+  const { isLoading, isCodeLoading } = useAppSelector((state) => state.user);
 
   const [isPasswordType, setIsPasswordType] = useState<'text' | 'password'>(
     'password'
@@ -53,17 +63,6 @@ const ChangePasswordModal: NextPage<IChangePasswordModal> = ({
   const [isCode, setIsCode] = useState<string>('');
   const [isPlay, setIsPlay] = useState(false);
   const [isCodesSame, setIsCodesSame] = useState(false);
-
-  const showPasswordIcon = {
-    color: Colors.primary,
-    position: 'absolute',
-    right: '25px',
-    top: '15px',
-    cursor: 'pointer',
-    ':hover': {
-      opacity: '0.8',
-    },
-  };
 
   const togglePassword = () => {
     if (isPasswordType === 'password') {

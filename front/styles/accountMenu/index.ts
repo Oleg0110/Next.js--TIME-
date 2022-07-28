@@ -1,6 +1,6 @@
+import theme, { Colors } from '../theme';
 import { styled } from '@mui/material/styles';
 import { Box, Button } from '@mui/material';
-import theme, { Colors } from '../theme';
 import { ErrorMessage, Field } from 'formik';
 
 export const MainAccountModalBox = styled(Box)(() => ({

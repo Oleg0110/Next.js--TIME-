@@ -7,6 +7,9 @@ const uuid = require('uuid')
 const path = require('path')
 const OrderDto = require('../dtos/order-dto')
 const MailService = require('./MailService')
+const User = require('../models/User')
+const UserDto = require('../dtos/user-dto')
+const fs = require('fs')
 
 class AdminService {
   async getProducts(searchValue) {
@@ -16,6 +19,23 @@ class AdminService {
   }
 
   async addPhoto(file, productId) {
+    const findFiles = await Photo.find({ productId })
+
+    try {
+      for (let i = 0; i < findFiles.length; i++) {
+        if (fs.existsSync(`static/${findFiles[i].photoName}`)) {
+          fs.unlink(`static/${findFiles[i].photoName}`, (err) => {
+            if (err) return console.log(err)
+
+            console.log('File deleted!')
+          })
+        }
+      }
+    } catch (e) {
+      console.log(e)
+    }
+    await Photo.deleteMany({ productId })
+
     const fileName = uuid.v4() + '.jpg'
 
     const photo = new Photo({
@@ -51,7 +71,7 @@ class AdminService {
 
     for (let i = 0; i < 9; i++) {
       let pos = Math.floor(Math.random() * givenSet.length)
-      code += givenSet[pos]
+      productNumber += givenSet[pos]
     }
 
     const fileName = uuid.v4() + '.jpg'
@@ -94,8 +114,25 @@ class AdminService {
     productDescription,
     productStyleName,
     productStyleMaterial,
-    searchValue
+    searchValue,
+    file
   ) {
+    const findProduct = await Product.findById({ _id: productId })
+
+    try {
+      if (fs.existsSync(`static/${findProduct.productMainPictures}`)) {
+        fs.unlink(`static/${findProduct.productMainPictures}`, (err) => {
+          if (err) return console.log(err)
+
+          console.log('File deleted!')
+        })
+      }
+    } catch (e) {
+      console.log(e)
+    }
+
+    const fileName = uuid.v4() + '.jpg'
+
     const changedProduct = await Product.findOneAndUpdate(
       { _id: productId },
       {
@@ -112,11 +149,22 @@ class AdminService {
           productDescription,
           productStyleName,
           productStyleMaterial,
+          productMainPictures: fileName,
         },
       },
       { new: true }
     )
-    return await AdminFunc.regexFunc(searchValue, 'product')
+
+    if (changedProduct.productMainPictures !== fileName) {
+      throw next(ApiErrors.BadRequest('Invalid data'))
+    }
+
+    file.mv(path.resolve(__dirname, '..', 'static', fileName))
+
+    const products = await AdminFunc.regexFunc(searchValue, 'product')
+    const dtoValue = new ProductDto(changedProduct)
+
+    return { products, dtoValue }
   }
 
   async deleteProduct(productId, searchValue) {
@@ -127,6 +175,52 @@ class AdminService {
 
   async getUsers(searchValue) {
     return await AdminFunc.regexFunc(searchValue, 'user')
+  }
+
+  async getUserInTeam() {
+    const users = await User.find({ role: ['admin', 'owner'] })
+
+    let dtoValue = []
+
+    users.map((data) => dtoValue.push({ ...new UserDto(data) }))
+
+    return dtoValue
+  }
+
+  async userAssignment(userId) {
+    const user = await User.findOneAndUpdate({ _id: userId }, { role: 'admin' }, { new: true })
+
+    if (user.role === 'user') {
+      return next(ApiErrors.BadRequest('invalid data'))
+    }
+
+    // await MailService.sendAssignUser(user)
+
+    const users = await User.find({ role: ['admin', 'owner'] })
+
+    let dtoValue = []
+
+    users.map((data) => dtoValue.push({ ...new UserDto(data) }))
+
+    return dtoValue
+  }
+
+  async removeAssignmentAdmin(userId) {
+    const user = await User.findOneAndUpdate({ _id: userId }, { role: 'user' }, { new: true })
+
+    if (user.role === 'admin') {
+      return next(ApiErrors.BadRequest('invalid data'))
+    }
+
+    // await MailService.sendAssignUser(user)
+
+    const users = await User.find({ role: ['admin', 'owner'] })
+
+    let dtoValue = []
+
+    users.map((data) => dtoValue.push({ ...new UserDto(data) }))
+
+    return dtoValue
   }
 
   async changeOrderStatus(orderId, status, next) {

@@ -24,6 +24,7 @@ const ProductOnDelivery: NextPage<IProductInBag> = ({
   productId,
 }) => {
   const { t } = useTranslation('delivery');
+
   const router = useRouter();
 
   return (

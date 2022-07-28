@@ -11,19 +11,19 @@ import {
   BagIconPosition,
 } from '../../styles/carouselProduct';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-import TooltipIcon from '../TooltipIcon/TooltipIcon';
-import styles from '../../styles/icons.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { BASIC_URL } from '../../utils/httpLinks';
 import { removeFromBag } from '../../utils/function';
-import ChooseSizeModal from '../ChooseSizeModal';
 import { IProduct } from '../../utils/interface/productInterface';
 import {
   addToFavorite,
   removeFromFavorite,
 } from '../../store/services/ProductService';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
+import TooltipIcon from '../TooltipIcon/TooltipIcon';
+import styles from '../../styles/icons.module.scss';
+import ChooseSizeModal from '../ChooseSizeModal';
 
 interface IProductCarouselProps {
   productSize: number[];
@@ -44,23 +44,24 @@ const ProductCarousel: NextPage<IProductCarouselProps> = ({
   productMainPictures,
   productFor,
 }) => {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
-  const category = router.query.category;
-
   const { productInBag, productsFavorite } = useAppSelector(
     (state) => state.product
   );
   const { isAuth, user } = useAppSelector((state) => state.user);
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const category = router.query.category;
 
   const isFavorite =
     productsFavorite &&
     productsFavorite.find((f) => f.product?.id === productId);
 
   const isAdded = !!productInBag.find((f) => f.productId === productId);
-
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

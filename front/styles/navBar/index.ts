@@ -1,6 +1,6 @@
+import theme, { Colors } from '../theme';
 import { Badge, Box, Collapse } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import theme, { Colors } from '../theme';
 
 //Boxes
 

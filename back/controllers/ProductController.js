@@ -31,11 +31,13 @@ class ProductController {
 
   async getProducts(req, res) {
     try {
-      const { category, page } = req.params
+      const { category, filters, page, limit, sorting } = req.query
 
-      if (!category) res.status(400).json({ error: 'invalid data' })
+      if (!category && !filters && !limit && !sorting) res.status(400).json({ error: 'invalid data' })
 
-      const products = await ProductService.getProducts(category, page)
+      const parseFilters = JSON.parse(filters)
+
+      const products = await ProductService.getProducts(category, page, parseFilters, limit, sorting)
 
       res.status(200).json(products)
     } catch (e) {
@@ -43,17 +45,17 @@ class ProductController {
     }
   }
 
-  async filterProducts(req, res) {
+  async paginationProducts(req, res) {
     try {
-      const { category, filter, page } = req.query
+      const { category, filters, page, start, limit, sorting } = req.query
 
-      if (!category && !filter) res.status(400).json({ error: 'invalid data' })
+      if (!category && !filters && !start && !limit) res.status(400).json({ error: 'invalid data' })
 
-      const filters = JSON.parse(filter)
+      const parseFilters = JSON.parse(filters)
 
-      const filteredProducts = await ProductService.filterProducts(category, filters, page)
+      const products = await ProductService.paginationProducts(category, page, parseFilters, start, limit, sorting)
 
-      res.status(200).json(filteredProducts)
+      res.status(200).json(products)
     } catch (e) {
       res.status(500).json(e.message)
     }

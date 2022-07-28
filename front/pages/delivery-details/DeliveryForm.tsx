@@ -1,11 +1,10 @@
+import React from 'react';
 import { Typography } from '@mui/material';
-import { ErrorMessage, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import React from 'react';
 import { toast } from 'react-toastify';
-import { object, string } from 'yup';
 import CustomButton from '../../components/CustomButton';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { createOrder } from '../../store/services/UserService';
@@ -24,6 +23,7 @@ import {
 } from '../../utils/constants';
 import { cleanBag } from '../../utils/function';
 import { IUserInitialOrder } from '../../utils/interface/userInterface';
+import { object, string } from 'yup';
 
 const arrDataForm = [
   { id: '1', name: 'userName', placeholder: 'name' },
@@ -40,10 +40,11 @@ interface IDeliveryForm {
 }
 
 const DeliveryForm: NextPage<IDeliveryForm> = ({ totalPrice }) => {
+  const { t } = useTranslation('delivery');
+
   const { productInBag } = useAppSelector((state) => state.product);
   const { user } = useAppSelector((state) => state.user);
 
-  const { t } = useTranslation('delivery');
   const dispatch = useAppDispatch();
   const router = useRouter();
 

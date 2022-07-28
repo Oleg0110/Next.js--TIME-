@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Rating, Typography } from '@mui/material';
+import { Rating, Typography } from '@mui/material';
 import {
   CommentDate,
   CommentField,
@@ -18,6 +18,11 @@ interface IUserReview {
   date: number;
 }
 
+const commentStyle = {
+  color: Colors.black,
+  textAlign: 'start',
+};
+
 const UserReview: NextPage<IUserReview> = ({
   userName,
   rating,
@@ -28,11 +33,6 @@ const UserReview: NextPage<IUserReview> = ({
 
   const lettersCount = comment.split('');
   const lessText = comment.split('').slice(0, 150);
-
-  const commentStyle = {
-    color: Colors.black,
-    textAlign: 'start',
-  };
 
   return (
     <UserReviewManiContainer>

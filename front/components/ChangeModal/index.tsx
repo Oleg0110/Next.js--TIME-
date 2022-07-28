@@ -1,15 +1,12 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Modal, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
-import CustomButton from '../CustomButton';
 import { Colors } from '../../styles/theme';
 import { NextPage } from 'next';
 import { IProduct } from '../../utils/interface/productInterface';
 import { array, boolean, number, object, string } from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import CheckBoxRadioInput from '../CheckBoxRadioInput';
-import styles from '../../styles/AdminPage.module.scss';
+import { useAppDispatch } from '../../hooks/redux';
 import {
   colorArray,
   materialArray,
@@ -25,6 +22,18 @@ import {
 } from '../../styles/modal';
 import { changeProduct } from '../../store/services/ProductService';
 import { toast } from 'react-toastify';
+import {
+  AddMainPhotoBox,
+  AddPhotoBox,
+  ButtonAddPhotos,
+  MainPhotoBox,
+  PhotosBox,
+  PhotoBox,
+} from '../../styles/administration';
+import TooltipIcon from '../TooltipIcon/TooltipIcon';
+import CheckBoxRadioInput from '../CheckBoxRadioInput';
+import CustomButton from '../CustomButton';
+import styles from '../../styles/AdminPage.module.scss';
 
 interface IChangeModalProps {
   isModalOpened: boolean;
@@ -32,6 +41,8 @@ interface IChangeModalProps {
   product: IProduct;
   searchValue: string;
 }
+
+const styleSpan = { width: '45%', color: Colors.primary };
 
 const ChangeModal: NextPage<IChangeModalProps> = ({
   isModalOpened,
@@ -41,10 +52,9 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
 }) => {
   const { t } = useTranslation(['admin', 'toast']);
 
-  const initialValues: Omit<
-    IProduct,
-    'id' | 'date' | 'productMainPictures' | 'productNumber'
-  > = {
+  const dispatch = useAppDispatch();
+
+  const initialValues: Omit<IProduct, 'id' | 'date' | 'productNumber'> = {
     productName: product.productName,
     productFor: product.productFor,
     productPrice: product.productPrice,
@@ -53,7 +63,7 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
     productNew: product.productNew,
     productSize: [],
     productColor: product.productColor,
-    // productMainPictures: [{}],
+    productMainPictures: null,
     productDescription: product.productDescription,
     productStyleName: product.productStyleName,
     productStyleMaterial: product.productStyleMaterial,
@@ -77,17 +87,55 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
     productNew: boolean(),
     productSize: array().of(number()).required().min(1, 'Choose some sizes'),
     productColor: string().required('Choose by colors propose'),
+    productMainPictures: array().min(1, 'Require').required('Require'),
     productDescription: string()
       .min(20, 'Too Short!')
-      .max(150, 'Too Long!')
+      .max(400, 'Too Long!')
       .required('Required'),
     productStyleName: string().required('Choose by style propose'),
     productStyleMaterial: string().required('Choose by material propose'),
   });
 
-  const dispatch = useAppDispatch();
+  const [isPhotos, setIsPhotos] = useState({ images: [] });
+  const [isMainPhoto, setIsMainPhoto] = useState({ images: [] });
 
-  const styleSpan = { width: '45%', color: Colors.primary };
+  const addPhotos = (event, setFieldValue, isBo) => {
+    event.preventDefault();
+
+    const allPhotos = [
+      ...isPhotos.images,
+      ...isMainPhoto.images,
+      ...event.target.files,
+    ];
+
+    !isBo &&
+      setIsPhotos({ images: [...isPhotos.images, ...event.target.files] });
+    isBo && setIsMainPhoto({ images: [...event.target.files] });
+    setFieldValue('productMainPictures', allPhotos);
+  };
+
+  const deletePhoto = (index, setFieldValue) => {
+    const imagesArr = isPhotos.images;
+    imagesArr.splice(index, 1);
+
+    setIsPhotos({ images: imagesArr });
+
+    setFieldValue('productMainPictures', imagesArr);
+  };
+
+  const deleteMainPhoto = (index, setFieldValue) => {
+    const imagesArr = isMainPhoto.images;
+    imagesArr.splice(index, 1);
+
+    setIsMainPhoto({ images: imagesArr });
+
+    const allPhotos = [...isPhotos.images, ...isMainPhoto.images];
+
+    setFieldValue('productMainPictures', allPhotos);
+  };
+
+  const mainPhotoRef = useRef(null);
+  const photosRef = useRef(null);
 
   return (
     <>
@@ -122,6 +170,7 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
                   productId: product.id,
                   product: values,
                   searchValue,
+                  photoFile: values.productMainPictures,
                 })
               );
 
@@ -129,7 +178,7 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
                 toast.error(t('product-not-change', { ns: 'toast' }));
               } else {
                 toast.success(t('product-was-change', { ns: 'toast' }));
-                handleClose();
+                // handleClose();
               }
             }}
           >
@@ -152,6 +201,91 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
                     placeholder={t('placeholderName')}
                     className={styles.inputText}
                   />
+                  <input
+                    ref={mainPhotoRef}
+                    type="file"
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    onChange={(event) => {
+                      addPhotos(event, setFieldValue, true);
+                    }}
+                  />
+                  <InfoChangeBox>
+                    <Typography variant="roboto24500" sx={styleSpan}>
+                      {t('main-photo')}:
+                    </Typography>
+                    <ErrorMessage
+                      name="productMainPictures"
+                      component="span"
+                      className={styles.errorStyle}
+                    />
+                  </InfoChangeBox>
+
+                  {isMainPhoto.images[0] === undefined ? (
+                    <AddMainPhotoBox
+                      onClick={(e) => {
+                        e.preventDefault();
+                        mainPhotoRef.current.click();
+                      }}
+                    >
+                      {t('click-to-add')}
+                    </AddMainPhotoBox>
+                  ) : (
+                    <MainPhotoBox>
+                      {isMainPhoto.images.map((src, index) => {
+                        const url = URL.createObjectURL(src);
+                        return (
+                          <TooltipIcon
+                            key={index}
+                            title="delete-photo"
+                            onClick={() =>
+                              deleteMainPhoto(index, setFieldValue)
+                            }
+                          >
+                            <img src={url} width="125px" height="125px" />
+                          </TooltipIcon>
+                        );
+                      })}
+                    </MainPhotoBox>
+                  )}
+                  <input
+                    multiple
+                    style={{ display: 'none' }}
+                    ref={photosRef}
+                    accept="image/*"
+                    type="file"
+                    onChange={(event) => {
+                      addPhotos(event, setFieldValue, false);
+                    }}
+                  />
+                  <AddPhotoBox>
+                    <Typography variant="roboto24500" sx={styleSpan}>
+                      {t('photos')}:
+                    </Typography>
+                    <ButtonAddPhotos
+                      onClick={(e) => {
+                        e.preventDefault();
+                        photosRef.current.click();
+                      }}
+                    >
+                      {t('add-photos')}
+                    </ButtonAddPhotos>
+                  </AddPhotoBox>
+                  <PhotosBox>
+                    {isPhotos.images.map((src, index) => {
+                      const url = URL.createObjectURL(src);
+                      return (
+                        <PhotoBox key={index}>
+                          <TooltipIcon
+                            title="delete-photo"
+                            onClick={() => deletePhoto(index, setFieldValue)}
+                          >
+                            <img src={url} width="100px" height="100px" />
+                          </TooltipIcon>
+                        </PhotoBox>
+                      );
+                    })}
+                  </PhotosBox>
                   <ChangeProductStateBox>
                     <Typography variant="roboto24500" sx={styleSpan}>
                       {t('sex')}

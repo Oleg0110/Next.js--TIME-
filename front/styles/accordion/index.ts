@@ -1,6 +1,6 @@
 import { AccordionSummary, Box, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import theme, { Colors } from '../theme';
+import { Colors } from '../theme';
 
 export const SummaryAccordion = styled(AccordionSummary)(() => ({
   ':hover': {

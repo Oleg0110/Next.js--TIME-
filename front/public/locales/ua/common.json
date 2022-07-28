@@ -15,6 +15,7 @@
   "add-to-favorites": "Додати в Улюблені",
   "remove-from-favorites": "Видалити з Улюблених",
   "click-to-copy": "Клацніть, щоб скопіювати код",
+  "click-to-change": "Клацніть, щоб змінити статус",
   "delete-photo": "Клацніть, щоб видалити фотографію",
   "add-to-shopping-bag": "Додати до Корзини",
   "remove-from-shopping-bag": "Видалити з Корзини",
@@ -38,5 +39,15 @@
   "total": "Загальний",
   "order": "Заказати",
   "continue": "Продовжити покупки",
-  "change": "Змінити"
+  "change": "Змінити",
+  "select-size": "Виберіть доступний розмір",
+  "seen-all": "Так! Ви все це бачили",
+  "sorting": "Сортування",
+  "filters": "Фільтри",
+  "shoe": "взуття",
+  "cheap-to-expensive": "від дешевого до дорогого",
+  "expensive-to-cheap": "від дорогого до дешевого",
+  "novelty": "новинки",
+  "maximum-discount": "Максимальна знижка",
+  "without-sort": "без сортування"
 }

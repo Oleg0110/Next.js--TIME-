@@ -1,9 +1,8 @@
+import React from 'react';
 import { Typography } from '@mui/material';
-import { AnyARecord } from 'dns';
 import { Form, Formik } from 'formik';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
-import React from 'react';
 import { useAppDispatch } from '../../hooks/redux';
 import {
   AdminFormBox,
@@ -28,11 +27,14 @@ const AdminSearchForm: NextPage<IAdminSearchForm> = ({
   formName,
   setProductSearchValue,
 }) => {
-  const dispatch = useAppDispatch();
   const { t } = useTranslation('admin');
 
+  const dispatch = useAppDispatch();
+
   return (
-    <AdminFormBox>
+    <AdminFormBox
+      sx={formName === 'user' && { margin: '0px 10px 0px', padding: '0px' }}
+    >
       <Formik
         initialValues={{ searchValue: '' }}
         validationSchema={validationSchema}
@@ -45,17 +47,23 @@ const AdminSearchForm: NextPage<IAdminSearchForm> = ({
           return (
             <Form onChange={() => submitForm()}>
               <SearchAdminFormBox>
-                <Typography
-                  variant="roboto24200"
-                  sx={{
-                    width: '45%',
-                    color: Colors.primary,
-                    marginRight: '10px',
-                  }}
-                >
-                  {formName} :
-                </Typography>
-                <SearchAdminFormError name="searchValue" component="span" />
+                {formName !== 'user' && (
+                  <Typography
+                    variant="roboto24200"
+                    sx={{
+                      width: '55%',
+                      color: Colors.primary,
+                      marginRight: '10px',
+                    }}
+                  >
+                    {t(formName)}:
+                  </Typography>
+                )}
+                <SearchAdminFormError
+                  name="searchValue"
+                  component="span"
+                  sx={formName === 'user' && { left: '5px' }}
+                />
                 <SearchAdminFormInput
                   name="searchValue"
                   id="searchValue"
