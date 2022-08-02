@@ -83,6 +83,7 @@ export interface ProductState {
   countProducts: number;
   isLoading: boolean;
   isPaginationLoading: boolean;
+  isFavoriteLoading: boolean;
   error: string;
 }
 

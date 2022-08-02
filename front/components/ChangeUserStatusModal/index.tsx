@@ -32,7 +32,7 @@ const ChangeUserStatusModal: NextPage<IChangeUserStatusModal> = ({
 
   const dispatch = useAppDispatch();
 
-  const { isLoading } = useAppSelector((state) => state.user);
+  const { isLoadingAssign } = useAppSelector((state) => state.user);
 
   return (
     <>
@@ -57,7 +57,7 @@ const ChangeUserStatusModal: NextPage<IChangeUserStatusModal> = ({
               `Do you want remove ${userName} ${userSurname} like a Administration`}
           </Typography>
           <OptionsAppointBox>
-            {isLoading ? (
+            {isLoadingAssign ? (
               <CircularProgress
                 sx={{ color: Colors.primary, margin: '25px 0px' }}
                 disableShrink
@@ -74,11 +74,13 @@ const ChangeUserStatusModal: NextPage<IChangeUserStatusModal> = ({
                   }}
                   onClick={async () => {
                     let res;
+
                     if (userRole === 'user') {
                       res = await dispatch(userAssignment(userId));
                     } else if (userRole === 'admin') {
                       res = await dispatch(removeAssignmentAdmin(userId));
                     }
+
                     if (res.meta.requestStatus === 'rejected') {
                       toast.error('invalid data');
                     } else {
@@ -87,7 +89,7 @@ const ChangeUserStatusModal: NextPage<IChangeUserStatusModal> = ({
                     }
                   }}
                 >
-                  Yes
+                  {t('yes')}
                 </Typography>
                 <Typography
                   variant="roboto24500hover"
@@ -98,7 +100,7 @@ const ChangeUserStatusModal: NextPage<IChangeUserStatusModal> = ({
                   }}
                   onClick={handleClose}
                 >
-                  No
+                  {t('no')}
                 </Typography>
               </>
             )}

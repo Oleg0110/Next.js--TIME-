@@ -222,7 +222,7 @@ class AdminController {
         return next(ApiErrors.BadRequest('invalid data'))
       }
 
-      const users = await AdminService.userAssignment(userId)
+      const users = await AdminService.userAssignment(userId, next)
 
       res.status(200).json(users)
     } catch (e) {
@@ -238,7 +238,7 @@ class AdminController {
         return next(ApiErrors.BadRequest('invalid data'))
       }
 
-      const users = await AdminService.removeAssignmentAdmin(userId)
+      const users = await AdminService.removeAssignmentAdmin(userId, next)
 
       res.status(200).json(users)
     } catch (e) {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper';
+// import { Swiper, SwiperSlide } from 'swiper/react';
+// import { Navigation } from 'swiper';
 import { SwiperProductContainer } from '../../styles/productPage';
 
 const ProductPhotoCarousel = () => {
@@ -8,7 +8,7 @@ const ProductPhotoCarousel = () => {
 
   return (
     <SwiperProductContainer>
-      <Swiper modules={[Navigation]}>
+      {/* <Swiper modules={[Navigation]}>
         <SwiperSlide>
           <img
             src="https://swiperjs.com/demos/images/nature-1.jpg"
@@ -44,7 +44,7 @@ const ProductPhotoCarousel = () => {
             height="250px"
           />
         </SwiperSlide>
-      </Swiper>
+      </Swiper> */}
     </SwiperProductContainer>
   );
 };

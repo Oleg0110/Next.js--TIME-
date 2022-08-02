@@ -178,7 +178,7 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
                 toast.error(t('product-not-change', { ns: 'toast' }));
               } else {
                 toast.success(t('product-was-change', { ns: 'toast' }));
-                // handleClose();
+                handleClose();
               }
             }}
           >

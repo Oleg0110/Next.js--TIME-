@@ -55,8 +55,6 @@ const ProductCarousel: NextPage<IProductCarouselProps> = ({
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const category = router.query.category;
-
   const isFavorite =
     productsFavorite &&
     productsFavorite.find((f) => f.product?.id === productId);
@@ -90,7 +88,7 @@ const ProductCarousel: NextPage<IProductCarouselProps> = ({
           width="300px"
           height="300px"
           onClick={() =>
-            router.push(`/product/${category}/${productName}/${productId}`)
+            router.push(`/product/${productFor}/${productName}/${productId}`)
           }
           style={{ cursor: 'pointer' }}
         />
@@ -130,13 +128,7 @@ const ProductCarousel: NextPage<IProductCarouselProps> = ({
         </IconPosition>
       </CarouselProductPhoto>
       <CarouselProductInfo>
-        <Link
-          href={
-            category !== undefined
-              ? `/product/${category}/${productName}/${productId}`
-              : `/product/sale/${productName}/${productId}`
-          }
-        >
+        <Link href={`/product/${productFor}/${productName}/${productId}`}>
           <Typography
             variant="roboto24200hover"
             marginBottom="5px"

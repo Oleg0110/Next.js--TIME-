@@ -18,6 +18,7 @@ import { stringRegExp } from '../../utils/constants';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CustomButton from '../CustomButton';
+import { toast } from 'react-toastify';
 
 const showPasswordIcon = {
   color: Colors.primary,
@@ -93,7 +94,7 @@ const Registration = () => {
         initialValues={initialRegistrationValues}
         validationSchema={validationRegistrationSchema}
         onSubmit={async (values) => {
-          await dispatch(
+          const res = await dispatch(
             registration({
               email: values.email,
               password: values.password,
@@ -101,6 +102,12 @@ const Registration = () => {
               surname: values.surname,
             })
           );
+
+          if (res.meta.requestStatus === 'rejected') {
+            toast.error('Invalid data');
+          } else {
+            toast.success('Successfully registration');
+          }
         }}
       >
         {({ handleSubmit }) => {

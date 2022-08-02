@@ -48,7 +48,8 @@ export const getProducts = createAsyncThunk(
   'product/getProducts',
   async ({ category, page, filters, sorting }: IGetProductsArg, thunkApi) => {
     try {
-      const limit = 2;
+      const limit = 5;
+
       const res = await axios.get<GetProductsResponse>(
         `${GET_PRODUCTS}/${category}`,
         {
@@ -77,7 +78,7 @@ export const paginationProductFunc = createAsyncThunk(
   ) => {
     try {
       const res = await axios.get<GetProductsResponse>(
-        `${GET_PRODUCTS}/test/${category}/posts?start=${productCount}&limit=2`,
+        `${GET_PRODUCTS}/test/${category}/posts?start=${productCount}&limit=5`,
         {
           params: {
             filters,

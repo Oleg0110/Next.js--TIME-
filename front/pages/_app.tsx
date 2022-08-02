@@ -11,10 +11,10 @@ import createEmotionCache from '../createEmotionCache';
 import theme from '../styles/theme/index';
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/global.scss';
-import 'swiper/scss';
-import 'swiper/scss/free-mode';
-import 'swiper/scss/navigation';
-import 'swiper/scss/thumbs';
+// import 'swiper/scss';
+// import 'swiper/scss/free-mode';
+// import 'swiper/scss/navigation';
+// import 'swiper/scss/thumbs';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();

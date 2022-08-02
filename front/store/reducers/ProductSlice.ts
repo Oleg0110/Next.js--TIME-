@@ -39,6 +39,7 @@ const initialState: ProductState = {
   countProducts: 0,
   isLoading: false,
   isPaginationLoading: false,
+  isFavoriteLoading: false,
   error: '',
 };
 
@@ -198,15 +199,15 @@ export const productReducer = createSlice({
       state,
       action: PayloadAction<IFavorite[]>
     ) => {
-      state.isLoading = false;
+      state.isFavoriteLoading = false;
       state.error = '';
       state.productsFavorite = action.payload;
     },
     [getFavorite.pending.type]: (state) => {
-      state.isLoading = true;
+      state.isFavoriteLoading = true;
     },
     [getFavorite.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false;
+      state.isFavoriteLoading = false;
       state.error = action.payload;
     },
 
@@ -230,15 +231,15 @@ export const productReducer = createSlice({
       state,
       action: PayloadAction<IFavorite[]>
     ) => {
-      state.isLoading = false;
+      state.isFavoriteLoading = false;
       state.error = '';
       state.productsFavorite = action.payload;
     },
     [addToFavorite.pending.type]: (state) => {
-      state.isLoading = true;
+      state.isFavoriteLoading = true;
     },
     [addToFavorite.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false;
+      state.isFavoriteLoading = false;
       state.error = action.payload;
     },
 
@@ -297,18 +298,18 @@ export const productReducer = createSlice({
       state,
       action: PayloadAction<IFavorite[]>
     ) => {
-      state.isLoading = false;
+      state.isFavoriteLoading = false;
       state.error = '';
       state.productsFavorite = action.payload;
     },
     [removeFromFavorite.pending.type]: (state) => {
-      state.isLoading = true;
+      state.isFavoriteLoading = true;
     },
     [removeFromFavorite.rejected.type]: (
       state,
       action: PayloadAction<string>
     ) => {
-      state.isLoading = false;
+      state.isFavoriteLoading = false;
       state.error = action.payload;
     },
   },

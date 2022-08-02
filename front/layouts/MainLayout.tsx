@@ -17,6 +17,8 @@ import { checkAuth } from '../store/services/UserService';
 import Head from 'next/head';
 import Navbar from '../components/NavBar/index';
 import Footer from '../components/Footer';
+import { IUser } from '../utils/interface/userInterface';
+import { getFavoriteAndOrders } from '../utils/function';
 
 interface MainLayoutProps {
   title?: string;
@@ -33,8 +35,9 @@ const MainLayout: NextPage<MainLayoutProps> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  const { user } = useAppSelector((state) => state.user);
-  const { productsFavorite } = useAppSelector((state) => state.product);
+  useEffect(() => {
+    getFavoriteAndOrders(dispatch);
+  }, []);
 
   useEffect(() => {
     const asyncFunc = async () => {
@@ -46,38 +49,10 @@ const MainLayout: NextPage<MainLayoutProps> = ({
       !!isAuth && (await dispatch(checkAuth()));
 
       await dispatch(setProductInShoppingBag(arr));
-      // console.log(user);
-
-      // user &&
-      //   productsFavorite[0] === undefined &&
-      //   (await dispatch(getFavorite(user.id)));
-      // console.log(user);
-      if ((user && user.userRole === 'admin') || user.userRole === 'owner') {
-        await dispatch(getUnconfirmedOrders());
-      }
-
-      // if (user && productsFavorite[0] === undefined) {
-      //   await dispatch(getFavorite(user.id));
-      // }
-
-      // ((await user) && user.userRole === 'admin') ||
-      //   ((await user) &&
-      //     user.userRole === 'owner' &&
-      //     (await dispatch(getUnconfirmedOrders())));
     };
 
     asyncFunc();
-  }, [dispatch, productsFavorite, getFavorite]);
-
-  const getFavoriteProduct = async () => {
-    user &&
-      productsFavorite[0] === undefined &&
-      (await dispatch(getFavorite(user.id)));
-    (user && user.userRole === 'admin') ||
-      (user.userRole === 'owner' && (await dispatch(getUnconfirmedOrders())));
-  };
-
-  // getFavoriteProduct();
+  }, []);
 
   return (
     <>

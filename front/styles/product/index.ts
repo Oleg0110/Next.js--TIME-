@@ -12,7 +12,15 @@ export const MainProductContainer = styled(Box)(() => ({
 })) as typeof Box;
 
 export const MainContentProductBox = styled(Box)(() => ({
+  width: '100%',
   display: 'flex',
+  justifyContent: 'center',
+})) as typeof Box;
+
+export const MainProductBox = styled(Box)(() => ({
+  display: 'flex',
+  justifyContent: 'start',
+  width: '100%',
 })) as typeof Box;
 
 export const ProductContentBox = styled(Box)(() => ({

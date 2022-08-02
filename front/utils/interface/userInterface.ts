@@ -44,6 +44,7 @@ export interface UserState {
   isLoading: boolean;
   isOrdersLoading: boolean;
   isCodeLoading: boolean;
+  isLoadingAssign: boolean;
   error: string;
 }
 
