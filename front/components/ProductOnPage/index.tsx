@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Typography } from '@mui/material';
-import { Colors } from '../../styles/theme';
+import theme, { Colors } from '../../styles/theme';
+import { Typography, useMediaQuery } from '@mui/material';
 import {
   IconPosition,
   ProductOnPageBox,
@@ -43,6 +43,7 @@ const ProductOnPage: NextPage<IProductOnPageProps> = ({
   productSize,
   mainPicture,
 }) => {
+  const mediaMD = useMediaQuery(theme.breakpoints.down('md'));
   const { productInBag, productsFavorite } = useAppSelector(
     (state) => state.product
   );
@@ -84,8 +85,8 @@ const ProductOnPage: NextPage<IProductOnPageProps> = ({
       <ProductOnPagePhoto>
         <img
           src={`${BASIC_URL}/${mainPicture}`}
-          width="370px"
-          height="335px"
+          width={mediaMD ? '300' : '370px'}
+          height={mediaMD ? '265' : '335px'}
           onClick={() =>
             router.push(`/product/${productFor}/${name}/${productId}`)
           }
@@ -130,9 +131,14 @@ const ProductOnPage: NextPage<IProductOnPageProps> = ({
         <Link href={`/product/${productFor}/${name}/${productId}`}>
           <Typography
             variant="roboto20400"
-            marginBottom="8px"
-            color={Colors.black}
-            sx={{ cursor: 'pointer' }}
+            sx={{
+              cursor: 'pointer',
+              marginBottom: '8px',
+              color: Colors.black,
+              [theme.breakpoints.down('md')]: {
+                width: '230px',
+              },
+            }}
           >
             {name}
           </Typography>

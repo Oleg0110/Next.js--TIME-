@@ -1,7 +1,12 @@
 import { toast } from 'react-toastify';
 import { setProductInShoppingBag } from '../store/reducers/ProductSlice';
+import {
+  getFavorite,
+  getUnconfirmedOrders,
+} from '../store/services/ProductService';
 import { shoppingBagDataName } from './constants';
 import { IProduct, IProductInBag } from './interface/productInterface';
+import { IUser } from './interface/userInterface';
 import { SortType } from './types/product';
 
 export const firstLetterUpper = (category: string) => {
@@ -168,4 +173,18 @@ export const totalPriceFunc = (productInBag: IProductInBag[]) => {
   }
 
   return totalPrice;
+};
+
+export const getFavoriteAndOrders = (dispatch) => {
+  const ISSERVER = typeof window === 'undefined';
+
+  if (!ISSERVER) {
+    const user: IUser = JSON.parse(localStorage.getItem('user'));
+
+    user && dispatch(getFavorite(user.id));
+
+    if (user && (user.userRole === 'admin' || user.userRole === 'owner')) {
+      dispatch(getUnconfirmedOrders());
+    }
+  }
 };

@@ -17,6 +17,8 @@ import { login } from '../../store/services/UserService';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CustomButton from '../CustomButton';
+import { toast } from 'react-toastify';
+import { getFavoriteAndOrders } from '../../utils/function';
 
 const showPasswordIcon = {
   color: Colors.primary,
@@ -77,12 +79,18 @@ const Entry = () => {
         initialValues={initialLoginValues}
         validationSchema={validationLoginSchema}
         onSubmit={async (values) => {
-          await dispatch(
+          const res = await dispatch(
             login({
               email: values.email,
               password: values.password,
             })
           );
+
+          if (res.meta.requestStatus === 'rejected') {
+            toast.error('Invalid data');
+          } else {
+            getFavoriteAndOrders(dispatch);
+          }
         }}
       >
         {({ handleSubmit }) => {

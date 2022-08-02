@@ -17,6 +17,7 @@ import {
   CategoryBox,
   InfoProductBox,
   MainContentProductBox,
+  MainProductBox,
   MainProductContainer,
   ProductContentBox,
   SortingFilterBox,
@@ -47,45 +48,47 @@ export const getServerSideProps = async (context) => {
   };
 };
 
-const endMessage = (isFilterOpen, mediaMD, t) => {
+const endMessage = (isFilterOpen, mediaMD, t, isLoading) => {
   return (
     <>
-      <Box
-        style={{
-          display: 'flex',
-          margin: '20px 0px',
-          width: '100%',
-          justifyContent: 'center',
-        }}
-      >
-        {mediaMD && !isFilterOpen && (
-          <Typography
-            variant="roboto24200"
-            style={{
-              color: Colors.black,
-              border: `1px solid ${Colors.primary}`,
-              padding: '0px 10px',
-              borderRadius: '4px',
-            }}
-          >
-            {t('seen-all')}
-          </Typography>
-        )}
+      {!isLoading && (
+        <Box
+          style={{
+            display: 'flex',
+            margin: '20px 0px',
+            width: '100%',
+            justifyContent: 'center',
+          }}
+        >
+          {mediaMD && !isFilterOpen && (
+            <Typography
+              variant="roboto24200"
+              style={{
+                color: Colors.black,
+                border: `1px solid ${Colors.primary}`,
+                padding: '0px 10px',
+                borderRadius: '4px',
+              }}
+            >
+              {t('seen-all')}
+            </Typography>
+          )}
 
-        {!mediaMD && (
-          <Typography
-            variant="roboto24200"
-            style={{
-              color: Colors.black,
-              border: `1px solid ${Colors.primary}`,
-              padding: '0px 10px',
-              borderRadius: '4px',
-            }}
-          >
-            {t('seen-all')}
-          </Typography>
-        )}
-      </Box>
+          {!mediaMD && (
+            <Typography
+              variant="roboto24200"
+              style={{
+                color: Colors.black,
+                border: `1px solid ${Colors.primary}`,
+                padding: '0px 10px',
+                borderRadius: '4px',
+              }}
+            >
+              {t('seen-all')}
+            </Typography>
+          )}
+        </Box>
+      )}
     </>
   );
 };
@@ -152,9 +155,8 @@ const CategoryPage: NextPage<ICategoryPage> = ({ category }) => {
     setIsActive(sorting);
   }, [category, dispatch]);
 
-  const { products, countProducts, isPaginationLoading } = useAppSelector(
-    (state) => state.product
-  );
+  const { products, countProducts, isPaginationLoading, isLoading } =
+    useAppSelector((state) => state.product);
 
   useEffect(() => {
     setHesMore(countProducts > products.length ? true : false);
@@ -246,43 +248,67 @@ const CategoryPage: NextPage<ICategoryPage> = ({ category }) => {
             next={productsGetMore}
             hasMore={hasMore}
             loader={true}
-            endMessage={endMessage(isFilterOpen, mediaMD, t)}
+            endMessage={endMessage(isFilterOpen, mediaMD, t, isLoading)}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
           >
-            {mediaMD && !isFilterOpen && (
-              <ProductContentBox>
-                {products &&
-                  products.map((data) => (
-                    <div key={data.id}>
-                      <ProductOnPage
-                        mainPicture={data.productMainPictures}
-                        productId={data.id}
-                        productFor={data.productFor}
-                        name={data.productName}
-                        price={data.productPrice}
-                        salePrice={data.productDiscountPrice}
-                        productSize={data.productSize}
-                      />
-                    </div>
-                  ))}
-              </ProductContentBox>
-            )}
-            {!mediaMD && (
-              <ProductContentBox>
-                {products &&
-                  products.map((data) => (
-                    <div key={data.id}>
-                      <ProductOnPage
-                        mainPicture={data.productMainPictures}
-                        productId={data.id}
-                        productFor={data.productFor}
-                        name={data.productName}
-                        price={data.productPrice}
-                        salePrice={data.productDiscountPrice}
-                        productSize={data.productSize}
-                      />
-                    </div>
-                  ))}
-              </ProductContentBox>
+            {!isLoading ? (
+              <MainProductBox>
+                {mediaMD && !isFilterOpen && (
+                  <ProductContentBox>
+                    {products &&
+                      products.map((data) => (
+                        <div key={data.id}>
+                          <ProductOnPage
+                            mainPicture={data.productMainPictures}
+                            productId={data.id}
+                            productFor={data.productFor}
+                            name={data.productName}
+                            price={data.productPrice}
+                            salePrice={data.productDiscountPrice}
+                            productSize={data.productSize}
+                          />
+                        </div>
+                      ))}
+                  </ProductContentBox>
+                )}
+                {!mediaMD && (
+                  <ProductContentBox>
+                    {products &&
+                      products.map((data) => (
+                        <div key={data.id}>
+                          <ProductOnPage
+                            mainPicture={data.productMainPictures}
+                            productId={data.id}
+                            productFor={data.productFor}
+                            name={data.productName}
+                            price={data.productPrice}
+                            salePrice={data.productDiscountPrice}
+                            productSize={data.productSize}
+                          />
+                        </div>
+                      ))}
+                  </ProductContentBox>
+                )}
+              </MainProductBox>
+            ) : (
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  width: '150px',
+                  margin: '150px',
+                }}
+              >
+                <CircularProgress
+                  sx={{ color: Colors.primary }}
+                  disableShrink
+                  size="150px"
+                />
+              </Box>
             )}
           </InfiniteScroll>
           <SortingMenu

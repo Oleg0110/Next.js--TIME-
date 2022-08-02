@@ -24,7 +24,7 @@ import {
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import Link from 'next/link';
 import MainLayout from '../../../../layouts/MainLayout';
-import ProductPhotoCarousel from '../../../../components/ProductPhotoCarousel';
+// import ProductPhotoCarousel from '../../../../components/ProductPhotoCarousel';
 import CustomAccordion from '../../../../components/Accordion';
 import UserReview from '../../../../components/UserReview';
 import Recommended from './Recommended';
@@ -125,12 +125,13 @@ const Product: NextPage<IProductProps> = ({
                       />
                     </div>
                   ))} */}
-                  <ProductPhotoCarousel />
+                  {/* <ProductPhotoCarousel /> */}
                   <CustomAccordion
                     title={t('delivery')}
                     accordionVariant="outlined"
+                    textArr={'delivery-propose-standard'}
                   />
-                  <CustomAccordion
+                  {/* <CustomAccordion
                     title={t('reviews')}
                     accordionVariant="outlined"
                     averageRating={averageRating}
@@ -147,7 +148,7 @@ const Product: NextPage<IProductProps> = ({
                           />
                         </div>
                       ))}
-                  </CustomAccordion>
+                  </CustomAccordion> */}
                 </PhotoDescriptionBox>
                 <Information product={product} />
               </ProductPageMainInfoBox>

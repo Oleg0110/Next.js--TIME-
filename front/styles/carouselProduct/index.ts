@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
 export const CarouselProductBox = styled(Box)(() => ({
-  width: '400px',
+  width: '300px',
   minHeight: '150px',
   display: 'flex',
   flexDirection: 'column',

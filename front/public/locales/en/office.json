@@ -15,5 +15,7 @@
   "submit": "Submit",
   "continue": "To continue confirm code",
   "click-to-sent-code": "Click to email the code",
-  "your-information": "Your Information"
+  "your-information": "Your Information",
+  "yes": "Yes",
+  "no": "No"
 }

@@ -19,7 +19,7 @@ import { ROUTES, token } from '../../utils/constants';
 import $api from '../../http';
 import { IProductOrder } from '../../utils/interface/productInterface';
 
-// Get
+// Gets
 export const checkAuth = createAsyncThunk(
   'user/checkAuth',
   async (_, thunkApi) => {
@@ -29,6 +29,7 @@ export const checkAuth = createAsyncThunk(
       });
 
       localStorage.setItem(token, res.data.tokens.accessToken);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
 
       return res.data.user;
     } catch (error) {
@@ -126,6 +127,7 @@ export const registration = createAsyncThunk(
       const res = await $api.post<AuthResponse>(`/registration`, arg);
 
       localStorage.setItem(token, res.data.tokens.accessToken);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
 
       return res.data.user;
     } catch (error) {
@@ -146,6 +148,7 @@ export const login = createAsyncThunk(
       });
 
       localStorage.setItem(token, res.data.tokens.accessToken);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
 
       return res.data.user;
     } catch (error) {
@@ -157,7 +160,9 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk('user/logout', async (_, thunkApi) => {
   try {
     const res = await $api.post<void>(`/logout`);
+
     localStorage.removeItem(token);
+    localStorage.removeItem('user');
 
     return {} as IUser;
   } catch (error) {

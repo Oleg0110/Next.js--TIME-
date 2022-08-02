@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import theme, { Colors } from '../../styles/theme';
+import { Colors } from '../../styles/theme';
 import { Slide, Slider, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { NextPage } from 'next';
 import { Form, Formik } from 'formik';
 import {
+  ClearFilterButton,
   CustomInput,
   FilterClickPosition,
   FilterOpenBox,
@@ -17,6 +18,7 @@ import {
 import {
   colorArray,
   filterDataName,
+  filterReset,
   materialArray,
   sizeArray,
   styleArray,
@@ -81,6 +83,27 @@ const FilterMenu: NextPage<IFilterMenuProps> = ({
       setMax(event.target.value);
   };
 
+  const clearFiltersFunc = async () => {
+    await localStorage.setItem(filterDataName, JSON.stringify(filterReset));
+
+    if (category === 'women' || category === 'men') {
+      await dispatch(getProducts({ category, filters: filterReset, sorting }));
+    } else {
+      const categoryName = category.split('-')[1];
+      const page = category.split('-')[0];
+
+      await dispatch(
+        getProducts({
+          filters: filterReset,
+          category: categoryName,
+          page,
+          sorting,
+        })
+      );
+    }
+    setIsOpen(false);
+  };
+
   const initialValues = filters && {
     productColor: filters.productColor,
     productStyleName: filters.productStyleName,
@@ -126,6 +149,11 @@ const FilterMenu: NextPage<IFilterMenuProps> = ({
                   <Typography variant="roboto24200" sx={styleSpan}>
                     {t('style')}
                   </Typography>
+                  {values !== filterReset && (
+                    <ClearFilterButton onClick={clearFiltersFunc}>
+                      Clear Filters
+                    </ClearFilterButton>
+                  )}
                 </InfoFilterBox>
                 <FilterOptionsBox>
                   {styleArray.map((data) => (

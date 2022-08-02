@@ -27,6 +27,7 @@ const initialState: UserState = {
   isLoading: false,
   isOrdersLoading: false,
   isCodeLoading: false,
+  isLoadingAssign: false,
   error: '',
 };
 
@@ -157,33 +158,35 @@ export const userReducer = createSlice({
       state,
       action: PayloadAction<IUser[]>
     ) => {
-      state.isLoading = false;
+      state.isLoadingAssign = false;
       state.error = '';
       state.userInTeam = action.payload;
+      state.userSearch = [];
     },
     [userAssignment.pending.type]: (state) => {
-      state.isLoading = true;
+      state.isLoadingAssign = true;
     },
     [userAssignment.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.isLoading = false;
+      state.isLoadingAssign = false;
       state.error = action.payload;
     },
     [removeAssignmentAdmin.fulfilled.type]: (
       state,
       action: PayloadAction<IUser[]>
     ) => {
-      state.isLoading = false;
+      state.isLoadingAssign = false;
       state.error = '';
       state.userInTeam = action.payload;
+      state.userSearch = [];
     },
     [removeAssignmentAdmin.pending.type]: (state) => {
-      state.isLoading = true;
+      state.isLoadingAssign = true;
     },
     [removeAssignmentAdmin.rejected.type]: (
       state,
       action: PayloadAction<string>
     ) => {
-      state.isLoading = false;
+      state.isLoadingAssign = false;
       state.error = action.payload;
     },
     [changeUserData.fulfilled.type]: (state, action: PayloadAction<IUser>) => {

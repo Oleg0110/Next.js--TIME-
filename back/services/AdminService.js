@@ -10,6 +10,7 @@ const MailService = require('./MailService')
 const User = require('../models/User')
 const UserDto = require('../dtos/user-dto')
 const fs = require('fs')
+const ApiErrors = require('../utils/apiErrors')
 
 class AdminService {
   async getProducts(searchValue) {
@@ -187,14 +188,14 @@ class AdminService {
     return dtoValue
   }
 
-  async userAssignment(userId) {
+  async userAssignment(userId, next) {
     const user = await User.findOneAndUpdate({ _id: userId }, { role: 'admin' }, { new: true })
 
     if (user.role === 'user') {
       return next(ApiErrors.BadRequest('invalid data'))
     }
 
-    // await MailService.sendAssignUser(user)
+    await MailService.sendAssignUser(user)
 
     const users = await User.find({ role: ['admin', 'owner'] })
 
@@ -205,14 +206,14 @@ class AdminService {
     return dtoValue
   }
 
-  async removeAssignmentAdmin(userId) {
+  async removeAssignmentAdmin(userId, next) {
     const user = await User.findOneAndUpdate({ _id: userId }, { role: 'user' }, { new: true })
 
     if (user.role === 'admin') {
       return next(ApiErrors.BadRequest('invalid data'))
     }
 
-    // await MailService.sendAssignUser(user)
+    await MailService.sendRemoveAssignUser(user)
 
     const users = await User.find({ role: ['admin', 'owner'] })
 

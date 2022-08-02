@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
 import React, { useCallback, useState } from 'react';
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+// import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import ProductCarousel from '../../../../components/ProductCarousel';
 import {
   ButtonArrowNext,
@@ -10,25 +10,25 @@ import {
 import { Colors } from '../../../../styles/theme';
 import styles from '../../../../styles/icons.module.scss';
 import { useAppSelector } from '../../../../hooks/redux';
-import { Autoplay, Navigation } from 'swiper';
+// import { Autoplay, Navigation } from 'swiper';
 import { BASIC_URL } from '../../../../utils/httpLinks';
 import { useTranslation } from 'next-i18next';
 
 const Recommended = () => {
   const { t } = useTranslation('product');
 
-  const swiper = useSwiper();
-  const [swiperRef, setSwiperRef] = useState<typeof swiper>();
+  // const swiper = useSwiper();
+  // const [swiperRef, setSwiperRef] = useState<typeof swiper>();
 
-  const handleLeftClick = useCallback(() => {
-    if (!swiperRef) return;
-    swiperRef.slidePrev();
-  }, [swiperRef]);
+  // const handleLeftClick = useCallback(() => {
+  //   if (!swiperRef) return;
+  //   swiperRef.slidePrev();
+  // }, [swiperRef]);
 
-  const handleRightClick = useCallback(() => {
-    if (!swiperRef) return;
-    swiperRef.slideNext();
-  }, [swiperRef]);
+  // const handleRightClick = useCallback(() => {
+  //   if (!swiperRef) return;
+  //   swiperRef.slideNext();
+  // }, [swiperRef]);
 
   const { productsRecommended } = useAppSelector((state) => state.product);
 
@@ -39,13 +39,13 @@ const Recommended = () => {
           <Typography variant="h1" color={Colors.black}>
             {t('recommended')}
           </Typography>
-          <ButtonArrowPrev onClick={handleLeftClick}>
+          {/* <ButtonArrowPrev onClick={handleLeftClick}>
             <div className={styles.carouselArrowPrev} />
           </ButtonArrowPrev>
           <ButtonArrowNext onClick={handleRightClick}>
             <div className={styles.carouselArrowNext} />
-          </ButtonArrowNext>
-          <Swiper
+          </ButtonArrowNext> */}
+          {/* <Swiper
             onSwiper={setSwiperRef}
             slidesPerView={4}
             slidesPerGroup={1}
@@ -77,7 +77,7 @@ const Recommended = () => {
                 />
               </SwiperSlide>
             ))}
-          </Swiper>
+          </Swiper> */}
         </ProductRecommended>
       )}
     </div>

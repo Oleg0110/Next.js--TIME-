@@ -14,6 +14,7 @@ const FavoriteProduct = require('../models/FavoriteProduct')
 
 class UserService {
   // Get
+
   async activate(activationLink, res, next) {
     const user = await User.findOne({ activationLink })
 

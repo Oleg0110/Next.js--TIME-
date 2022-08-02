@@ -36,7 +36,7 @@ type TextAccordionType = {
 
 interface ICustomAccordionPros {
   title: string;
-  textArr?: TextAccordionType;
+  textArr?: any;
   accordionVariant: VariantAccordionType;
   children?: ReactNode;
   averageRating?: number;
@@ -135,19 +135,28 @@ const CustomAccordion: NextPage<ICustomAccordionPros> = ({
         )}
         {title && title === 'Delivery' && (
           <AccordionDetails>
-            <Typography
+            {/* <Typography
               variant="roboto24500"
               component="p"
               sx={{ color: Colors.black, textAlign: 'start' }}
             >
-              {t('delivery-propose-standard')}
-            </Typography>
+              {t(textArr)}
+            </Typography> */}
+            {textArr && (
+              <Typography
+                variant="roboto24200"
+                component="p"
+                marginBottom="30px"
+              >
+                {t(textArr)}
+              </Typography>
+            )}
             <ListItem sx={{ display: 'list-item' }}>
               <Typography
                 variant="roboto24200"
                 sx={{ color: Colors.black, textAlign: 'start' }}
               >
-                {t('delivery-item-1')}
+                {/* {t('delivery-item-1')} */}
               </Typography>
             </ListItem>
             <Typography
@@ -155,14 +164,14 @@ const CustomAccordion: NextPage<ICustomAccordionPros> = ({
               component="p"
               sx={{ color: Colors.black, textAlign: 'start' }}
             >
-              {t('delivery-propose-next-day')}
+              {/* {t('delivery-propose-next-day')} */}
             </Typography>
             <ListItem sx={{ display: 'list-item' }}>
               <Typography
                 variant="roboto24200"
                 sx={{ color: Colors.black, textAlign: 'start' }}
               >
-                {t('delivery-item-2')}
+                {/* {t('delivery-item-2')} */}
               </Typography>
             </ListItem>
             <ListItem sx={{ display: 'list-item' }}>
@@ -170,7 +179,7 @@ const CustomAccordion: NextPage<ICustomAccordionPros> = ({
                 variant="roboto24200"
                 sx={{ color: Colors.black, textAlign: 'start' }}
               >
-                {t('delivery-item-3')}
+                {/* {t('delivery-item-3')} */}
               </Typography>
             </ListItem>
             <Typography
@@ -182,7 +191,7 @@ const CustomAccordion: NextPage<ICustomAccordionPros> = ({
                 fontStyle: 'italic',
               }}
             >
-              {t('delivery-attention')}
+              {/* {t('delivery-attention')} */}
             </Typography>
           </AccordionDetails>
         )}
@@ -265,9 +274,9 @@ const CustomAccordion: NextPage<ICustomAccordionPros> = ({
 
 export default CustomAccordion;
 
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    // !!!Problem with translation
-    ...(await serverSideTranslations(locale, ['common', 'accordion'])),
-  },
-});
+// export const getStaticProps = async ({ locale }) => ({
+//   props: {
+//     // !!!Problem with translation
+//     ...(await serverSideTranslations(locale, ['common', 'accordion'])),
+//   },
+// });

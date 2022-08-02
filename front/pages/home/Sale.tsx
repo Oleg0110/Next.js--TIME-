@@ -1,26 +1,46 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { useCallback, useState } from 'react';
 import { IProduct } from '../../utils/interface/productInterface';
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
-import { Autoplay, Navigation } from 'swiper';
 import {
-  ButtonArrowNext,
-  ButtonArrowPrev,
-  SaleContentBox,
+  // ButtonArrowNext,
+  // ButtonArrowPrev,
+  // SaleContentBox,
   SaleMainBox,
 } from '../../styles/home';
-import { Typography } from '@mui/material';
-import { Colors } from '../../styles/theme';
+import { Box, Button, Typography, useMediaQuery } from '@mui/material';
+import theme, { Colors } from '../../styles/theme';
 import ProductCarousel from '../../components/ProductCarousel';
-import styles from '../../styles/icons.module.scss';
+import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper';
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+// import styles from '../../styles/icons.module.scss';
+import styles from '../../styles/Home.module.scss';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/effect-fade';
 
 interface ISaleProps {
   saleCarouselProduct: IProduct[];
 }
 
 const Sale: NextPage<ISaleProps> = ({ saleCarouselProduct }) => {
+  const mediaSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const mediaMD = useMediaQuery(theme.breakpoints.down('md'));
+
+  // const slidesPerView = mediaSM ? 1 : mediaMD ? 2 : 4;
+
+  const breakDa = mediaMD && {
+    900: {
+      width: 600,
+      slidesPerView: 1,
+    },
+  };
+  // console.log(slidesPerView);
+
   const { t } = useTranslation('home');
 
   const swiper = useSwiper();
@@ -37,39 +57,48 @@ const Sale: NextPage<ISaleProps> = ({ saleCarouselProduct }) => {
   }, [swiperRef]);
 
   return (
-    <SaleMainBox>
-      <SaleContentBox>
+    <>
+      <SaleMainBox>
         <Typography variant="h1" color={Colors.black}>
           {t('sale')}
         </Typography>
-        <ButtonArrowPrev onClick={handleLeftClick}>
+
+        {/* <ButtonArrowPrev onClick={handleLeftClick}>
           <div className={styles.carouselArrowPrev} />
         </ButtonArrowPrev>
         <ButtonArrowNext onClick={handleRightClick}>
           <div className={styles.carouselArrowNext} />
-        </ButtonArrowNext>
+        </ButtonArrowNext> */}
+      </SaleMainBox>
+      <Box sx={{ width: '100%', position: 'relative', margin: '0px 0px 40px' }}>
         <Swiper
           onSwiper={setSwiperRef}
+          modules={[Navigation, Autoplay]}
+          spaceBetween={-10}
+          speed={800}
           slidesPerView={4}
-          slidesPerGroup={1}
+          loop
+          centeredSlides={false}
+          // autoplay={{ delay: 3000 }}
           // breakpoints={{
-          //   640: {
-          //     width: 640,
+          //   410: {
           //     slidesPerView: 1,
           //   },
+          //   640: {
+          //     slidesPerView: 2,
+          //   },
+          //   1000: {
+          //     slidesPerView: 3,
+          //   },
+          //   1500: {
+          //     slidesPerView: 4,
+          //   },
           // }}
-          loop={true}
-          loopFillGroupWithBlank={true}
-          navigation={true}
-          modules={[Navigation, Autoplay]}
-          // autoplay={{
-          //   delay: 3000,
-          //   disableOnInteraction: false,
-          // }}
+          className={styles.myswiper}
         >
           {saleCarouselProduct &&
             saleCarouselProduct.map((product) => (
-              <SwiperSlide key={product.id}>
+              <SwiperSlide key={product.id} className={styles.swiperSlide}>
                 <ProductCarousel
                   productDiscountPrice={product.productDiscountPrice}
                   productFor={product.productFor}
@@ -82,8 +111,10 @@ const Sale: NextPage<ISaleProps> = ({ saleCarouselProduct }) => {
               </SwiperSlide>
             ))}
         </Swiper>
-      </SaleContentBox>
-    </SaleMainBox>
+        <div className={styles.swiperNavPrev} onClick={handleLeftClick} />
+        <div className={styles.swiperNavNext} onClick={handleRightClick} />
+      </Box>
+    </>
   );
 };
 

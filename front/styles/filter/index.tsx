@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { Box, Input } from '@mui/material';
+import { Box, Button, Input } from '@mui/material';
 import { Colors } from '../theme';
 
 export const FilterOpenBox = styled(Box)(() => ({
@@ -14,7 +14,7 @@ export const FilterOpenBox = styled(Box)(() => ({
 export const InfoFilterBox = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-betweens',
+  justifyContent: 'space-between',
 })) as typeof Box;
 
 export const InputPriceBox = styled(Box)(() => ({
@@ -68,3 +68,17 @@ export const FilterClickPosition = styled(Box)(() => ({
   width: '100%',
   marginTop: '25px',
 })) as typeof Box;
+
+export const ClearFilterButton = styled(Button)(() => ({
+  background: 'Transparent',
+  border: `1px solid ${Colors.saleColor}`,
+  color: Colors.saleColor,
+  fontSize: '12px',
+  padding: '0px 5px',
+  borderRadius: '4px',
+  ':hover': {
+    border: `1px solid ${Colors.saleColor}`,
+    background: 'Transparent',
+    color: Colors.lightGray,
+  },
+}));
