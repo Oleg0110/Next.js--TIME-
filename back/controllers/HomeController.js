@@ -11,9 +11,27 @@ class HomeController {
     }
   }
 
+  async globalProductSearch(req, res) {
+    try {
+      const { searchValue } = req.params
+
+      if (!searchValue) {
+        return next(ApiErrors.BadRequest('invalid data'))
+      }
+
+      const products = await HomeService.globalProductSearch(searchValue)
+
+      res.status(200).json(products)
+    } catch (e) {
+      res.status(500).json(e.message)
+    }
+  }
+
   async getUnconfirmedOrders(req, res) {
     try {
       const orders = await HomeService.getUnconfirmedOrders()
+
+      console.log(orders)
 
       res.status(200).json(orders)
     } catch (e) {

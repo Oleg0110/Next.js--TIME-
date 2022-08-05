@@ -4,9 +4,11 @@ import { useTranslation } from 'next-i18next';
 import { Colors } from '../../styles/theme';
 import { ROUTES } from '../../utils/constants';
 import Link from 'next/link';
+import { useAppSelector } from '../../hooks/redux';
 
 const Information = () => {
   const { t } = useTranslation('common');
+  const { isAuth } = useAppSelector((state) => state.user);
 
   return (
     <>
@@ -22,11 +24,13 @@ const Information = () => {
       <Link href={ROUTES.FAQ}>
         <Typography variant="roboto24200hover">FAQ</Typography>
       </Link>
-      <Link href={ROUTES.personalOffice}>
-        <Typography variant="roboto24200hover">
-          {t('personal-office')}
-        </Typography>
-      </Link>
+      {isAuth && (
+        <Link href={ROUTES.personalOffice}>
+          <Typography variant="roboto24200hover">
+            {t('personal-office')}
+          </Typography>
+        </Link>
+      )}
     </>
   );
 };

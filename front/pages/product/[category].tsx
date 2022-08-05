@@ -23,12 +23,12 @@ import {
   SortingFilterBox,
 } from '../../styles/product';
 import {
+  categoryLocalStorageName,
   filterDataName,
   filterReset,
   sortingDataName,
 } from '../../utils/constants';
 import { firstLetterUpper } from '../../utils/function';
-import { IProduct } from '../../utils/interface/productInterface';
 import { SortType } from '../../utils/types/product';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import FilterMenu from '../../components/FilterMenu';
@@ -102,9 +102,9 @@ const CategoryPage: NextPage<ICategoryPage> = ({ category }) => {
   let localCategory;
   let filters;
 
-  const { t } = useTranslation('common');
-
   const mediaMD = useMediaQuery(theme.breakpoints.down('md'));
+
+  const { t } = useTranslation('common');
 
   let categoryTitle = firstLetterUpper(category);
 
@@ -117,7 +117,7 @@ const CategoryPage: NextPage<ICategoryPage> = ({ category }) => {
   const ISSERVER = typeof window === 'undefined';
 
   if (!ISSERVER) {
-    localCategory = localStorage.getItem('category');
+    localCategory = localStorage.getItem(categoryLocalStorageName);
     sorting = localStorage.getItem(sortingDataName);
     filters = JSON.parse(localStorage.getItem(filterDataName));
 
@@ -150,7 +150,8 @@ const CategoryPage: NextPage<ICategoryPage> = ({ category }) => {
 
     asyncFunc();
 
-    category !== localCategory && localStorage.setItem('category', category);
+    category !== localCategory &&
+      localStorage.setItem(categoryLocalStorageName, category);
 
     setIsActive(sorting);
   }, [category, dispatch]);
@@ -189,7 +190,11 @@ const CategoryPage: NextPage<ICategoryPage> = ({ category }) => {
   };
 
   return (
-    <MainLayout>
+    <MainLayout
+      title={`${categoryTitle} shoes`}
+      description={`Shoes for ${categoryTitle}`}
+      keywords={`${categoryTitle},choose, `}
+    >
       <MainProductContainer>
         <InfoProductBox>
           <Typography variant="h1" sx={{ textAlign: 'center' }}>

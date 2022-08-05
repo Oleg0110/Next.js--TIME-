@@ -34,9 +34,7 @@ const Navbar = () => {
           <Communication />
         </CommunicationBox>
         <Link href={'/'}>
-          <Typography variant="title" sx={{ marginLeft: '50px' }}>
-            TIME
-          </Typography>
+          <Typography variant="title">TIME</Typography>
         </Link>
         <IconsBox>
           <IconButtons />

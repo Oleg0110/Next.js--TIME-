@@ -19,6 +19,7 @@ class UserController {
   }
 
   async refreshToken(req, res, next) {
+    console.log('da')
     try {
       const { refreshToken } = req.cookies
 

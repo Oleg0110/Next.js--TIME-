@@ -235,3 +235,61 @@ export const OptionsAppointBox = styled(Box)(() => ({
   alignItems: 'center',
   justifyContent: 'space-around',
 })) as typeof Box;
+
+//Shopping and Favorite Bag  Modal
+export const BagMainModalBox = styled(Box)(() => ({
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 500,
+  maxHeight: '370px',
+  backgroundColor: Colors.secondaryWhite,
+  border: `6px solid ${Colors.primary}`,
+  padding: '20px 4px 4px 4px',
+  overflowY: 'scroll',
+  '&::-webkit-scrollbar': {
+    width: '15px',
+  },
+  '&::-webkit-scrollbar-track': {
+    background: Colors.secondaryWhite,
+    borderRadius: '10px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: Colors.darkGray,
+    border: `4px solid ${Colors.lightGray}`,
+    borderRadius: '10px',
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '370px',
+  },
+})) as typeof Box;
+
+//Global Product Search Modal
+export const GlobalSearchMainModalBox = styled(Box)(() => ({
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 500,
+  maxHeight: '370px',
+  backgroundColor: Colors.secondaryWhite,
+  border: `6px solid ${Colors.primary}`,
+  padding: '4px',
+  overflowY: 'scroll',
+  '&::-webkit-scrollbar': {
+    width: '15px',
+  },
+  '&::-webkit-scrollbar-track': {
+    background: Colors.secondaryWhite,
+    borderRadius: '10px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: Colors.darkGray,
+    border: `4px solid ${Colors.lightGray}`,
+    borderRadius: '10px',
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '370px',
+  },
+})) as typeof Box;

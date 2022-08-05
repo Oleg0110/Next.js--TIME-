@@ -20,7 +20,9 @@ const Contacts = () => {
 
       <ContactBox>
         <div className={styles.mailIcon} />
-        <Typography variant="footerMail">time.shoe.shop@gmail.com</Typography>
+        <a href="mailto:time.shoe.shop@gmail.com">
+          <Typography variant="footerMail">time.shoe.shop@gmail.com</Typography>
+        </a>
       </ContactBox>
     </>
   );

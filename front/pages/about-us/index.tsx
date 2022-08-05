@@ -20,7 +20,11 @@ const AboutUs = () => {
   const { t } = useTranslation('about');
 
   return (
-    <MainLayout title="About Us" keywords="about us, about company">
+    <MainLayout
+      title="About Us"
+      keywords="about us, about company"
+      description="About us, about company"
+    >
       <AboutUsContainer>
         <AboutUsContentBox>
           <SinceBox>

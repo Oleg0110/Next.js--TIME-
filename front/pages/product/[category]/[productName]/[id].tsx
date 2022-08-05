@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Typography } from '@mui/material';
+import theme, { Colors } from '../../../../styles/theme';
+import { Typography, useMediaQuery } from '@mui/material';
 import { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import {
@@ -9,8 +10,7 @@ import {
   ProductPageMainBox,
   ProductPageMainInfoBox,
 } from '../../../../styles/productPage';
-import { Colors } from '../../../../styles/theme';
-import { firstLetterUpper, getAverageRating } from '../../../../utils/function';
+import { getAverageRating } from '../../../../utils/function';
 import { GET_PRODUCTS } from '../../../../utils/httpLinks';
 import {
   IProduct,
@@ -24,14 +24,16 @@ import {
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import Link from 'next/link';
 import MainLayout from '../../../../layouts/MainLayout';
-// import ProductPhotoCarousel from '../../../../components/ProductPhotoCarousel';
+import ProductPhotoCarousel from '../../../../components/ProductPhotoCarousel';
 import CustomAccordion from '../../../../components/Accordion';
 import UserReview from '../../../../components/UserReview';
 import Recommended from './Recommended';
 import Information from './Information';
+import ProductNameBox from './ProductNameBox';
 
 export const getServerSideProps = async (context) => {
   const productId = context.query.id;
+
   const category: string = JSON.parse(JSON.stringify(context.query.category));
 
   const res = await fetch(`${GET_PRODUCTS}/product/${productId}`);
@@ -45,7 +47,11 @@ export const getServerSideProps = async (context) => {
       product,
       productPhotos,
       category,
-      ...(await serverSideTranslations(context.locale, ['common', 'product'])),
+      ...(await serverSideTranslations(context.locale, [
+        'common',
+        'product',
+        'accordion',
+      ])),
     },
   };
 };
@@ -61,9 +67,9 @@ const Product: NextPage<IProductProps> = ({
   category,
   productPhotos,
 }) => {
-  const { t } = useTranslation(['product']);
+  const mediaMD = useMediaQuery(theme.breakpoints.down('md'));
 
-  const categoryTitle = firstLetterUpper(category);
+  const { t } = useTranslation(['product']);
 
   const dispatch = useAppDispatch();
 
@@ -84,7 +90,13 @@ const Product: NextPage<IProductProps> = ({
   const reviewsCount = productReviews && productReviews.length;
 
   return (
-    <MainLayout>
+    <MainLayout
+      title={product.productName}
+      description={`Shoe for ${product.productFor}, shoe name ${product.productName}`}
+      keywords={`product, choose, ${product.productFor}, ${
+        product.productSale && 'sale, discount'
+      },${product.productNew && 'new'}`}
+    >
       <MainProductPageContainer>
         <ProductPageMainBox>
           {product && (
@@ -99,6 +111,10 @@ const Product: NextPage<IProductProps> = ({
                       minWidth: '150px',
                       cursor: 'pointer',
                       marginRight: '5px',
+                      [theme.breakpoints.down('sm')]: {
+                        fontSize: '16px',
+                        minWidth: '100px',
+                      },
                     }}
                   >
                     {t(category)} {t('shoes')}
@@ -109,54 +125,82 @@ const Product: NextPage<IProductProps> = ({
                   sx={{
                     textAlign: 'start',
                     color: Colors.black,
+                    [theme.breakpoints.down('sm')]: {
+                      fontSize: '16px',
+                    },
                   }}
                 >
                   / {product.productName}
                 </Typography>
               </ProductPageLinkBox>
               <ProductPageMainInfoBox>
-                <PhotoDescriptionBox>
-                  {/* {productPhotos &&
-                  productPhotos.map((data) => (
-                    <div key={data.id}>
-                      <img
-                        src={`${BASIC_URL}/${data.photoName}`}
-                        alt={product.productName}
+                {!mediaMD && (
+                  <>
+                    <PhotoDescriptionBox>
+                      <ProductPhotoCarousel productPhotos={productPhotos} />
+                      <CustomAccordion
+                        title={t('delivery')}
+                        accordionVariant="outlined"
                       />
-                    </div>
-                  ))} */}
-                  {/* <ProductPhotoCarousel /> */}
-                  <CustomAccordion
-                    title={t('delivery')}
-                    accordionVariant="outlined"
-                    textArr={'delivery-propose-standard'}
-                  />
-                  {/* <CustomAccordion
-                    title={t('reviews')}
-                    accordionVariant="outlined"
-                    averageRating={averageRating}
-                    countReviews={reviewsCount}
-                  >
-                    {productReviews &&
-                      productReviews.map((data) => (
-                        <div key={data.id}>
-                          <UserReview
-                            comment={data.comment}
-                            date={data.date}
-                            rating={data.rating}
-                            userName={data.userName}
-                          />
-                        </div>
-                      ))}
-                  </CustomAccordion> */}
-                </PhotoDescriptionBox>
-                <Information product={product} />
+                      <CustomAccordion
+                        title={t('reviews')}
+                        accordionVariant="outlined"
+                        averageRating={averageRating}
+                        countReviews={reviewsCount}
+                      >
+                        {productReviews &&
+                          productReviews.map((data) => (
+                            <div key={data.id}>
+                              <UserReview
+                                comment={data.comment}
+                                date={data.date}
+                                rating={data.rating}
+                                userName={data.userName}
+                              />
+                            </div>
+                          ))}
+                      </CustomAccordion>
+                    </PhotoDescriptionBox>
+                    <Information product={product} />
+                  </>
+                )}
+                {mediaMD && (
+                  <>
+                    <ProductNameBox product={product} />
+                    <PhotoDescriptionBox>
+                      <ProductPhotoCarousel productPhotos={productPhotos} />
+                    </PhotoDescriptionBox>
+                    <Information product={product} />
+                    <CustomAccordion
+                      title={t('delivery')}
+                      accordionVariant="outlined"
+                    />
+                    <CustomAccordion
+                      title={t('reviews')}
+                      accordionVariant="outlined"
+                      averageRating={averageRating}
+                      countReviews={reviewsCount}
+                    >
+                      {productReviews &&
+                        productReviews.map((data) => (
+                          <div key={data.id}>
+                            <UserReview
+                              comment={data.comment}
+                              date={data.date}
+                              rating={data.rating}
+                              userName={data.userName}
+                            />
+                          </div>
+                        ))}
+                    </CustomAccordion>
+                  </>
+                )}
               </ProductPageMainInfoBox>
             </>
           )}
-          <Recommended />
         </ProductPageMainBox>
       </MainProductPageContainer>
+      <Recommended />
     </MainLayout>
   );
 };

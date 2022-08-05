@@ -53,7 +53,7 @@ const SwipeableTemporaryDrawer = () => {
       <CommunicationMenuBox>
         <Communication />
       </CommunicationMenuBox>
-      <List sx={{ padding: '15px' }}>
+      <List sx={{ padding: '0px 15px' }}>
         {BUTTONS.map((data) => (
           <Box
             key={data.id}

@@ -74,6 +74,7 @@ export interface ProductState {
   products: IProduct[];
   productsSale: IProduct[];
   productSearch: IProduct[];
+  globalSearchProduct: IProduct[];
   productReviews: IProductReview[];
   productsRecommended: IProduct[];
   productInBag: IProductInBag[];
@@ -84,6 +85,7 @@ export interface ProductState {
   isLoading: boolean;
   isPaginationLoading: boolean;
   isFavoriteLoading: boolean;
+  isGlobalSearchLoading: boolean;
   error: string;
 }
 

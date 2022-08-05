@@ -1,6 +1,5 @@
 import { IButtonProps } from './interface/buttonInterface';
 import { ColorType, MaterialType, SizeType, StyleType } from './types/form';
-// import Swiper from 'swiper';
 
 export const ROUTES = {
   home: '/',
@@ -31,6 +30,10 @@ export const ROUTES = {
   personalOffice: '/personal-office',
   bag: '/bag',
   delivery: '/delivery-details',
+  registration: '/registration',
+  login: '/login',
+  logout: '/logout',
+  deleteUser: '/delete-user',
 };
 
 export const BUTTONS: IButtonProps[] = [
@@ -123,6 +126,8 @@ export const filterDataName = 'filterData';
 export const sortingDataName = 'sorting';
 export const shoppingBagDataName = 'products in Shopping Bag';
 export const token = 'token';
+export const userDataName = 'user';
+export const categoryLocalStorageName = 'category';
 
 export const sizesArray = [35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45];
 
@@ -134,13 +139,6 @@ export const filterReset = {
   productPriceTo: 15000,
   productSize: [],
 };
-
-// export const swiper = new Swiper('.swiper', {
-//   navigation: {
-//     prevEl: '.swiper-button-prev',
-//     nextEl: '.swiper-button-next',
-//   },
-// });
 
 export const phoneRegExp = /^(?:\+38)?(0\d{9})$/;
 export const stringRegExp = /^[A-ZА-Я]?[a-zа-яA-ZА-Я]+$/;

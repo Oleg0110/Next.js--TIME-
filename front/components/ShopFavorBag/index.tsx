@@ -18,7 +18,7 @@ import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import TooltipIcon from '../TooltipIcon/TooltipIcon';
 import CustomButton from '../CustomButton';
-import ShopFavorBagModal from '../ShopFavorCartModal';
+import ShopFavorBagModal from '../ShopFavorBagModal';
 import ProductInBag from '../ProductInBag';
 import styles from '../../styles/icons.module.scss';
 
@@ -106,83 +106,81 @@ const ShopFavorBag: NextPage<IShopFavorBagProps> = ({ who }) => {
           totalPrice={totalPrice}
         />
       ) : (
-        <>
-          <Menu
-            variant="selectedMenu"
-            anchorEl={anchorEl}
-            id="account-menu"
-            open={productInBag[0] !== undefined && open}
-            onClose={handleClose}
-            disableScrollLock={true}
-          >
-            {who === 'bag' ? (
-              <div>
-                {productInBag &&
-                  productInBag.map((data) => (
-                    <div key={data.productId}>
-                      <ProductInBag
-                        price={data.price}
-                        productId={data.productId}
-                        productName={data.productName}
-                        productPhoto={data.productPhoto}
-                        salePrice={data.salePrice}
-                        sizeProduct={data.sizeProduct}
-                        who="bag"
-                        productFor={data.productFor}
-                      />
-                    </div>
-                  ))}
-                <ResultBox>
-                  <TotalBox>
-                    <Typography variant="roboto24200" color={Colors.black}>
-                      {t('total')}
-                    </Typography>
-                    <Typography variant="roboto20400" color={Colors.black}>
-                      {totalPrice} UAH
-                    </Typography>
-                  </TotalBox>
-                  <ButtonBox>
-                    <CustomButton
-                      size="LG"
-                      variant="secondary"
-                      style={{ marginBottom: '15px' }}
-                      onClick={() =>
-                        productInBag[0] !== undefined && router.push(ROUTES.bag)
-                      }
-                    >
-                      {t('order')}
-                    </CustomButton>
-                    <CustomButton
-                      size="LG"
-                      variant="primary"
-                      onClick={() => setAnchorEl(null)}
-                    >
-                      {t('continue')}
-                    </CustomButton>
-                  </ButtonBox>
-                </ResultBox>
-              </div>
-            ) : (
-              <div>
-                {productsFavorite &&
-                  productsFavorite.map((data) => (
-                    <div key={data.id}>
-                      <ProductInBag
-                        price={data.product.productPrice}
-                        favoriteId={data.id}
-                        productName={data.product.productName}
-                        productPhoto={data.product.productMainPictures}
-                        salePrice={data.product.productDiscountPrice}
-                        who="favorite"
-                        productFor={data.product.productFor}
-                        productId={data.product.id}
-                      />
-                    </div>
-                  ))}
-              </div>
-            )}
-          </Menu>
-        </>
+        <Menu
+          variant="selectedMenu"
+          anchorEl={anchorEl}
+          id="account-menu"
+          open={productInBag[0] !== undefined && open}
+          onClose={handleClose}
+          disableScrollLock={true}
+        >
+          {who === 'bag' ? (
+            <div>
+              {productInBag &&
+                productInBag.map((data) => (
+                  <div key={data.productId}>
+                    <ProductInBag
+                      price={data.price}
+                      productId={data.productId}
+                      productName={data.productName}
+                      productPhoto={data.productPhoto}
+                      salePrice={data.salePrice}
+                      sizeProduct={data.sizeProduct}
+                      who="bag"
+                      productFor={data.productFor}
+                    />
+                  </div>
+                ))}
+              <ResultBox>
+                <TotalBox>
+                  <Typography variant="roboto24200" color={Colors.black}>
+                    {t('total')}
+                  </Typography>
+                  <Typography variant="roboto20400" color={Colors.black}>
+                    {totalPrice} UAH
+                  </Typography>
+                </TotalBox>
+                <ButtonBox>
+                  <CustomButton
+                    size="LG"
+                    variant="secondary"
+                    style={{ marginBottom: '15px' }}
+                    onClick={() =>
+                      productInBag[0] !== undefined && router.push(ROUTES.bag)
+                    }
+                  >
+                    {t('order')}
+                  </CustomButton>
+                  <CustomButton
+                    size="LG"
+                    variant="primary"
+                    onClick={() => setAnchorEl(null)}
+                  >
+                    {t('continue')}
+                  </CustomButton>
+                </ButtonBox>
+              </ResultBox>
+            </div>
+          ) : (
+            <div>
+              {productsFavorite &&
+                productsFavorite.map((data) => (
+                  <div key={data.id}>
+                    <ProductInBag
+                      price={data.product.productPrice}
+                      favoriteId={data.id}
+                      productName={data.product.productName}
+                      productPhoto={data.product.productMainPictures}
+                      salePrice={data.product.productDiscountPrice}
+                      who="favorite"
+                      productFor={data.product.productFor}
+                      productId={data.product.id}
+                    />
+                  </div>
+                ))}
+            </div>
+          )}
+        </Menu>
       )}
     </>
   );

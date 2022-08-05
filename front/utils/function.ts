@@ -4,7 +4,7 @@ import {
   getFavorite,
   getUnconfirmedOrders,
 } from '../store/services/ProductService';
-import { shoppingBagDataName } from './constants';
+import { shoppingBagDataName, userDataName } from './constants';
 import { IProduct, IProductInBag } from './interface/productInterface';
 import { IUser } from './interface/userInterface';
 import { SortType } from './types/product';
@@ -179,7 +179,8 @@ export const getFavoriteAndOrders = (dispatch) => {
   const ISSERVER = typeof window === 'undefined';
 
   if (!ISSERVER) {
-    const user: IUser = JSON.parse(localStorage.getItem('user'));
+    const user: IUser = JSON.parse(localStorage.getItem(userDataName));
+    console.log(1, user);
 
     user && dispatch(getFavorite(user.id));
 

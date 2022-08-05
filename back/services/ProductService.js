@@ -80,7 +80,12 @@ class ProductService {
 
   async getRecommended(style, category) {
     const recommendedProduct = await Product.aggregate([
-      { $match: { productFor: category, productStyleName: style } },
+      {
+        $match: {
+          productFor: category,
+          //  productStyleName: style
+        },
+      },
       { $sample: { size: 6 } },
     ])
 

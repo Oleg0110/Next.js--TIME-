@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { useCallback, useState } from 'react';
@@ -9,12 +9,11 @@ import {
   // SaleContentBox,
   SaleMainBox,
 } from '../../styles/home';
-import { Box, Button, Typography, useMediaQuery } from '@mui/material';
-import theme, { Colors } from '../../styles/theme';
+import { Box, Typography } from '@mui/material';
+import { Colors } from '../../styles/theme';
 import ProductCarousel from '../../components/ProductCarousel';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
-// import styles from '../../styles/icons.module.scss';
 import styles from '../../styles/Home.module.scss';
 
 import 'swiper/css';
@@ -28,19 +27,6 @@ interface ISaleProps {
 }
 
 const Sale: NextPage<ISaleProps> = ({ saleCarouselProduct }) => {
-  const mediaSM = useMediaQuery(theme.breakpoints.down('sm'));
-  const mediaMD = useMediaQuery(theme.breakpoints.down('md'));
-
-  // const slidesPerView = mediaSM ? 1 : mediaMD ? 2 : 4;
-
-  const breakDa = mediaMD && {
-    900: {
-      width: 600,
-      slidesPerView: 1,
-    },
-  };
-  // console.log(slidesPerView);
-
   const { t } = useTranslation('home');
 
   const swiper = useSwiper();
@@ -76,40 +62,55 @@ const Sale: NextPage<ISaleProps> = ({ saleCarouselProduct }) => {
           modules={[Navigation, Autoplay]}
           spaceBetween={-10}
           speed={800}
-          slidesPerView={4}
+          slidesPerView="auto"
           loop
-          centeredSlides={false}
-          // autoplay={{ delay: 3000 }}
-          // breakpoints={{
-          //   410: {
-          //     slidesPerView: 1,
-          //   },
-          //   640: {
-          //     slidesPerView: 2,
-          //   },
-          //   1000: {
-          //     slidesPerView: 3,
-          //   },
-          //   1500: {
-          //     slidesPerView: 4,
-          //   },
-          // }}
+          autoplay={{ delay: 3000 }}
+          breakpoints={{
+            410: {
+              slidesPerView: 1,
+              spaceBetween: 250,
+            },
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 50,
+            },
+            1000: {
+              slidesPerView: 3,
+              spaceBetween: 80,
+            },
+            1200: {
+              slidesPerView: 3,
+              spaceBetween: 50,
+            },
+            1500: {
+              slidesPerView: 4,
+              spaceBetween: -20,
+            },
+          }}
           className={styles.myswiper}
         >
-          {saleCarouselProduct &&
-            saleCarouselProduct.map((product) => (
-              <SwiperSlide key={product.id} className={styles.swiperSlide}>
-                <ProductCarousel
-                  productDiscountPrice={product.productDiscountPrice}
-                  productFor={product.productFor}
-                  productId={product.id}
-                  productMainPictures={product.productMainPictures}
-                  productName={product.productName}
-                  productSize={product.productSize}
-                  productPrice={product.productPrice}
-                />
-              </SwiperSlide>
-            ))}
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginLeft: '150px',
+            }}
+          >
+            {saleCarouselProduct &&
+              saleCarouselProduct.map((product) => (
+                <SwiperSlide key={product.id} className={styles.swiperSlide}>
+                  <ProductCarousel
+                    productDiscountPrice={product.productDiscountPrice}
+                    productFor={product.productFor}
+                    productId={product.id}
+                    productMainPictures={product.productMainPictures}
+                    productName={product.productName}
+                    productSize={product.productSize}
+                    productPrice={product.productPrice}
+                  />
+                </SwiperSlide>
+              ))}
+          </Box>
         </Swiper>
         <div className={styles.swiperNavPrev} onClick={handleLeftClick} />
         <div className={styles.swiperNavNext} onClick={handleRightClick} />
