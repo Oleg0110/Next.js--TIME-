@@ -25,7 +25,11 @@ const Bag = () => {
   const router = useRouter();
 
   return (
-    <MainLayout>
+    <MainLayout
+      title="Bag"
+      keywords="bag, shopping bag, products in bag"
+      description="Products in bag"
+    >
       <BagPageContainer>
         <BagPageContent>
           <Typography

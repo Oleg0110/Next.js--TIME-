@@ -14,7 +14,7 @@ export const MainNavBarBox = styled(Box)(() => ({
 
 export const BurgerBox = styled(Box)(() => ({
   display: 'none',
-  width: '50px',
+  width: '100px',
   justifyContent: 'start',
   [theme.breakpoints.down('md')]: {
     display: 'block',
@@ -39,7 +39,7 @@ export const CommunicationBox = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'start',
   alignItems: 'center',
-  minWidth: '200px',
+  minWidth: '250px',
   [theme.breakpoints.down('md')]: {
     display: 'none',
   },
@@ -93,7 +93,7 @@ export const IconsBox = styled(Box)(() => ({
   minWidth: '230px',
   justifyContent: 'end',
   [theme.breakpoints.down('md')]: {
-    minWidth: '50px',
+    minWidth: '100px',
   },
 })) as typeof Box;
 
@@ -113,7 +113,7 @@ export const IconsContainerMobile = styled(Box)(() => ({
   bottom: 0,
   left: 0,
   width: '100%',
-  height: '35px',
+  height: '45px',
   zIndex: 99,
   borderTop: `1px solid ${Colors.secondaryWhite}`,
 })) as typeof Box;

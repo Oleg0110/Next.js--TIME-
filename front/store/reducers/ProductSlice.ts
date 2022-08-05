@@ -24,12 +24,14 @@ import {
   getFavorite,
   removeFromFavorite,
   paginationProductFunc,
+  globalProductSearch,
 } from '../services/ProductService';
 
 const initialState: ProductState = {
   products: [],
   productsSale: [],
   productSearch: [],
+  globalSearchProduct: [],
   productReviews: [],
   productsRecommended: [],
   ordersUnconfirmed: [],
@@ -40,6 +42,7 @@ const initialState: ProductState = {
   isLoading: false,
   isPaginationLoading: false,
   isFavoriteLoading: false,
+  isGlobalSearchLoading: false,
   error: '',
 };
 
@@ -124,6 +127,24 @@ export const productReducer = createSlice({
       action: PayloadAction<string>
     ) => {
       state.isLoading = false;
+      state.error = action.payload;
+    },
+    [globalProductSearch.fulfilled.type]: (
+      state,
+      action: PayloadAction<IProduct[]>
+    ) => {
+      state.isGlobalSearchLoading = false;
+      state.error = '';
+      state.globalSearchProduct = action.payload;
+    },
+    [globalProductSearch.pending.type]: (state) => {
+      state.isGlobalSearchLoading = true;
+    },
+    [globalProductSearch.rejected.type]: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.isGlobalSearchLoading = false;
       state.error = action.payload;
     },
     [getReview.fulfilled.type]: (

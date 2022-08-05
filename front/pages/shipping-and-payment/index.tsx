@@ -17,7 +17,11 @@ const ShippingAndPayment = () => {
   const { t } = useTranslation('shipping');
 
   return (
-    <MainLayout>
+    <MainLayout
+      title="Shipping and Payment"
+      keywords="shipping, payment, delivery"
+      description="Shipping and Payment details"
+    >
       <MainPhotoBox>
         <Typography
           variant="h1"

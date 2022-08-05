@@ -47,7 +47,11 @@ const FAQ = () => {
   const { t } = useTranslation('accordion');
 
   return (
-    <MainLayout>
+    <MainLayout
+      title="FAQ"
+      keywords="FAQ, question, questions, answer"
+      description="Main customer questions"
+    >
       <MainFAQBox>
         <ContentFAQBox>
           <>

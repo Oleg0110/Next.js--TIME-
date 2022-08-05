@@ -56,7 +56,11 @@ const PersonalOffice = () => {
   };
 
   return (
-    <MainLayout>
+    <MainLayout
+      title="Your office"
+      keywords="office, change, email, password, phone, number"
+      description="Personal office"
+    >
       {(isChange.email || isChange.delete || isChange.password) && (
         <CheckPasswordModal
           handleClose={handleClose}

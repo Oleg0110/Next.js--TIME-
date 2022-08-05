@@ -494,7 +494,7 @@ export const SearchAdminFormError = styled(ErrorMessage)(() => ({
   top: '32px',
   left: '135px',
   color: Colors.saleColor,
-})) as typeof Field;
+}));
 
 export const SearchAdminFormInput = styled(Field)(() => ({
   fontFamily: 'Roboto',

@@ -13,6 +13,7 @@ import AccountMenu from '../AccountMenu';
 import theme from '../../styles/theme';
 import styles from '../../styles/icons.module.scss';
 import Link from 'next/link';
+import GlobalProductSearch from '../GlobalProductSearch';
 
 const IconButtons = () => {
   const { ordersUnconfirmed } = useAppSelector((state) => state.product);
@@ -39,9 +40,10 @@ const IconButtons = () => {
           </Link>
         </TooltipIcon>
       )}
-      <TooltipIcon title="search">
+      {/* <TooltipIcon title="search">
         <div className={styles.search} />
-      </TooltipIcon>
+      </TooltipIcon> */}
+      <GlobalProductSearch />
       <Component>
         <ShopFavorBag who="bag" />
         <AccountMenu />

@@ -25,7 +25,7 @@ interface IProductInBag {
   productPhoto: string;
   salePrice: number;
   sizeProduct?: number;
-  who: 'bag' | 'favorite';
+  who?: 'bag' | 'favorite';
   productFor: string;
 }
 
@@ -107,22 +107,24 @@ const ProductInBag: NextPage<IProductInBag> = ({
             </Typography>
           </PriceInBagBox>
         )}
-        <RemoveBox>
-          <RemoveButton
-            onClick={async () =>
-              who === 'bag'
-                ? removeFromBag(productId, dispatch)
-                : await dispatch(
-                    removeFromFavorite({
-                      favoriteId,
-                      userId: user.id,
-                    })
-                  )
-            }
-          >
-            {t('remove')}
-          </RemoveButton>
-        </RemoveBox>
+        {who && (
+          <RemoveBox>
+            <RemoveButton
+              onClick={async () =>
+                who === 'bag'
+                  ? removeFromBag(productId, dispatch)
+                  : await dispatch(
+                      removeFromFavorite({
+                        favoriteId,
+                        userId: user.id,
+                      })
+                    )
+              }
+            >
+              {t('remove')}
+            </RemoveButton>
+          </RemoveBox>
+        )}
       </InfoContainer>
     </MainContainer>
   );

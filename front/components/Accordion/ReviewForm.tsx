@@ -1,28 +1,33 @@
 import React, { useState } from 'react';
-import { Rating, Typography } from '@mui/material';
+import { CircularProgress, Rating, Typography } from '@mui/material';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { number, object, string } from 'yup';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { addReview } from '../../store/services/ProductService';
 import { RatingBox } from '../../styles/accordion';
 import { Colors } from '../../styles/theme';
-import styles from '../../styles/AdminPage.module.scss';
+import { useTranslation } from 'next-i18next';
 import CustomButton from '../CustomButton';
+import styles from '../../styles/AdminPage.module.scss';
 
 interface IReviewForm {
   setIsOpen: (boolean: boolean) => void;
 }
 
 const ReviewForm: NextPage<IReviewForm> = ({ setIsOpen }) => {
+  const { t } = useTranslation('accordion');
+
   const [value, setValue] = useState<number | null>(2);
 
   const dispatch = useAppDispatch();
   const router = useRouter();
 
   const productId = `${router.query.id}`;
-  const userId = '6290e06eafaf40d5247f3818';
+
+  const { user } = useAppSelector((state) => state.user);
+  const { isLoading } = useAppSelector((state) => state.product);
 
   const validationSchema = object().shape({
     comment: string()
@@ -41,7 +46,7 @@ const ReviewForm: NextPage<IReviewForm> = ({ setIsOpen }) => {
           addReview({
             comment: values.comment,
             productId,
-            userId,
+            userId: user.id,
             rating: values.rating,
           })
         );
@@ -57,9 +62,8 @@ const ReviewForm: NextPage<IReviewForm> = ({ setIsOpen }) => {
                 variant="roboto16400"
                 sx={{ color: Colors.black, marginRight: '10px' }}
               >
-                Rating
+                {t('rating')}
               </Typography>
-
               <Rating
                 name="rating"
                 value={value}
@@ -89,9 +93,17 @@ const ReviewForm: NextPage<IReviewForm> = ({ setIsOpen }) => {
               placeholder="Comment"
               className={styles.textArea}
             />
-            <CustomButton size="SM" type="submit">
-              Add Review
-            </CustomButton>
+            {isLoading ? (
+              <CircularProgress
+                sx={{ color: Colors.primary, margin: '25px 0px' }}
+                disableShrink
+                size="25px"
+              />
+            ) : (
+              <CustomButton size="SM" type="submit">
+                {t('add-review')}
+              </CustomButton>
+            )}
           </Form>
         );
       }}

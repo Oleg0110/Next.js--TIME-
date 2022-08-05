@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Typography } from '@mui/material';
-import { Colors } from '../../styles/theme';
+import { Typography, useMediaQuery } from '@mui/material';
+import theme, { Colors } from '../../styles/theme';
 import { NextPage } from 'next';
 import {
   PriceCarouselProductBox,
@@ -44,6 +44,8 @@ const ProductCarousel: NextPage<IProductCarouselProps> = ({
   productMainPictures,
   productFor,
 }) => {
+  const mediaLG = useMediaQuery(theme.breakpoints.down('lg'));
+
   const { productInBag, productsFavorite } = useAppSelector(
     (state) => state.product
   );
@@ -85,8 +87,8 @@ const ProductCarousel: NextPage<IProductCarouselProps> = ({
       <CarouselProductPhoto>
         <img
           src={`${BASIC_URL}/${productMainPictures}`}
-          width="300px"
-          height="300px"
+          width={mediaLG ? '250' : '300px'}
+          height={mediaLG ? '250' : '300px'}
           onClick={() =>
             router.push(`/product/${productFor}/${productName}/${productId}`)
           }
@@ -137,6 +139,9 @@ const ProductCarousel: NextPage<IProductCarouselProps> = ({
               textAlign: 'start',
               cursor: 'pointer',
               width: '260px',
+              [theme.breakpoints.down('lg')]: {
+                width: '200px',
+              },
             }}
           >
             {productName}
@@ -145,7 +150,13 @@ const ProductCarousel: NextPage<IProductCarouselProps> = ({
         {productDiscountPrice === 0 ? (
           <Typography
             variant="roboto20200"
-            sx={{ color: Colors.black, textAlign: 'start' }}
+            sx={{
+              color: Colors.black,
+              textAlign: 'start',
+              [theme.breakpoints.down('lg')]: {
+                fontSize: '16px',
+              },
+            }}
           >
             {productPrice} UAH
           </Typography>
@@ -158,11 +169,22 @@ const ProductCarousel: NextPage<IProductCarouselProps> = ({
                 textDecoration: 'line-through',
                 textDecorationThickness: '1px',
                 marginRight: '10px',
+                [theme.breakpoints.down('lg')]: {
+                  fontSize: '16px',
+                },
               }}
             >
               {productPrice} UAH
             </Typography>
-            <Typography variant="roboto24200" color={Colors.saleColor}>
+            <Typography
+              variant="roboto24200"
+              sx={{
+                color: Colors.saleColor,
+                [theme.breakpoints.down('lg')]: {
+                  fontSize: '20px',
+                },
+              }}
+            >
               {productDiscountPrice} UAH
             </Typography>
           </PriceCarouselProductBox>

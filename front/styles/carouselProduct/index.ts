@@ -1,3 +1,4 @@
+import theme from '../theme';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
@@ -8,6 +9,10 @@ export const CarouselProductBox = styled(Box)(() => ({
   flexDirection: 'column',
   justifyContent: 'center',
   margin: '20px',
+  [theme.breakpoints.down('lg')]: {
+    margin: '10px',
+    width: '250px',
+  },
 })) as typeof Box;
 
 export const CarouselProductPhoto = styled(Box)(() => ({
@@ -20,6 +25,9 @@ export const IconPosition = styled(Box)(() => ({
   top: '10px',
   right: '15px',
   cursor: 'pointer',
+  [theme.breakpoints.down('lg')]: {
+    right: '0px',
+  },
 })) as typeof Box;
 
 export const BagIconPosition = styled(Box)(() => ({
@@ -27,6 +35,9 @@ export const BagIconPosition = styled(Box)(() => ({
   top: '15px',
   right: '15px',
   cursor: 'pointer',
+  [theme.breakpoints.down('lg')]: {
+    right: '0px',
+  },
 })) as typeof Box;
 
 export const CarouselProductInfo = styled(Box)(() => ({

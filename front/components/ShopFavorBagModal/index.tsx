@@ -3,7 +3,7 @@ import { Modal, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { Colors } from '../../styles/theme';
 import { NextPage } from 'next';
-import { MainBox } from '../../styles/ShopFavorBagModal';
+import { BagMainModalBox } from '../../styles/modal';
 import { ButtonBox, ResultBox, TotalBox } from '../../styles/shopFavorBag';
 import { useAppSelector } from '../../hooks/redux';
 import CustomButton from '../CustomButton';
@@ -37,7 +37,7 @@ const ShopFavorBagModal: NextPage<IShopFavorBagModalProps> = ({
         aria-describedby="modal-modal-description"
         disableScrollLock={true}
       >
-        <MainBox>
+        <BagMainModalBox>
           {who === 'bag' ? (
             <div>
               {productInBag &&
@@ -101,7 +101,7 @@ const ShopFavorBagModal: NextPage<IShopFavorBagModalProps> = ({
                 ))}
             </div>
           )}
-        </MainBox>
+        </BagMainModalBox>
       </Modal>
     </>
   );

@@ -9,15 +9,9 @@ import New from './home/New';
 import Sale from './home/Sale';
 
 export const getServerSideProps = async ({ locale }) => {
-  const res = await fetch(`${BASIC_URL}`);
-  // const da = await fetch(
-  //   'https://raw.githubusercontent.com/Adushar/UkraineCitiesAndVillages/main/CitiesAndVillages%20-%2014%20March.json'
-  // );
-  // const no = await da.json();
-  // console.log(no);
+  const res = await fetch(BASIC_URL);
 
   const saleCarouselProduct: IProduct[] = await res.json();
-
   return {
     props: {
       saleCarouselProduct,

@@ -25,7 +25,11 @@ const Bag = () => {
   const totalPrice = totalPriceFunc(productInBag);
 
   return (
-    <MainLayout>
+    <MainLayout
+      title="Delivery details"
+      keywords="delivery, data, postal data"
+      description="Delivery details"
+    >
       <DeliveryContainer>
         <DeliveryMainBox>
           <Typography
