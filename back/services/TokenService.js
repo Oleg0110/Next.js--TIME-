@@ -42,9 +42,9 @@ class TokenService {
   async validateAccessToken(token) {
     try {
       // console.log(jwt.verify(token, process.env.SECRET_JWT_ACCESS_PHRASE))
-      console.log(1, token)
+      // console.log(1, token)
       const userData = jwt.verify(token, process.env.SECRET_JWT_ACCESS_PHRASE, (err, decoded) => {
-        console.log(err)
+        // console.log(err)
         next()
       })
 
@@ -53,7 +53,7 @@ class TokenService {
       return null
     }
   }
-  
+
   async validateRefreshToken(token) {
     try {
       const userData = jwt.verify(token, process.env.SECRET_JWT_REFRESH_PHRASE)

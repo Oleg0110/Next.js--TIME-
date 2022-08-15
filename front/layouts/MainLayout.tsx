@@ -8,7 +8,7 @@ import { NextPage } from 'next';
 import { useAppDispatch } from '../hooks/redux';
 import { IProductInBag } from '../utils/interface/productInterface';
 import { setProductInShoppingBag } from '../store/reducers/ProductSlice';
-import { shoppingBagDataName, token } from '../utils/constants';
+import { shoppingBagDataName, tokenLocalStorageName } from '../utils/constants';
 import { checkAuth } from '../store/services/UserService';
 import { getFavoriteAndOrders } from '../utils/function';
 import Head from 'next/head';
@@ -39,11 +39,9 @@ const MainLayout: NextPage<MainLayoutProps> = ({
       const arr: IProductInBag[] =
         JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
 
-      const isAuth: string = localStorage.getItem(token);
+      const isAuth: string = localStorage.getItem(tokenLocalStorageName);
 
-      console.log(!!isAuth);
-
-      !!isAuth && (await dispatch(checkAuth()));
+      // !!isAuth && (await dispatch(checkAuth()));
 
       await dispatch(setProductInShoppingBag(arr));
     };

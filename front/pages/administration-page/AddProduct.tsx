@@ -63,7 +63,7 @@ const AddProduct: NextPage = () => {
   const validationSchema = object().shape({
     productName: string()
       .min(3, 'Too Short!')
-      .max(40, 'Too Long!')
+      .max(50, 'Too Long!')
       .required('Required'),
     productFor: string().required('Men or Women'),
     productPrice: number()

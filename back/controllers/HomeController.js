@@ -14,6 +14,7 @@ class HomeController {
   async globalProductSearch(req, res) {
     try {
       const { searchValue } = req.params
+      console.log('svsfvdfs')
 
       if (!searchValue) {
         return next(ApiErrors.BadRequest('invalid data'))
@@ -30,8 +31,6 @@ class HomeController {
   async getUnconfirmedOrders(req, res) {
     try {
       const orders = await HomeService.getUnconfirmedOrders()
-
-      console.log(orders)
 
       res.status(200).json(orders)
     } catch (e) {

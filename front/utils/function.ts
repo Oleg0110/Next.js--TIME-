@@ -180,7 +180,6 @@ export const getFavoriteAndOrders = (dispatch) => {
 
   if (!ISSERVER) {
     const user: IUser = JSON.parse(localStorage.getItem(userDataName));
-    console.log(1, user);
 
     user && dispatch(getFavorite(user.id));
 

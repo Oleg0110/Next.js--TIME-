@@ -1,6 +1,5 @@
-import axios, { AxiosInstance } from 'axios';
-import { useAppSelector } from '../hooks/redux';
-import { token } from '../utils/constants';
+import axios from 'axios';
+import { tokenLocalStorageName } from '../utils/constants';
 import { BASIC_URL } from '../utils/httpLinks';
 import { AuthResponse } from '../utils/interface/userInterface';
 
@@ -10,15 +9,17 @@ const $api = axios.create({
 });
 
 const ISSERVER = typeof window === 'undefined';
-let isToken;
+
+let currentToken;
+
 if (!ISSERVER) {
-  // const { isAuth } = useAppSelector((state) => state.user);
-  isToken = localStorage.getItem(token);
+  currentToken = localStorage.getItem(tokenLocalStorageName);
   // !!Problem
 }
+
 $api.interceptors.request.use((config) => {
-  // console.log(11, isToken);
-  config.headers.Authorization = `Bearer ${isToken}`;
+  // console.log(11, currentToken);
+  config.headers.Authorization = `Bearer ${currentToken}`;
   // console.log(config);
 
   return config;
@@ -26,10 +27,12 @@ $api.interceptors.request.use((config) => {
 
 $api.interceptors.response.use(
   (config) => {
+    // console.log(2, config);
     return config;
   },
   async (error) => {
     const originalRequest = error.config;
+
     if (
       error.response.status == 401 &&
       error.config &&
@@ -37,10 +40,16 @@ $api.interceptors.response.use(
     ) {
       originalRequest._isRetry = true;
       try {
-        const response = await axios.get<AuthResponse>(`${BASIC_URL}/refresh`, {
-          withCredentials: true,
-        });
-        localStorage.setItem(token, response.data.tokens.accessToken);
+        const response = await axios.get<AuthResponse>(
+          `${BASIC_URL}/refreshToken`,
+          {
+            withCredentials: true,
+          }
+        );
+        localStorage.setItem(
+          tokenLocalStorageName,
+          response.data.tokens.accessToken
+        );
         return $api.request(originalRequest);
       } catch (e) {
         console.log('Not authorization');
@@ -51,29 +60,3 @@ $api.interceptors.response.use(
 );
 
 export default $api;
-
-// class ApiProviderStore {
-//   private axiosWrapper: AxiosInstance;
-
-//   userToken: any;
-
-//   constructor() {
-//     this.userToken = useAppSelector;
-//     this.axiosWrapper = axios.create({ baseURL: BASIC_URL });
-//   }
-
-//   doFetch = () => {
-//     const da = this.userToken((state) => state.user);
-//     console.log(da);
-
-//     this.axiosWrapper.interceptors.request.use((config) => {
-//       console.log(11, isToken);
-//       config.headers.Authorization = `Bearer ${isToken}`;
-//       console.log(config);
-
-//       return config;
-//     });
-//   };
-// }
-
-// export default ApiProviderStore;
