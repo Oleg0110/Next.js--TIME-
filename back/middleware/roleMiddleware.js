@@ -10,12 +10,13 @@ const roleMiddleware = (roles) => {
 
     try {
       const token = req.headers.authorization.split(' ')[1] // "Bearer TOKEN"
+      console.log(token)
 
       if (!token) {
         return next(ApiErrors.NoTAuthorizedError())
       }
 
-      await TokenService.validateAccessToken(token)
+      // await TokenService.validateAccessToken(token)
       // !! Problem
       // if (!userRole) {
       //   return next(ApiErrors.NoTAuthorizedError())

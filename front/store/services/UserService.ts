@@ -28,7 +28,7 @@
 //   IRegistrationArg,
 //   ISendCodeArg,
 // } from '../../utils/interface/serviceInterface';
-// import { ROUTES, token, userDataName } from '../../utils/constants';
+// import { ROUTES, tokenLocalStorageName, userDataName } from '../../utils/constants';
 // import $api from '../../http';
 // import { IProductOrder } from '../../utils/interface/productInterface';
 
@@ -45,7 +45,7 @@
 
 //       console.log(res.data);
 
-//       localStorage.setItem(token, res.data.tokens.accessToken);
+//       localStorage.setItem(tokenLocalStorageName, res.data.tokens.accessToken);
 //       localStorage.setItem(userDataName, JSON.stringify(res.data.user));
 
 //       return res.data.user;
@@ -139,7 +139,7 @@
 //     try {
 //       const res = await $api.post<AuthResponse>(ROUTES.registration, arg);
 
-//       localStorage.setItem(token, res.data.tokens.accessToken);
+//       localStorage.setItem(tokenLocalStorageName, res.data.tokens.accessToken);
 //       localStorage.setItem(userDataName, JSON.stringify(res.data.user));
 
 //       return res.data.user;
@@ -160,7 +160,7 @@
 //         password,
 //       });
 
-//       localStorage.setItem(token, res.data.tokens.accessToken);
+//       localStorage.setItem(tokenLocalStorageName, res.data.tokens.accessToken);
 //       localStorage.setItem(userDataName, JSON.stringify(res.data.user));
 
 //       return res.data.user;
@@ -174,7 +174,7 @@
 //   try {
 //     const res = await $api.post<void>(ROUTES.logout);
 
-//     localStorage.removeItem(token);
+//     localStorage.removeItem(tokenLocalStorageName);
 //     localStorage.removeItem(userDataName);
 
 //     return {} as IUser;
@@ -259,7 +259,7 @@
 //     try {
 //       const res = await $api.delete<void>(`${ROUTES.deleteUser}/${userId}`);
 
-//       localStorage.removeItem(token);
+//       localStorage.removeItem(tokenLocalStorageName);
 
 //       return {} as IUser;
 //     } catch (error) {
@@ -284,7 +284,7 @@ import {
   IRegistrationArg,
   ISendCodeArg,
 } from '../../utils/interface/serviceInterface';
-import { ROUTES, token } from '../../utils/constants';
+import { ROUTES, tokenLocalStorageName } from '../../utils/constants';
 import $api from '../../http';
 import { IProductOrder } from '../../utils/interface/productInterface';
 
@@ -293,15 +293,11 @@ export const checkAuth = createAsyncThunk(
   'user/checkAuth',
   async (_, thunkApi) => {
     try {
-      console.log('check');
-
       const res = await axios.get<AuthResponse>(`${BASIC_URL}/refreshToken`, {
         withCredentials: true,
       });
 
-      console.log(res.data);
-
-      localStorage.setItem(token, res.data.tokens.accessToken);
+      localStorage.setItem(tokenLocalStorageName, res.data.tokens.accessToken);
       localStorage.setItem('user', JSON.stringify(res.data.user));
 
       return res.data.user;
@@ -399,7 +395,7 @@ export const registration = createAsyncThunk(
     try {
       const res = await $api.post<AuthResponse>(`/registration`, arg);
 
-      localStorage.setItem(token, res.data.tokens.accessToken);
+      localStorage.setItem(tokenLocalStorageName, res.data.tokens.accessToken);
       localStorage.setItem('user', JSON.stringify(res.data.user));
 
       return res.data.user;
@@ -420,7 +416,7 @@ export const login = createAsyncThunk(
         password,
       });
 
-      localStorage.setItem(token, res.data.tokens.accessToken);
+      localStorage.setItem(tokenLocalStorageName, res.data.tokens.accessToken);
       localStorage.setItem('user', JSON.stringify(res.data.user));
 
       return res.data.user;
@@ -434,7 +430,7 @@ export const logout = createAsyncThunk('user/logout', async (_, thunkApi) => {
   try {
     const res = await $api.post<void>(`/logout`);
 
-    localStorage.removeItem(token);
+    localStorage.removeItem(tokenLocalStorageName);
     localStorage.removeItem('user');
 
     return {} as IUser;
@@ -529,7 +525,7 @@ export const deleteUser = createAsyncThunk(
     try {
       const res = await $api.delete<void>(`/delete-user/${userId}`);
 
-      localStorage.removeItem(token);
+      localStorage.removeItem(tokenLocalStorageName);
 
       return {} as IUser;
     } catch (error) {

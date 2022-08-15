@@ -438,6 +438,7 @@ import {
   IGetRecommendedArg,
   IGetReviewArg,
 } from '../../utils/interface/serviceInterface';
+import $api from '../../http';
 
 // Get Requests
 export const getSaleProduct = createAsyncThunk(
@@ -487,7 +488,7 @@ export const paginationProductFunc = createAsyncThunk(
   ) => {
     try {
       const res = await axios.get<GetProductsResponse>(
-        `${GET_PRODUCTS}/test/${category}/posts?start=${productCount}&limit=5`,
+        `${GET_PRODUCTS}/${category}/posts?start=${productCount}&limit=5`,
         {
           params: {
             filters,
@@ -535,7 +536,9 @@ export const globalProductSearch = createAsyncThunk(
   'product/globalProductSearch',
   async (searchValue: string, thunkApi) => {
     try {
-      const res = await axios.get<IProduct[]>(`${BASIC_URL}/${searchValue}`);
+      const res = await axios.get<IProduct[]>(
+        `${BASIC_URL}/product-search/${searchValue}`
+      );
 
       return res.data;
     } catch (error) {
@@ -771,7 +774,7 @@ export const changeOrderStatus = createAsyncThunk(
     try {
       const { orderId, orderStatus } = arg;
 
-      const res = await axios.patch<IProductOrder[]>(
+      const res = await $api.patch<IProductOrder[]>(
         `${BASIC_URL}/administration-page/change-order-status`,
         {
           orderId,

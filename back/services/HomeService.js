@@ -32,6 +32,7 @@ class HomeService {
 
   async getUnconfirmedOrders() {
     const orders = await Order.find({ orderStatus: false })
+
     let dtoOrders = []
 
     orders.map((data) => dtoOrders.push({ ...new OrderDto(data) }))

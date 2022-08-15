@@ -27,8 +27,8 @@ app.use('/', user)
 app.use('/product', product)
 app.use(
   '/administration-page',
-  // roleMiddleware(['admin']),
-  // authMiddleware
+  roleMiddleware('admin'),
+  // authMiddleware,
   admin
 )
 app.use(errorMiddleware)
