@@ -13,12 +13,12 @@ import {
 import { CircularProgress, Typography } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { Colors } from '../../styles/theme';
+import { toast } from 'react-toastify';
+import { getFavoriteAndOrders } from '../../utils/function';
 import { login } from '../../store/services/UserService';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CustomButton from '../CustomButton';
-import { toast } from 'react-toastify';
-import { getFavoriteAndOrders } from '../../utils/function';
 
 const showPasswordIcon = {
   color: Colors.primary,

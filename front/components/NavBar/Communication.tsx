@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import theme, { Colors } from '../../styles/theme';
 import { useRouter } from 'next/router';
 import { Box, Typography, useMediaQuery } from '@mui/material';
-import theme, { Colors } from '../../styles/theme';
 import TooltipIcon from '../TooltipIcon/TooltipIcon';
 import styles from '../../styles/icons.module.scss';
 import Link from 'next/link';

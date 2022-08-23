@@ -10,7 +10,7 @@ import { NextPage } from 'next';
 interface TooltipIconProps {
   onClick?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   onSubmit?: () => void;
-  children: any;
+  children: React.ReactNode;
   title: TooltipTitleTypes;
   placement?: TooltipPositionTypes;
   style?: object;

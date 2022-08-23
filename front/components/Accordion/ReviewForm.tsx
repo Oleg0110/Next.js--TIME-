@@ -31,7 +31,7 @@ const ReviewForm: NextPage<IReviewForm> = ({ setIsOpen }) => {
 
   const validationSchema = object().shape({
     comment: string()
-      .min(20, 'Too Short!')
+      .min(10, 'Too Short!')
       .max(500, 'Too Long!')
       .required('Required Comment'),
     rating: number().min(1, 'Min 1 star').max(5, 'Max 5 Stars').required(),
@@ -42,7 +42,7 @@ const ReviewForm: NextPage<IReviewForm> = ({ setIsOpen }) => {
       initialValues={{ comment: '', rating: 0 }}
       validationSchema={validationSchema}
       onSubmit={async (values) => {
-        const data = await dispatch(
+        await dispatch(
           addReview({
             comment: values.comment,
             productId,
@@ -50,7 +50,6 @@ const ReviewForm: NextPage<IReviewForm> = ({ setIsOpen }) => {
             rating: values.rating,
           })
         );
-        console.log(data);
         setIsOpen(false);
       }}
     >
@@ -68,7 +67,6 @@ const ReviewForm: NextPage<IReviewForm> = ({ setIsOpen }) => {
                 name="rating"
                 value={value}
                 size="large"
-                // precision={0.5}
                 sx={{ color: Colors.primary, marginRight: '20px' }}
                 onChange={(event, newValue) => {
                   setValue(newValue);

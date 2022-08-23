@@ -5,5 +5,6 @@
   "color": "Колір",
   "style": "Стиль",
   "material": "Матеріал",
-  "apply-filters": "Застосувати"
+  "apply-filters": "Застосувати",
+  "clean-filters": "Очистити"
 }

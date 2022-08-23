@@ -78,6 +78,13 @@ export const ProductTotalPriceBox = styled(Box)(() => ({
   alignItems: 'start',
 })) as typeof Box;
 
+export const ConfirmButtonPosition = styled(Box)(() => ({
+  minWidth: '180px',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+})) as typeof Box;
+
 // Order Product
 
 export const ProductAccordionBox = styled(Box)(() => ({

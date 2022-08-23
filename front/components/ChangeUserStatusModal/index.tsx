@@ -84,7 +84,7 @@ const ChangeUserStatusModal: NextPage<IChangeUserStatusModal> = ({
                     if (res.meta.requestStatus === 'rejected') {
                       toast.error('invalid data');
                     } else {
-                      toast.success('Successfully assigned');
+                      toast.success('Successfully');
                       handleClose();
                     }
                   }}

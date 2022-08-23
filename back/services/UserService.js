@@ -1,8 +1,8 @@
+const { validationResult } = require('express-validator')
 const Role = require('../models/Role')
 const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const uuid = require('uuid')
-const { validationResult } = require('express-validator')
 const MailService = require('./MailService')
 const tokensMakeFunc = require('../utils/UserServiceFunc')
 const ApiErrors = require('../utils/apiErrors')
@@ -14,7 +14,6 @@ const FavoriteProduct = require('../models/FavoriteProduct')
 
 class UserService {
   // Get
-
   async activate(activationLink, res, next) {
     const user = await User.findOne({ activationLink })
 
@@ -23,8 +22,12 @@ class UserService {
     }
 
     user.isActivate = true
-    await user.save()
-    return res.redirect(process.env.CLIENT_URL).json({ message: 'Successful registration' })
+
+    const activatedUser = await user.save()
+
+    activatedUser.isActivate && (await MailService.sendActivationTrue(activatedUser))
+
+    return activatedUser
   }
 
   async refreshToken(refreshToken) {
@@ -47,6 +50,16 @@ class UserService {
     await TokenService.saveToken(userDto.id, tokens.refreshToken)
 
     return { user: { ...userDto }, tokens }
+  }
+
+  async getUser(refreshToken) {
+    const userData = await TokenService.findToken(refreshToken)
+
+    const user = await User.findById({ _id: userData.userId })
+
+    const dtoUser = new UserDto(user)
+
+    return dtoUser
   }
 
   async getOrders(userId) {
@@ -119,7 +132,7 @@ class UserService {
 
     await user.save()
 
-    await MailService.sendActivationMail(email, `${process.env.API_URL}/activate/${activationLink}`)
+    await MailService.sendActivationMail(email, name, surname, `${process.env.API_URL}/activate/${activationLink}`)
 
     return tokensMakeFunc(user, res, 'Please confirm your email')
   }
@@ -151,7 +164,7 @@ class UserService {
 
     for (let i = 0; i < 7; i++) {
       let pos = Math.floor(Math.random() * givenSet.length)
-      code += givenSet[pos]
+      orderNumber += givenSet[pos]
     }
 
     const { userName, userSurname, userRegion, userAddress, userPhone, userCity, userEmail } = userOrderData

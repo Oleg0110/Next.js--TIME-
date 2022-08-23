@@ -1,8 +1,7 @@
-const jwt = require('jsonwebtoken')
 const TokenService = require('../services/TokenService')
 const ApiErrors = require('../utils/apiErrors')
 
-const roleMiddleware = (roles) => {
+const roleMiddleware = () => {
   return async (req, res, next) => {
     if (req.method === 'OPTIONS') {
       return next()
@@ -10,31 +9,22 @@ const roleMiddleware = (roles) => {
 
     try {
       const token = req.headers.authorization.split(' ')[1] // "Bearer TOKEN"
-      console.log(token)
 
       if (!token) {
         return next(ApiErrors.NoTAuthorizedError())
       }
 
-      // await TokenService.validateAccessToken(token)
-      // !! Problem
-      // if (!userRole) {
-      //   return next(ApiErrors.NoTAuthorizedError())
-      // }
+      const { userRole } = await TokenService.validateAccessToken(token)
 
-      // let hasRole = false
+      if (!userRole) {
+        return next(ApiErrors.NoTAuthorizedError())
+      }
 
-      // userRole.forEach((role) => {
-      //   if (roles.includes(role)) {
-      //     hasRole = true
-      //   }
-      // })
+      if (!userRole === 'user') {
+        return next(ApiErrors.BadRequest("You don't have access"))
+      }
 
-      // if (!hasRole) {
-      //   return next(ApiErrors.BadRequest("You don't have access"))
-      // }
-
-      // next()
+      next()
     } catch (e) {
       return next(ApiErrors.NoTAuthorizedError())
     }

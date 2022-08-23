@@ -5,7 +5,7 @@ import { useTranslation } from 'next-i18next';
 import { NextPage } from 'next';
 import { Form, Formik } from 'formik';
 import {
-  ClearFilterButton,
+  CleanFilterButton,
   CustomInput,
   FilterClickPosition,
   FilterOpenBox,
@@ -83,8 +83,11 @@ const FilterMenu: NextPage<IFilterMenuProps> = ({
       setMax(event.target.value);
   };
 
-  const clearFiltersFunc = async () => {
+  const cleanFiltersFunc = async () => {
     await localStorage.setItem(filterDataName, JSON.stringify(filterReset));
+
+    setMin(filterReset.productPriceFrom);
+    setMax(filterReset.productPriceTo);
 
     if (category === 'women' || category === 'men') {
       await dispatch(getProducts({ category, filters: filterReset, sorting }));
@@ -118,7 +121,6 @@ const FilterMenu: NextPage<IFilterMenuProps> = ({
       <FilterOpenBox>
         <Formik
           initialValues={initialValues}
-          // validationSchema={validationSchema}
           onSubmit={async (values) => {
             await localStorage.setItem(filterDataName, JSON.stringify(values));
 
@@ -149,10 +151,12 @@ const FilterMenu: NextPage<IFilterMenuProps> = ({
                   <Typography variant="roboto24200" sx={styleSpan}>
                     {t('style')}
                   </Typography>
-                  {values !== filterReset && (
-                    <ClearFilterButton onClick={clearFiltersFunc}>
-                      Clear Filters
-                    </ClearFilterButton>
+                  {JSON.stringify(values) !== JSON.stringify(filterReset) ? (
+                    <CleanFilterButton onClick={cleanFiltersFunc}>
+                      {t('clean-filters')}
+                    </CleanFilterButton>
+                  ) : (
+                    <></>
                   )}
                 </InfoFilterBox>
                 <FilterOptionsBox>
@@ -238,7 +242,6 @@ const FilterMenu: NextPage<IFilterMenuProps> = ({
                     value={[min, max]}
                     onChange={(event) => handleChange(event, setFieldValue)}
                     valueLabelDisplay="auto"
-                    // getAriaValueText={valuetext}
                     max={15000}
                     min={0}
                     sx={{

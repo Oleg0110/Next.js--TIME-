@@ -13,30 +13,33 @@ const fs = require('fs')
 const ApiErrors = require('../utils/apiErrors')
 
 class AdminService {
+  // Get
   async getProducts(searchValue) {
     const productsData = await AdminFunc.regexFunc(searchValue, 'product')
 
     return productsData
   }
 
+  async getConfirmedOrders(searchValue) {
+    return await AdminFunc.regexFunc(searchValue, 'order')
+  }
+
+  async getUsers(searchValue) {
+    return await AdminFunc.regexFunc(searchValue, 'user')
+  }
+
+  async getUserInTeam() {
+    const users = await User.find({ role: ['admin', 'owner'] })
+
+    let dtoValue = []
+
+    users.map((data) => dtoValue.push({ ...new UserDto(data) }))
+
+    return dtoValue
+  }
+
+  // Post
   async addPhoto(file, productId) {
-    const findFiles = await Photo.find({ productId })
-
-    try {
-      for (let i = 0; i < findFiles.length; i++) {
-        if (fs.existsSync(`static/${findFiles[i].photoName}`)) {
-          fs.unlink(`static/${findFiles[i].photoName}`, (err) => {
-            if (err) return console.log(err)
-
-            console.log('File deleted!')
-          })
-        }
-      }
-    } catch (e) {
-      console.log(e)
-    }
-    await Photo.deleteMany({ productId })
-
     const fileName = uuid.v4() + '.jpg'
 
     const photo = new Photo({
@@ -102,6 +105,26 @@ class AdminService {
     return dtoValue
   }
 
+  // Patch
+  async changeOrderStatus(orderId, status, next) {
+    const order = await Order.findOneAndUpdate({ _id: orderId }, { orderStatus: status }, { new: true })
+
+    if (order.orderStatus !== true) {
+      return next(ApiErrors.BadRequest('invalid data'))
+    }
+
+    const dtoOrder = new OrderDto(order)
+
+    await MailService.sendConfirmOrderMail(dtoOrder)
+
+    let dtoOrders = []
+    const orders = await Order.find({ orderStatus: false })
+
+    orders.map((data) => dtoOrders.push({ ...new OrderDto(data) }))
+
+    return dtoOrders
+  }
+
   async changeProduct(
     productId,
     productName,
@@ -118,6 +141,8 @@ class AdminService {
     searchValue,
     file
   ) {
+    await AdminFunc.deletePhotos(productId)
+
     const findProduct = await Product.findById({ _id: productId })
 
     try {
@@ -168,26 +193,6 @@ class AdminService {
     return { products, dtoValue }
   }
 
-  async deleteProduct(productId, searchValue) {
-    await Product.findOneAndDelete({ _id: productId })
-
-    return await AdminFunc.regexFunc(searchValue, 'product')
-  }
-
-  async getUsers(searchValue) {
-    return await AdminFunc.regexFunc(searchValue, 'user')
-  }
-
-  async getUserInTeam() {
-    const users = await User.find({ role: ['admin', 'owner'] })
-
-    let dtoValue = []
-
-    users.map((data) => dtoValue.push({ ...new UserDto(data) }))
-
-    return dtoValue
-  }
-
   async userAssignment(userId, next) {
     const user = await User.findOneAndUpdate({ _id: userId }, { role: 'admin' }, { new: true })
 
@@ -224,27 +229,34 @@ class AdminService {
     return dtoValue
   }
 
-  async changeOrderStatus(orderId, status, next) {
-    const order = await Order.findOneAndUpdate({ _id: orderId }, { orderStatus: status }, { new: true })
+  // Delete
+  async deleteProduct(productId, searchValue, next) {
+    await AdminFunc.deletePhotos(productId)
 
-    if (order.orderStatus !== true) {
+    const findProduct = await Product.findById({ _id: productId })
+
+    try {
+      if (fs.existsSync(`static/${findProduct.productMainPictures}`)) {
+        fs.unlink(`static/${findProduct.productMainPictures}`, (err) => {
+          if (err) return console.log(err)
+
+          console.log('File deleted!')
+        })
+      }
+    } catch (e) {
+      console.log(e)
+    }
+
+    await Product.findOneAndDelete({ _id: productId })
+    const findDeletedProduct = await Product.findById({ _id: productId })
+
+    const findDeletedPhotos = await Photo.find({ productId })
+
+    if (findDeletedProduct && findDeletedPhotos[0] !== undefined) {
       return next(ApiErrors.BadRequest('invalid data'))
     }
 
-    const dtoOrder = new OrderDto(order)
-
-    await MailService.sendConfirmOrderMail(dtoOrder)
-
-    let dtoOrders = []
-    const orders = await Order.find({ orderStatus: false })
-
-    orders.map((data) => dtoOrders.push({ ...new OrderDto(data) }))
-
-    return dtoOrders
-  }
-
-  async getConfirmedOrders(searchValue) {
-    return await AdminFunc.regexFunc(searchValue, 'order')
+    return await AdminFunc.regexFunc(searchValue, 'product')
   }
 }
 

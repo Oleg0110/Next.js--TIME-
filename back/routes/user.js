@@ -1,15 +1,17 @@
 const { Router } = require('express')
 const { body } = require('express-validator')
 const UserController = require('../controllers/UserController')
+const authMiddleware = require('../middleware/authMiddleware')
 
 const router = new Router()
 
 // Get
 router.get('/activate/:link', UserController.activate)
 router.get('/refreshToken', UserController.refreshToken)
-router.get('/get-orders/:userId', UserController.getOrders)
-router.get('/check-password/:userId/:password', UserController.checkPassword)
-router.get('/send-confirm-code/:userId/:code', UserController.sendConfirmCode)
+router.get('/get-user', authMiddleware, UserController.getUser)
+router.get('/get-orders/:userId', authMiddleware, UserController.getOrders)
+router.get('/check-password/:userId/:password', authMiddleware, UserController.checkPassword)
+router.get('/send-confirm-code/:userId/:code', authMiddleware, UserController.sendConfirmCode)
 
 // Post
 router.post(
@@ -40,10 +42,10 @@ router.post('/logout', UserController.logout)
 router.post('/delivery-details/create-order', UserController.createOrder)
 
 // Patch
-router.patch('/change-user-data', UserController.changeUserData)
-router.patch('/add-user-phone', UserController.addUserPhone)
+router.patch('/change-user-data', authMiddleware, UserController.changeUserData)
+router.patch('/add-user-phone', authMiddleware, UserController.addUserPhone)
 
 // Delete
-router.delete('/delete-user/:userId', UserController.deleteUser)
+router.delete('/delete-user/:userId', authMiddleware, UserController.deleteUser)
 
 module.exports = router

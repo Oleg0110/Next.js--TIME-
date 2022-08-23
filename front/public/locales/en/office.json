@@ -16,6 +16,13 @@
   "continue": "To continue confirm code",
   "click-to-sent-code": "Click to email the code",
   "your-information": "Your Information",
+  "order-number": "Order number",
+  "address": "Address",
+  "order-info": "Order Info",
+  "total-price": "Total Price",
+  "order-status": "Order Status",
+  "size": "Size",
+  "amount": "Amount",
   "yes": "Yes",
   "no": "No"
 }

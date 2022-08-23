@@ -31,7 +31,7 @@ const ProductInAccordionOrder: NextPage<IProductInAccordionOrder> = ({
   productAmount,
   who,
 }) => {
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation('office');
 
   return (
     <ProductAccordionBox

@@ -491,7 +491,7 @@ export const SearchAdminFormBox = styled(Box)(() => ({
 
 export const SearchAdminFormError = styled(ErrorMessage)(() => ({
   position: 'absolute',
-  top: '32px',
+  top: '28px',
   left: '135px',
   color: Colors.saleColor,
 }));

@@ -1,11 +1,10 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { CircularProgress, Typography } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-import CustomButton from '../../components/CustomButton';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { createOrder } from '../../store/services/UserService';
 import {
@@ -24,14 +23,16 @@ import {
 import { cleanBag } from '../../utils/function';
 import { IUserInitialOrder } from '../../utils/interface/userInterface';
 import { object, string } from 'yup';
+import { Colors } from '../../styles/theme';
+import CustomButton from '../../components/CustomButton';
 
 const arrDataForm = [
   { id: '1', name: 'userName', placeholder: 'name' },
   { id: '2', name: 'userSurname', placeholder: 'surname' },
   { id: '3', name: 'userRegion', placeholder: 'region' },
+  { id: '6', name: 'userCity', placeholder: 'city' },
   { id: '4', name: 'userAddress', placeholder: 'address' },
   { id: '5', name: 'userPhone', placeholder: 'phone' },
-  { id: '6', name: 'userCity', placeholder: 'city' },
   { id: '7', name: 'userEmail', placeholder: 'email' },
 ];
 
@@ -43,7 +44,7 @@ const DeliveryForm: NextPage<IDeliveryForm> = ({ totalPrice }) => {
   const { t } = useTranslation('delivery');
 
   const { productInBag } = useAppSelector((state) => state.product);
-  const { user } = useAppSelector((state) => state.user);
+  const { user, isOrdersLoading } = useAppSelector((state) => state.user);
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -124,9 +125,17 @@ const DeliveryForm: NextPage<IDeliveryForm> = ({ totalPrice }) => {
                   </InputOrderBox>
                 ))}
               </FormOrderBox>
-              <CustomButton size="MD" type="submit" style={{ width: '55%' }}>
-                {t('order')}
-              </CustomButton>
+              {isOrdersLoading ? (
+                <CircularProgress
+                  sx={{ color: Colors.secondaryWhite, margin: '10px 0px' }}
+                  disableShrink
+                  size="25px"
+                />
+              ) : (
+                <CustomButton size="MD" type="submit" style={{ width: '55%' }}>
+                  {t('order')}
+                </CustomButton>
+              )}
             </Form>
           );
         }}

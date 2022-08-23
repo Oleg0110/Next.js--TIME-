@@ -41,14 +41,9 @@ class TokenService {
 
   async validateAccessToken(token) {
     try {
-      // console.log(jwt.verify(token, process.env.SECRET_JWT_ACCESS_PHRASE))
-      // console.log(1, token)
-      const userData = jwt.verify(token, process.env.SECRET_JWT_ACCESS_PHRASE, (err, decoded) => {
-        // console.log(err)
-        next()
-      })
+      const userData = jwt.verify(token, process.env.SECRET_JWT_ACCESS_PHRASE)
 
-      // return userData
+      return userData
     } catch (e) {
       return null
     }

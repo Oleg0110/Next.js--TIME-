@@ -17,7 +17,7 @@ import {
 import { removeFromBag } from '../../utils/function';
 import { BASIC_URL } from '../../utils/httpLinks';
 import { IProductInBag } from '../../utils/interface/productInterface';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik } from 'formik';
 import { number, object } from 'yup';
 import { shoppingBagDataName } from '../../utils/constants';
 import { setProductInShoppingBag } from '../../store/reducers/ProductSlice';
@@ -49,10 +49,10 @@ const ProductOnBagPage: NextPage<IProductInBag> = ({
       const arr: IProductInBag[] =
         JSON.parse(localStorage.getItem(shoppingBagDataName)) || [];
 
-      arr.forEach((data) =>
-        data.productId === productId
-          ? (data.productAmount = productAmountValue)
-          : (data.productAmount = productAmount)
+      arr.forEach(
+        (data) =>
+          data.productId === productId &&
+          (data.productAmount = productAmountValue)
       );
 
       localStorage.setItem(shoppingBagDataName, JSON.stringify(arr));

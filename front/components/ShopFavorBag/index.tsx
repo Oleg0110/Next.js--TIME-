@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import theme, { Colors } from '../../styles/theme';
 import { Typography, useMediaQuery } from '@mui/material';
 import { useTranslation } from 'next-i18next';
@@ -48,6 +48,14 @@ const ShopFavorBag: NextPage<IShopFavorBagProps> = ({ who }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    if (who === 'bag' && productInBag[0] === undefined) {
+      setAnchorEl(null);
+    } else if (who === 'favorite' && productsFavorite[0] === undefined) {
+      setAnchorEl(null);
+    }
+  }, [setAnchorEl, productInBag, productsFavorite]);
 
   return (
     <>
@@ -110,7 +118,7 @@ const ShopFavorBag: NextPage<IShopFavorBagProps> = ({ who }) => {
           variant="selectedMenu"
           anchorEl={anchorEl}
           id="account-menu"
-          open={productInBag[0] !== undefined && open}
+          open={open}
           onClose={handleClose}
           disableScrollLock={true}
         >

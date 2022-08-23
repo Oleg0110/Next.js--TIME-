@@ -4,6 +4,8 @@ const ProductDto = require('../../dtos/product-dto')
 const UserDto = require('../../dtos/user-dto')
 const Order = require('../../models/Order')
 const OrderDto = require('../../dtos/order-dto')
+const Photo = require('../../models/Photo')
+const fs = require('fs')
 
 class AdminFunc {
   regexFunc = async (searchValue, type) => {
@@ -30,41 +32,26 @@ class AdminFunc {
 
     return dtoValue
   }
+
+  deletePhotos = async (productId) => {
+    const findFiles = await Photo.find({ productId })
+
+    try {
+      for (let i = 0; i < findFiles.length; i++) {
+        if (fs.existsSync(`static/${findFiles[i].photoName}`)) {
+          fs.unlink(`static/${findFiles[i].photoName}`, (err) => {
+            if (err) return console.log(err)
+
+            console.log('File deleted!')
+          })
+        }
+      }
+    } catch (e) {
+      console.log(e)
+    }
+
+    await Photo.deleteMany({ productId })
+  }
 }
 
 module.exports = new AdminFunc()
-
-// module.exports = regexFunc = async (searchValue, type) => {
-//   const regex = new RegExp(searchValue, 'i')
-
-//   let dtoValue = []
-//   if (type === 'product') {
-//     const product = await Product.find({
-//       $or: [{ productNumber: { $regex: regex } }],
-//     }).limit(10)
-
-//     product.map((data) => dtoValue.push({ ...new ProductDto(data) }))
-//   } else if (type === 'user') {
-//     const users = await User.find({
-//       $or: [{ name: { $regex: regex } }, { surname: { $regex: regex } }, { email: { $regex: regex } }],
-//     }).limit(10)
-
-//     users.map((data) => dtoValue.push({ ...new UserDto(data) }))
-//   }
-
-//   return dtoValue
-// }
-
-// module.exports = productRegex = async (searchValue) => {
-//   console.log(2222, searchValue)
-//   const regex = new RegExp(searchValue, 'i')
-
-//   const product = await Product.find({
-//     $or: [{ productNumber: { $regex: regex } }],
-//   }).limit(10)
-
-//   let dtoProducts = []
-//   product.map((data) => dtoProducts.push({ ...new ProductDto(data) }))
-
-//   return dtoProducts
-// }

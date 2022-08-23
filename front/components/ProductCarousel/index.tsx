@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Typography, useMediaQuery } from '@mui/material';
 import theme, { Colors } from '../../styles/theme';
+import { Typography, useMediaQuery } from '@mui/material';
 import { NextPage } from 'next';
 import {
   PriceCarouselProductBox,
@@ -14,7 +14,6 @@ import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { BASIC_URL } from '../../utils/httpLinks';
 import { removeFromBag } from '../../utils/function';
-import { IProduct } from '../../utils/interface/productInterface';
 import {
   addToFavorite,
   removeFromFavorite,

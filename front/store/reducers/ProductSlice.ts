@@ -40,6 +40,7 @@ const initialState: ProductState = {
   productsFavorite: [],
   countProducts: 0,
   isLoading: false,
+  isOrderStatusLoading: false,
   isPaginationLoading: false,
   isFavoriteLoading: false,
   isGlobalSearchLoading: false,
@@ -284,18 +285,18 @@ export const productReducer = createSlice({
       state,
       action: PayloadAction<IProductOrder[]>
     ) => {
-      state.isLoading = false;
+      state.isOrderStatusLoading = false;
       state.error = '';
       state.ordersUnconfirmed = action.payload;
     },
     [changeOrderStatus.pending.type]: (state) => {
-      state.isLoading = true;
+      state.isOrderStatusLoading = true;
     },
     [changeOrderStatus.rejected.type]: (
       state,
       action: PayloadAction<string>
     ) => {
-      state.isLoading = false;
+      state.isOrderStatusLoading = false;
       state.error = action.payload;
     },
 

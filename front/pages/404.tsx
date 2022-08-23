@@ -28,7 +28,7 @@ const Error = () => {
             </Typography>
             <CustomButton
               style={{
-                marginTop: '10px',
+                margin: '10px 0px 20px',
               }}
               size="LG"
             >

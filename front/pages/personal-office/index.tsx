@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import theme, { Colors } from '../../styles/theme';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
@@ -12,9 +12,10 @@ import {
   UserInfoBox,
   UserTypographyBox,
 } from '../../styles/personalOffice';
+import { useRouter } from 'next/router';
+import { IChangeProps } from '../../utils/interface/userInterface';
 import MainLayout from '../../layouts/MainLayout';
 import CheckPasswordModal from '../../components/CheckPasswordModal';
-import { IChangeProps } from '../../utils/interface/userInterface';
 import UserNameField from './UserNameField';
 import UserSurnameField from './UserSurnameField';
 import UserEmailField from './UserEmailField';
@@ -25,7 +26,9 @@ import ChangePasswordModal from '../../components/ChangePasswordModal';
 const PersonalOffice = () => {
   const { t } = useTranslation('office');
 
-  const { user } = useAppSelector((state) => state.user);
+  const router = useRouter();
+
+  const { user, isAuth } = useAppSelector((state) => state.user);
 
   const [isChange, setIsChange] = useState<IChangeProps>({
     name: false,

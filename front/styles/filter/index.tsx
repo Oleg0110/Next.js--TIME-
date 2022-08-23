@@ -69,7 +69,7 @@ export const FilterClickPosition = styled(Box)(() => ({
   marginTop: '25px',
 })) as typeof Box;
 
-export const ClearFilterButton = styled(Button)(() => ({
+export const CleanFilterButton = styled(Button)(() => ({
   background: 'Transparent',
   border: `1px solid ${Colors.saleColor}`,
   color: Colors.saleColor,

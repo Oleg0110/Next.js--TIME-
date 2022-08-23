@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { tokenLocalStorageName } from '../utils/constants';
 import { BASIC_URL } from '../utils/httpLinks';
 import { AuthResponse } from '../utils/interface/userInterface';
+import axios from 'axios';
 
 const $api = axios.create({
   withCredentials: true,
@@ -10,24 +10,20 @@ const $api = axios.create({
 
 const ISSERVER = typeof window === 'undefined';
 
-let currentToken;
+let token;
 
 if (!ISSERVER) {
-  currentToken = localStorage.getItem(tokenLocalStorageName);
-  // !!Problem
+  token = localStorage.getItem(tokenLocalStorageName);
 }
 
 $api.interceptors.request.use((config) => {
-  // console.log(11, currentToken);
-  config.headers.Authorization = `Bearer ${currentToken}`;
-  // console.log(config);
+  config.headers.Authorization = `Bearer ${token}`;
 
   return config;
 });
 
 $api.interceptors.response.use(
   (config) => {
-    // console.log(2, config);
     return config;
   },
   async (error) => {

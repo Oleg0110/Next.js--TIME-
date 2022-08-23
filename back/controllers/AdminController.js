@@ -3,6 +3,7 @@ const AdminService = require('../services/AdminService')
 const ApiErrors = require('../utils/apiErrors')
 
 class AdminController {
+  // Get
   async getProducts(req, res, next) {
     try {
       const { searchValue } = req.params
@@ -19,6 +20,49 @@ class AdminController {
     }
   }
 
+  async getConfirmedOrders(req, res) {
+    try {
+      const { searchValue } = req.params
+
+      if (!searchValue) {
+        return next(ApiErrors.BadRequest('invalid data'))
+      }
+
+      const orders = await AdminService.getConfirmedOrders(searchValue)
+
+      res.status(200).json(orders)
+    } catch (e) {
+      res.status(500).json(e.message)
+    }
+  }
+
+  async getUsers(req, res, next) {
+    try {
+      const { searchValue } = req.params
+
+      if (!searchValue) {
+        return next(ApiErrors.BadRequest('invalid data'))
+      }
+
+      const users = await AdminService.getUsers(searchValue)
+
+      res.status(200).json(users)
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  async getUserInTeam(req, res, next) {
+    try {
+      const users = await AdminService.getUserInTeam()
+
+      res.status(200).json(users)
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  // Post
   async addPhoto(req, res, next) {
     try {
       const { file } = req.files
@@ -101,6 +145,23 @@ class AdminController {
     }
   }
 
+  // Patch
+  async changeOrderStatus(req, res, next) {
+    try {
+      const { orderId, orderStatus } = req.body
+
+      if (!orderId && !orderStatus) {
+        return next(ApiErrors.BadRequest('invalid data'))
+      }
+
+      const changedOrder = await AdminService.changeOrderStatus(orderId, orderStatus, next)
+
+      res.status(200).json(changedOrder)
+    } catch (e) {
+      res.status(500).json(e.message)
+    }
+  }
+
   async changeProduct(req, res, next) {
     try {
       const { file } = req.files
@@ -171,49 +232,6 @@ class AdminController {
     }
   }
 
-  async deleteProduct(req, res, next) {
-    try {
-      const { productId, searchValue } = req.params
-
-      if (!productId && !searchValue) {
-        return next(ApiErrors.BadRequest('invalid data'))
-      }
-
-      const deletedProduct = await AdminService.deleteProduct(productId, searchValue)
-      if (deletedProduct !== undefined || null) {
-        res.status(200).json({ message: 'Product was deleted', deletedProduct })
-      }
-    } catch (e) {
-      next(e)
-    }
-  }
-
-  async getUsers(req, res, next) {
-    try {
-      const { searchValue } = req.params
-
-      if (!searchValue) {
-        return next(ApiErrors.BadRequest('invalid data'))
-      }
-
-      const users = await AdminService.getUsers(searchValue)
-
-      res.status(200).json(users)
-    } catch (e) {
-      next(e)
-    }
-  }
-
-  async getUserInTeam(req, res, next) {
-    try {
-      const users = await AdminService.getUserInTeam()
-
-      res.status(200).json(users)
-    } catch (e) {
-      next(e)
-    }
-  }
-
   async userAssignment(req, res, next) {
     try {
       const { userId } = req.body
@@ -246,35 +264,21 @@ class AdminController {
     }
   }
 
-  async changeOrderStatus(req, res, next) {
+  // Delete
+  async deleteProduct(req, res, next) {
     try {
-      const { orderId, orderStatus } = req.body
+      const { productId, searchValue } = req.params
 
-      if (!orderId && !orderStatus) {
+      if (!productId && !searchValue) {
         return next(ApiErrors.BadRequest('invalid data'))
       }
 
-      const changedOrder = await AdminService.changeOrderStatus(orderId, orderStatus, next)
-
-      res.status(200).json(changedOrder)
-    } catch (e) {
-      res.status(500).json(e.message)
-    }
-  }
-
-  async getConfirmedOrders(req, res) {
-    try {
-      const { searchValue } = req.params
-
-      if (!searchValue) {
-        return next(ApiErrors.BadRequest('invalid data'))
+      const deletedProduct = await AdminService.deleteProduct(productId, searchValue, next)
+      if (deletedProduct !== undefined || null) {
+        res.status(200).json({ message: 'Product was deleted', deletedProduct })
       }
-
-      const orders = await AdminService.getConfirmedOrders(searchValue)
-
-      res.status(200).json(orders)
     } catch (e) {
-      res.status(500).json(e.message)
+      next(e)
     }
   }
 }

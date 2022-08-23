@@ -18,10 +18,10 @@ const Catalog = () => {
       <Link href={ROUTES.men}>
         <Typography variant="roboto24200hover">{t('men-products')}</Typography>
       </Link>
-      <Link href={ROUTES.sale}>
+      <Link href={ROUTES.saleWomen}>
         <Typography variant="roboto24200hover">{t('sale-footer')}</Typography>
       </Link>
-      <Link href={ROUTES.new}>
+      <Link href={ROUTES.newWomen}>
         <Typography variant="roboto24200hover">{t('new-footer')}</Typography>
       </Link>
     </>

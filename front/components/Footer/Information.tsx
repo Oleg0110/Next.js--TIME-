@@ -1,10 +1,9 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
-import { Colors } from '../../styles/theme';
 import { ROUTES } from '../../utils/constants';
-import Link from 'next/link';
 import { useAppSelector } from '../../hooks/redux';
+import Link from 'next/link';
 
 const Information = () => {
   const { t } = useTranslation('common');

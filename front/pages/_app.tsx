@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import CssBaseline from '@mui/material/CssBaseline';
 import createEmotionCache from '../createEmotionCache';
 import theme from '../styles/theme/index';
+
 import 'react-toastify/dist/ReactToastify.css';
 import '../styles/global.scss';
 

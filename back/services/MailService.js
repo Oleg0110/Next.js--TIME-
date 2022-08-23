@@ -13,22 +13,53 @@ class MailService {
     })
   }
 
-  async sendActivationMail(to, activateLink) {
+  async sendActivationMail(to, name, surname, activateLink) {
     await this.transporter.sendMail({
       from: process.env.SMTP_USER,
       to,
       subject: `Activation account on ${process.env.API_URL}`,
       html: `
-      <div>
-        <h1>For activation click on this link</h1>
-        <a href=${activateLink}>${activateLink}</a>
+      <div style="background:#685248; padding:10px">
+        <div style="background:#685248; padding:10px; border:2px solid #fff;">
+          <h1 style="color:#fff;">For activation click on this link</h1>
+          <a style="text-decoration: none; color:#c4c4c4; font-size:25px; text-align:center" href=${activateLink}> 
+            >>>>>>>>>> Click to activate your account <<<<<<<<<<
+            </a>
+          <h4 style="color:#fff;">Attention:</h4>
+          <p style="text-align:start">
+            ${name} If you have any questions, please email or call us.
+          </p>
+          <h4 style="color:#fff;">Phone numbers: <a style="text-decoration: none; color:#fff;" href='tel:+310 55-555-55'>+310 55-555-55 </a>, <a style="text-decoration: none" href='tel:+380 55-555-55'> +380 55-555-55</a> </h2>
+          <h4 style="color:#fff;">Email: <span style="color:#000; text-decoration: none">${process.env.SMTP_USER}</span> </h2>
+          <h3 style="color:#fff;">Thank you ${name} ${surname}.</h3>
+        </div>
+      `,
+    })
+  }
+
+  async sendActivationTrue(activatedUser) {
+    const { email, name, surname } = activatedUser
+    await this.transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to: email,
+      subject: `Dear ${name} ${surname} your account was activated !`,
+      html: `
+      <div style="background:#685248; padding:10px">
+        <div style="background:#685248; padding:10px; border:2px solid #fff;">
+          <h4 style="color:#fff;">Attention:</h4>
+          <p style="text-align:start">
+            ${name} If you have any questions, please email or call us.
+          </p>
+          <h4 style="color:#fff;">Phone numbers: <a style="text-decoration: none" href='tel:+310 55-555-55'>+310 55-555-55 </a>, <a style="text-decoration: none" href='tel:+380 55-555-55'> +380 55-555-55</a> </h2>
+          <h4 style="color:#fff;">Email: <span style="color:#000; text-decoration: none">${process.env.SMTP_USER}</span> </h2>
+          <h3 style="color:#fff;">Thank you ${name} ${surname}.</h3>
+        </div>
       </div>
       `,
     })
   }
 
   async sendOrderToUs(orderNumber, userName, userSurname) {
-    // this.transporter.verify().then(console.log).catch(console.error)
     await this.transporter.sendMail({
       from: process.env.SMTP_USER,
       to: process.env.SMTP_USER,
@@ -148,7 +179,7 @@ class MailService {
       html: `
       <div style="background:#685248; padding:10px">
         <div style="background:#685248; padding:10px; border:2px solid #fff;">
-        <h1 style="color:#fff;">Code to Confirm: <span style="color:#c4c4c4; font-size:30px; width:100%" >${code}</span></h1>
+          <h1 style="color:#fff;">Code to Confirm: <span style="color:#c4c4c4; font-size:30px; width:100%" >${code}</span></h1>
           <h4 style="color:#fff;">Attention:</h4>
           <p style="text-align:start">
             ${name} If you have any questions, please email or call us.
