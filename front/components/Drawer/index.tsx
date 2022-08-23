@@ -9,10 +9,10 @@ import {
 } from '@mui/material';
 import { BUTTONS } from '../../utils/constants';
 import { useTranslation } from 'next-i18next';
-import Link from 'next/link';
 import { useState } from 'react';
 import { CommunicationMenuBox, HoverNavbar } from '../../styles/navBar';
 import { Colors } from '../../styles/theme';
+import Link from 'next/link';
 import Communication from '../NavBar/Communication';
 import styles from '../../styles/icons.module.scss';
 
@@ -43,7 +43,6 @@ const SwipeableTemporaryDrawer = () => {
 
   const list = (anchor: Anchor) => (
     <Box
-      // onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
       role="presentation"
       sx={{

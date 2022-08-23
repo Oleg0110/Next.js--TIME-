@@ -144,7 +144,7 @@ const theme = createTheme({
                 marginTop: 24,
                 border: '1px solid',
                 minWidth: '490px',
-                minHeight: '300px',
+                minHeight: '200px',
                 borderRadius: '0px',
                 boxShadow: 'none',
                 maxHeight: '500px',
@@ -193,7 +193,6 @@ const theme = createTheme({
             margin: '0px',
             background: Colors.primary,
             borderBottom: `1px solid ${Colors.secondaryWhite}`,
-            // width: '100%',
           },
         },
         {

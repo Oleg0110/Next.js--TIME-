@@ -6,7 +6,6 @@ import { logout } from '../../store/services/UserService';
 import { AuthBox, FormAuthButtonPosition } from '../../styles/accountMenu';
 import { Colors } from '../../styles/theme';
 import { clearFavorite } from '../../store/reducers/ProductSlice';
-import { Router } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import Link from 'next/link';

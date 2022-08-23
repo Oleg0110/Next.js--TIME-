@@ -30,12 +30,12 @@ import {
 } from '../../utils/constants';
 import { firstLetterUpper } from '../../utils/function';
 import { SortType } from '../../utils/types/product';
+import { useTranslation } from 'next-i18next';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import FilterMenu from '../../components/FilterMenu';
 import ProductOnPage from '../../components/ProductOnPage';
 import SortingMenu from '../../components/SortingMenu';
 import MainLayout from '../../layouts/MainLayout';
-import { useTranslation } from 'next-i18next';
 
 export const getServerSideProps = async (context) => {
   const category: string = JSON.parse(JSON.stringify(context.query.category));

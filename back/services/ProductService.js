@@ -6,11 +6,11 @@ const Product = require('../models/Product')
 const Photo = require('../models/Photo')
 const User = require('../models/User')
 const Review = require('../models/Review')
-const UserDto = require('../dtos/user-dto')
 const FavoriteProduct = require('../models/FavoriteProduct')
 const FavoriteProductDto = require('../dtos/favoriteProduc-dto')
 
 class ProductService {
+  // Get
   async getProduct(productId) {
     const product = await Product.findOne({ _id: productId })
 
@@ -66,15 +66,6 @@ class ProductService {
       })
       .sort((a, b) => a.date - b.date)
 
-    let count = 0
-
-    for (let i = 0; i < reviewsArr.length; i++) {
-      const rev = reviewsArr[i]
-      count += rev.rating
-    }
-
-    const averageRating = Math.round(count / reviewsArr.length)
-
     return reviewsArr
   }
 
@@ -95,6 +86,7 @@ class ProductService {
     return dtoValue
   }
 
+  // Post
   async addReview(comment, productId, userId, rating) {
     const user = await User.findById({ _id: userId })
     const userName = `${user.name} ${user.surname}`
@@ -108,7 +100,15 @@ class ProductService {
 
     reviews.map((data) => dtoValue.push({ ...new ReviewDto(data) }))
 
-    return dtoValue
+    const reviewsArr = dtoValue
+      .map((data) => {
+        let currentDate = Date.parse(new Date())
+        let days = Math.round((currentDate - Date.parse(data.date)) / 86400000)
+        return { ...data, date: days }
+      })
+      .sort((a, b) => a.date - b.date)
+
+    return reviewsArr
   }
 
   async addProductToFavorite(productId, userId) {
@@ -130,6 +130,7 @@ class ProductService {
     return dtoValue
   }
 
+  // Delete
   async removeProductToFavorite(favoriteId, userId) {
     await FavoriteProduct.findByIdAndDelete({ _id: favoriteId })
 

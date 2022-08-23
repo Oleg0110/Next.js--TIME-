@@ -11,7 +11,6 @@ export const MainProductPageContainer = styled(Box)(() => ({
   height: '100%',
   margin: 0,
   padding: '30px 10px 30px 10px',
-  // flexDirection: 'column',
 })) as typeof Box;
 
 export const ProductPageMainBox = styled(Box)(() => ({
@@ -75,14 +74,6 @@ export const PriceProductPageBox = styled(Box)(() => ({
   alignItems: 'center',
 })) as typeof Box;
 
-// export const MakePhotoBox = styled(Box)(() => ({
-//   maxWidth: '500px',
-//   marginBottom: '40px',
-//   [theme.breakpoints.down('md')]: {
-//     margin: 'auto',
-//   },
-// })) as typeof Box;
-
 export const PhotoDescriptionBox = styled(Box)(() => ({
   width: '65%',
   display: 'flex',
@@ -94,17 +85,6 @@ export const PhotoDescriptionBox = styled(Box)(() => ({
     width: '100%',
   },
 })) as typeof Box;
-
-// export const CleanPhotoBox = styled(Box)(() => ({
-//   maxWidth: '790px',
-//   maxHeight: '1100px',
-//   marginTop: '50px',
-//   [theme.breakpoints.down('sm')]: {
-//     marginBottom: '100px',
-//     maxWidth: '400px',
-//     maxHeight: '550px',
-//   },
-// })) as typeof Box;
 
 export const ProductNameMainBox = styled(Box)(() => ({
   position: 'relative',

@@ -3,17 +3,12 @@ import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { useCallback, useState } from 'react';
 import { IProduct } from '../../utils/interface/productInterface';
-import {
-  // ButtonArrowNext,
-  // ButtonArrowPrev,
-  // SaleContentBox,
-  SaleMainBox,
-} from '../../styles/home';
+import { SaleMainBox } from '../../styles/home';
 import { Box, Typography } from '@mui/material';
 import { Colors } from '../../styles/theme';
-import ProductCarousel from '../../components/ProductCarousel';
-import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper';
+import { Navigation, Autoplay } from 'swiper';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import ProductCarousel from '../../components/ProductCarousel';
 import styles from '../../styles/Home.module.scss';
 
 import 'swiper/css';
@@ -48,13 +43,6 @@ const Sale: NextPage<ISaleProps> = ({ saleCarouselProduct }) => {
         <Typography variant="h1" color={Colors.black}>
           {t('sale')}
         </Typography>
-
-        {/* <ButtonArrowPrev onClick={handleLeftClick}>
-          <div className={styles.carouselArrowPrev} />
-        </ButtonArrowPrev>
-        <ButtonArrowNext onClick={handleRightClick}>
-          <div className={styles.carouselArrowNext} />
-        </ButtonArrowNext> */}
       </SaleMainBox>
       <Box sx={{ width: '100%', position: 'relative', margin: '0px 0px 40px' }}>
         <Swiper

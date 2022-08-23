@@ -194,33 +194,3 @@ export const SaleMainBox = styled(Box)(() => ({
   padding: '0px 10px',
   margin: '70px 0px 50px',
 })) as typeof Box;
-
-// export const SaleContentBox = styled(Box)(() => ({
-//   display: 'flex',
-//   flexDirection: 'column',
-//   alignItems: 'center',
-//   width: '1430px',
-//   position: 'relative',
-// })) as typeof Box;
-
-// export const ButtonArrowPrev = styled(Box)(() => ({
-//   position: 'absolute',
-//   cursor: 'pointer',
-//   zIndex: '3',
-//   left: '-3%',
-//   top: '40%',
-//   [theme.breakpoints.down('md')]: {
-//     display: 'none',
-//   },
-// })) as typeof Box;
-
-// export const ButtonArrowNext = styled(Box)(() => ({
-//   position: 'absolute',
-//   cursor: 'pointer',
-//   zIndex: '3',
-//   right: '-3%',
-//   top: '40%',
-//   [theme.breakpoints.down('md')]: {
-//     display: 'none',
-//   },
-// })) as typeof Box;

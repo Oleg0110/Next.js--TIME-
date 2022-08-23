@@ -15,10 +15,10 @@ import {
 } from '../../styles/accountMenu';
 import { Colors } from '../../styles/theme';
 import { stringRegExp } from '../../utils/constants';
+import { toast } from 'react-toastify';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CustomButton from '../CustomButton';
-import { toast } from 'react-toastify';
 
 const showPasswordIcon = {
   color: Colors.primary,
@@ -106,7 +106,9 @@ const Registration = () => {
           if (res.meta.requestStatus === 'rejected') {
             toast.error('Invalid data');
           } else {
-            toast.success('Successfully registration');
+            toast.success(
+              'Successfully, please activate your account, check your email'
+            );
           }
         }}
       >

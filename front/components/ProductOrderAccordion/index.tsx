@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { Colors } from '../../styles/theme';
 import { IProductOrder } from '../../utils/interface/productInterface';
 import {
+  ConfirmButtonPosition,
   CustomerInfoBox,
   DetailsOrderAccordion,
   OrderInformationBox,
@@ -34,7 +35,7 @@ const ProductOrderAccordion: NextPage<IProductOrderAccordion> = ({
 
   const [expanded, setExpanded] = useState(true);
 
-  const { isLoading } = useAppSelector((state) => state.product);
+  const { isOrderStatusLoading } = useAppSelector((state) => state.product);
 
   const {
     orderNumber,
@@ -210,28 +211,33 @@ const ProductOrderAccordion: NextPage<IProductOrderAccordion> = ({
               )}
             </Typography>
           </ProductTotalPriceBox>
-          {!orderStatus && (
-            <CustomButton
-              size="SM"
-              onClick={async () => {
-                const res = await dispatch(
-                  changeOrderStatus({ orderId: id, orderStatus: true })
-                );
-
-                if (res.meta.requestStatus === 'fulfilled') {
-                  toast.success('Order is successful confirm');
-                } else {
-                  toast.error('Problem with confirm, please try again');
-                }
-              }}
-            >
-              {isLoading ? (
-                <CircularProgress disableShrink size="2rem" />
+          <ConfirmButtonPosition>
+            {!orderStatus &&
+              (isOrderStatusLoading ? (
+                <CircularProgress
+                  sx={{ color: Colors.primary, margin: '25px 0px' }}
+                  disableShrink
+                  size="25px"
+                />
               ) : (
-                `${t('confirm')}`
-              )}
-            </CustomButton>
-          )}
+                <CustomButton
+                  size="SM"
+                  onClick={async () => {
+                    const res = await dispatch(
+                      changeOrderStatus({ orderId: id, orderStatus: true })
+                    );
+
+                    if (res.meta.requestStatus === 'fulfilled') {
+                      toast.success('Order is successful confirm');
+                    } else {
+                      toast.error('Problem with confirm, please try again');
+                    }
+                  }}
+                >
+                  {t('confirm')}
+                </CustomButton>
+              ))}
+          </ConfirmButtonPosition>
         </OrderInformationBox>
       </DetailsOrderAccordion>
     </ProductOrderAccordionBox>

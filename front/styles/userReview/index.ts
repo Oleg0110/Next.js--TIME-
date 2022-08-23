@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import { Box, Button } from '@mui/material';
-import { Colors } from '../theme';
+import theme, { Colors } from '../theme';
 
 export const UserReviewManiContainer = styled(Box)(() => ({
   width: '95%',
@@ -12,12 +12,21 @@ export const UserReviewManiContainer = styled(Box)(() => ({
   padding: '10px',
   borderBottom: `1px solid ${Colors.primary}`,
   position: 'relative',
+  [theme.breakpoints.down('sm')]: {
+    padding: '5px',
+    minHeight: '60px',
+  },
 })) as typeof Box;
 
 export const ReviewUser = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   padding: '10px',
+  alignItems: 'center',
+  justifyContent: 'center',
+  [theme.breakpoints.down('sm')]: {
+    padding: '5px',
+  },
 })) as typeof Box;
 
 export const CommentField = styled(Box)(() => ({
@@ -29,6 +38,11 @@ export const CommentField = styled(Box)(() => ({
   minHeight: '75px',
   borderLeft: `1px solid ${Colors.lightGray}`,
   wordBreak: 'break-word',
+  [theme.breakpoints.down('sm')]: {
+    minHeight: '50px',
+    padding: ' 0px 0px 10px 10px',
+    marginBottom: '10px',
+  },
 })) as typeof Box;
 
 export const CommentDate = styled(Box)(() => ({
@@ -40,7 +54,10 @@ export const CommentDate = styled(Box)(() => ({
 export const TextButtonPosition = styled(Box)(() => ({
   position: 'absolute',
   bottom: '2%',
-  left: '26%',
+  left: '130px',
+  [theme.breakpoints.down('sm')]: {
+    left: '90px',
+  },
 })) as typeof Box;
 
 export const TextButton = styled(Button)(() => ({

@@ -4,9 +4,9 @@ const Product = require('../models/Product')
 const Order = require('../models/Order')
 const FavoriteProductDto = require('../dtos/favoriteProduc-dto')
 const FavoriteProduct = require('../models/FavoriteProduct')
-const AdminFunc = require('../utils/functions/AdminFunc')
 
 class HomeService {
+  // Get
   async getProductSale() {
     const saleProduct = await Product.aggregate([{ $match: { productSale: true } }, { $sample: { size: 6 } }])
     let dtoProducts = []
@@ -14,20 +14,6 @@ class HomeService {
     saleProduct.map((data) => dtoProducts.push({ ...new ProductDto(data) }))
 
     return dtoProducts
-  }
-
-  async globalProductSearch(searchValue) {
-    const regex = new RegExp(searchValue, 'i')
-
-    let dtoValue = []
-
-    const product = await Product.find({
-      $or: [{ productNumber: { $regex: regex } }, { productName: { $regex: regex } }],
-    }).limit(5)
-
-    product.map((data) => dtoValue.push({ ...new ProductDto(data) }))
-
-    return dtoValue
   }
 
   async getUnconfirmedOrders() {
@@ -46,6 +32,20 @@ class HomeService {
     let dtoValue = []
 
     favoriteProducts.map((data) => dtoValue.push({ ...new FavoriteProductDto(data) }))
+
+    return dtoValue
+  }
+
+  async globalProductSearch(searchValue) {
+    const regex = new RegExp(searchValue, 'i')
+
+    let dtoValue = []
+
+    const product = await Product.find({
+      $or: [{ productNumber: { $regex: regex } }, { productName: { $regex: regex } }],
+    }).limit(5)
+
+    product.map((data) => dtoValue.push({ ...new ProductDto(data) }))
 
     return dtoValue
   }

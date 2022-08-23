@@ -19,7 +19,7 @@ interface MainLayoutProps {
   title?: string;
   keywords?: string;
   description?: string;
-  children?: any;
+  children?: React.ReactNode;
 }
 
 const MainLayout: NextPage<MainLayoutProps> = ({
@@ -41,7 +41,7 @@ const MainLayout: NextPage<MainLayoutProps> = ({
 
       const isAuth: string = localStorage.getItem(tokenLocalStorageName);
 
-      // !!isAuth && (await dispatch(checkAuth()));
+      !!isAuth && (await dispatch(checkAuth()));
 
       await dispatch(setProductInShoppingBag(arr));
     };
@@ -66,7 +66,7 @@ const MainLayout: NextPage<MainLayoutProps> = ({
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="UTF-8" />
-        <link rel="icon" href="/heart-icon.ico" />
+        <link rel="icon" href="/high-heels.ico" />
       </Head>
       <MainNavBarContainer>
         <Navbar />

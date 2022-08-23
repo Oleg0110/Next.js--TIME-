@@ -1,4 +1,3 @@
-const User = require('../models/User')
 const UserService = require('../services/UserService.js')
 const ApiErrors = require('../utils/apiErrors')
 
@@ -9,10 +8,12 @@ class UserController {
       const activationLink = req.params.link
 
       const activatedUser = await UserService.activate(activationLink, res, next)
-      // if (activatedUser.isActivate){
-      //   return res.redirect(process.env.CLIENT_URL).json({ message: 'Successful registration' })
-      // }
-      return activatedUser
+
+      if (!activatedUser.isActivate) {
+        return next(ApiErrors.BadRequest('invalid data'))
+      }
+
+      return res.redirect(process.env.CLIENT_URL)
     } catch (e) {
       return next(e)
     }
@@ -21,16 +22,28 @@ class UserController {
   async refreshToken(req, res, next) {
     try {
       const { refreshToken } = req.cookies
-      // console.log(refreshToken)
-
       const userData = await UserService.refreshToken(refreshToken)
-      // console.log(userData)
 
       res.cookie('refreshToken', userData.tokens.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true })
 
       return res.status(200).json({ message: 'Successful refresh token', ...userData })
     } catch (e) {
       return next(e)
+    }
+  }
+
+  async getUser(req, res) {
+    try {
+      const { refreshToken } = req.cookies
+
+      if (!refreshToken) {
+        return next(ApiErrors.BadRequest('invalid data'))
+      }
+      const user = await UserService.getUser(refreshToken)
+
+      res.status(200).json(user)
+    } catch (e) {
+      res.status(500).json(e.message)
     }
   }
 

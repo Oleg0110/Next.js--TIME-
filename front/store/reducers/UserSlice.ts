@@ -6,6 +6,7 @@ import {
   changeUserData,
   checkAuth,
   checkPassword,
+  createOrder,
   deleteUser,
   getOrders,
   getSearchUser,
@@ -150,6 +151,17 @@ export const userReducer = createSlice({
     },
     [logout.rejected.type]: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
+      state.error = action.payload;
+    },
+    [createOrder.fulfilled.type]: (state) => {
+      state.isOrdersLoading = false;
+      state.error = '';
+    },
+    [createOrder.pending.type]: (state) => {
+      state.isOrdersLoading = true;
+    },
+    [createOrder.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isOrdersLoading = false;
       state.error = action.payload;
     },
 

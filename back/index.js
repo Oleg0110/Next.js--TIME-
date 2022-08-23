@@ -25,12 +25,7 @@ app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }))
 app.use('/', home)
 app.use('/', user)
 app.use('/product', product)
-app.use(
-  '/administration-page',
-  roleMiddleware('admin'),
-  // authMiddleware,
-  admin
-)
+app.use('/administration-page', roleMiddleware(), authMiddleware, admin)
 app.use(errorMiddleware)
 
 const asyncStart = async () => {

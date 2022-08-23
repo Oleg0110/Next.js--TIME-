@@ -5,9 +5,8 @@ import {
   getUnconfirmedOrders,
 } from '../store/services/ProductService';
 import { shoppingBagDataName, userDataName } from './constants';
-import { IProduct, IProductInBag } from './interface/productInterface';
+import { IProductInBag } from './interface/productInterface';
 import { IUser } from './interface/userInterface';
-import { SortType } from './types/product';
 
 export const firstLetterUpper = (category: string) => {
   let str;
@@ -120,46 +119,6 @@ export const cleanBag = (dispatch) => {
 
   dispatch(setProductInShoppingBag([]));
 };
-
-// const discountSort = (copyArrProduct: IProduct[]) => {
-//   const sorted = copyArrProduct
-//     .map((data) => {
-//       let percentageSale;
-//       if (data.productSale === true) {
-//         percentageSale = Math.floor(
-//           100 - (data.productDiscountPrice * 100) / data.productPrice
-//         );
-//       } else {
-//         percentageSale = 0;
-//       }
-
-//       return { ...data, percentageSale };
-//     })
-//     .sort((a, b) => b.percentageSale - a.percentageSale);
-
-//   return sorted;
-// };
-
-// export const sortProduct = (product: IProduct[], sort: SortType) => {
-//   const copyArrProduct: IProduct[] = JSON.parse(JSON.stringify(product));
-
-//   switch (sort) {
-//     case 'cheap to expensive':
-//       return copyArrProduct.sort((a, b) => a.productPrice - b.productPrice);
-
-//     case 'expensive to cheap':
-//       return copyArrProduct.sort((a, b) => b.productPrice - a.productPrice);
-
-//     case 'novelty':
-//       return copyArrProduct.sort((a, b) => b.date - a.date);
-
-//     case 'maximum discount':
-//       return discountSort(copyArrProduct);
-
-//     default:
-//       break;
-//   }
-// };
 
 export const totalPriceFunc = (productInBag: IProductInBag[]) => {
   let totalPrice: number = 0;

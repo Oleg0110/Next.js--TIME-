@@ -9,15 +9,14 @@ import {
 } from '../../styles/accordion';
 import { NextPage } from 'next';
 import { ListItem, Rating } from '@mui/material';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useAppSelector } from '../../hooks/redux';
+import { toast } from 'react-toastify';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ReviewForm from './ReviewForm';
-import { useAppSelector } from '../../hooks/redux';
-import { toast } from 'react-toastify';
 
 type VariantAccordionType = 'elevation' | 'outlined';
 
@@ -38,7 +37,7 @@ type TextAccordionType = {
 
 interface ICustomAccordionPros {
   title: string;
-  textArr?: any;
+  textArr?: TextAccordionType;
   accordionVariant: VariantAccordionType;
   children?: ReactNode;
   averageRating?: number;
@@ -131,7 +130,7 @@ const CustomAccordion: NextPage<ICustomAccordionPros> = ({
               {!isOpen && (
                 <OpenComment
                   onClick={() =>
-                    !isAuth
+                    isAuth
                       ? setIsOpen(!isOpen)
                       : toast.warning('Please Login to add review')
                   }

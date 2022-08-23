@@ -14,8 +14,6 @@ const material = [
   'artificial materials',
   'fiber',
 ]
-const priceFrom = 0
-const priceTo = 15000
 
 const comparativeFunc = (where, what) => {
   for (var i = 0; i < what.length; i++) {
@@ -45,27 +43,6 @@ const whatSortFunc = (sorting) => {
 
 class ProductFunc {
   chooseCurrentPageFunc = async (category, skip, filters, limit, sorting) => {
-    // if (discount) {
-    //   if (category === 'new')
-    //     return await Product.find({ productNew: true, productDiscountPrice: { $gt: 0 } })
-    //       .skip(skip)
-    //       .limit(1)
-    //   if (category === 'sale')
-    //     return await Product.find({ productSale: true, productDiscountPrice: { $gt: 0 } })
-    //       .skip(skip)
-    //       .limit(1)
-
-    //   return await Product.find({ productFor: category, productDiscountPrice: { $gt: 0 } })
-    //     .skip(skip)
-    //     .limit(1)
-    // }
-
-    // if (category === 'new') return await Product.find({ productNew: true }).skip(skip).limit(1)
-    // if (category === 'sale') return await Product.find({ productSale: true }).skip(skip).limit(1)
-    // const res = await Product.aggregate([
-    //   { $match: { productColor: { $elemMatch: ['black', 'pink'] }, productFor: category } },
-    // ])
-
     const sortData = whatSortFunc(sorting)
 
     const { productColor, productStyleName, productSize, productStyleMaterial, productPriceFrom, productPriceTo } =

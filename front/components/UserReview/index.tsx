@@ -8,7 +8,7 @@ import {
   TextButton,
   TextButtonPosition,
 } from '../../styles/userReview';
-import { Colors } from '../../styles/theme';
+import theme, { Colors } from '../../styles/theme';
 import { NextPage } from 'next';
 
 interface IUserReview {
@@ -21,6 +21,9 @@ interface IUserReview {
 const commentStyle = {
   color: Colors.black,
   textAlign: 'start',
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '10px',
+  },
 };
 
 const UserReview: NextPage<IUserReview> = ({
@@ -41,9 +44,22 @@ const UserReview: NextPage<IUserReview> = ({
           name="read-only"
           value={rating}
           readOnly
-          sx={{ color: Colors.primary }}
+          sx={{
+            color: Colors.primary,
+            [theme.breakpoints.down('sm')]: {
+              fontSize: '15px',
+            },
+          }}
         />
-        <Typography variant="roboto20400" sx={{ color: Colors.black }}>
+        <Typography
+          variant="roboto20400"
+          sx={{
+            color: Colors.black,
+            [theme.breakpoints.down('sm')]: {
+              fontSize: '10px',
+            },
+          }}
+        >
           {userName}
         </Typography>
       </ReviewUser>

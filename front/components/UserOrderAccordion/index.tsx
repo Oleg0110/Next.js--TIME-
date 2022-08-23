@@ -71,25 +71,25 @@ const UserOrderAccordion: NextPage<IUserOrderAccordion> = ({ orderData }) => {
         </Typography>
         <UserOrderInfoBox>
           <Typography variant="roboto20200" sx={{ marginLeft: '10px' }}>
-            {t('customer-name')}
+            {t('name')}:
             <Typography variant="roboto20400" sx={{ paddingLeft: '10px' }}>
               {userName}
             </Typography>
           </Typography>
           <Typography variant="roboto20200" sx={{ marginLeft: '10px' }}>
-            {t('customer-surname')}
+            {t('surname')}:
             <Typography variant="roboto20400" sx={{ paddingLeft: '10px' }}>
               {userSurname}
             </Typography>
           </Typography>
           <Typography variant="roboto20200" sx={{ marginLeft: '10px' }}>
-            {t('customer-email')}
+            {t('email')}:
             <Typography variant="roboto20400" sx={{ paddingLeft: '10px' }}>
               {userEmail}
             </Typography>
           </Typography>
           <Typography variant="roboto20200" sx={{ marginLeft: '10px' }}>
-            {t('customer-phone')}
+            {t('phone')}:
             <a href={`tel:${userPhone}`}>
               <Typography variant="roboto20400" sx={{ paddingLeft: '10px' }}>
                 {userPhone}
@@ -97,7 +97,7 @@ const UserOrderAccordion: NextPage<IUserOrderAccordion> = ({ orderData }) => {
             </a>
           </Typography>
           <Typography variant="roboto20200" sx={{ marginLeft: '10px' }}>
-            {t('customer-address')}
+            {t('address')}:
             <Typography variant="roboto20400" sx={{ paddingLeft: '10px' }}>
               {userRegion},
               <Typography variant="roboto20400" sx={{ padding: '0px 10px' }}>

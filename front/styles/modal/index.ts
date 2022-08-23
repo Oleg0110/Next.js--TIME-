@@ -188,8 +188,10 @@ export const FormChangePasswordBox = styled(Box)(() => ({
 
 export const ChangePasswordErrorMessage = styled(ErrorMessage)(() => ({
   position: 'absolute',
+  width: '150px',
+  fontSize: '10px',
   top: '40px',
-  left: '20px',
+  left: '12px',
   color: '#e64848',
 })) as typeof ErrorMessage;
 

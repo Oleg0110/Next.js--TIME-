@@ -109,7 +109,7 @@ const UserField: NextPage<IUserField> = ({
         title={!isChange.name ? 'change' : 'close'}
         style={{
           position: 'absolute',
-          top: '6px',
+          top: '9px',
           right: '5px',
           [theme.breakpoints.down('md')]: {
             top: '3px',

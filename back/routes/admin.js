@@ -1,46 +1,26 @@
 const { Router } = require('express')
-const AdminController = require('../controllers/AdminController')
 const { body } = require('express-validator')
+const AdminController = require('../controllers/AdminController')
 
 const router = new Router()
 
+// Get
 router.get('/:searchValue', body('searchValue').isString(), AdminController.getProducts)
 router.get('/get-confirmed-orders/:searchValue', body('searchValue').isString(), AdminController.getConfirmedOrders)
-router.patch('/change-order-status', body('searchValue').isString(), AdminController.changeOrderStatus)
-router.post('/products-management/add-product/add-photos', body('searchValue').isString(), AdminController.addPhoto)
-router.post(
-  '/products-management/add-product',
-  // body('productName', "Product name can't be empty").notEmpty().isString().isLength({ max: 30 }),
-  // body('productFor', "Product For can't be empty, use 'men' or 'women'").notEmpty().isString().isLength({ max: 6, min: 4 }),
-  // body('productPrice', "Product Price can't be empty and this is a number").notEmpty().isNumeric(),
-  // body('productDiscountPrice', "Product Discount Price can't be empty and this is a number").notEmpty().isNumeric(),
-  // body('productSale', 'Product Sale is boolean').notEmpty().isBoolean(),
-  // body('productNew', 'Product New is boolean').notEmpty().isBoolean(),
-  // body('productSize', "Product Size can't be empty and this is array of numbers").notEmpty().isNumeric().isArray(),
-  // body('productColor', "Product Color can't be empty").notEmpty().isString().isLength({ max: 30 }),
-  // body('productDescription', "Product Description can't be empty, min 10 and max 150 symbol")
-  //   .notEmpty()
-  //   .isString()
-  //   .isLength({ min: 10, max: 150 }),
-  // body('productStyleName', "Product Style Name can't be empty").notEmpty().isString().isLength({ max: 30 }),
-  // body('productStyleMaterial', "Product Style Material can't be empty").notEmpty().isString().isLength({ max: 30 }),
-  AdminController.addProduct
-)
-router.patch(
-  '/products-management/change-product',
-  // body('productId').isString(),
-  // body('productSale', 'Product Sale is boolean').notEmpty().isBoolean(),
-  // body('productNew', 'Product New is boolean').notEmpty().isBoolean(),
-  // body('productSize', "Product Size can't be empty and this is array of numbers").notEmpty().isNumeric().isArray(),
-  // body('productPrice', "Product Price can't be empty and this is a number").notEmpty().isNumeric(),
-  // body('productDiscountPrice', "Product Discount Price can't be empty and this is a number").notEmpty().isNumeric(),
-  AdminController.changeProduct
-)
-router.delete('/products-management/delete-product/:productId/:searchValue', AdminController.deleteProduct)
 router.get('/users-management/:searchValue', body('searchValue').isString(), AdminController.getUsers)
 router.get('/users-management/team/get-user-in-team', AdminController.getUserInTeam)
+
+// Post
+router.post('/products-management/add-product/add-photos', body('searchValue').isString(), AdminController.addPhoto)
+router.post('/products-management/add-product', AdminController.addProduct)
+
+// Patch
+router.patch('/change-order-status', body('searchValue').isString(), AdminController.changeOrderStatus)
+router.patch('/products-management/change-product', AdminController.changeProduct)
 router.patch('/users-management/team/user-assignment', AdminController.userAssignment)
 router.patch('/users-management/team/remove-user-assignment', AdminController.removeAssignmentAdmin)
-// router.get('/orders-management', body('text').isString(), AdminController.getUsers)
+
+// Delete
+router.delete('/products-management/delete-product/:productId/:searchValue', AdminController.deleteProduct)
 
 module.exports = router

@@ -83,6 +83,7 @@ export interface ProductState {
   productsFavorite: IFavorite[];
   countProducts: number;
   isLoading: boolean;
+  isOrderStatusLoading: boolean;
   isPaginationLoading: boolean;
   isFavoriteLoading: boolean;
   isGlobalSearchLoading: boolean;

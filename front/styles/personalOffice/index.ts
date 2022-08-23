@@ -48,7 +48,7 @@ export const UserTypographyBox = styled(Box)(() => ({
   justifyContent: 'start',
   alignItems: 'center',
   width: '100%',
-  padding: '10px',
+  padding: '12px',
   position: 'relative',
   [theme.breakpoints.down('md')]: {
     padding: '5px',
@@ -129,9 +129,10 @@ export const ChangeUserInputBox = styled(Box)(() => ({
 
 export const ChangeUserErrorMessage = styled(ErrorMessage)(() => ({
   position: 'absolute',
-  top: '29px',
+  top: '28px',
   left: '5px',
   color: '#e64848',
+  fontSize: '12px',
 })) as typeof ErrorMessage;
 
 export const InputChangeUser = styled(Field)(() => ({

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import theme, { Colors } from '../../styles/theme';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
@@ -12,6 +12,7 @@ import {
   StyledOrdersBadge,
 } from '../../styles/administration';
 import { useAppSelector } from '../../hooks/redux';
+import { useRouter } from 'next/router';
 import MainLayout from '../../layouts/MainLayout';
 import AddProduct from './AddProduct';
 import ChangeDelete from './ChangeDelete';
@@ -27,11 +28,18 @@ const activeButtonStyle = {
 const AdministrationPage = () => {
   const { t } = useTranslation('admin');
 
+  const router = useRouter();
+
   const { ordersUnconfirmed } = useAppSelector((state) => state.product);
+  const { user } = useAppSelector((state) => state.user);
 
   const [isActive, setIsActive] = useState<
     'add' | 'change' | 'user' | 'orders'
   >('orders');
+
+  useEffect(() => {
+    user && user.userRole === 'user' && router.push('/404');
+  }, [user]);
 
   return (
     <MainLayout>
@@ -139,8 +147,10 @@ const AdministrationPage = () => {
 
 export default AdministrationPage;
 
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['admin', 'toast', 'common'])),
-  },
-});
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['admin', 'toast', 'common'])),
+    },
+  };
+};

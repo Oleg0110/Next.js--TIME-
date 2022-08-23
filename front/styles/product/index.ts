@@ -53,5 +53,5 @@ export const SortingFilterBox = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  width: '165px',
+  minWidth: '165px',
 })) as typeof Box;

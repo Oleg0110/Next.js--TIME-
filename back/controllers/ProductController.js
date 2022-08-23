@@ -1,6 +1,7 @@
 const ProductService = require('../services/ProductService')
 
 class ProductController {
+  // Get
   async getProduct(req, res) {
     try {
       const { productId } = req.params
@@ -89,6 +90,7 @@ class ProductController {
     }
   }
 
+  // Post
   async addReview(req, res) {
     try {
       const { comment, productId, userId, rating } = req.body
@@ -117,6 +119,7 @@ class ProductController {
     }
   }
 
+  // Delete
   async removeProductToFavorite(req, res) {
     try {
       const { favoriteId, userId } = req.params
