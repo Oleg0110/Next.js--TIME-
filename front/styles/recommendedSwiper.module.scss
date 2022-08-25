@@ -1,0 +1,64 @@
+.myswiper {
+  width: 90%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  .swiperSlide {
+    width: 100%;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    -webkit-transform: translateZ(0);
+  }
+}
+
+.swiperNavPrev,
+.swiperNavNext {
+  top: 30%;
+  position: absolute;
+  background-image: url(../assets/icon/carouselArrow.svg);
+  background-repeat: no-repeat;
+  background-size: 75px !important;
+  background-position: center;
+  width: 80px !important;
+  height: 80px !important;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.swiperNavNext {
+  transform: rotate(180deg);
+  right: 25px;
+}
+
+.swiperNavPrev {
+  left: 25px;
+}
+
+@media screen and (max-width: 420px) {
+  .swiperNavPrev,
+  .swiperNavNext {
+    background-size: 45px !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .swiperNavNext {
+    transform: rotate(180deg);
+    right: 35px;
+  }
+
+  .swiperNavPrev {
+    left: 35px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .swiperNavPrev,
+  .swiperNavNext {
+    background-size: 60px !important;
+    width: 65px !important;
+    height: 65px !important;
+  }
+}

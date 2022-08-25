@@ -1,0 +1,10 @@
+{
+  "filters": "Фільтри",
+  "price": "ціна",
+  "size": "Розмір",
+  "color": "Колір",
+  "style": "Стиль",
+  "material": "Матеріал",
+  "apply-filters": "Застосувати",
+  "clean-filters": "Очистити"
+}

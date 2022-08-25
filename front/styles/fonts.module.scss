@@ -1,0 +1,81 @@
+@import url(https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Trirong:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap);
+@import './colors.module.scss';
+
+//Trirong Font
+
+%title-fonts {
+  font-family: 'Trirong', serif;
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 83px;
+  color: $white-color;
+}
+
+%header-button-fonts {
+  font-family: 'Trirong', serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 35px;
+}
+//Noto Serif Font
+
+%main-h1-fonts {
+  font-family: 'Noto Serif', serif;
+  font-size: 55px;
+  font-weight: 300;
+  line-height: 75px;
+  font-style: normal;
+}
+
+//Roboto Font
+
+%roboto-36-400-fonts {
+  font-family: 'Roboto', sans-serif;
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 42px;
+}
+
+%roboto-30-300-fonts {
+  font-family: 'Roboto', sans-serif;
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 35px;
+}
+
+%roboto-24-200-fonts {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  font-weight: 200;
+  line-height: 28px;
+}
+
+%roboto-24-500-fonts {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 28px;
+}
+
+%roboto-20-400-fonts {
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 23px;
+}
+
+%roboto-20-200-fonts {
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 200;
+  line-height: 23px;
+}
+
+%roboto-16-400-fonts {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
