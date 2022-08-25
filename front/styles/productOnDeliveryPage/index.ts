@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 
 export const ProductOnDeliveryContainer = styled(Box)(() => ({
   width: '100%',
-  minHeight: '150px',
+  minHeight: '100px',
   borderBottom: `2px solid ${Colors.secondaryWhite}`,
   display: 'flex',
   alignItems: 'center',

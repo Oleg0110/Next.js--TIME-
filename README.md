@@ -39,7 +39,7 @@ I added while writing this project. Thank You for your time.
 - [Shopping Bag](#shopping-bag)
 - [Bag page](#bag-page)
 - [Delivery details page](#delivery-details-page)
-  - [Message with an order to the client and "Time"](#delivery-details-page)
+  - [Message with an order to the client and "Time"](#delivery-emails)
 - [About Us](#about-us)
 - [Shipping and Payment](#shipping-and-payment)
 - [FAQ](#FAQ)
@@ -146,6 +146,12 @@ I added while writing this project. Thank You for your time.
 
 _If you are authorized, your data available to us will be filled. You can see it [here](#auth-delivery-details-page). After the order, a notification will be sent to your work email and to the customer's email._
 
+<a id="delivery-emails"></a>
+
+<h5 align="start" style="color: #685248; margin-left: 10px">
+<em>- Messages with an order</em>
+</h5>
+
 <a id="about-us"></a>
 
 <h4 align="start" style="font-size: 20px; color: #685248">About Us</h4>
@@ -225,7 +231,7 @@ _If you are authorized, your data available to us will be filled. You can see it
 
 <h4 align="start" style="font-size: 20px; color: #685248">Delivery details page</h4>
 
-<p style="margin-left: 20px"><em></em></p>
+_If you are authorized, your data available to us will be filled. After the order, a notification will be sent to your work email and to the customer's email. You can see it [here](#delivery-emails)._
 
 > Admin area
 
@@ -269,8 +275,6 @@ _If you are authorized, your data available to us will be filled. You can see it
 The mobile version has the same functionality as the desktop version, so in this section I will only show the responsible design.
 </p>
 
-<!--General opportunities-->
-
 <a id="mobile-major-page"></a>
 
 <h4 align="start" style="font-size: 20px; color: #685248">Major page / Entry / Registration / Products global search</h4>
@@ -300,5 +304,9 @@ The mobile version has the same functionality as the desktop version, so in this
 <a id="mobile-admin-page"></a>
 
 <h4 align="start" style="font-size: 20px; color: #685248">Admin page</h4>
+
+<p  style="font-size: 15px; font-weight: 600;">
+Thank you for taking the time to familiarize yourself with my project, it is very important for me, thank you again and have a nice day)))
+</p>
 
 [Go to Top](#to-top)

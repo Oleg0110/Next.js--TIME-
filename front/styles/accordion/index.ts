@@ -21,6 +21,13 @@ export const ReviewField = styled(Box)(() => ({
   justifyContent: 'center',
 })) as typeof Box;
 
+export const AddReviewButtonPosition = styled(Box)(() => ({
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+})) as typeof Box;
+
 export const OpenComment = styled(Button)(() => ({
   background: Colors.secondaryWhite,
   marginLeft: '20px',
@@ -40,4 +47,5 @@ export const RatingBox = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'start',
+  marginLeft: '10px',
 })) as typeof Box;

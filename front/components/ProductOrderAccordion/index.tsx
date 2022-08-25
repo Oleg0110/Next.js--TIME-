@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
+import theme, { Colors } from '../../styles/theme';
 import { CircularProgress, Typography } from '@mui/material';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { Colors } from '../../styles/theme';
 import { IProductOrder } from '../../utils/interface/productInterface';
 import {
   ConfirmButtonPosition,
@@ -52,26 +52,65 @@ const ProductOrderAccordion: NextPage<IProductOrderAccordion> = ({
     id,
   } = orderData;
 
+  const userCategoryStyle = {
+    color: Colors.black,
+    marginLeft: '10px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '15px',
+    },
+  };
+
+  const userInfoStyle = {
+    color: Colors.black,
+    paddingLeft: '10px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '12px',
+    },
+  };
+
   return (
     <ProductOrderAccordionBox>
       <SummaryOrderAccordion
         expandIcon={
           expanded ? (
-            <AddIcon fontSize="large" sx={{ color: Colors.darkGray }} />
+            <AddIcon
+              fontSize="large"
+              sx={{
+                color: Colors.darkGray,
+                [theme.breakpoints.down('sm')]: {
+                  width: '20px',
+                  height: '20px',
+                },
+              }}
+            />
           ) : (
-            <RemoveIcon fontSize="large" sx={{ color: Colors.darkGray }} />
+            <RemoveIcon
+              fontSize="large"
+              sx={{
+                color: Colors.darkGray,
+                [theme.breakpoints.down('sm')]: {
+                  width: '20px',
+                  height: '20px',
+                },
+              }}
+            />
           )
         }
         onClick={() => {
           setExpanded(!expanded);
         }}
       >
-        <Typography variant="roboto20200" sx={{ color: Colors.black }}>
+        <Typography
+          variant="roboto20200"
+          sx={{
+            color: Colors.black,
+            [theme.breakpoints.down('sm')]: {
+              fontSize: '14px',
+            },
+          }}
+        >
           {t('order-number')}
-          <Typography
-            variant="roboto20400"
-            sx={{ color: Colors.black, marginLeft: '10px' }}
-          >
+          <Typography variant="roboto20400" sx={userCategoryStyle}>
             {orderNumber}
           </Typography>
         </Typography>
@@ -79,74 +118,56 @@ const ProductOrderAccordion: NextPage<IProductOrderAccordion> = ({
       <DetailsOrderAccordion>
         <Typography
           variant="roboto20400"
-          sx={{ color: Colors.black, padding: '0px 0px 10px 10px' }}
+          sx={{
+            color: Colors.black,
+            padding: '0px 0px 10px 10px',
+            [theme.breakpoints.down('sm')]: {
+              fontSize: '15px',
+            },
+          }}
         >
           {t('customer-info')}
         </Typography>
         <CustomerInfoBox>
-          <Typography
-            variant="roboto20200"
-            sx={{ color: Colors.black, marginLeft: '10px' }}
-          >
+          <Typography variant="roboto20200" sx={userCategoryStyle}>
             {t('customer-name')}
-            <Typography
-              variant="roboto20400"
-              sx={{ color: Colors.black, paddingLeft: '10px' }}
-            >
+            <Typography variant="roboto20400" sx={userInfoStyle}>
               {userName}
             </Typography>
           </Typography>
-          <Typography
-            variant="roboto20200"
-            sx={{ color: Colors.black, marginLeft: '10px' }}
-          >
+          <Typography variant="roboto20200" sx={userCategoryStyle}>
             {t('customer-surname')}
-            <Typography
-              variant="roboto20400"
-              sx={{ color: Colors.black, paddingLeft: '10px' }}
-            >
+            <Typography variant="roboto20400" sx={userInfoStyle}>
               {userSurname}
             </Typography>
           </Typography>
-          <Typography
-            variant="roboto20200"
-            sx={{ color: Colors.black, marginLeft: '10px' }}
-          >
+          <Typography variant="roboto20200" sx={userCategoryStyle}>
             {t('customer-email')}
-            <Typography
-              variant="roboto20400"
-              sx={{ color: Colors.black, paddingLeft: '10px' }}
-            >
+            <Typography variant="roboto20400" sx={userInfoStyle}>
               {userEmail}
             </Typography>
           </Typography>
-          <Typography
-            variant="roboto20200"
-            sx={{ color: Colors.black, marginLeft: '10px' }}
-          >
+          <Typography variant="roboto20200" sx={userCategoryStyle}>
             {t('customer-phone')}
             <a href={`tel:${userPhone}`}>
-              <Typography
-                variant="roboto20400"
-                sx={{ color: Colors.black, paddingLeft: '10px' }}
-              >
+              <Typography variant="roboto20400" sx={userInfoStyle}>
                 {userPhone}
               </Typography>
             </a>
           </Typography>
-          <Typography
-            variant="roboto20200"
-            sx={{ color: Colors.black, marginLeft: '10px' }}
-          >
+          <Typography variant="roboto20200" sx={userCategoryStyle}>
             {t('customer-address')}
-            <Typography
-              variant="roboto20400"
-              sx={{ color: Colors.black, paddingLeft: '10px' }}
-            >
+            <Typography variant="roboto20400" sx={userInfoStyle}>
               {userRegion},
               <Typography
                 variant="roboto20400"
-                sx={{ color: Colors.black, padding: '0px 10px' }}
+                sx={{
+                  color: Colors.black,
+                  padding: '0px 10px',
+                  [theme.breakpoints.down('sm')]: {
+                    fontSize: '12px',
+                  },
+                }}
               >
                 {userCity},
               </Typography>
@@ -156,7 +177,13 @@ const ProductOrderAccordion: NextPage<IProductOrderAccordion> = ({
         </CustomerInfoBox>
         <Typography
           variant="roboto20400"
-          sx={{ color: Colors.black, padding: '0px 0px 10px 10px' }}
+          sx={{
+            color: Colors.black,
+            padding: '0px 0px 10px 10px',
+            [theme.breakpoints.down('sm')]: {
+              fontSize: '15px',
+            },
+          }}
         >
           {t('order-info')}
         </Typography>
@@ -179,19 +206,37 @@ const ProductOrderAccordion: NextPage<IProductOrderAccordion> = ({
           <ProductTotalPriceBox>
             <Typography
               variant="roboto20200"
-              sx={{ color: Colors.black, marginLeft: '10px' }}
+              sx={{
+                color: Colors.black,
+                marginLeft: '10px',
+                [theme.breakpoints.down('sm')]: {
+                  fontSize: '12px',
+                },
+              }}
             >
               {t('total-price')}
               <Typography
                 variant="roboto20400"
-                sx={{ color: Colors.black, paddingLeft: '10px' }}
+                sx={{
+                  color: Colors.black,
+                  paddingLeft: '10px',
+                  [theme.breakpoints.down('sm')]: {
+                    fontSize: '12px',
+                  },
+                }}
               >
                 {totalPrice} UAH
               </Typography>
             </Typography>
             <Typography
               variant="roboto20200"
-              sx={{ color: Colors.black, marginLeft: '10px' }}
+              sx={{
+                color: Colors.black,
+                marginLeft: '10px',
+                [theme.breakpoints.down('sm')]: {
+                  fontSize: '12px',
+                },
+              }}
             >
               {t('order-status')}
               {orderStatus ? (

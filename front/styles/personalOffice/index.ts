@@ -104,8 +104,8 @@ export const UserOrdersScrollBox = styled(Box)(() => ({
     borderRadius: '10px',
   },
   '&::-webkit-scrollbar-thumb': {
-    backgroundColor: Colors.primary,
-    border: `4px solid ${Colors.secondaryWhite}`,
+    backgroundColor: Colors.lightGray,
+    border: `4px solid ${Colors.primary}`,
     borderRadius: '10px',
   },
 })) as typeof Box;

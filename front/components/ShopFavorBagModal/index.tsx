@@ -1,4 +1,6 @@
 import React from 'react';
+import { ROUTES } from '../../utils/constants';
+import { useRouter } from 'next/router';
 import { Modal, Typography } from '@mui/material';
 import { useTranslation } from 'next-i18next';
 import { Colors } from '../../styles/theme';
@@ -23,6 +25,8 @@ const ShopFavorBagModal: NextPage<IShopFavorBagModalProps> = ({
   totalPrice,
 }) => {
   const { t } = useTranslation('common');
+
+  const router = useRouter();
 
   const { productInBag, productsFavorite } = useAppSelector(
     (state) => state.product
@@ -69,6 +73,9 @@ const ShopFavorBagModal: NextPage<IShopFavorBagModalProps> = ({
                     size="LG"
                     variant="secondary"
                     style={{ marginBottom: '15px' }}
+                    onClick={() =>
+                      productInBag[0] !== undefined && router.push(ROUTES.bag)
+                    }
                   >
                     {t('order')}
                   </CustomButton>

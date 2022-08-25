@@ -99,19 +99,20 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
   const [isPhotos, setIsPhotos] = useState({ images: [] });
   const [isMainPhoto, setIsMainPhoto] = useState({ images: [] });
 
-  const addPhotos = (event, setFieldValue, isBo) => {
+  const addPhotos = (event, setFieldValue) => {
     event.preventDefault();
 
-    const allPhotos = [
-      ...isPhotos.images,
-      ...isMainPhoto.images,
-      ...event.target.files,
-    ];
+    const allPhotos = [...isPhotos.images, ...event.target.files];
 
-    !isBo &&
-      setIsPhotos({ images: [...isPhotos.images, ...event.target.files] });
-    isBo && setIsMainPhoto({ images: [...event.target.files] });
+    setIsPhotos({ images: [...isPhotos.images, ...event.target.files] });
+
     setFieldValue('productMainPictures', allPhotos);
+  };
+
+  const addMainPhoto = (event) => {
+    event.preventDefault();
+
+    setIsMainPhoto({ images: [...event.target.files] });
   };
 
   const deletePhoto = (index, setFieldValue) => {
@@ -123,15 +124,11 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
     setFieldValue('productMainPictures', imagesArr);
   };
 
-  const deleteMainPhoto = (index, setFieldValue) => {
+  const deleteMainPhoto = (index) => {
     const imagesArr = isMainPhoto.images;
     imagesArr.splice(index, 1);
 
     setIsMainPhoto({ images: imagesArr });
-
-    const allPhotos = [...isPhotos.images, ...isMainPhoto.images];
-
-    setFieldValue('productMainPictures', allPhotos);
   };
 
   const mainPhotoRef = useRef(null);
@@ -171,6 +168,7 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
                   product: values,
                   searchValue,
                   photoFile: values.productMainPictures,
+                  mainPhoto: isMainPhoto,
                 })
               );
 
@@ -207,7 +205,7 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
                     accept="image/*"
                     style={{ display: 'none' }}
                     onChange={(event) => {
-                      addPhotos(event, setFieldValue, true);
+                      addMainPhoto(event);
                     }}
                   />
                   <InfoChangeBox>
@@ -238,9 +236,7 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
                           <TooltipIcon
                             key={index}
                             title="delete-photo"
-                            onClick={() =>
-                              deleteMainPhoto(index, setFieldValue)
-                            }
+                            onClick={() => deleteMainPhoto(index)}
                           >
                             <img src={url} width="125px" height="125px" />
                           </TooltipIcon>
@@ -255,7 +251,7 @@ const ChangeModal: NextPage<IChangeModalProps> = ({
                     accept="image/*"
                     type="file"
                     onChange={(event) => {
-                      addPhotos(event, setFieldValue, false);
+                      addPhotos(event, setFieldValue);
                     }}
                   />
                   <AddPhotoBox>

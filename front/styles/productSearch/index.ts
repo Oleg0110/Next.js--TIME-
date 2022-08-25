@@ -28,7 +28,7 @@ export const InfoSearchContainer = styled(Box)(() => ({
   marginLeft: '10px',
   justifyContent: 'center',
   [theme.breakpoints.down('sm')]: {
-    minWidth: '200px',
+    minWidth: '135px',
   },
 })) as typeof Box;
 
@@ -37,6 +37,11 @@ export const ProductSearchButtonBox = styled(Box)(() => ({
   display: 'flex',
   justifyContent: 'space-around',
   alignItems: 'center',
+  [theme.breakpoints.down('sm')]: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
 })) as typeof Box;
 
 export const ChangeButton = styled(Button)(() => ({
@@ -52,6 +57,10 @@ export const ChangeButton = styled(Button)(() => ({
     border: 'none',
     color: Colors.black,
     background: 'none',
+  },
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '12px',
+    width: '30px',
   },
 }));
 
@@ -69,5 +78,10 @@ export const DeleteButton = styled(Button)(() => ({
     border: 'none',
     color: Colors.saleColor,
     background: 'none',
+  },
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '12px',
+    padding: '0px',
+    width: '30px',
   },
 }));

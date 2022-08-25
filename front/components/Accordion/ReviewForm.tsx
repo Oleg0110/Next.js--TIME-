@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { number, object, string } from 'yup';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { addReview } from '../../store/services/ProductService';
-import { RatingBox } from '../../styles/accordion';
+import { AddReviewButtonPosition, RatingBox } from '../../styles/accordion';
 import { Colors } from '../../styles/theme';
 import { useTranslation } from 'next-i18next';
 import CustomButton from '../CustomButton';
@@ -55,7 +55,7 @@ const ReviewForm: NextPage<IReviewForm> = ({ setIsOpen }) => {
     >
       {({ setFieldValue, handleSubmit }) => {
         return (
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleSubmit} style={{ width: '75%' }}>
             <RatingBox>
               <Typography
                 variant="roboto16400"
@@ -98,9 +98,11 @@ const ReviewForm: NextPage<IReviewForm> = ({ setIsOpen }) => {
                 size="25px"
               />
             ) : (
-              <CustomButton size="SM" type="submit">
-                {t('add-review')}
-              </CustomButton>
+              <AddReviewButtonPosition>
+                <CustomButton size="SM" type="submit">
+                  {t('add-review')}
+                </CustomButton>
+              </AddReviewButtonPosition>
             )}
           </Form>
         );

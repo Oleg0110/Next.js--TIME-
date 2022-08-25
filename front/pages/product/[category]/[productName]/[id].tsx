@@ -42,6 +42,14 @@ export const getServerSideProps = async (context) => {
   const photosRes = await fetch(`${GET_PRODUCTS}/product/photos/${productId}`);
   const productPhotos: IProductPhoto[] = await photosRes.json();
 
+  const mainPhoto: IProductPhoto = {
+    id: product.productMainPictures,
+    productId: product.id,
+    photoName: product.productMainPictures,
+  };
+
+  productPhotos.unshift(mainPhoto);
+
   return {
     props: {
       product,
