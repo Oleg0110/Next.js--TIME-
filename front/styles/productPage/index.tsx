@@ -112,6 +112,9 @@ export const ProductPageSizeBox = styled(Box)(() => ({
   flexWrap: 'wrap',
   margin: '10px 10px 15px',
   justifyContent: 'start',
+  [theme.breakpoints.down('sm')]: {
+    justifyContent: 'center',
+  },
 })) as typeof Box;
 
 export const ProductPageColorBox = styled(Box)(() => ({

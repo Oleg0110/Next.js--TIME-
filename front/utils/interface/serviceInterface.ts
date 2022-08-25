@@ -6,6 +6,7 @@ import { IUserInitialOrder } from './userInterface';
 export interface IAddArg {
   product: Omit<IProduct, 'id' | 'date' | 'productNumber'>;
   photoFile: any[];
+  mainPhoto: any;
 }
 
 export interface IAddReviewArg {
@@ -43,6 +44,7 @@ export interface IChangeProductArg {
   product: Omit<IProduct, 'id' | 'date' | 'productNumber'>;
   searchValue: string;
   photoFile: any[];
+  mainPhoto: any;
 }
 
 export interface IFilterArg {

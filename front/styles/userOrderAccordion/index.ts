@@ -15,18 +15,36 @@ export const UserOrderAccordionBox = styled(Accordion)(() => ({
   borderRadius: '3px',
   border: `1px solid ${Colors.secondaryWhite}`,
   padding: '10px',
-  margin: '15px 0px',
+  margin: '10px 0px',
   '.scss-o4b71y-MuiAccordionSummary-content.Mui-expanded ': {
     margin: '0px',
   },
   '.scss-15v22id-MuiAccordionDetails-root': {
     padding: '0px 30px 16px',
   },
+  [theme.breakpoints.down('sm')]: {
+    padding: '0px',
+    margin: '5px 0px',
+    '.scss-x10pvw-MuiPaper-root-MuiAccordion-root.Mui-expanded:last-of-type': {
+      marginBottom: '20px !important',
+    },
+    '.scss-m02129-MuiPaper-root-MuiAccordion-root.Mui-expanded:first-of-type': {
+      marginTop: '5px !important',
+    },
+  },
 })) as typeof Accordion;
 
 export const SummaryUserOrderAccordion = styled(AccordionSummary)(() => ({
+  minHeight: '50px !important',
   ':hover': {
     opacity: '0.5',
+  },
+  [theme.breakpoints.down('sm')]: {
+    '.scss-o4b71y-MuiAccordionSummary-content': {
+      margin: '5px 0px !important',
+    },
+    minHeight: '20px !important',
+    padding: '0px 10px',
   },
 }));
 
@@ -49,7 +67,7 @@ export const UserAccordionScroll = styled(Box)(() => ({
   },
   '&::-webkit-scrollbar-thumb': {
     backgroundColor: Colors.lightGray,
-    border: `6px solid ${Colors.secondaryWhite}`,
+    border: `6px solid ${Colors.primary}`,
     borderRadius: '10px',
   },
 })) as typeof Box;

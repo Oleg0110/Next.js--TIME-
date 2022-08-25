@@ -70,12 +70,21 @@ export const OrderInformationBox = styled(Box)(() => ({
   justifyContent: 'space-between',
   padding: '0 10% 0 2%',
   margin: '20px 0px',
+  [theme.breakpoints.down('sm')]: {
+    margin: '5px 0px 20px',
+    padding: '0px',
+    flexDirection: 'column',
+  },
 })) as typeof Box;
 
 export const ProductTotalPriceBox = styled(Box)(() => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'start',
+  [theme.breakpoints.down('sm')]: {
+    width: '100%',
+    marginBottom: '10px',
+  },
 })) as typeof Box;
 
 export const ConfirmButtonPosition = styled(Box)(() => ({
@@ -98,6 +107,11 @@ export const ProductAccordionBox = styled(Box)(() => ({
   padding: '8px 15px',
   margin: '10px 0px',
   border: '1px dotted',
+  [theme.breakpoints.down('sm')]: {
+    width: '98%',
+    margin: '10px 0px 10px 2px',
+    padding: '8px 0px',
+  },
 })) as typeof Box;
 
 export const ProductOrderPhotoBox = styled(Box)(() => ({
@@ -105,6 +119,10 @@ export const ProductOrderPhotoBox = styled(Box)(() => ({
   alignItems: 'center',
   justifyContent: 'space-around',
   width: '50%',
+  marginLeft: '5px',
+  [theme.breakpoints.down('sm')]: {
+    width: '60%',
+  },
 })) as typeof Box;
 
 export const ProductOrderInfo = styled(Box)(() => ({
@@ -114,19 +132,45 @@ export const ProductOrderInfo = styled(Box)(() => ({
   flexDirection: 'column',
   alignItems: 'start',
   margin: '0px 10px 0px 20px',
+  [theme.breakpoints.down('sm')]: {
+    margin: '0px 0px 0px 5px',
+  },
+})) as typeof Box;
+
+export const ProductOrderAcountPrice = styled(Box)(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  width: '45%',
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '35%',
+  },
 })) as typeof Box;
 
 export const ProductOrderCount = styled(Box)(() => ({
   display: 'flex',
-  width: '20%',
+  alignItems: 'center',
+  flexWrap: 'wrap',
+  width: '50%',
+  justifyContent: 'center',
+  [theme.breakpoints.down('sm')]: {
+    width: '75%',
+    marginBottom: '5px',
+  },
 })) as typeof Box;
 
 export const ProductOrderPrice = styled(Box)(() => ({
   display: 'flex',
   alignItems: 'center',
   flexWrap: 'wrap',
-  width: '25%',
-  justifyContent: 'space-between',
+  width: '50%',
+  justifyContent: 'center',
+  [theme.breakpoints.down('sm')]: {
+    width: '75%',
+  },
 })) as typeof Box;
 
 export const ProductOnBagRemove = styled(Box)(() => ({

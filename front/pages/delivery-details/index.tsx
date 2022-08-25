@@ -1,8 +1,8 @@
 import React from 'react';
+import theme, { Colors } from '../../styles/theme';
 import { Typography } from '@mui/material';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useAppSelector } from '../../hooks/redux';
-import { Colors } from '../../styles/theme';
 import { totalPriceFunc } from '../../utils/function';
 import {
   DeliveryContainer,
@@ -34,13 +34,29 @@ const Bag = () => {
         <DeliveryMainBox>
           <Typography
             variant="h1"
-            sx={{ color: Colors.secondaryWhite, margin: '30px 0px' }}
+            sx={{
+              color: Colors.secondaryWhite,
+              margin: '30px 0px',
+              [theme.breakpoints.down('sm')]: {
+                fontSize: '20px',
+                margin: '10px 0px',
+              },
+            }}
           >
             {t('title')}
           </Typography>
           <DeliveryContent>
             <ProductOnDeliveryBox>
-              <Typography variant="roboto36400">{t('yourOrder')}</Typography>
+              <Typography
+                variant="roboto36400"
+                sx={{
+                  [theme.breakpoints.down('sm')]: {
+                    fontSize: '20px',
+                  },
+                }}
+              >
+                {t('yourOrder')}
+              </Typography>
               <ProductOnDeliveryScroll>
                 {productInBag &&
                   productInBag.map((data) => (

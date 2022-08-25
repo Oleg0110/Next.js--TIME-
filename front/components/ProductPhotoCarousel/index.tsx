@@ -16,6 +16,7 @@ import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
+import { useAppSelector } from '../../hooks/redux';
 
 interface IProductPhotoCarousel {
   productPhotos: IProductPhoto[];

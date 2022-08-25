@@ -1,8 +1,8 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import theme, { Colors } from '../../styles/theme';
+import { Typography, useMediaQuery } from '@mui/material';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
-import { Colors } from '../../styles/theme';
 import { BASIC_URL } from '../../utils/httpLinks';
 import { IProductInBag } from '../../utils/interface/productInterface';
 import {
@@ -23,9 +23,15 @@ const ProductOnDelivery: NextPage<IProductInBag> = ({
   productFor,
   productId,
 }) => {
+  const madiaSM = useMediaQuery(theme.breakpoints.down('sm'));
+
   const { t } = useTranslation('delivery');
 
   const router = useRouter();
+
+  const photoSize = madiaSM
+    ? { cursor: 'pointer', width: '140px', height: '140px' }
+    : { cursor: 'pointer', width: '160px', height: '160px' };
 
   return (
     <ProductOnDeliveryContainer>
@@ -35,7 +41,7 @@ const ProductOnDelivery: NextPage<IProductInBag> = ({
           onClick={() =>
             router.push(`/product/${productFor}/${productName}/${productId}`)
           }
-          style={{ cursor: 'pointer', width: '160px', height: '160px' }}
+          style={photoSize}
         />
         <ProductOnDeliveryInfo>
           <Typography
@@ -49,6 +55,9 @@ const ProductOnDelivery: NextPage<IProductInBag> = ({
               ':hover': {
                 color: Colors.lightGray,
               },
+              [theme.breakpoints.down('sm')]: {
+                fontSize: '13px',
+              },
             }}
             onClick={() =>
               router.push(`/product/${productFor}/${productName}/${productId}`)
@@ -56,12 +65,26 @@ const ProductOnDelivery: NextPage<IProductInBag> = ({
           >
             {productName}
           </Typography>
-          <Typography variant="roboto20200" color={Colors.secondaryWhite}>
+          <Typography
+            variant="roboto20200"
+            sx={{
+              color: Colors.secondaryWhite,
+              [theme.breakpoints.down('sm')]: {
+                fontSize: '13px',
+              },
+            }}
+          >
             {t('size')}: {sizeProduct}
           </Typography>
           <Typography
             variant="roboto20200"
-            sx={{ color: Colors.secondaryWhite, marginRight: '10px' }}
+            sx={{
+              color: Colors.secondaryWhite,
+              marginRight: '10px',
+              [theme.breakpoints.down('sm')]: {
+                fontSize: '13px',
+              },
+            }}
           >
             {t('amount')}: {productAmount}
           </Typography>
@@ -69,7 +92,12 @@ const ProductOnDelivery: NextPage<IProductInBag> = ({
             <ProductOnDeliveryPrice>
               <Typography
                 variant="roboto20400"
-                sx={{ color: Colors.secondaryWhite }}
+                sx={{
+                  color: Colors.secondaryWhite,
+                  [theme.breakpoints.down('sm')]: {
+                    fontSize: '13px',
+                  },
+                }}
               >
                 {price} UAH
               </Typography>
@@ -83,11 +111,23 @@ const ProductOnDelivery: NextPage<IProductInBag> = ({
                   textDecoration: 'line-through',
                   textDecorationThickness: '1px',
                   marginRight: '10px',
+
+                  [theme.breakpoints.down('sm')]: {
+                    fontSize: '13px',
+                  },
                 }}
               >
                 {price} UAH
               </Typography>
-              <Typography variant="roboto24200" color={Colors.saleColor}>
+              <Typography
+                variant="roboto24200"
+                sx={{
+                  color: Colors.saleColor,
+                  [theme.breakpoints.down('sm')]: {
+                    fontSize: '13px',
+                  },
+                }}
+              >
                 {salePrice} UAH
               </Typography>
             </ProductOnDeliveryPrice>

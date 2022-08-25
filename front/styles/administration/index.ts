@@ -1,7 +1,7 @@
+import theme, { Colors } from '../theme';
 import { Badge, Box, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { ErrorMessage, Field } from 'formik';
-import theme, { Colors } from '../theme';
 
 export const MainAdminBox = styled(Box)(() => ({
   backgroundColor: Colors.secondaryWhite,

@@ -6,6 +6,7 @@ import { useTranslation } from 'next-i18next';
 import { BASIC_URL } from '../../utils/httpLinks';
 import {
   ProductAccordionBox,
+  ProductOrderAcountPrice,
   ProductOrderCount,
   ProductOrderInfo,
   ProductOrderPhotoBox,
@@ -31,7 +32,7 @@ const ProductInAccordionOrder: NextPage<IProductInAccordionOrder> = ({
   productAmount,
   who,
 }) => {
-  const { t } = useTranslation('office');
+  const { t } = useTranslation('admin');
 
   return (
     <ProductAccordionBox
@@ -53,7 +54,7 @@ const ProductInAccordionOrder: NextPage<IProductInAccordionOrder> = ({
               textAlign: 'start',
               color: who === 'admin' ? Colors.black : Colors.secondaryWhite,
               [theme.breakpoints.down('sm')]: {
-                fontSize: '12px',
+                fontSize: '8px',
               },
             }}
           >
@@ -64,7 +65,7 @@ const ProductInAccordionOrder: NextPage<IProductInAccordionOrder> = ({
             sx={{
               color: who === 'admin' ? Colors.black : Colors.secondaryWhite,
               [theme.breakpoints.down('sm')]: {
-                fontSize: '12px',
+                fontSize: '9px',
               },
             }}
           >
@@ -72,65 +73,68 @@ const ProductInAccordionOrder: NextPage<IProductInAccordionOrder> = ({
           </Typography>
         </ProductOrderInfo>
       </ProductOrderPhotoBox>
-      <ProductOrderCount>
-        <Typography
-          variant="roboto16200"
-          sx={{
-            marginRight: '10px',
-            color: who === 'admin' ? Colors.black : Colors.secondaryWhite,
-            [theme.breakpoints.down('sm')]: {
-              fontSize: '12px',
-            },
-          }}
-        >
-          {t('amount')}: {productAmount}
-        </Typography>
-      </ProductOrderCount>
-      {salePrice === 0 ? (
-        <ProductOrderPrice>
+      <ProductOrderAcountPrice>
+        <ProductOrderCount>
           <Typography
             variant="roboto16200"
             sx={{
-              width: '240px',
-              color: who === 'admin' ? Colors.black : Colors.secondaryWhite,
-              [theme.breakpoints.down('sm')]: {
-                fontSize: '12px',
-              },
-            }}
-          >
-            {price} UAH
-          </Typography>
-        </ProductOrderPrice>
-      ) : (
-        <ProductOrderPrice>
-          <Typography
-            variant="roboto16200"
-            sx={{
-              color: who === 'admin' ? Colors.black : Colors.secondaryWhite,
-              textDecoration: 'line-through',
-              textDecorationThickness: '1px',
               marginRight: '10px',
+              color: who === 'admin' ? Colors.black : Colors.secondaryWhite,
               [theme.breakpoints.down('sm')]: {
-                fontSize: '12px',
+                fontSize: '10px',
                 marginRight: '0px',
               },
             }}
           >
-            {price} UAH
+            {t('amount')}: {productAmount}
           </Typography>
-          <Typography
-            variant="roboto20400"
-            sx={{
-              color: Colors.saleColor,
-              [theme.breakpoints.down('sm')]: {
-                fontSize: '12px',
-              },
-            }}
-          >
-            {salePrice} UAH
-          </Typography>
-        </ProductOrderPrice>
-      )}
+        </ProductOrderCount>
+        {salePrice === 0 ? (
+          <ProductOrderPrice>
+            <Typography
+              variant="roboto16200"
+              sx={{
+                width: '240px',
+                color: who === 'admin' ? Colors.black : Colors.secondaryWhite,
+                [theme.breakpoints.down('sm')]: {
+                  fontSize: '10px',
+                },
+              }}
+            >
+              {price} UAH
+            </Typography>
+          </ProductOrderPrice>
+        ) : (
+          <ProductOrderPrice>
+            <Typography
+              variant="roboto16200"
+              sx={{
+                color: who === 'admin' ? Colors.black : Colors.secondaryWhite,
+                textDecoration: 'line-through',
+                textDecorationThickness: '1px',
+                marginRight: '10px',
+                [theme.breakpoints.down('sm')]: {
+                  fontSize: '10px',
+                  marginRight: '0px',
+                },
+              }}
+            >
+              {price} UAH
+            </Typography>
+            <Typography
+              variant="roboto20400"
+              sx={{
+                color: Colors.saleColor,
+                [theme.breakpoints.down('sm')]: {
+                  fontSize: '12px',
+                },
+              }}
+            >
+              {salePrice} UAH
+            </Typography>
+          </ProductOrderPrice>
+        )}
+      </ProductOrderAcountPrice>
     </ProductAccordionBox>
   );
 };

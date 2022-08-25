@@ -10,7 +10,7 @@ import {
   SearchAdminFormError,
   SearchAdminFormInput,
 } from '../../styles/administration';
-import { Colors } from '../../styles/theme';
+import theme, { Colors } from '../../styles/theme';
 import { toast } from 'react-toastify';
 
 interface IAdminSearchForm {
@@ -55,6 +55,9 @@ const AdminSearchForm: NextPage<IAdminSearchForm> = ({
                       width: '55%',
                       color: Colors.primary,
                       marginRight: '10px',
+                      [theme.breakpoints.down('sm')]: {
+                        fontSize: '18px',
+                      },
                     }}
                   >
                     {t(formName)}:

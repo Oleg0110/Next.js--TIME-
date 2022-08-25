@@ -74,6 +74,11 @@ export const ChooseSizeModalBox = styled(Box)(() => ({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
+
+  [theme.breakpoints.down('sm')]: {
+    width: '400px',
+    height: '170px',
+  },
 })) as typeof Box;
 
 export const ChooseSizeBox = styled(Box)(() => ({

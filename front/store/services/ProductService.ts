@@ -230,11 +230,11 @@ export const addProduct = createAsyncThunk(
   'admin/addProduct',
   async (arg: IAddArg, thunkApi) => {
     try {
-      const { product, photoFile } = arg;
+      const { product, photoFile, mainPhoto } = arg;
 
       let formData = new FormData();
 
-      formData.append('file', product.productMainPictures[0]);
+      formData.append('file', mainPhoto.images[0]);
       formData.append('product', JSON.stringify({ ...product }));
 
       const res = await $api.post<IAddProductResponse>(
@@ -308,11 +308,11 @@ export const changeProduct = createAsyncThunk(
   'admin/changeProduct',
   async (arg: IChangeProductArg, thunkApi) => {
     try {
-      const { productId, product, searchValue, photoFile } = arg;
+      const { productId, product, searchValue, photoFile, mainPhoto } = arg;
 
       let formData = new FormData();
 
-      formData.append('file', product.productMainPictures[0]);
+      formData.append('file', mainPhoto.images[0]);
       formData.append('product', JSON.stringify({ ...product }));
       formData.append('productId', productId);
       formData.append('searchValue', searchValue);
