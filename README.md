@@ -83,7 +83,7 @@ I added while writing this project. Thank You for your time.
 <h5 align="start">Mobile version :</h5>
 
 - [Major page / Entry / Registration / Products global search](#mobile-major-page)
-- [Products page / Shopping Bag / Favorite Bag](#mobile-products-page)
+- [Products page / Shopping Bag / Favorite Bag / Sorting / Filter](#mobile-products-page)
 - [Product Page](#mobile-product-page)
 - [Bag / Delivery details page](#mobile-bag-delivery-page)
 - [About Us / Shipping and Payment / FAQ](#mobile-information)
@@ -400,10 +400,11 @@ https://user-images.githubusercontent.com/81637612/186704968-5f55e95b-5f79-4267-
 
 <a id="mobile-products-page"></a>
 
-<h4 align="start" style="font-size: 20px; color: #685248">Products / Shopping Bag / Favorite Bag</h4>
+<h4 align="start" style="font-size: 20px; color: #685248">Products page / Shopping Bag / Favorite Bag / Sorting / Filter</h4>
 
 
-https://user-images.githubusercontent.com/81637612/186705173-103830ea-1b79-40d7-8dc8-886cd9dc2b5c.mp4
+https://user-images.githubusercontent.com/81637612/186727509-866499d2-cc11-409b-806c-722e5bd0dd6d.mp4
+
 
 
 <a id="mobile-product-page"></a>
